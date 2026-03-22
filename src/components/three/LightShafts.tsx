@@ -86,16 +86,19 @@ export function LightShafts() {
             width={5 + (i % 3) * 2}
             depth={5 + (i % 2) * 2}
           />
-          <spotLight
-            position={[pos[0], 42, pos[2]]}
-            target-position={[pos[0], 0, pos[2]]}
-            intensity={0.4}
-            color={0xfff0d0}
-            angle={0.35}
-            penumbra={0.8}
-            distance={50}
-            decay={2}
-          />
+          {/* Only 3 spot lights instead of 12 — massive perf gain */}
+          {i < 3 && (
+            <spotLight
+              position={[pos[0], 42, pos[2]]}
+              target-position={[pos[0], 0, pos[2]]}
+              intensity={0.5}
+              color={0xfff0d0}
+              angle={0.4}
+              penumbra={0.9}
+              distance={50}
+              decay={2}
+            />
+          )}
         </group>
       ))}
     </group>

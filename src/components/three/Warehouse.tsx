@@ -311,29 +311,23 @@ export function Warehouse() {
         )
       })}
 
-      {/* Columns with copper bands — grid across warehouse */}
-      {[-200, -150, -100, -50, 0, 50, 100, 150, 200].flatMap(x =>
-        [-130, -80, -30, 20, 70, 120].map(z => (
+      {/* Columns — reduced grid (every other column removed for perf) */}
+      {[-200, -100, 0, 100, 200].flatMap(x =>
+        [-120, -30, 60, 120].map(z => (
           <group key={`col-${x}-${z}`}>
-            <mesh position={[x, 22, z]} castShadow>
-              <cylinderGeometry args={[0.6, 0.75, 44, 8]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
-            </mesh>
-            <mesh position={[x, 8, z]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[0.8, 0.1, 8, 16]} />
-              <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
+            <mesh position={[x, 22, z]}>
+              <cylinderGeometry args={[0.7, 0.85, 44, 6]} />
+              <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.6} />
             </mesh>
           </group>
         ))
       )}
 
-      {/* Practical lights — spread across massive warehouse */}
+      {/* Practical lights — reduced to 9 for performance */}
       {([
-        [-100, 38, -50], [0, 38, 0], [100, 38, -50], [-100, 38, 50], [100, 38, 50],
-        [-175, 38, 0], [175, 38, 0], [0, 38, -100], [0, 38, 100],
-        [-75, 38, -100], [75, 38, -100], [-75, 38, 100], [75, 38, 100],
-        [-175, 38, -80], [175, 38, -80], [-175, 38, 80], [175, 38, 80],
-        [-50, 38, -50], [50, 38, -50], [-50, 38, 50], [50, 38, 50],
+        [-120, 38, -60], [0, 38, 0], [120, 38, -60],
+        [-120, 38, 60], [120, 38, 60], [0, 38, -120],
+        [0, 38, 80], [-180, 38, 0], [180, 38, 0],
       ] as [number, number, number][]).map((p, i) => (
         <PracticalLight key={i} position={p} />
       ))}

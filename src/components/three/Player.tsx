@@ -123,6 +123,9 @@ export function Player() {
       rightLegRef.current.rotation.x = -legSwing
     }
 
+    // Dispatch position for minimap
+    window.dispatchEvent(new CustomEvent('playerMove', { detail: { x: pos.x, z: pos.z } }))
+
     // Camera follows player (third person — pulled back for scale)
     const camOffset = new THREE.Vector3(
       Math.sin(s.yaw) * 10,
