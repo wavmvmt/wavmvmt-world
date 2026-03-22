@@ -1,20 +1,24 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import { COLORS } from '@/lib/roomConfig'
+import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 import { DayNightCycle } from './three/DayNightCycle'
 import { SceneContent } from './three/SceneContent'
 import { UIOverlay } from './UIOverlay'
 import * as THREE from 'three'
 
 export default function World3D() {
+  const perf = useMemo(() => getPerfSettings(detectPerformanceLevel()), [])
+
   return (
     <div className="w-screen h-screen relative">
       <Canvas
-        shadows
+        shadows={perf.enableShadows}
         camera={{ fov: 55, near: 0.5, far: 600, position: [0, 8, 80] }}
         gl={{
           antialias: false,
@@ -23,8 +27,8 @@ export default function World3D() {
           powerPreference: 'high-performance',
         }}
         onCreated={({ gl }) => {
-          const isMobile = window.innerWidth < 768
-          gl.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5))
+          const level = detectPerformanceLevel()
+          gl.setPixelRatio(Math.min(window.devicePixelRatio, level === 'low' ? 0.75 : level === 'medium' ? 1 : 1.5))
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
@@ -40,10 +44,12 @@ export default function World3D() {
           <SceneContent />
         </Suspense>
 
-        <EffectComposer multisampling={4}>
-          <Bloom intensity={0.3} luminanceThreshold={0.7} luminanceSmoothing={0.9} mipmapBlur />
-          <Vignette offset={0.3} darkness={0.5} blendFunction={BlendFunction.NORMAL} />
-        </EffectComposer>
+        {perf.enablePostProcessing && (
+          <EffectComposer multisampling={4}>
+            <Bloom intensity={0.3} luminanceThreshold={0.7} luminanceSmoothing={0.9} mipmapBlur />
+            <Vignette offset={0.3} darkness={0.5} blendFunction={BlendFunction.NORMAL} />
+          </EffectComposer>
+        )}
       </Canvas>
       <UIOverlay />
     </div>

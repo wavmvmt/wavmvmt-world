@@ -1,9 +1,12 @@
 'use client'
 
 /**
- * All 3D scene content grouped in one component.
- * Keeps World3D clean and makes it easy to add/remove scene elements.
+ * All 3D scene content with performance-adaptive rendering.
+ * Low-end devices get a stripped-down version that still looks good.
  */
+
+import { useMemo } from 'react'
+import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 
 import { Warehouse } from './Warehouse'
 import { Workers } from './Workers'
@@ -42,58 +45,62 @@ import { CeilingFans } from './CeilingFans'
 import { SiteClock } from './SiteClock'
 
 export function SceneContent() {
+  const perf = useMemo(() => {
+    const level = detectPerformanceLevel()
+    return getPerfSettings(level)
+  }, [])
+
   return (
     <>
-      {/* Sky & atmosphere */}
-      <NightSky />
-      <Fireflies />
-      <RainEffect />
-      <DustMotes />
-
-      {/* Warehouse structure */}
+      {/* === ALWAYS RENDERED (core experience) === */}
       <Warehouse />
-      <LightShafts />
-      <Signage />
-      <Decorations />
-
-      {/* Room content */}
+      <Player />
       <RoomInteriors />
+      <DustMotes />
+      <AnimatedDoors />
+
+      {/* Room interactions — lightweight, essential */}
       <BeatPads />
       <SoundBathBowls />
       <RoomInteractions />
-      <RemainingRoomFX />
       <StageSpotlight />
 
-      {/* Characters & vehicles */}
+      {/* Workers — count controlled by perf */}
       <Workers />
-      <Player />
-      <Skateboards />
-      <MultiplayerPresence />
 
-      {/* Construction site */}
+      {/* Audio — no visual cost */}
+      <AmbientAudio />
+      <CafeAmbient />
+      <BirdSounds />
+
+      {/* Confetti + drone — event-driven, zero cost when idle */}
+      <Confetti />
+      <DroneCamera />
+      <IntroFlyover />
+
+      {/* === MEDIUM + HIGH === */}
+      {perf.enableRoomIcons && <RoomIcons />}
+      {perf.enableTrail && <PlayerTrail />}
+
+      <Signage />
+      <LightShafts />
+      <NightSky />
       <ConstructionEquipment />
       <ConstructionProps />
       <PhaseProps />
       <Sparks />
       <ParkourTrampolines />
-
-      {/* Room markers */}
-      <AnimatedDoors />
-      <RoomIcons />
-
-      {/* Player effects */}
-      <PlayerTrail />
-
-      {/* Effects & systems */}
-      <CafeAmbient />
+      <Skateboards />
+      <MultiplayerPresence />
+      <RemainingRoomFX />
+      <Decorations />
       <BulletinBoard />
-      <BirdSounds />
-      <CeilingFans />
       <SiteClock />
-      <Confetti />
-      <DroneCamera />
-      <IntroFlyover />
-      <AmbientAudio />
+
+      {/* === HIGH ONLY === */}
+      {perf.enableCeilingFans && <CeilingFans />}
+      <Fireflies />
+      <RainEffect />
     </>
   )
 }
