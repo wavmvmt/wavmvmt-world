@@ -20,6 +20,7 @@ import { BeatPads } from './three/BeatPads'
 import { SoundBathBowls } from './three/SoundBathBowls'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
+import { StageSpotlight } from './three/StageSpotlight'
 import { DayNightCycle } from './three/DayNightCycle'
 import { NightSky } from './three/NightSky'
 import { HUD } from './HUD'
@@ -75,6 +76,7 @@ export default function World3D() {
           <SoundBathBowls />
           <PhaseProps />
           <Skateboards />
+          <StageSpotlight />
         </Suspense>
 
         {/* Post-processing — just bloom + vignette (dropped chromatic aberration + SMAA) */}

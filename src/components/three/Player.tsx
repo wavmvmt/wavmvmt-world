@@ -3,7 +3,7 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { COLORS } from '@/lib/roomConfig'
+import { COLORS, ROOMS } from '@/lib/roomConfig'
 
 const WALK_SPEED = 18
 const SPRINT_SPEED = 32
@@ -124,8 +124,52 @@ export function Player() {
 
     if (moveDir.length() > 0) {
       moveDir.normalize()
-      pos.x += moveDir.x * speed * delta
-      pos.z += moveDir.z * speed * delta
+      const newX = pos.x + moveDir.x * speed * delta
+      const newZ = pos.z + moveDir.z * speed * delta
+
+      // Wall collision — slide along room walls instead of passing through
+      let blockedX = false
+      let blockedZ = false
+      const PLAYER_R = 1.5
+
+      for (const room of ROOMS) {
+        const left = room.x - room.w / 2 - PLAYER_R
+        const right = room.x + room.w / 2 + PLAYER_R
+        const front = room.z - room.d / 2 - PLAYER_R
+        const back = room.z + room.d / 2 + PLAYER_R
+
+        // Check if new position is inside room wall band (2 units thick)
+        const inXBand = newX > left && newX < right
+        const inZBand = newZ > front && newZ < back
+        const wasInXBand = pos.x > left && pos.x < right
+        const wasInZBand = pos.z > front && pos.z < back
+
+        if (inXBand && inZBand) {
+          // Inside room bounds — only block if near a wall edge (not deep inside)
+          const distToLeft = Math.abs(newX - left)
+          const distToRight = Math.abs(newX - right)
+          const distToFront = Math.abs(newZ - front)
+          const distToBack = Math.abs(newZ - back)
+          const minDist = Math.min(distToLeft, distToRight, distToFront, distToBack)
+
+          if (minDist < 3) {
+            // Near a wall — block the axis that crossed
+            if (!wasInXBand && inXBand) blockedX = true
+            if (!wasInZBand && inZBand) blockedZ = true
+            if (wasInXBand && wasInZBand) {
+              // Already inside, let them out
+            } else if (!blockedX && !blockedZ) {
+              // Block whichever axis has smaller penetration
+              if (distToLeft < distToRight && distToLeft < distToFront && distToLeft < distToBack) blockedX = true
+              else if (distToRight < distToFront && distToRight < distToBack) blockedX = true
+              else blockedZ = true
+            }
+          }
+        }
+      }
+
+      if (!blockedX) pos.x = newX
+      if (!blockedZ) pos.z = newZ
       s.walkPhase += delta * (sprinting ? 12 : 8)
 
       // Footstep sounds — dispatch to AmbientAudio system

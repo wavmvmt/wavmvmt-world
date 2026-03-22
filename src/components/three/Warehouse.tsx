@@ -130,6 +130,46 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
         <meshBasicMaterial color={color} transparent opacity={0.02} />
       </mesh>
 
+      {/* Door appears at 60%+ build */}
+      {buildPct >= 60 && (
+        <group position={[0, 0, d / 2 + 0.1]}>
+          {/* Door frame */}
+          <mesh position={[0, 2, 0]}>
+            <boxGeometry args={[2.5, 4, 0.3]} />
+            <meshStandardMaterial color={COLORS.woodDk} roughness={0.8} />
+          </mesh>
+          {/* Door panel */}
+          <mesh position={[0, 2, 0.2]}>
+            <boxGeometry args={[2, 3.6, 0.1]} />
+            <meshStandardMaterial
+              color={color}
+              transparent
+              opacity={0.6 + (buildPct / 100) * 0.4}
+              roughness={0.7}
+            />
+          </mesh>
+          {/* Handle */}
+          <mesh position={[0.7, 1.8, 0.35]}>
+            <sphereGeometry args={[0.1, 8, 8]} />
+            <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
+          </mesh>
+          {/* "Coming Soon" or "Open" label */}
+          <Html position={[0, 4.5, 0]} center distanceFactor={15}>
+            <div style={{
+              color: buildPct >= 100 ? '#80d4a8' : hexColor,
+              fontSize: '8px',
+              fontFamily: "'DM Sans', sans-serif",
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              opacity: 0.6,
+              pointerEvents: 'none',
+            }}>
+              {buildPct >= 100 ? 'ENTER' : `${buildPct}% COMPLETE`}
+            </div>
+          </Html>
+        </group>
+      )}
+
       {/* Floating room label + info card */}
       <Html position={[0, h + 3, 0]} center distanceFactor={35}>
         <div style={{
