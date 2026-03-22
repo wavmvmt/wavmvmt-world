@@ -18,6 +18,7 @@ import { ConstructionProps } from './three/ConstructionProps'
 import { AmbientAudio } from './three/AmbientAudio'
 import { BeatPads } from './three/BeatPads'
 import { SoundBathBowls } from './three/SoundBathBowls'
+import { RoomInteractions } from './three/RoomInteractions'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
 import { StageSpotlight } from './three/StageSpotlight'
@@ -78,6 +79,7 @@ export default function World3D() {
           <AmbientAudio />
           <BeatPads />
           <SoundBathBowls />
+          <RoomInteractions />
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />

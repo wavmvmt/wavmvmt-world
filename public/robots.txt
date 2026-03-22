@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wavmvmt-world.vercel.app/sitemap.xml
