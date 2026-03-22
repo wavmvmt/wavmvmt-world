@@ -5,7 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
-const SPEED = 5.5
+const SPEED = 10
 const JUMP_FORCE = 7.5
 const GRAVITY = -20
 const GROUND_Y = 0
@@ -104,9 +104,9 @@ export function Player() {
       s.onGround = true
     }
 
-    // Bounds
-    pos.x = Math.max(-28, Math.min(28, pos.x))
-    pos.z = Math.max(-18, Math.min(18, pos.z))
+    // Bounds — expanded warehouse
+    pos.x = Math.max(-95, Math.min(95, pos.x))
+    pos.z = Math.max(-55, Math.min(65, pos.z))
 
     // Rotate player to face movement direction
     if (moveDir.length() > 0) {

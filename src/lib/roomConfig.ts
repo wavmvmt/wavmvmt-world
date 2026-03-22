@@ -39,29 +39,32 @@ export const WORKER_DATA = [
 ] as const
 
 export const ROOMS: RoomDef[] = [
-  { name: 'Parkour Gym',    x: -12, z: -8,  w: 14, d: 10, h: 6,   color: COLORS.lavender, buildPct: 30 },
-  { name: 'Sound Bath',     x: 12,  z: -10, w: 8,  d: 8,  h: 4,   color: COLORS.gold,     buildPct: 10 },
-  { name: 'Music Studio',   x: 12,  z: 4,   w: 8,  d: 6,  h: 4,   color: COLORS.rose,     buildPct: 5 },
-  { name: 'Cafe & Lounge',  x: -12, z: 6,   w: 10, d: 8,  h: 3.5, color: COLORS.sky,      buildPct: 0 },
-  { name: 'Front Desk',     x: 0,   z: 16,  w: 8,  d: 4,  h: 3,   color: COLORS.sage,     buildPct: 65 },
-  { name: 'Yoga Room',      x: -22, z: -4,  w: 6,  d: 6,  h: 3.5, color: COLORS.gold,     buildPct: 0 },
-  { name: 'Weight Training', x: 22,  z: -4,  w: 8,  d: 7,  h: 4,   color: COLORS.sage,     buildPct: 8 },
-  { name: 'Amphitheatre',   x: 0,   z: -14, w: 10, d: 6,  h: 5,   color: COLORS.rose,     buildPct: 3 },
-  { name: 'Photo Studio',   x: 22,  z: 8,   w: 6,  d: 5,  h: 3.5, color: COLORS.lavender, buildPct: 0 },
-  { name: 'Video Studio',   x: -22, z: 8,   w: 6,  d: 5,  h: 3.5, color: COLORS.sky,      buildPct: 0 },
+  { name: 'Parkour Gym',     x: -35, z: -25, w: 40, d: 30, h: 14,  color: COLORS.lavender, buildPct: 30 },
+  { name: 'Sound Bath',      x: 35,  z: -30, w: 24, d: 24, h: 10,  color: COLORS.gold,     buildPct: 10 },
+  { name: 'Music Studio',    x: 35,  z: 12,  w: 24, d: 18, h: 10,  color: COLORS.rose,     buildPct: 5 },
+  { name: 'Cafe & Lounge',   x: -35, z: 18,  w: 30, d: 24, h: 8,   color: COLORS.sky,      buildPct: 0 },
+  { name: 'Front Desk',      x: 0,   z: 50,  w: 24, d: 12, h: 7,   color: COLORS.sage,     buildPct: 65 },
+  { name: 'Yoga Room',       x: -65, z: -12, w: 18, d: 18, h: 8,   color: COLORS.gold,     buildPct: 0 },
+  { name: 'Weight Training',  x: 65,  z: -12, w: 24, d: 20, h: 10,  color: COLORS.sage,     buildPct: 8 },
+  { name: 'Amphitheatre',    x: 0,   z: -40, w: 30, d: 20, h: 12,  color: COLORS.rose,     buildPct: 3 },
+  { name: 'Photo Studio',    x: 65,  z: 24,  w: 18, d: 16, h: 8,   color: COLORS.lavender, buildPct: 0 },
+  { name: 'Video Studio',    x: -65, z: 24,  w: 18, d: 16, h: 8,   color: COLORS.sky,      buildPct: 0 },
 ]
 
 export const WORKER_POSITIONS: [number, number][] = [
-  [-10, -7], [-14, -10], [10, -9], [13, 5], [-1, 14],
-  [-8, -4], [22, -6], [0, -16], [22, 9], [-22, 9],
+  [-30, -20], [-40, -30], [30, -28], [38, 14], [-2, 48],
+  [-25, -10], [62, -15], [0, -38], [62, 26], [-62, 26],
+  [-15, -35], [15, -25], [-50, 20], [50, -5], [0, 10],
 ]
 
 export const SCAFFOLD_POSITIONS: { x: number; z: number; levels: number }[] = [
-  { x: -18, z: -8, levels: 3 },
-  { x: -6, z: -12, levels: 2 },
-  { x: 16, z: -10, levels: 2 },
-  { x: 24, z: -6, levels: 2 },
-  { x: -3, z: -16, levels: 2 },
-  { x: 24, z: 10, levels: 1 },
-  { x: -24, z: 10, levels: 1 },
+  { x: -50, z: -25, levels: 4 },
+  { x: -15, z: -35, levels: 3 },
+  { x: 45, z: -30, levels: 3 },
+  { x: 70, z: -18, levels: 3 },
+  { x: -8, z: -45, levels: 3 },
+  { x: 70, z: 30, levels: 2 },
+  { x: -70, z: 30, levels: 2 },
+  { x: 20, z: 45, levels: 2 },
+  { x: -20, z: 45, levels: 2 },
 ]

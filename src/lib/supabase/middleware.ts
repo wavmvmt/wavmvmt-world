@@ -26,18 +26,10 @@ export async function updateSession(request: NextRequest) {
   )
 
   // Refresh the session — important for Server Components
-  const { data: { user } } = await supabase.auth.getUser()
+  await supabase.auth.getUser()
 
-  // If accessing /world/* and not logged in, redirect to login
-  if (
-    !user &&
-    request.nextUrl.pathname.startsWith('/world') &&
-    !request.nextUrl.pathname.startsWith('/world/login')
-  ) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/world/login'
-    return NextResponse.redirect(url)
-  }
+  // World is publicly viewable — auth only required for interactive features
+  // (API key management, community board, room interactions)
 
   return supabaseResponse
 }

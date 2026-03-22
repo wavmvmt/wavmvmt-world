@@ -16,7 +16,7 @@ export default function World3D() {
     <div className="w-screen h-screen relative">
       <Canvas
         shadows
-        camera={{ fov: 55, near: 0.1, far: 200, position: [0, 4, 18] }}
+        camera={{ fov: 55, near: 0.1, far: 500, position: [0, 6, 60] }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -27,29 +27,31 @@ export default function World3D() {
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
-        <fogExp2 attach="fog" args={[0x1e1828, 0.016]} />
+        <fogExp2 attach="fog" args={[0x1e1828, 0.006]} />
 
         {/* Ghibli lighting */}
         <ambientLight intensity={0.5} color={0x3a2850} />
         <hemisphereLight args={[0xf0d8b0, 0x2a2040, 0.4]} />
         <directionalLight
-          position={[15, 20, 10]}
+          position={[40, 30, 25]}
           intensity={0.8}
           color={0xffe0a0}
           castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
           shadow-camera-near={0.5}
-          shadow-camera-far={60}
-          shadow-camera-left={-30}
-          shadow-camera-right={30}
-          shadow-camera-top={25}
-          shadow-camera-bottom={-25}
+          shadow-camera-far={200}
+          shadow-camera-left={-100}
+          shadow-camera-right={100}
+          shadow-camera-top={80}
+          shadow-camera-bottom={-80}
         />
 
-        {/* Accent lights */}
-        <pointLight position={[-18, 4, -8]} intensity={0.2} color={COLORS.lavender} distance={18} />
-        <pointLight position={[18, 4, 8]} intensity={0.15} color={COLORS.sage} distance={18} />
+        {/* Accent lights — spread wide */}
+        <pointLight position={[-60, 8, -25]} intensity={0.3} color={COLORS.lavender} distance={50} />
+        <pointLight position={[60, 8, 25]} intensity={0.25} color={COLORS.sage} distance={50} />
+        <pointLight position={[0, 8, -45]} intensity={0.2} color={COLORS.rose} distance={40} />
+        <pointLight position={[0, 8, 45]} intensity={0.2} color={COLORS.sky} distance={40} />
 
         <Suspense fallback={null}>
           <Warehouse />

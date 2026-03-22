@@ -150,60 +150,64 @@ function MaterialPile({ position, type }: { position: [number, number, number]; 
 export function Warehouse() {
   return (
     <group>
-      {/* Floor */}
+      {/* Floor — massive warehouse */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[60, 40]} />
+        <planeGeometry args={[200, 140]} />
         <meshStandardMaterial color={COLORS.floor} roughness={0.92} metalness={0.05} />
       </mesh>
 
       {/* Grid overlay */}
-      <gridHelper args={[60, 30, 0x2a2535, 0x201a2a]} position={[0, 0.01, 0]}>
-        <meshBasicMaterial transparent opacity={0.2} />
+      <gridHelper args={[200, 50, 0x2a2535, 0x201a2a]} position={[0, 0.01, 0]}>
+        <meshBasicMaterial transparent opacity={0.15} />
       </gridHelper>
 
-      {/* Walls */}
-      <Wall width={60} height={13} position={[0, 6.5, -20]} />
-      <Wall width={40} height={13} position={[-30, 6.5, 0]} rotationY={Math.PI / 2} />
-      <Wall width={40} height={13} position={[30, 6.5, 0]} rotationY={Math.PI / 2} />
+      {/* Walls — expanded warehouse */}
+      <Wall width={200} height={18} position={[0, 9, -60]} />
+      <Wall width={140} height={18} position={[-100, 9, 0]} rotationY={Math.PI / 2} />
+      <Wall width={140} height={18} position={[100, 9, 0]} rotationY={Math.PI / 2} />
 
-      {/* Ceiling beams */}
-      {Array.from({ length: 9 }, (_, i) => {
-        const z = -24 + i * 6
+      {/* Ceiling beams — spanning the warehouse */}
+      {Array.from({ length: 15 }, (_, i) => {
+        const z = -60 + i * 9
         return (
-          <mesh key={`cb-${i}`} position={[0, 12.5, z]} castShadow>
-            <boxGeometry args={[60, 0.5, 0.7]} />
+          <mesh key={`cb-${i}`} position={[0, 17, z]} castShadow>
+            <boxGeometry args={[200, 0.6, 0.8]} />
             <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
           </mesh>
         )
       })}
-      {Array.from({ length: 10 }, (_, i) => {
-        const x = -27 + i * 6
+      {Array.from({ length: 20 }, (_, i) => {
+        const x = -90 + i * 10
         return (
-          <mesh key={`cb2-${i}`} position={[x, 12.2, 0]}>
-            <boxGeometry args={[0.5, 0.4, 40]} />
+          <mesh key={`cb2-${i}`} position={[x, 16.5, 0]}>
+            <boxGeometry args={[0.6, 0.5, 140]} />
             <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
           </mesh>
         )
       })}
 
-      {/* Columns with copper bands */}
-      {[-24, -12, 0, 12, 24].flatMap(x =>
-        [-18, -6, 6, 18].map(z => (
+      {/* Columns with copper bands — grid across warehouse */}
+      {[-80, -60, -40, -20, 0, 20, 40, 60, 80].flatMap(x =>
+        [-50, -30, -10, 10, 30, 50].map(z => (
           <group key={`col-${x}-${z}`}>
-            <mesh position={[x, 6.5, z]} castShadow>
-              <cylinderGeometry args={[0.25, 0.3, 13, 8]} />
+            <mesh position={[x, 9, z]} castShadow>
+              <cylinderGeometry args={[0.35, 0.45, 18, 8]} />
               <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
             </mesh>
-            <mesh position={[x, 2, z]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[0.32, 0.04, 8, 16]} />
+            <mesh position={[x, 3, z]} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[0.48, 0.06, 8, 16]} />
               <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
             </mesh>
           </group>
         ))
       )}
 
-      {/* Practical lights */}
-      {([[-12, 11, -6], [0, 11, 0], [12, 11, -6], [-12, 11, 6], [12, 11, 6]] as [number, number, number][]).map((p, i) => (
+      {/* Practical lights — spread across warehouse */}
+      {([
+        [-40, 15, -20], [0, 15, 0], [40, 15, -20], [-40, 15, 20], [40, 15, 20],
+        [-70, 15, 0], [70, 15, 0], [0, 15, -40], [0, 15, 40],
+        [-30, 15, -40], [30, 15, -40], [-30, 15, 40], [30, 15, 40],
+      ] as [number, number, number][]).map((p, i) => (
         <PracticalLight key={i} position={p} />
       ))}
 
