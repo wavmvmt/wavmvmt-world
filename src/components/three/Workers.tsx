@@ -1,9 +1,25 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS, SKIN_TONES, WORKER_DATA, WORKER_POSITIONS } from '@/lib/roomConfig'
+
+// Create a 3-step gradient texture for toon shading
+function useToonGradient() {
+  return useMemo(() => {
+    const colors = new Uint8Array(4)
+    colors[0] = 80   // darkest
+    colors[1] = 160  // mid
+    colors[2] = 220  // light
+    colors[3] = 255  // lightest
+    const tex = new THREE.DataTexture(colors, 4, 1, THREE.RedFormat)
+    tex.minFilter = THREE.NearestFilter
+    tex.magFilter = THREE.NearestFilter
+    tex.needsUpdate = true
+    return tex
+  }, [])
+}
 
 function Worker({ position, index }: { position: [number, number]; index: number }) {
   const groupRef = useRef<THREE.Group>(null)
@@ -15,6 +31,7 @@ function Worker({ position, index }: { position: [number, number]; index: number
   const skin = SKIN_TONES[index % SKIN_TONES.length]
   const phase = useRef(Math.random() * Math.PI * 2)
   const type = ['hammer', 'measure', 'walk', 'dance', 'hammer', 'walk', 'weld', 'carry', 'idle', 'dance'][index % 10]
+  const toonGradient = useToonGradient()
 
   useFrame((_, delta) => {
     const t = phase.current
@@ -30,7 +47,6 @@ function Worker({ position, index }: { position: [number, number]; index: number
         case 'hammer':
           rightArmRef.current.rotation.z = -0.3 + Math.sin(t * 2) * 0.8
           leftArmRef.current.rotation.z = 0.3
-          // Slight body bob with each hit
           if (groupRef.current) {
             groupRef.current.position.y = Math.abs(Math.sin(t * 2)) * 0.03
           }
@@ -39,7 +55,6 @@ function Worker({ position, index }: { position: [number, number]; index: number
           leftArmRef.current.rotation.z = 0.3 + Math.sin(t * 0.5) * 0.15
           rightArmRef.current.rotation.z = -0.8
           headRef.current.rotation.y = Math.sin(t * 0.3) * 0.3
-          // Look up and down too
           headRef.current.rotation.x = Math.sin(t * 0.2) * 0.15
           break
         case 'walk':
@@ -49,12 +64,10 @@ function Worker({ position, index }: { position: [number, number]; index: number
             groupRef.current.position.x = position[0] + Math.sin(t * 0.3) * 1.5
             groupRef.current.position.z = position[1] + Math.cos(t * 0.2) * 0.8
             groupRef.current.rotation.y = Math.sin(t * 0.3) * 0.3
-            // Walking bob
             groupRef.current.position.y = Math.abs(Math.sin(t * 1.2)) * 0.04
           }
           break
         case 'dance':
-          // The signature WAVMVMT move — a worker busting out
           leftArmRef.current.rotation.z = 0.5 + Math.sin(t * 1.5) * 0.6
           rightArmRef.current.rotation.z = -0.5 - Math.sin(t * 1.5 + 1) * 0.6
           leftArmRef.current.rotation.x = Math.sin(t * 3) * 0.3
@@ -66,7 +79,6 @@ function Worker({ position, index }: { position: [number, number]; index: number
           }
           break
         case 'weld':
-          // Focused forward lean, steady arm, slight vibration
           rightArmRef.current.rotation.z = -0.7 + Math.sin(t * 8) * 0.03
           rightArmRef.current.rotation.x = -0.5
           leftArmRef.current.rotation.z = 0.2
@@ -74,7 +86,6 @@ function Worker({ position, index }: { position: [number, number]; index: number
           headRef.current.rotation.x = 0.2
           break
         case 'carry':
-          // Both arms forward, steady walk
           leftArmRef.current.rotation.z = 0.1
           leftArmRef.current.rotation.x = -0.8
           rightArmRef.current.rotation.z = -0.1
@@ -86,7 +97,6 @@ function Worker({ position, index }: { position: [number, number]; index: number
           }
           break
         case 'idle':
-          // Scratching head, looking around
           headRef.current.rotation.y = Math.sin(t * 0.2) * 0.5
           rightArmRef.current.rotation.z = -0.3 + Math.sin(t * 0.4) * 0.1
           leftArmRef.current.rotation.z = 0.3
@@ -95,117 +105,188 @@ function Worker({ position, index }: { position: [number, number]; index: number
     }
   })
 
+  // Toon materials — the key to looking Ghibli
+  const bodyMat = <meshToonMaterial color={0x3a5080} gradientMap={toonGradient} />
+  const pantsMat = <meshToonMaterial color={0x2a3548} gradientMap={toonGradient} />
+  const skinMat = <meshToonMaterial color={skin} gradientMap={toonGradient} />
   const outlineMat = <meshBasicMaterial color={COLORS.outline} side={THREE.BackSide} />
+  const hatMat = <meshToonMaterial color={info.hat} gradientMap={toonGradient} />
 
+  // Scale factor for anime proportions — bigger head, shorter legs
   return (
-    <group ref={groupRef} position={[position[0], 0, position[1]]} castShadow>
-      {/* Body */}
-      <mesh position={[0, 1.15, 0]}>
-        <cylinderGeometry args={[0.22, 0.28, 0.9, 10]} />
-        <meshStandardMaterial color={0x3a5080} roughness={0.9} />
+    <group ref={groupRef} position={[position[0], 0, position[1]]} scale={1.2} castShadow>
+      {/* === TORSO === */}
+      {/* Main torso — rounder, chubbier */}
+      <mesh position={[0, 1.05, 0]}>
+        <capsuleGeometry args={[0.22, 0.5, 8, 12]} />
+        {bodyMat}
       </mesh>
-      <mesh position={[0, 1.15, 0]} scale={[1.08, 1.08, 1.08]}>
-        <cylinderGeometry args={[0.22, 0.28, 0.9, 10]} />
+      {/* Torso outline */}
+      <mesh position={[0, 1.05, 0]} scale={[1.06, 1.06, 1.06]}>
+        <capsuleGeometry args={[0.22, 0.5, 8, 12]} />
         {outlineMat}
       </mesh>
 
-      {/* Head */}
-      <mesh ref={headRef} position={[0, 1.95, 0]}>
-        <sphereGeometry args={[0.24, 12, 12]} />
-        <meshStandardMaterial color={skin} roughness={0.8} />
+      {/* Collar / shirt detail */}
+      <mesh position={[0, 1.32, 0.05]} rotation={[0.2, 0, 0]}>
+        <torusGeometry args={[0.18, 0.025, 6, 12, Math.PI]} />
+        <meshToonMaterial color={0x4a6090} gradientMap={toonGradient} />
       </mesh>
-      <mesh position={[0, 1.95, 0]} scale={[1.07, 1.07, 1.07]}>
-        <sphereGeometry args={[0.24, 12, 12]} />
+
+      {/* === HEAD === bigger for anime proportions */}
+      <mesh ref={headRef} position={[0, 1.72, 0]}>
+        <sphereGeometry args={[0.28, 16, 16]} />
+        {skinMat}
+      </mesh>
+      {/* Head outline */}
+      <mesh position={[0, 1.72, 0]} scale={[1.05, 1.05, 1.05]}>
+        <sphereGeometry args={[0.28, 16, 16]} />
         {outlineMat}
       </mesh>
 
-      {/* Big anime eyes */}
+      {/* === FACE === */}
+      {/* Big anime eyes — expressive, with colored iris */}
       {[-1, 1].map(s => (
-        <group key={s}>
-          <mesh position={[s * 0.09, 1.97, 0.2]}>
-            <sphereGeometry args={[0.06, 8, 8]} />
+        <group key={`eye-${s}`}>
+          {/* Eye white — large oval */}
+          <mesh position={[s * 0.1, 1.74, 0.22]}>
+            <sphereGeometry args={[0.075, 10, 10]} />
             <meshBasicMaterial color={0xffffff} />
           </mesh>
-          <mesh position={[s * 0.09, 1.97, 0.24]}>
-            <sphereGeometry args={[0.035, 8, 8]} />
-            <meshBasicMaterial color={0x1a1520} />
+          {/* Iris — colored per worker */}
+          <mesh position={[s * 0.1, 1.74, 0.28]}>
+            <sphereGeometry args={[0.045, 10, 10]} />
+            <meshBasicMaterial color={info.hat} />
           </mesh>
-          {/* Anime sparkle highlight */}
-          <mesh position={[s * 0.07, 1.99, 0.25]}>
-            <sphereGeometry args={[0.015, 6, 6]} />
+          {/* Pupil */}
+          <mesh position={[s * 0.1, 1.74, 0.3]}>
+            <sphereGeometry args={[0.03, 8, 8]} />
+            <meshBasicMaterial color={0x0a0a15} />
+          </mesh>
+          {/* Primary sparkle — top right */}
+          <mesh position={[s * 0.075, 1.77, 0.3]}>
+            <sphereGeometry args={[0.018, 6, 6]} />
             <meshBasicMaterial color={0xffffff} />
+          </mesh>
+          {/* Secondary sparkle — bottom left (smaller) */}
+          <mesh position={[s * 0.12, 1.71, 0.29]}>
+            <sphereGeometry args={[0.01, 6, 6]} />
+            <meshBasicMaterial color={0xffffff} />
+          </mesh>
+          {/* Eyelid line */}
+          <mesh position={[s * 0.1, 1.79, 0.24]} rotation={[0.1, 0, 0]}>
+            <boxGeometry args={[0.12, 0.008, 0.01]} />
+            <meshBasicMaterial color={COLORS.outline} />
           </mesh>
         </group>
       ))}
 
-      {/* Hard hat */}
-      <mesh position={[0, 2.15, 0]}>
-        <sphereGeometry args={[0.27, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={info.hat} roughness={0.6} metalness={0.1} />
-      </mesh>
-      <mesh position={[0, 2.15, 0]}>
-        <cylinderGeometry args={[0.32, 0.32, 0.03, 12]} />
-        <meshStandardMaterial color={info.hat} roughness={0.6} metalness={0.1} />
+      {/* Nose — tiny bump */}
+      <mesh position={[0, 1.68, 0.27]}>
+        <sphereGeometry args={[0.02, 6, 6]} />
+        {skinMat}
       </mesh>
 
-      {/* Arms */}
-      <mesh ref={leftArmRef} position={[-0.33, 1.25, 0]} rotation={[0, 0, 0.3]}>
-        <cylinderGeometry args={[0.055, 0.055, 0.65, 6]} />
-        <meshStandardMaterial color={0x3a5080} roughness={0.9} />
-      </mesh>
-      <mesh ref={rightArmRef} position={[0.33, 1.25, 0]} rotation={[0, 0, -0.3]}>
-        <cylinderGeometry args={[0.055, 0.055, 0.65, 6]} />
-        <meshStandardMaterial color={0x3a5080} roughness={0.9} />
+      {/* Mouth — small curved line (happy) */}
+      <mesh position={[0, 1.63, 0.25]} rotation={[0, 0, 0]}>
+        <torusGeometry args={[0.04, 0.006, 4, 8, Math.PI]} />
+        <meshBasicMaterial color={COLORS.outline} />
       </mesh>
 
-      {/* Tool belt */}
-      <mesh position={[0, 0.72, 0]}>
-        <torusGeometry args={[0.26, 0.03, 6, 12]} />
-        <meshStandardMaterial color={0x6a4a28} roughness={0.7} metalness={0.2} />
+      {/* Blush marks — Ghibli signature */}
+      {[-1, 1].map(s => (
+        <mesh key={`blush-${s}`} position={[s * 0.16, 1.66, 0.2]}>
+          <circleGeometry args={[0.04, 8]} />
+          <meshBasicMaterial color={0xe8a0a0} transparent opacity={0.15} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
+
+      {/* === HARD HAT === rounder, more detailed */}
+      <mesh position={[0, 1.96, 0]}>
+        <sphereGeometry args={[0.3, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        {hatMat}
+      </mesh>
+      {/* Hat brim */}
+      <mesh position={[0, 1.96, 0]}>
+        <cylinderGeometry args={[0.35, 0.35, 0.035, 16]} />
+        {hatMat}
+      </mesh>
+      {/* Hat band */}
+      <mesh position={[0, 1.97, 0]}>
+        <torusGeometry args={[0.29, 0.015, 6, 16]} />
+        <meshToonMaterial color={0xffffff} gradientMap={toonGradient} />
+      </mesh>
+      {/* Hat outline */}
+      <mesh position={[0, 1.96, 0]} scale={[1.04, 1.04, 1.04]}>
+        <sphereGeometry args={[0.3, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        {outlineMat}
+      </mesh>
+
+      {/* === ARMS === thicker, more defined */}
+      {/* Left arm — upper */}
+      <mesh ref={leftArmRef} position={[-0.32, 1.15, 0]} rotation={[0, 0, 0.3]}>
+        <capsuleGeometry args={[0.06, 0.4, 6, 8]} />
+        {bodyMat}
+      </mesh>
+      {/* Right arm — upper */}
+      <mesh ref={rightArmRef} position={[0.32, 1.15, 0]} rotation={[0, 0, -0.3]}>
+        <capsuleGeometry args={[0.06, 0.4, 6, 8]} />
+        {bodyMat}
+      </mesh>
+
+      {/* Hands — round and cartoony */}
+      <mesh position={[-0.42, 0.88, 0]}>
+        <sphereGeometry args={[0.055, 8, 8]} />
+        <meshToonMaterial color={0xd4a060} gradientMap={toonGradient} />
+      </mesh>
+      <mesh position={[0.42, 0.88, 0]}>
+        <sphereGeometry args={[0.055, 8, 8]} />
+        <meshToonMaterial color={0xd4a060} gradientMap={toonGradient} />
+      </mesh>
+
+      {/* === TOOL BELT === */}
+      <mesh position={[0, 0.78, 0]}>
+        <torusGeometry args={[0.23, 0.03, 6, 16]} />
+        <meshToonMaterial color={0x6a4a28} gradientMap={toonGradient} />
       </mesh>
       {/* Belt buckle */}
-      <mesh position={[0, 0.72, 0.25]}>
+      <mesh position={[0, 0.78, 0.23]}>
         <boxGeometry args={[0.08, 0.06, 0.02]} />
         <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
       </mesh>
-
-      {/* Legs */}
-      <mesh position={[-0.1, 0.35, 0]}>
-        <cylinderGeometry args={[0.07, 0.075, 0.55, 6]} />
-        <meshStandardMaterial color={0x2a3548} roughness={0.9} />
-      </mesh>
-      <mesh position={[0.1, 0.35, 0]}>
-        <cylinderGeometry args={[0.07, 0.075, 0.55, 6]} />
-        <meshStandardMaterial color={0x2a3548} roughness={0.9} />
+      {/* Tool pouch — side */}
+      <mesh position={[0.22, 0.74, 0.05]}>
+        <boxGeometry args={[0.06, 0.1, 0.08]} />
+        <meshToonMaterial color={0x5a3a18} gradientMap={toonGradient} />
       </mesh>
 
-      {/* Chunky boots (Ghibli style — round and oversized) */}
-      <mesh position={[-0.1, 0.06, 0.03]}>
-        <boxGeometry args={[0.12, 0.12, 0.18]} />
-        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+      {/* === LEGS === shorter (anime proportions) */}
+      <mesh position={[-0.1, 0.42, 0]}>
+        <capsuleGeometry args={[0.07, 0.35, 6, 8]} />
+        {pantsMat}
       </mesh>
-      <mesh position={[0.1, 0.06, 0.03]}>
-        <boxGeometry args={[0.12, 0.12, 0.18]} />
-        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
-      </mesh>
-      {/* Boot soles */}
-      <mesh position={[-0.1, 0.01, 0.03]}>
-        <boxGeometry args={[0.13, 0.02, 0.2]} />
-        <meshStandardMaterial color={0x1a1010} roughness={0.95} />
-      </mesh>
-      <mesh position={[0.1, 0.01, 0.03]}>
-        <boxGeometry args={[0.13, 0.02, 0.2]} />
-        <meshStandardMaterial color={0x1a1010} roughness={0.95} />
+      <mesh position={[0.1, 0.42, 0]}>
+        <capsuleGeometry args={[0.07, 0.35, 6, 8]} />
+        {pantsMat}
       </mesh>
 
-      {/* Gloves (skin-colored hands at arm ends) */}
-      <mesh position={[-0.42, 0.95, 0]}>
-        <sphereGeometry args={[0.04, 6, 6]} />
-        <meshStandardMaterial color={0xd4a060} roughness={0.8} />
+      {/* === BOOTS === chunky and round (Ghibli style) */}
+      <mesh position={[-0.1, 0.1, 0.02]}>
+        <capsuleGeometry args={[0.065, 0.08, 6, 8]} />
+        <meshToonMaterial color={0x3a2a1a} gradientMap={toonGradient} />
       </mesh>
-      <mesh position={[0.42, 0.95, 0]}>
-        <sphereGeometry args={[0.04, 6, 6]} />
-        <meshStandardMaterial color={0xd4a060} roughness={0.8} />
+      <mesh position={[0.1, 0.1, 0.02]}>
+        <capsuleGeometry args={[0.065, 0.08, 6, 8]} />
+        <meshToonMaterial color={0x3a2a1a} gradientMap={toonGradient} />
+      </mesh>
+      {/* Boot soles — thick rubber */}
+      <mesh position={[-0.1, 0.03, 0.02]}>
+        <boxGeometry args={[0.14, 0.03, 0.18]} />
+        <meshBasicMaterial color={0x1a1010} />
+      </mesh>
+      <mesh position={[0.1, 0.03, 0.02]}>
+        <boxGeometry args={[0.14, 0.03, 0.18]} />
+        <meshBasicMaterial color={0x1a1010} />
       </mesh>
     </group>
   )
