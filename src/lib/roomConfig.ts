@@ -39,16 +39,16 @@ export const WORKER_DATA = [
 ] as const
 
 export const ROOMS: RoomDef[] = [
-  { name: 'Parkour Gym',     x: -35, z: -25, w: 40, d: 30, h: 14,  color: COLORS.lavender, buildPct: 30 },
-  { name: 'Sound Bath',      x: 35,  z: -30, w: 24, d: 24, h: 10,  color: COLORS.gold,     buildPct: 10 },
-  { name: 'Music Studio',    x: 35,  z: 12,  w: 24, d: 18, h: 10,  color: COLORS.rose,     buildPct: 5 },
-  { name: 'Cafe & Lounge',   x: -35, z: 18,  w: 30, d: 24, h: 8,   color: COLORS.sky,      buildPct: 0 },
-  { name: 'Front Desk',      x: 0,   z: 50,  w: 24, d: 12, h: 7,   color: COLORS.sage,     buildPct: 65 },
-  { name: 'Yoga Room',       x: -65, z: -12, w: 18, d: 18, h: 8,   color: COLORS.gold,     buildPct: 0 },
-  { name: 'Weight Training',  x: 65,  z: -12, w: 24, d: 20, h: 10,  color: COLORS.sage,     buildPct: 8 },
-  { name: 'Amphitheatre',    x: 0,   z: -40, w: 30, d: 20, h: 12,  color: COLORS.rose,     buildPct: 3 },
-  { name: 'Photo Studio',    x: 65,  z: 24,  w: 18, d: 16, h: 8,   color: COLORS.lavender, buildPct: 0 },
-  { name: 'Video Studio',    x: -65, z: 24,  w: 18, d: 16, h: 8,   color: COLORS.sky,      buildPct: 0 },
+  { name: 'Parkour Gym',     x: -40, z: -30, w: 55, d: 40, h: 18,  color: COLORS.lavender, buildPct: 30 },
+  { name: 'Sound Bath',      x: 45,  z: -35, w: 35, d: 35, h: 14,  color: COLORS.gold,     buildPct: 10 },
+  { name: 'Music Studio',    x: 45,  z: 18,  w: 35, d: 25, h: 12,  color: COLORS.rose,     buildPct: 5 },
+  { name: 'Cafe & Lounge',   x: -42, z: 22,  w: 40, d: 30, h: 10,  color: COLORS.sky,      buildPct: 0 },
+  { name: 'Front Desk',      x: 0,   z: 52,  w: 30, d: 16, h: 9,   color: COLORS.sage,     buildPct: 65 },
+  { name: 'Yoga Room',       x: -75, z: -15, w: 25, d: 25, h: 10,  color: COLORS.gold,     buildPct: 0 },
+  { name: 'Weight Training',  x: 75,  z: -15, w: 30, d: 28, h: 12,  color: COLORS.sage,     buildPct: 8 },
+  { name: 'Amphitheatre',    x: 0,   z: -42, w: 40, d: 28, h: 15,  color: COLORS.rose,     buildPct: 3 },
+  { name: 'Photo Studio',    x: 75,  z: 28,  w: 25, d: 22, h: 10,  color: COLORS.lavender, buildPct: 0 },
+  { name: 'Video Studio',    x: -75, z: 28,  w: 25, d: 22, h: 10,  color: COLORS.sky,      buildPct: 0 },
 ]
 
 export const WORKER_POSITIONS: [number, number][] = [

@@ -2,6 +2,8 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
+import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
 import { COLORS } from '@/lib/roomConfig'
 import { Warehouse } from './three/Warehouse'
 import { Workers } from './three/Workers'
@@ -20,21 +22,24 @@ export default function World3D() {
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.1,
+          toneMappingExposure: 1.2,
+          powerPreference: 'high-performance',
         }}
         onCreated={({ gl }) => {
           gl.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
-        <fogExp2 attach="fog" args={[0x1e1828, 0.006]} />
+        <fogExp2 attach="fog" args={[0x1e1828, 0.005]} />
 
-        {/* Ghibli lighting */}
-        <ambientLight intensity={0.5} color={0x3a2850} />
-        <hemisphereLight args={[0xf0d8b0, 0x2a2040, 0.4]} />
+        {/* Ghibli lighting — warm and cinematic */}
+        <ambientLight intensity={0.4} color={0x3a2850} />
+        <hemisphereLight args={[0xf0d8b0, 0x2a2040, 0.5]} />
+
+        {/* Main sun — golden hour */}
         <directionalLight
-          position={[40, 30, 25]}
-          intensity={0.8}
+          position={[40, 35, 25]}
+          intensity={1.0}
           color={0xffe0a0}
           castShadow
           shadow-mapSize-width={2048}
@@ -45,13 +50,23 @@ export default function World3D() {
           shadow-camera-right={100}
           shadow-camera-top={80}
           shadow-camera-bottom={-80}
+          shadow-bias={-0.0001}
         />
 
-        {/* Accent lights — spread wide */}
-        <pointLight position={[-60, 8, -25]} intensity={0.3} color={COLORS.lavender} distance={50} />
-        <pointLight position={[60, 8, 25]} intensity={0.25} color={COLORS.sage} distance={50} />
-        <pointLight position={[0, 8, -45]} intensity={0.2} color={COLORS.rose} distance={40} />
-        <pointLight position={[0, 8, 45]} intensity={0.2} color={COLORS.sky} distance={40} />
+        {/* Secondary fill light — cooler, from opposite side */}
+        <directionalLight
+          position={[-30, 20, -15]}
+          intensity={0.25}
+          color={0xb0c8e8}
+        />
+
+        {/* Accent lights — color wash across the space */}
+        <pointLight position={[-60, 10, -25]} intensity={0.4} color={COLORS.lavender} distance={60} decay={1.5} />
+        <pointLight position={[60, 10, 25]} intensity={0.35} color={COLORS.sage} distance={60} decay={1.5} />
+        <pointLight position={[0, 10, -45]} intensity={0.3} color={COLORS.rose} distance={50} decay={1.5} />
+        <pointLight position={[0, 10, 45]} intensity={0.3} color={COLORS.sky} distance={50} decay={1.5} />
+        <pointLight position={[-35, 6, -20]} intensity={0.5} color={COLORS.gold} distance={40} decay={2} />
+        <pointLight position={[35, 6, -28]} intensity={0.4} color={COLORS.amber} distance={40} decay={2} />
 
         <Suspense fallback={null}>
           <Warehouse />
@@ -60,6 +75,25 @@ export default function World3D() {
           <Sparks />
           <Player />
         </Suspense>
+
+        {/* Post-processing — cinematic Ghibli feel */}
+        <EffectComposer>
+          <Bloom
+            intensity={0.4}
+            luminanceThreshold={0.6}
+            luminanceSmoothing={0.9}
+            mipmapBlur
+          />
+          <Vignette
+            offset={0.3}
+            darkness={0.6}
+            blendFunction={BlendFunction.NORMAL}
+          />
+          <ChromaticAberration
+            offset={new THREE.Vector2(0.0005, 0.0005)}
+            blendFunction={BlendFunction.NORMAL}
+          />
+        </EffectComposer>
       </Canvas>
       <HUD />
     </div>

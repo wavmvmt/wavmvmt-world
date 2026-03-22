@@ -9,61 +9,109 @@ function Wall({ width, height, position, rotationY = 0 }: {
   width: number; height: number; position: [number, number, number]; rotationY?: number
 }) {
   return (
-    <mesh position={position} rotation={[0, rotationY, 0]} receiveShadow>
-      <planeGeometry args={[width, height]} />
-      <meshStandardMaterial color={COLORS.concrete} roughness={0.95} side={THREE.DoubleSide} />
-    </mesh>
+    <group>
+      <mesh position={position} rotation={[0, rotationY, 0]} receiveShadow>
+        <planeGeometry args={[width, height, Math.floor(width / 4), Math.floor(height / 4)]} />
+        <meshStandardMaterial
+          color={COLORS.concrete}
+          roughness={0.85}
+          metalness={0.05}
+          side={THREE.DoubleSide}
+          envMapIntensity={0.2}
+        />
+      </mesh>
+      {/* Wall base trim */}
+      <mesh position={[
+        position[0] + (rotationY ? 0 : 0),
+        0.15,
+        position[2]
+      ]} rotation={[0, rotationY, 0]}>
+        <boxGeometry args={[width, 0.3, 0.15]} />
+        <meshStandardMaterial color={COLORS.copper} roughness={0.5} metalness={0.4} />
+      </mesh>
+    </group>
   )
 }
 
 function WireframeRoom({ name, x, z, w, d, h, color, buildPct }: {
   name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number
 }) {
+  const hexColor = `#${color.toString(16).padStart(6, '0')}`
   return (
     <group position={[x, 0, z]}>
-      {/* Wireframe outline */}
+      {/* Main wireframe outline — glowing */}
       <lineSegments position={[0, h / 2, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(w, h, d)]} />
-        <lineBasicMaterial color={color} transparent opacity={0.5} />
+        <lineBasicMaterial color={color} transparent opacity={0.7} />
       </lineSegments>
+
+      {/* Inner structure lines for depth */}
+      <lineSegments position={[0, h / 2, 0]}>
+        <edgesGeometry args={[new THREE.BoxGeometry(w - 1, h - 0.5, d - 1)]} />
+        <lineBasicMaterial color={color} transparent opacity={0.15} />
+      </lineSegments>
+
+      {/* Corner pillars — gives rooms physical presence */}
+      {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
+        <mesh key={i} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
+          <boxGeometry args={[0.3, h, 0.3]} />
+          <meshStandardMaterial color={color} transparent opacity={0.2} roughness={0.8} />
+        </mesh>
+      ))}
 
       {/* Build fill (rising from floor) */}
       {buildPct > 0 && (
         <>
           <mesh position={[0, (h * buildPct / 100) / 2, 0]}>
-            <boxGeometry args={[w - 0.1, h * buildPct / 100, d - 0.1]} />
+            <boxGeometry args={[w - 0.5, h * buildPct / 100, d - 0.5]} />
             <meshStandardMaterial
               color={color} transparent
-              opacity={0.04 + (buildPct / 100) * 0.06}
-              roughness={1}
+              opacity={0.03 + (buildPct / 100) * 0.08}
+              roughness={0.9}
+              emissive={color}
+              emissiveIntensity={0.02 + (buildPct / 100) * 0.03}
             />
           </mesh>
           {/* Top cap glow */}
           <mesh position={[0, h * buildPct / 100, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[w, d]} />
-            <meshBasicMaterial color={color} transparent opacity={0.1} side={THREE.DoubleSide} depthWrite={false} />
+            <planeGeometry args={[w - 1, d - 1]} />
+            <meshBasicMaterial color={color} transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
           </mesh>
+          {/* Interior glow light */}
+          <pointLight
+            position={[0, h * buildPct / 100 * 0.5, 0]}
+            intensity={buildPct / 100 * 0.3}
+            color={color}
+            distance={Math.max(w, d) * 0.8}
+            decay={2}
+          />
         </>
       )}
 
-      {/* Floor grid */}
+      {/* Floor grid — finer detail */}
+      <mesh position={[0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[w - 0.5, d - 0.5, Math.floor(w / 2), Math.floor(d / 2)]} />
+        <meshBasicMaterial color={color} wireframe transparent opacity={0.08} />
+      </mesh>
+
+      {/* Floor fill — subtle colored ground */}
       <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[w, d, Math.floor(w), Math.floor(d)]} />
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.06} />
+        <planeGeometry args={[w - 0.5, d - 0.5]} />
+        <meshBasicMaterial color={color} transparent opacity={0.02} />
       </mesh>
 
       {/* Floating room label */}
-      <Html position={[0, h + 0.5, 0]} center distanceFactor={20}>
+      <Html position={[0, h + 1.5, 0]} center distanceFactor={25}>
         <div style={{
-          color: `#${color.toString(16).padStart(6, '0')}`,
-          fontSize: '11px',
+          color: hexColor,
+          fontSize: '13px',
           fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 500,
-          letterSpacing: '0.15em',
+          fontWeight: 600,
+          letterSpacing: '0.2em',
           textTransform: 'uppercase',
           whiteSpace: 'nowrap',
-          opacity: 0.6,
-          textShadow: '0 0 8px rgba(0,0,0,0.5)',
+          opacity: 0.7,
+          textShadow: `0 0 12px ${hexColor}40, 0 0 4px rgba(0,0,0,0.8)`,
           userSelect: 'none',
         }}>
           {name} · {buildPct}%
@@ -150,16 +198,35 @@ function MaterialPile({ position, type }: { position: [number, number, number]; 
 export function Warehouse() {
   return (
     <group>
-      {/* Floor — massive warehouse */}
+      {/* Floor — polished concrete warehouse */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[200, 140]} />
-        <meshStandardMaterial color={COLORS.floor} roughness={0.92} metalness={0.05} />
+        <planeGeometry args={[200, 140, 40, 28]} />
+        <meshStandardMaterial
+          color={COLORS.floor}
+          roughness={0.75}
+          metalness={0.08}
+          envMapIntensity={0.3}
+        />
       </mesh>
 
-      {/* Grid overlay */}
-      <gridHelper args={[200, 50, 0x2a2535, 0x201a2a]} position={[0, 0.01, 0]}>
-        <meshBasicMaterial transparent opacity={0.15} />
+      {/* Subtle floor grid — construction site markings */}
+      <gridHelper args={[200, 50, 0x2a2535, 0x201a2a]} position={[0, 0.02, 0]}>
+        <meshBasicMaterial transparent opacity={0.1} />
       </gridHelper>
+
+      {/* Floor detail lines — construction zone tape markers */}
+      {[-40, 0, 40].map(x => (
+        <mesh key={`fl-${x}`} position={[x, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.15, 120]} />
+          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.06} />
+        </mesh>
+      ))}
+      {[-30, 0, 30].map(z => (
+        <mesh key={`fl2-${z}`} position={[0, 0.03, z]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+          <planeGeometry args={[0.15, 180]} />
+          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.04} />
+        </mesh>
+      ))}
 
       {/* Walls — expanded warehouse */}
       <Wall width={200} height={18} position={[0, 9, -60]} />
