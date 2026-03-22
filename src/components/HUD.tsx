@@ -34,8 +34,13 @@ function Panel({ title, icon, children, defaultOpen, position }: {
   defaultOpen: boolean
   position: 'left' | 'right'
 }) {
-  const [open, setOpen] = useState(defaultOpen)
   const isMobile = useIsMobile()
+  const [open, setOpen] = useState(false) // start closed, open after mount if desktop
+
+  // On mount: open panels on desktop, keep closed on mobile
+  useEffect(() => {
+    if (defaultOpen && !isMobile) setOpen(true)
+  }, [isMobile, defaultOpen])
 
   // Minimized button
   if (!open) {
