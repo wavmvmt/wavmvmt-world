@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { ROOMS } from '@/lib/roomConfig'
-import { FUNDRAISING, formatCurrency } from '@/lib/fundraisingConfig'
+import { FUNDRAISING, PHASE_2, formatCurrency } from '@/lib/fundraisingConfig'
 
 function colorToHex(n: number): string {
   return '#' + n.toString(16).padStart(6, '0')
@@ -212,6 +212,45 @@ export function HUD() {
             )}
           </div>
         ))}
+
+        {/* Phase 2 expansion teaser */}
+        <div className="text-[0.5rem] tracking-[0.2em] uppercase mb-1.5 mt-2 pt-2"
+          style={{ color: 'rgba(136,192,208,0.4)', borderTop: '1px solid rgba(136,192,208,0.08)' }}>
+          Phase 2 Vision · Upper Floors
+        </div>
+        <div className="text-[0.52rem] mb-1.5" style={{ color: 'rgba(255,220,180,0.25)', fontStyle: 'italic' }}>
+          {PHASE_2.description}
+        </div>
+        <div className="flex justify-between mb-1">
+          <span className="text-[0.5rem]" style={{ color: 'rgba(136,192,208,0.35)' }}>Add&apos;l investment</span>
+          <span className="text-[0.55rem] font-mono font-bold" style={{ color: 'rgba(136,192,208,0.5)' }}>
+            {formatCurrency(PHASE_2.additionalCost)}
+          </span>
+        </div>
+        <div className="flex justify-between mb-1.5">
+          <span className="text-[0.5rem]" style={{ color: 'rgba(136,192,208,0.35)' }}>Projected revenue</span>
+          <span className="text-[0.55rem] font-mono" style={{ color: 'rgba(128,212,168,0.5)' }}>
+            {formatCurrency(PHASE_2.projectedAnnualRevenue)}/yr
+          </span>
+        </div>
+        <div className="text-[0.5rem] mb-1" style={{ color: 'rgba(136,192,208,0.3)' }}>
+          {PHASE_2.units.filter(u => u.type !== 'Shared amenities').map(u => (
+            <div key={u.type} className="flex justify-between my-0.5">
+              <span>{u.type} ({u.count})</span>
+              <span className="font-mono" style={{ color: 'rgba(128,212,168,0.35)' }}>{u.revenue}</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-[0.48rem] mt-1.5 p-1.5 rounded-lg" style={{
+          background: 'rgba(136,192,208,0.05)',
+          border: '1px solid rgba(136,192,208,0.08)',
+          color: 'rgba(255,220,180,0.2)',
+        }}>
+          Tenant perks: discounted center access, priority booking, wellness credits, community events
+        </div>
+        <div className="text-[0.45rem] mt-1 text-center" style={{ color: 'rgba(136,192,208,0.2)' }}>
+          Status: {PHASE_2.status.toUpperCase()} · Requires rezoning
+        </div>
       </Panel>
 
       {/* Main site link */}
