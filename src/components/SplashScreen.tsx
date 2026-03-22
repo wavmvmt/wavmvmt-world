@@ -102,6 +102,23 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           Under Construction
         </p>
 
+        {/* Quick stats */}
+        <div
+          className="flex gap-5 justify-center mb-6 transition-all duration-[2s] delay-600"
+          style={{ opacity: phase === 'intro' ? 0 : 1 }}
+        >
+          {[
+            ['42K', 'sq ft'],
+            ['12', 'rooms'],
+            ['100', 'quests'],
+          ].map(([val, label]) => (
+            <div key={label} className="text-center">
+              <div className="text-lg font-bold font-mono" style={{ color: '#f0c674' }}>{val}</div>
+              <div className="text-[0.45rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,200,150,0.2)' }}>{label}</div>
+            </div>
+          ))}
+        </div>
+
         <p
           className="text-[0.6rem] tracking-[0.2em] mb-10 transition-all duration-[2s] delay-700"
           style={{

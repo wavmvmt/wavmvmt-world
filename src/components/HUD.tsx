@@ -472,14 +472,16 @@ function MobileControls() {
         id="mobile-joystick"
         className="fixed bottom-6 left-4 w-28 h-28 rounded-full pointer-events-auto z-20 flex items-center justify-center"
         style={{
-          ...touchBtnStyle,
-          background: 'rgba(26,21,32,0.6)',
+          background: 'radial-gradient(circle, rgba(26,21,32,0.7) 0%, rgba(26,21,32,0.4) 100%)',
+          border: '2px solid rgba(240,198,116,0.15)',
+          boxShadow: '0 0 20px rgba(240,198,116,0.05), inset 0 0 15px rgba(0,0,0,0.3)',
           touchAction: 'none',
         }}
       >
-        <div className="w-10 h-10 rounded-full" style={{
-          background: 'rgba(240,198,116,0.2)',
-          border: '1px solid rgba(240,198,116,0.4)',
+        <div className="w-11 h-11 rounded-full" style={{
+          background: 'radial-gradient(circle, rgba(240,198,116,0.25) 0%, rgba(240,198,116,0.1) 100%)',
+          border: '1px solid rgba(240,198,116,0.35)',
+          boxShadow: '0 0 10px rgba(240,198,116,0.1)',
         }} />
         <span className="absolute top-2 text-[0.5rem] font-mono" style={{ color: 'rgba(240,198,116,0.4)' }}>W</span>
         <span className="absolute bottom-2 text-[0.5rem] font-mono" style={{ color: 'rgba(240,198,116,0.4)' }}>S</span>
@@ -491,16 +493,26 @@ function MobileControls() {
       <button
         id="mobile-jump"
         className="fixed bottom-8 right-6 w-16 h-16 rounded-full pointer-events-auto z-20 text-sm font-mono font-bold"
-        style={touchBtnStyle}
+        style={{
+          background: 'radial-gradient(circle, rgba(240,198,116,0.15) 0%, rgba(240,198,116,0.05) 100%)',
+          border: '2px solid rgba(240,198,116,0.3)',
+          color: '#f0c674',
+          boxShadow: '0 0 15px rgba(240,198,116,0.08)',
+        }}
       >
         JUMP
       </button>
 
-      {/* Interact button (E key equivalent) — above jump, offset left */}
+      {/* Interact button */}
       <button
         id="mobile-interact"
-        className="fixed bottom-8 right-24 w-12 h-12 rounded-full pointer-events-auto z-20 text-[0.5rem] font-mono font-bold"
-        style={touchBtnStyle}
+        className="fixed bottom-8 right-24 w-12 h-12 rounded-full pointer-events-auto z-20 text-[0.6rem] font-mono font-bold"
+        style={{
+          background: 'radial-gradient(circle, rgba(128,212,168,0.15) 0%, rgba(128,212,168,0.05) 100%)',
+          border: '2px solid rgba(128,212,168,0.3)',
+          color: '#80d4a8',
+          boxShadow: '0 0 15px rgba(128,212,168,0.08)',
+        }}
         onTouchStart={(e) => {
           e.preventDefault()
           window.dispatchEvent(new KeyboardEvent('keydown', { key: 'e' }))
