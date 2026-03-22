@@ -39,6 +39,8 @@ import { AchievementTracker } from './AchievementTracker'
 import { WelcomeTour } from './WelcomeTour'
 import { PhotoMode } from './PhotoMode'
 import { CompletionReward } from './CompletionReward'
+import { KeyboardHelp } from './KeyboardHelp'
+import { ParkourTimer } from './ParkourTimer'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -125,6 +127,8 @@ export default function World3D() {
       <WelcomeTour />
       <PhotoMode />
       <CompletionReward />
+      <KeyboardHelp />
+      <ParkourTimer />
     </div>
   )
 }

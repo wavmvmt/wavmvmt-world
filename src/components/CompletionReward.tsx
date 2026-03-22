@@ -102,10 +102,11 @@ export function CompletionReward() {
             {/* Prize list */}
             <div className="mb-6 text-left px-4">
               {[
-                ['🥇', 'Grand Prize', 'Free 1-year membership'],
-                ['🥈', '2nd Prize', '3-month membership'],
-                ['🥉', '3rd Prize', '1-month membership'],
-                ['⭐', 'Runner Up', 'Free day pass + merch'],
+                ['🥇', '5 Winners', 'Free 1-year membership ($2,400 value)'],
+                ['🥈', '15 Winners', 'Free 3-month membership ($720 value)'],
+                ['🥉', '30 Winners', 'Free 1-month membership ($240 value)'],
+                ['🎟️', '50 Winners', 'Free week pass + WAVMVMT merch pack'],
+                ['⭐', '100 Winners', 'Free day pass + exclusive sticker'],
               ].map(([icon, title, desc]) => (
                 <div key={title} className="flex items-center gap-3 my-2">
                   <span className="text-lg">{icon}</span>
