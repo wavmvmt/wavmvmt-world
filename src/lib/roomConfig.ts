@@ -105,10 +105,22 @@ export const ROOMS: RoomDef[] = [
     vision: 'Broadcast-ready content from day one',
     features: ['Sound stage (20x15ft)', 'Green screen wall', 'Editing suite (3 stations)', 'Live streaming setup', 'Teleprompter system', 'Podcast recording booth'],
   },
+  {
+    name: 'Recovery Suite', x: -100, z: -190, w: 100, d: 70, h: 24,
+    color: COLORS.sky, buildPct: 0, sqft: 4000,
+    vision: 'Where performance meets restoration',
+    features: ['Finnish sauna (180°F)', 'Cold plunge pool (39°F)', 'Ice bath stations', 'Steam room', 'Infrared sauna pods', 'Contrast therapy circuit'],
+  },
+  {
+    name: 'Spa & Wellness', x: 100, z: -190, w: 80, d: 60, h: 22,
+    color: COLORS.cream, buildPct: 0, sqft: 2500,
+    vision: 'Intentional rest as a practice',
+    features: ['Massage therapy rooms (4)', 'Cryotherapy chamber', 'Compression therapy', 'Salt room / halotherapy', 'Relaxation lounge', 'Aromatherapy steam'],
+  },
 ]
 
 /** Total facility square footage */
-export const TOTAL_SQFT = ROOMS.reduce((sum, r) => sum + r.sqft, 0) + 4000 // +4000 for common areas
+export const TOTAL_SQFT = ROOMS.reduce((sum, r) => sum + r.sqft, 0) + 5000 // +5000 for common areas, corridors, mechanical, bathrooms, locker rooms
 
 export const WORKER_POSITIONS: [number, number][] = [
   [-75, -50], [-100, -75], [75, -70], [95, 35], [-5, 120],
@@ -116,6 +128,7 @@ export const WORKER_POSITIONS: [number, number][] = [
   [-35, -85], [35, -60], [-125, 50], [125, -12], [0, 25],
   [-160, -30], [160, -30], [-160, 65], [160, 65], [0, -60],
   [-50, 80], [50, 80], [-130, -60], [130, -60], [0, 60],
+  [-100, -170], [100, -170], [-80, -190], [80, -190],
 ]
 
 export const SCAFFOLD_POSITIONS: { x: number; z: number; levels: number }[] = [
@@ -131,4 +144,6 @@ export const SCAFFOLD_POSITIONS: { x: number; z: number; levels: number }[] = [
   { x: -175, z: -20, levels: 4 },
   { x: 175, z: -20, levels: 4 },
   { x: 0, z: 0, levels: 3 },
+  { x: -120, z: -180, levels: 4 },
+  { x: 120, z: -180, levels: 3 },
 ]

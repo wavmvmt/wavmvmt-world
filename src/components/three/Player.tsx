@@ -107,9 +107,9 @@ export function Player() {
       s.onGround = true
     }
 
-    // Bounds — massive warehouse
+    // Bounds — massive warehouse with recovery wing
     pos.x = Math.max(-240, Math.min(240, pos.x))
-    pos.z = Math.max(-150, Math.min(160, pos.z))
+    pos.z = Math.max(-220, Math.min(160, pos.z))
 
     // Rotate player to face movement direction
     if (moveDir.length() > 0) {

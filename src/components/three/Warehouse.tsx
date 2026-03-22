@@ -258,7 +258,7 @@ export function Warehouse() {
     <group>
       {/* Floor — polished concrete warehouse */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[500, 350, 50, 35]} />
+        <planeGeometry args={[500, 450, 50, 45]} />
         <meshStandardMaterial
           color={COLORS.floor}
           roughness={0.75}
@@ -287,9 +287,9 @@ export function Warehouse() {
       ))}
 
       {/* Walls — massive warehouse */}
-      <Wall width={500} height={45} position={[0, 22.5, -160]} />
-      <Wall width={350} height={45} position={[-250, 22.5, 0]} rotationY={Math.PI / 2} />
-      <Wall width={350} height={45} position={[250, 22.5, 0]} rotationY={Math.PI / 2} />
+      <Wall width={500} height={45} position={[0, 22.5, -230]} />
+      <Wall width={450} height={45} position={[-250, 22.5, -30]} rotationY={Math.PI / 2} />
+      <Wall width={450} height={45} position={[250, 22.5, -30]} rotationY={Math.PI / 2} />
 
       {/* Ceiling beams — spanning the warehouse */}
       {Array.from({ length: 22 }, (_, i) => {
