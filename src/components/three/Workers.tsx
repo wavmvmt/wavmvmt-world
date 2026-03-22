@@ -158,14 +158,54 @@ function Worker({ position, index }: { position: [number, number]; index: number
         <meshStandardMaterial color={0x3a5080} roughness={0.9} />
       </mesh>
 
+      {/* Tool belt */}
+      <mesh position={[0, 0.72, 0]}>
+        <torusGeometry args={[0.26, 0.03, 6, 12]} />
+        <meshStandardMaterial color={0x6a4a28} roughness={0.7} metalness={0.2} />
+      </mesh>
+      {/* Belt buckle */}
+      <mesh position={[0, 0.72, 0.25]}>
+        <boxGeometry args={[0.08, 0.06, 0.02]} />
+        <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
+      </mesh>
+
       {/* Legs */}
-      <mesh position={[-0.1, 0.3, 0]}>
-        <cylinderGeometry args={[0.07, 0.07, 0.6, 6]} />
+      <mesh position={[-0.1, 0.35, 0]}>
+        <cylinderGeometry args={[0.07, 0.075, 0.55, 6]} />
         <meshStandardMaterial color={0x2a3548} roughness={0.9} />
       </mesh>
-      <mesh position={[0.1, 0.3, 0]}>
-        <cylinderGeometry args={[0.07, 0.07, 0.6, 6]} />
+      <mesh position={[0.1, 0.35, 0]}>
+        <cylinderGeometry args={[0.07, 0.075, 0.55, 6]} />
         <meshStandardMaterial color={0x2a3548} roughness={0.9} />
+      </mesh>
+
+      {/* Chunky boots (Ghibli style — round and oversized) */}
+      <mesh position={[-0.1, 0.06, 0.03]}>
+        <boxGeometry args={[0.12, 0.12, 0.18]} />
+        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+      </mesh>
+      <mesh position={[0.1, 0.06, 0.03]}>
+        <boxGeometry args={[0.12, 0.12, 0.18]} />
+        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+      </mesh>
+      {/* Boot soles */}
+      <mesh position={[-0.1, 0.01, 0.03]}>
+        <boxGeometry args={[0.13, 0.02, 0.2]} />
+        <meshStandardMaterial color={0x1a1010} roughness={0.95} />
+      </mesh>
+      <mesh position={[0.1, 0.01, 0.03]}>
+        <boxGeometry args={[0.13, 0.02, 0.2]} />
+        <meshStandardMaterial color={0x1a1010} roughness={0.95} />
+      </mesh>
+
+      {/* Gloves (skin-colored hands at arm ends) */}
+      <mesh position={[-0.42, 0.95, 0]}>
+        <sphereGeometry args={[0.04, 6, 6]} />
+        <meshStandardMaterial color={0xd4a060} roughness={0.8} />
+      </mesh>
+      <mesh position={[0.42, 0.95, 0]}>
+        <sphereGeometry args={[0.04, 6, 6]} />
+        <meshStandardMaterial color={0xd4a060} roughness={0.8} />
       </mesh>
     </group>
   )

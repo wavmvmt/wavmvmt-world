@@ -9,6 +9,7 @@ import { Warehouse } from './three/Warehouse'
 import { Workers } from './three/Workers'
 import { DustMotes } from './three/DustMotes'
 import { Sparks } from './three/Sparks'
+import { LightShafts } from './three/LightShafts'
 import { Player } from './three/Player'
 import { HUD } from './HUD'
 import * as THREE from 'three'
@@ -73,6 +74,7 @@ export default function World3D() {
           <Workers />
           <DustMotes />
           <Sparks />
+          <LightShafts />
           <Player />
         </Suspense>
 

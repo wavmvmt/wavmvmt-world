@@ -156,14 +156,69 @@ export function Player() {
         <meshStandardMaterial color={0x1a1015} roughness={0.9} />
       </mesh>
 
+      {/* Eyes */}
+      {[-1, 1].map(s => (
+        <group key={`eye-${s}`}>
+          <mesh position={[s * 0.07, 1.84, 0.16]}>
+            <sphereGeometry args={[0.04, 8, 8]} />
+            <meshBasicMaterial color={0xffffff} />
+          </mesh>
+          <mesh position={[s * 0.07, 1.84, 0.19]}>
+            <sphereGeometry args={[0.025, 8, 8]} />
+            <meshBasicMaterial color={0x1a1520} />
+          </mesh>
+          <mesh position={[s * 0.055, 1.86, 0.2]}>
+            <sphereGeometry args={[0.01, 6, 6]} />
+            <meshBasicMaterial color={0xffffff} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Scarf / bandana — flowing teal accent */}
+      <mesh position={[0, 1.55, 0]}>
+        <torusGeometry args={[0.2, 0.035, 6, 12]} />
+        <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
+      </mesh>
+      {/* Scarf tail */}
+      <mesh position={[0.15, 1.45, -0.12]} rotation={[0.3, 0.2, -0.5]}>
+        <boxGeometry args={[0.06, 0.2, 0.03]} />
+        <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
+      </mesh>
+
+      {/* Arms */}
+      <mesh position={[-0.27, 1.15, 0]} rotation={[0, 0, 0.15]}>
+        <cylinderGeometry args={[0.04, 0.045, 0.55, 6]} />
+        <meshStandardMaterial color={0x3a7a7a} roughness={0.85} />
+      </mesh>
+      <mesh position={[0.27, 1.15, 0]} rotation={[0, 0, -0.15]}>
+        <cylinderGeometry args={[0.04, 0.045, 0.55, 6]} />
+        <meshStandardMaterial color={0x3a7a7a} roughness={0.85} />
+      </mesh>
+
       {/* Legs */}
-      <mesh ref={leftLegRef} position={[-0.09, 0.3, 0]}>
-        <cylinderGeometry args={[0.06, 0.06, 0.6, 6]} />
+      <mesh ref={leftLegRef} position={[-0.09, 0.35, 0]}>
+        <cylinderGeometry args={[0.06, 0.065, 0.55, 6]} />
         <meshStandardMaterial color={0x2a2535} roughness={0.9} />
       </mesh>
-      <mesh ref={rightLegRef} position={[0.09, 0.3, 0]}>
-        <cylinderGeometry args={[0.06, 0.06, 0.6, 6]} />
+      <mesh ref={rightLegRef} position={[0.09, 0.35, 0]}>
+        <cylinderGeometry args={[0.06, 0.065, 0.55, 6]} />
         <meshStandardMaterial color={0x2a2535} roughness={0.9} />
+      </mesh>
+
+      {/* Boots */}
+      <mesh position={[-0.09, 0.06, 0.03]}>
+        <boxGeometry args={[0.1, 0.1, 0.16]} />
+        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+      </mesh>
+      <mesh position={[0.09, 0.06, 0.03]}>
+        <boxGeometry args={[0.1, 0.1, 0.16]} />
+        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+      </mesh>
+
+      {/* Outline shell */}
+      <mesh position={[0, 1.1, 0]} scale={[1.1, 1.1, 1.1]}>
+        <cylinderGeometry args={[0.18, 0.24, 0.85, 10]} />
+        {outlineMat}
       </mesh>
     </group>
   )
