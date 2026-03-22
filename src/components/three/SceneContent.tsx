@@ -43,6 +43,9 @@ import { BulletinBoard } from './BulletinBoard'
 import { BirdSounds } from './BirdSounds'
 import { CeilingFans } from './CeilingFans'
 import { SiteClock } from './SiteClock'
+import { NPCCoaches } from './NPCCoaches'
+import { DemoScreens } from './DemoScreens'
+import { QuestPath } from './QuestPath'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -67,6 +70,11 @@ export function SceneContent() {
 
       {/* Workers — count controlled by perf */}
       <Workers />
+
+      {/* NPCs, screens, quest navigation */}
+      <NPCCoaches />
+      <DemoScreens />
+      <QuestPath />
 
       {/* Audio — no visual cost */}
       <AmbientAudio />
