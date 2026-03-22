@@ -146,6 +146,83 @@ function Wheelbarrow({ position, rotation = 0 }: { position: [number, number, nu
   )
 }
 
+/** Generator with visual hum */
+function Generator({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      <mesh position={[0, 0.5, 0]}>
+        <boxGeometry args={[1.5, 1, 0.8]} />
+        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+      </mesh>
+      {/* Control panel */}
+      <mesh position={[0, 0.7, 0.41]}>
+        <planeGeometry args={[0.4, 0.3]} />
+        <meshStandardMaterial color={0x1a1520} roughness={0.5} />
+      </mesh>
+      {/* Exhaust pipe */}
+      <mesh position={[0.6, 0.9, 0]} rotation={[0, 0, -0.3]}>
+        <cylinderGeometry args={[0.06, 0.06, 0.5, 6]} />
+        <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+      </mesh>
+      {/* Power indicator */}
+      <mesh position={[-0.5, 0.75, 0.41]}>
+        <sphereGeometry args={[0.03, 6, 6]} />
+        <meshBasicMaterial color={0x44ff44} />
+      </mesh>
+    </group>
+  )
+}
+
+/** Water cooler */
+function WaterCooler({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      {/* Body */}
+      <mesh position={[0, 0.5, 0]}>
+        <cylinderGeometry args={[0.2, 0.25, 1, 8]} />
+        <meshStandardMaterial color={0xd0d0d0} roughness={0.6} />
+      </mesh>
+      {/* Water jug */}
+      <mesh position={[0, 1.15, 0]}>
+        <cylinderGeometry args={[0.15, 0.12, 0.4, 8]} />
+        <meshStandardMaterial color={0x8080ff} transparent opacity={0.3} roughness={0.2} />
+      </mesh>
+      {/* Tap */}
+      <mesh position={[0.2, 0.4, 0]}>
+        <boxGeometry args={[0.08, 0.05, 0.05]} />
+        <meshStandardMaterial color={COLORS.steel} metalness={0.6} />
+      </mesh>
+    </group>
+  )
+}
+
+/** Tool rack on wall */
+function ToolRack({ position, rotation = 0 }: { position: [number, number, number]; rotation?: number }) {
+  return (
+    <group position={position} rotation={[0, rotation, 0]}>
+      {/* Board */}
+      <mesh>
+        <boxGeometry args={[2, 1.2, 0.08]} />
+        <meshStandardMaterial color={COLORS.woodDk} roughness={0.9} />
+      </mesh>
+      {/* Hooks with tools */}
+      {[-0.6, -0.2, 0.2, 0.6].map((x, i) => (
+        <group key={i}>
+          <mesh position={[x, 0.2, 0.05]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.02, 0.02, 0.15, 4]} />
+            <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+          </mesh>
+          {/* Tool hanging */}
+          <mesh position={[x, -0.1, 0.08]} rotation={[0, 0, [0, 0.3, -0.2, 0.1][i]]}>
+            <boxGeometry args={[0.06, 0.5, 0.03]} />
+            <meshStandardMaterial color={[COLORS.amber, COLORS.steel, COLORS.woodLt, COLORS.copper][i]} roughness={0.7} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  )
+}
+
 export function ConstructionProps() {
   return (
     <group>
@@ -182,6 +259,19 @@ export function ConstructionProps() {
       <Wheelbarrow position={[-20, 0, -30]} rotation={0.5} />
       <Wheelbarrow position={[40, 0, 50]} rotation={-1.2} />
       <Wheelbarrow position={[-90, 0, -140]} rotation={2.1} />
+
+      {/* Generators */}
+      <Generator position={[-35, 0, -70]} />
+      <Generator position={[140, 0, -50]} />
+
+      {/* Water coolers */}
+      <WaterCooler position={[5, 0, 20]} />
+      <WaterCooler position={[-60, 0, 40]} />
+
+      {/* Tool racks (on walls/columns) */}
+      <ToolRack position={[-200, 5, -60]} rotation={Math.PI / 2} />
+      <ToolRack position={[200, 5, -60]} rotation={-Math.PI / 2} />
+      <ToolRack position={[0, 5, -180]} />
     </group>
   )
 }

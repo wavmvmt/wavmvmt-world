@@ -11,11 +11,21 @@ const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["lati
 
 export const metadata: Metadata = {
   title: "WAVMVMT World — Under Construction",
-  description: "A browser-based 3D world where anime construction workers build the WAVMVMT Center in real-time. Built by Arc.wav.",
+  description: "Walk through the 42,500 sq ft WAVMVMT Center construction site. 12 rooms. $20M build. Music, wellness, fitness, technology — under one roof. Toronto, ON.",
+  keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto"],
   openGraph: {
-    title: "WAVMVMT World",
-    description: "Enter the construction site. The world is always under construction — just like us.",
+    title: "WAVMVMT World · Walk the Construction Site",
+    description: "42,500 sq ft. 12 rooms. Parkour gym, music studio, sound bath, recovery suite. Watch it being built in real-time 3D.",
+    siteName: "WAVMVMT World",
+    type: "website",
+    locale: "en_US",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "WAVMVMT World · Walk the Construction Site",
+    description: "42,500 sq ft flagship wellness center. Watch anime construction workers build it in real-time 3D.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
