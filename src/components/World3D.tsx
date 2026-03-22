@@ -23,6 +23,7 @@ import { RemainingRoomFX } from './three/RemainingRoomFX'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
 import { StageSpotlight } from './three/StageSpotlight'
+import { MultiplayerPresence } from './three/MultiplayerPresence'
 import { DayNightCycle } from './three/DayNightCycle'
 import { NightSky } from './three/NightSky'
 import { HUD } from './HUD'
@@ -30,6 +31,7 @@ import { Minimap } from './Minimap'
 import { FPSCounter } from './FPSCounter'
 import { SettingsPanel } from './SettingsPanel'
 import { TimelapseMode } from './TimelapsMode'
+import { SuggestionBox } from './SuggestionBox'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -85,6 +87,7 @@ export default function World3D() {
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />
+          <MultiplayerPresence />
         </Suspense>
 
         {/* Post-processing — just bloom + vignette (dropped chromatic aberration + SMAA) */}
@@ -107,6 +110,7 @@ export default function World3D() {
       <FPSCounter />
       <SettingsPanel />
       <TimelapseMode />
+      <SuggestionBox />
     </div>
   )
 }

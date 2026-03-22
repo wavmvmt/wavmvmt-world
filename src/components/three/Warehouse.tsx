@@ -34,8 +34,8 @@ function Wall({ width, height, position, rotationY = 0 }: {
   )
 }
 
-function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, features }: {
-  name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number; sqft: number; vision: string; features: string[]
+function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, features, buildCost }: {
+  name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number; sqft: number; vision: string; features: string[]; buildCost: number
 }) {
   const hexColor = `#${color.toString(16).padStart(6, '0')}`
   const glowRef = useRef<THREE.PointLight>(null)
@@ -190,7 +190,7 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
           }}>
             {name}
           </div>
-          {/* Sq ft + build % */}
+          {/* Sq ft + build % + cost */}
           <div style={{
             color: 'rgba(255,220,180,0.5)',
             fontSize: '10px',
@@ -198,7 +198,7 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
             letterSpacing: '0.15em',
             marginTop: '2px',
           }}>
-            {sqft.toLocaleString()} sq ft · {buildPct}% built
+            {sqft.toLocaleString()} sq ft · ${(buildCost / 1_000_000).toFixed(1)}M · {buildPct}%
           </div>
           {/* Vision statement */}
           <div style={{

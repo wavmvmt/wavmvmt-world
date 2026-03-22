@@ -13,6 +13,8 @@ export interface RoomDef {
   features: string[]
   /** One-line vision statement */
   vision: string
+  /** Estimated buildout cost for this room */
+  buildCost: number
 }
 
 export const COLORS = {
@@ -48,73 +50,73 @@ export const ROOMS: RoomDef[] = [
   {
     name: 'Parkour Gym', x: -100, z: -80, w: 130, d: 100, h: 40,
     color: COLORS.lavender, buildPct: 30, sqft: 8000,
-    vision: 'The largest urban parkour facility in Canada',
+    vision: 'The largest urban parkour facility in Canada', buildCost: 2_800_000,
     features: ['Multi-level obstacle courses', 'Wall-run zones (20ft)', 'Vault boxes & precision trainers', 'Olympic foam pit', 'Trampoline grid', 'Bouldering wall'],
   },
   {
     name: 'Sound Bath', x: 110, z: -90, w: 85, d: 85, h: 32,
     color: COLORS.gold, buildPct: 10, sqft: 3000,
-    vision: 'A temple of frequency and healing vibration',
+    vision: 'A temple of frequency and healing vibration', buildCost: 850_000,
     features: ['12 crystal singing bowls', '20 heated meditation mats', 'Acoustic treatment (NRC 0.95)', 'Binaural beat system', 'Chromotherapy lighting', 'Float-grade silence'],
   },
   {
     name: 'Music Studio', x: 110, z: 50, w: 85, d: 60, h: 28,
     color: COLORS.rose, buildPct: 5, sqft: 2500,
-    vision: 'Professional recording accessible to every creator',
+    vision: 'Professional recording accessible to every creator', buildCost: 1_200_000,
     features: ['3 isolation booths', '48-channel mixing console', 'Vocal booth with Neumann U87', 'Beat lab with MPC/Push', 'Dolby Atmos monitoring', 'AI-assisted mastering suite'],
   },
   {
     name: 'Cafe & Lounge', x: -105, z: 55, w: 100, d: 75, h: 24,
     color: COLORS.sky, buildPct: 0, sqft: 3500,
-    vision: 'Where community happens between sessions',
+    vision: 'Where community happens between sessions', buildCost: 950_000,
     features: ['Full espresso bar & kitchen', '40-seat lounge area', 'Merch display wall', 'Community event board', 'Co-working nooks', 'Smoothie & juice bar'],
   },
   {
     name: 'Front Desk', x: 0, z: 130, w: 70, d: 40, h: 20,
     color: COLORS.sage, buildPct: 65, sqft: 1500,
-    vision: 'Your first impression of the WAVMVMT experience',
+    vision: 'Your first impression of the WAVMVMT experience', buildCost: 400_000,
     features: ['Curved reception desk', 'Self-check-in kiosks', 'Digital directory screen', 'Retail display', 'Welcome lounge', 'Member card system'],
   },
   {
     name: 'Yoga Room', x: -190, z: -35, w: 60, d: 60, h: 24,
     color: COLORS.gold, buildPct: 0, sqft: 2000,
-    vision: 'Mind-body connection in a sacred space',
+    vision: 'Mind-body connection in a sacred space', buildCost: 600_000,
     features: ['Heated bamboo floor', 'Full mirror wall', '30 premium yoga mats', 'Aerial silks rigging', 'Sound system for flow', 'Natural light panels'],
   },
   {
     name: 'Weight Training', x: 190, z: -35, w: 75, d: 70, h: 28,
     color: COLORS.sage, buildPct: 8, sqft: 4000,
-    vision: 'Strength training that moves with you',
+    vision: 'Strength training that moves with you', buildCost: 1_500_000,
     features: ['8 squat/power racks', 'Olympic lifting platforms', 'Full dumbbell wall (5-150 lb)', 'Cable crossover stations', 'Cardio deck (treads, bikes, rowers)', 'Stretching & mobility zone'],
   },
   {
     name: 'Amphitheatre', x: 0, z: -105, w: 100, d: 70, h: 35,
     color: COLORS.rose, buildPct: 3, sqft: 3500,
-    vision: 'Where performances, talks, and screenings unite',
+    vision: 'Where performances, talks, and screenings unite', buildCost: 1_800_000,
     features: ['200-seat tiered seating', 'Full stage (35ft wide)', 'Professional PA & monitoring', 'Theatrical lighting rig', 'Green room backstage', '4K projection system'],
   },
   {
     name: 'Photo Studio', x: 190, z: 70, w: 60, d: 55, h: 24,
     color: COLORS.lavender, buildPct: 0, sqft: 1500,
-    vision: 'Visual storytelling made accessible',
+    vision: 'Visual storytelling made accessible', buildCost: 500_000,
     features: ['2 shooting bays', 'Cyclorama wall (white/green)', 'Professional lighting kits', 'Backdrop system (12 options)', 'Tethered shooting station', 'Client review area'],
   },
   {
     name: 'Video Studio', x: -190, z: 70, w: 60, d: 55, h: 24,
     color: COLORS.sky, buildPct: 0, sqft: 2000,
-    vision: 'Broadcast-ready content from day one',
+    vision: 'Broadcast-ready content from day one', buildCost: 650_000,
     features: ['Sound stage (20x15ft)', 'Green screen wall', 'Editing suite (3 stations)', 'Live streaming setup', 'Teleprompter system', 'Podcast recording booth'],
   },
   {
     name: 'Recovery Suite', x: -100, z: -190, w: 100, d: 70, h: 24,
     color: COLORS.sky, buildPct: 0, sqft: 4000,
-    vision: 'Where performance meets restoration',
+    vision: 'Where performance meets restoration', buildCost: 1_400_000,
     features: ['Finnish sauna (180°F)', 'Cold plunge pool (39°F)', 'Ice bath stations', 'Steam room', 'Infrared sauna pods', 'Contrast therapy circuit'],
   },
   {
     name: 'Spa & Wellness', x: 100, z: -190, w: 80, d: 60, h: 22,
     color: COLORS.cream, buildPct: 0, sqft: 2500,
-    vision: 'Intentional rest as a practice',
+    vision: 'Intentional rest as a practice', buildCost: 900_000,
     features: ['Massage therapy rooms (4)', 'Cryotherapy chamber', 'Compression therapy', 'Salt room / halotherapy', 'Relaxation lounge', 'Aromatherapy steam'],
   },
 ]

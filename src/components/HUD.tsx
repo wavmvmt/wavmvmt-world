@@ -133,6 +133,13 @@ export function HUD() {
   const raisedPct = Math.min(100, (FUNDRAISING.raised / FUNDRAISING.goal) * 100)
   const isMobile = useIsMobile()
   const [showHint, setShowHint] = useState(true)
+  const [visitorCount, setVisitorCount] = useState(1)
+
+  useEffect(() => {
+    const handler = (e: Event) => setVisitorCount((e as CustomEvent).detail.count)
+    window.addEventListener('visitorCount', handler as EventListener)
+    return () => window.removeEventListener('visitorCount', handler as EventListener)
+  }, [])
 
   // Auto-hide the hint after 8 seconds
   useEffect(() => {
@@ -147,6 +154,9 @@ export function HUD() {
         <span className="text-base md:text-lg font-bold" style={{ color: '#f0c674', fontFamily: "'Playfair Display', serif" }}>~W</span>
         <span className="text-[0.55rem] md:text-[0.65rem] tracking-[0.1em] md:tracking-[0.15em] uppercase" style={{ color: 'rgba(255,220,180,0.5)' }}>
           {isMobile ? 'WAVMVMT · Building' : `WAVMVMT Center · ${FUNDRAISING.location} · Building in Progress`}
+        </span>
+        <span className="text-[0.5rem] font-mono" style={{ color: 'rgba(128,212,168,0.5)' }}>
+          {visitorCount} {visitorCount === 1 ? 'visitor' : 'visitors'}
         </span>
         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#80d4a8', boxShadow: '0 0 8px #80d4a8' }} />
         <SoundToggle />
