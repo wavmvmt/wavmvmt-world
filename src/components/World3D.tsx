@@ -36,6 +36,9 @@ import { SettingsPanel } from './SettingsPanel'
 import { TimelapseMode } from './TimelapsMode'
 import { SuggestionBox } from './SuggestionBox'
 import { AchievementTracker } from './AchievementTracker'
+import { WelcomeTour } from './WelcomeTour'
+import { PhotoMode } from './PhotoMode'
+import { CompletionReward } from './CompletionReward'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -119,6 +122,9 @@ export default function World3D() {
       <TimelapseMode />
       <SuggestionBox />
       <AchievementTracker />
+      <WelcomeTour />
+      <PhotoMode />
+      <CompletionReward />
     </div>
   )
 }

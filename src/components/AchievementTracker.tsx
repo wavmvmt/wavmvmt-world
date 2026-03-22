@@ -28,10 +28,10 @@ export function AchievementTracker() {
         setToast({ name: ach.name, icon: ach.icon })
         setTimeout(() => setToast(null), 4000)
         // Save to localStorage
-        const saved = JSON.parse(localStorage.getItem('wavmvmt_achievements') || '[]')
+        const saved = JSON.parse(sessionStorage.getItem('wavmvmt_achievements') || '[]')
         if (!saved.includes(ach.id)) {
           saved.push(ach.id)
-          localStorage.setItem('wavmvmt_achievements', JSON.stringify(saved))
+          sessionStorage.setItem('wavmvmt_achievements', JSON.stringify(saved))
         }
       }
     }
@@ -39,7 +39,7 @@ export function AchievementTracker() {
 
   useEffect(() => {
     // Load saved achievements
-    const saved = JSON.parse(localStorage.getItem('wavmvmt_achievements') || '[]') as string[]
+    const saved = JSON.parse(sessionStorage.getItem('wavmvmt_achievements') || '[]') as string[]
     setUnlocked(new Set(saved))
 
     // Track player movement → room discovery
