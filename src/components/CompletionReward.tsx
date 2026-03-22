@@ -25,8 +25,8 @@ export function CompletionReward() {
 
     // Monitor achievements
     const check = () => {
-      const saved = JSON.parse(sessionStorage.getItem('wavmvmt_achievements') || '[]') as string[]
-      if (saved.length >= ACHIEVEMENTS.length) {
+      const quests = JSON.parse(sessionStorage.getItem('wavmvmt_quests') || '[]') as number[]
+      if (quests.length >= 100) {
         setShow(true)
         // Trigger confetti!
         window.dispatchEvent(new CustomEvent('celebrate'))
@@ -92,7 +92,7 @@ export function CompletionReward() {
               100% Complete!
             </h2>
             <p className="text-[0.6rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(128,212,168,0.6)' }}>
-              All {ACHIEVEMENTS.length} achievements unlocked
+              All 100 quests complete
             </p>
             <p className="text-sm mb-6" style={{ color: 'rgba(255,220,180,0.7)' }}>
               You&apos;ve explored every corner of WAVMVMT World.

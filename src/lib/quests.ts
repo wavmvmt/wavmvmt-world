@@ -1,0 +1,131 @@
+/** 100 quests to complete for the WAVMVMT World roulette entry */
+
+export interface Quest {
+  id: number
+  title: string
+  instruction: string
+  category: 'explore' | 'interact' | 'move' | 'social' | 'discover' | 'challenge'
+}
+
+export const QUESTS: Quest[] = [
+  // === EXPLORE (1-20) — Visit every corner ===
+  { id: 1, title: 'First Steps', instruction: 'Walk to any room. Look for the glowing wireframes!', category: 'explore' },
+  { id: 2, title: 'Find the Parkour Gym', instruction: 'Walk to the purple-glowing room on the west side.', category: 'explore' },
+  { id: 3, title: 'Find the Sound Bath', instruction: 'Walk to the gold-glowing room on the northeast side.', category: 'explore' },
+  { id: 4, title: 'Find the Music Studio', instruction: 'Walk to the pink-glowing room on the east side.', category: 'explore' },
+  { id: 5, title: 'Find the Cafe', instruction: 'Walk to the blue-glowing room on the northwest side.', category: 'explore' },
+  { id: 6, title: 'Find the Front Desk', instruction: 'Walk south to the green-glowing room — it has a door!', category: 'explore' },
+  { id: 7, title: 'Find the Yoga Room', instruction: 'Walk far west to the gold-glowing room.', category: 'explore' },
+  { id: 8, title: 'Find the Weight Room', instruction: 'Walk far east to the green-glowing room.', category: 'explore' },
+  { id: 9, title: 'Find the Amphitheatre', instruction: 'Walk north to the pink-glowing room.', category: 'explore' },
+  { id: 10, title: 'Find the Photo Studio', instruction: 'Walk far east-south to the purple-glowing room.', category: 'explore' },
+  { id: 11, title: 'Find the Video Studio', instruction: 'Walk far west-south to the blue-glowing room.', category: 'explore' },
+  { id: 12, title: 'Find the Recovery Suite', instruction: 'Walk north-west to find the sauna & cold plunge room.', category: 'explore' },
+  { id: 13, title: 'Find the Spa', instruction: 'Walk north-east to find massage tables and wellness.', category: 'explore' },
+  { id: 14, title: 'Read a Room Sign', instruction: 'Walk close enough to any room to see its sq footage and cost.', category: 'explore' },
+  { id: 15, title: 'Find a Blueprint', instruction: 'Look for blue paper on wooden easels scattered around the site.', category: 'explore' },
+  { id: 16, title: 'Find the Cranes', instruction: 'Spot the two tower cranes — they have rotating arms and red lights.', category: 'explore' },
+  { id: 17, title: 'Find a Forklift', instruction: 'Watch for forklifts driving back and forth across the warehouse.', category: 'explore' },
+  { id: 18, title: 'Find the Cement Mixer', instruction: 'Look for a red truck with a spinning barrel near the Parkour Gym.', category: 'explore' },
+  { id: 19, title: 'Find the Excavator', instruction: 'Spot the yellow machine with the digging arm on the west side.', category: 'explore' },
+  { id: 20, title: 'Walk the Perimeter', instruction: 'Walk along all 3 walls of the warehouse. Feel how massive this place is.', category: 'explore' },
+
+  // === INTERACT (21-40) — Use every feature ===
+  { id: 21, title: 'Play a Beat', instruction: 'Click any colored pad in the Music Studio to play a sound.', category: 'interact' },
+  { id: 22, title: 'Play 5 Beats', instruction: 'Click the beat pads 5 times. Try making a rhythm!', category: 'interact' },
+  { id: 23, title: 'Play 10 Beats', instruction: 'Keep clicking! 10 beats total on the pads.', category: 'interact' },
+  { id: 24, title: 'Play All 4 Pads', instruction: 'Make sure you\'ve clicked each of the 4 different colored pads.', category: 'interact' },
+  { id: 25, title: 'Play a Singing Bowl', instruction: 'Click any bowl in the Sound Bath to hear a resonant tone.', category: 'interact' },
+  { id: 26, title: 'Play 3 Bowls', instruction: 'Click 3 different singing bowls. Each plays a different note.', category: 'interact' },
+  { id: 27, title: 'Play All 7 Bowls', instruction: 'Click every bowl — C, D, E, F, G, A, B. A full scale!', category: 'interact' },
+  { id: 28, title: 'Stand on Stage', instruction: 'Walk onto the Amphitheatre stage. The spotlight will follow you!', category: 'interact' },
+  { id: 29, title: 'Read the Cafe Menu', instruction: 'Walk to the Cafe and find the menu board. What\'s the most expensive item?', category: 'interact' },
+  { id: 30, title: 'Trigger a Photo Flash', instruction: 'Walk into the Photo Studio and press E for a camera flash!', category: 'interact' },
+  { id: 31, title: 'Enter the Recording Zone', instruction: 'Walk into the Video Studio and see the red REC light blink.', category: 'interact' },
+  { id: 32, title: 'Feel the Weights', instruction: 'Walk near the Weight Training room and watch the barbell bounce.', category: 'interact' },
+  { id: 33, title: 'Enter the Yoga Zone', instruction: 'Walk into the Yoga Room and hear the healing frequency.', category: 'interact' },
+  { id: 34, title: 'Feel the Steam', instruction: 'Walk to the Recovery Suite and see the steam particles rising.', category: 'interact' },
+  { id: 35, title: 'Find the Massage Tables', instruction: 'Walk into the Spa and count the massage tables (hint: 4).', category: 'interact' },
+  { id: 36, title: 'Open the Build Panel', instruction: 'Tap the "Digital Construction" button to see room build progress.', category: 'interact' },
+  { id: 37, title: 'Open the Fund Panel', instruction: 'Tap the "Real-World Build" button to see the $20M fundraising tracker.', category: 'interact' },
+  { id: 38, title: 'Check the Minimap', instruction: 'Look at the floor plan (bottom-left). Can you find yourself?', category: 'interact' },
+  { id: 39, title: 'Toggle Sound', instruction: 'Click the speaker icon in the top bar to mute/unmute.', category: 'interact' },
+  { id: 40, title: 'Open Settings', instruction: 'Click the Settings button (top-right) and explore the options.', category: 'interact' },
+
+  // === MOVE (41-60) — Master movement ===
+  { id: 41, title: 'Jump Once', instruction: 'Press Space (or JUMP button on mobile) to jump!', category: 'move' },
+  { id: 42, title: 'Jump 10 Times', instruction: 'Jump around! 10 jumps total.', category: 'move' },
+  { id: 43, title: 'Jump 25 Times', instruction: 'Keep jumping! You\'re getting air.', category: 'move' },
+  { id: 44, title: 'Jump 50 Times', instruction: 'The High Flyer achievement is within reach. 50 jumps!', category: 'move' },
+  { id: 45, title: 'Sprint!', instruction: 'Hold Shift to sprint. Feel the speed!', category: 'move' },
+  { id: 46, title: 'Sprint 100m', instruction: 'Sprint across the warehouse. Hold Shift + W.', category: 'move' },
+  { id: 47, title: 'Sprint 250m', instruction: 'Keep sprinting! You\'re covering ground.', category: 'move' },
+  { id: 48, title: 'Sprint 500m', instruction: 'Speed Demon! 500 meters of pure sprint.', category: 'move' },
+  { id: 49, title: 'Bounce on a Trampoline', instruction: 'Walk onto a trampoline in the Parkour Gym. Super jump!', category: 'move' },
+  { id: 50, title: 'Bounce 3 Times', instruction: 'Hit 3 different trampolines in the Parkour Gym.', category: 'move' },
+  { id: 51, title: 'Ride a Skateboard', instruction: 'Find a skateboard on the ground. Walk near it, press E!', category: 'move' },
+  { id: 52, title: 'Skateboard Sprint', instruction: 'While riding a skateboard, hold Shift. Maximum speed!', category: 'move' },
+  { id: 53, title: 'Dismount the Board', instruction: 'Press E again to jump off the skateboard.', category: 'move' },
+  { id: 54, title: 'Visit 3 Rooms by Skateboard', instruction: 'Ride a skateboard past 3 different rooms.', category: 'move' },
+  { id: 55, title: 'Jump While Sprinting', instruction: 'Sprint + jump at the same time. Combo move!', category: 'move' },
+  { id: 56, title: 'Walk Backwards', instruction: 'Press S to walk backwards. Check behind you!', category: 'move' },
+  { id: 57, title: 'Strafe Side to Side', instruction: 'Press A and D to strafe left and right.', category: 'move' },
+  { id: 58, title: 'Do a Full Circle', instruction: 'Walk in a complete circle around any room.', category: 'move' },
+  { id: 59, title: 'Sprint Between Cranes', instruction: 'Sprint from one tower crane to the other. Go!', category: 'move' },
+  { id: 60, title: 'Reach Maximum Height', instruction: 'Jump on a trampoline and enjoy the view from the top!', category: 'move' },
+
+  // === SOCIAL (61-75) — Engage with the community ===
+  { id: 61, title: 'Leave a Suggestion', instruction: 'Click "Leave a Suggestion" and share your idea for the space.', category: 'social' },
+  { id: 62, title: 'Take a Photo', instruction: 'Press P to take a screenshot. Flash!', category: 'social' },
+  { id: 63, title: 'Download Your Photo', instruction: 'After pressing P, click Download to save your screenshot.', category: 'social' },
+  { id: 64, title: 'Share the World', instruction: 'Visit the landing page and click a Share button (X or LinkedIn).', category: 'social' },
+  { id: 65, title: 'Read a Worker\'s Speech', instruction: 'Walk near a worker and wait for their speech bubble.', category: 'social' },
+  { id: 66, title: 'Read 5 Different Speeches', instruction: 'Find 5 workers saying different things. They talk every 10-20 seconds.', category: 'social' },
+  { id: 67, title: 'Check Visitor Count', instruction: 'Look at the top bar — how many visitors are on-site right now?', category: 'social' },
+  { id: 68, title: 'View the Pitch', instruction: 'Click "Pitch →" to see the full WAVMVMT pitch site.', category: 'social' },
+  { id: 69, title: 'Read All Room Visions', instruction: 'Walk close to every room and read the italic vision statement.', category: 'social' },
+  { id: 70, title: 'Count the Features', instruction: 'Walk to the Parkour Gym and count how many feature tags it shows.', category: 'social' },
+  { id: 71, title: 'Check Phase 2', instruction: 'Open the Real-World Build panel and scroll to the Phase 2 Vision section.', category: 'social' },
+  { id: 72, title: 'Read the IRL Phases', instruction: 'In the Real-World Build panel, read all 8 IRL construction phases.', category: 'social' },
+  { id: 73, title: 'Check Room Costs', instruction: 'Walk to 3 rooms and compare their build costs (shown in the label).', category: 'social' },
+  { id: 74, title: 'Find the Most Expensive Room', instruction: 'Which room costs the most? Walk around and check! (Hint: it\'s $2.8M)', category: 'social' },
+  { id: 75, title: 'Find the Cheapest Room', instruction: 'Which room costs the least? (Hint: it\'s the Front Desk at $400K)', category: 'social' },
+
+  // === DISCOVER (76-90) — Hidden details ===
+  { id: 76, title: 'Drone Camera Mode', instruction: 'Press C to see the warehouse from above. Cinematic!', category: 'discover' },
+  { id: 77, title: 'Watch the Day/Night Cycle', instruction: 'Stay in the world long enough to see the lighting shift. It\'s a 5-minute cycle.', category: 'discover' },
+  { id: 78, title: 'See the Stars', instruction: 'Wait for night time and look up through the skylights. Stars!', category: 'discover' },
+  { id: 79, title: 'Spot the Fireflies', instruction: 'During the night cycle, look for small green glowing dots floating around.', category: 'discover' },
+  { id: 80, title: 'Watch a Welding Flash', instruction: 'Near the Parkour Gym and Weight Room, watch for blue-white light flashes.', category: 'discover' },
+  { id: 81, title: 'Count the Safety Cones', instruction: 'Walk around and count the orange safety cones. There are 10!', category: 'discover' },
+  { id: 82, title: 'Find the Caution Tape', instruction: 'Look for yellow caution tape barriers. There are 3 around the site.', category: 'discover' },
+  { id: 83, title: 'Spot a Wheelbarrow', instruction: 'Find one of the 3 wheelbarrows with dirt/gravel in them.', category: 'discover' },
+  { id: 84, title: 'Find a Ladder', instruction: 'Look for ladders leaning against scaffolding. There are 3.', category: 'discover' },
+  { id: 85, title: 'Find the Water Cooler', instruction: 'Two water coolers are placed in the warehouse. Find one!', category: 'discover' },
+  { id: 86, title: 'Find the Generator', instruction: 'Look for a yellow machine with a green power light. Two in the warehouse.', category: 'discover' },
+  { id: 87, title: 'Find a Tool Rack', instruction: 'Look on the walls for boards with tools hanging from hooks.', category: 'discover' },
+  { id: 88, title: 'Watch the Light Shafts', instruction: 'Look for beams of light coming through the skylights above.', category: 'discover' },
+  { id: 89, title: 'Find a Door', instruction: 'One room has a visible door with a copper handle. Which one? (Hint: Front Desk)', category: 'discover' },
+  { id: 90, title: 'Read the Banners', instruction: 'Look up at the hanging banners. How many can you find? (Hint: 9)', category: 'discover' },
+
+  // === CHALLENGE (91-100) — The hard ones ===
+  { id: 91, title: 'Speed Runner', instruction: 'Sprint from the Front Desk to the Amphitheatre in under 10 seconds.', category: 'challenge' },
+  { id: 92, title: 'Trampoline Combo', instruction: 'Bounce on all 4 trampolines without stopping. No walking — just bounce!', category: 'challenge' },
+  { id: 93, title: 'Full Scale', instruction: 'Play all 7 singing bowls in order: C, D, E, F, G, A, B. A musical scale!', category: 'challenge' },
+  { id: 94, title: 'Beat Loop', instruction: 'Play the 4 beat pads in a repeating pattern 3 times. Make a loop!', category: 'challenge' },
+  { id: 95, title: 'Night Photography', instruction: 'Wait for the night cycle, then press P to capture a night screenshot.', category: 'challenge' },
+  { id: 96, title: 'Drone at Dawn', instruction: 'Press C during the dawn phase (sky turns warm pink). Cinematic!', category: 'challenge' },
+  { id: 97, title: 'Visit Every Room in 2 Minutes', instruction: 'Sprint to all 12 rooms in under 2 minutes. Use the minimap!', category: 'challenge' },
+  { id: 98, title: 'Skate to Every Corner', instruction: 'Ride a skateboard and touch all 3 walls of the warehouse.', category: 'challenge' },
+  { id: 99, title: '100 Jumps', instruction: 'Jump 100 times total. Your legs must be tired!', category: 'challenge' },
+  { id: 100, title: 'WAVMVMT Champion', instruction: 'You did it! All 100 quests complete. Enter the roulette!', category: 'challenge' },
+]
+
+export const CATEGORY_COLORS: Record<Quest['category'], string> = {
+  explore: '#b48ead',
+  interact: '#f0c674',
+  move: '#80d4a8',
+  social: '#88c0d0',
+  discover: '#e8a050',
+  challenge: '#e8a0bf',
+}
