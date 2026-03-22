@@ -94,8 +94,17 @@ export function Player() {
     }
     window.addEventListener('speedOverride', handleSpeedOverride as EventListener)
 
+    // Trampoline boost jump
+    const handleBoost = (e: Event) => {
+      const { force } = (e as CustomEvent).detail
+      state.current.velocity.y = force
+      state.current.onGround = false
+    }
+    window.addEventListener('boostJump', handleBoost as EventListener)
+
     return () => {
       window.removeEventListener('speedOverride', handleSpeedOverride as EventListener)
+      window.removeEventListener('boostJump', handleBoost as EventListener)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
       window.removeEventListener('mousemove', handleMouseMove)

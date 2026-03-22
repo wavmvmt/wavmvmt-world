@@ -20,6 +20,9 @@ import { BeatPads } from './three/BeatPads'
 import { SoundBathBowls } from './three/SoundBathBowls'
 import { RoomInteractions } from './three/RoomInteractions'
 import { RemainingRoomFX } from './three/RemainingRoomFX'
+import { Confetti } from './three/Confetti'
+import { DroneCamera } from './three/DroneCamera'
+import { ParkourTrampolines } from './three/ParkourTrampoline'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
 import { StageSpotlight } from './three/StageSpotlight'
@@ -84,6 +87,9 @@ export default function World3D() {
           <SoundBathBowls />
           <RoomInteractions />
           <RemainingRoomFX />
+          <Confetti />
+          <DroneCamera />
+          <ParkourTrampolines />
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />
