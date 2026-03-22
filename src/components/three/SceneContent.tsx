@@ -32,6 +32,8 @@ import { Fireflies } from './Fireflies'
 import { Decorations } from './Decorations'
 import { IntroFlyover } from './IntroFlyover'
 import { RainEffect } from './RainEffect'
+import { AnimatedDoors } from './AnimatedDoors'
+import { CafeAmbient } from './CafeAmbient'
 
 export function SceneContent() {
   return (
@@ -69,7 +71,11 @@ export function SceneContent() {
       <Sparks />
       <ParkourTrampolines />
 
+      {/* Doors */}
+      <AnimatedDoors />
+
       {/* Effects & systems */}
+      <CafeAmbient />
       <Confetti />
       <DroneCamera />
       <IntroFlyover />

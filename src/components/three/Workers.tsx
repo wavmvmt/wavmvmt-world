@@ -319,9 +319,25 @@ function Worker({ position, index }: { position: [number, number]; index: number
         <meshBasicMaterial color={0x1a1010} />
       </mesh>
 
+      {/* Name tag — always visible */}
+      <Html position={[0, 2.2, 0]} center distanceFactor={10}>
+        <div style={{
+          color: `#${info.hat.toString(16).padStart(6, '0')}`,
+          fontSize: '7px',
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 600,
+          letterSpacing: '0.1em',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          opacity: 0.5,
+        }}>
+          {info.name}
+        </div>
+      </Html>
+
       {/* Speech bubble */}
       {speech && (
-        <Html position={[0, 2.5, 0]} center distanceFactor={12}>
+        <Html position={[0, 2.7, 0]} center distanceFactor={12}>
           <div style={{
             background: 'rgba(26,21,32,0.85)',
             border: '1px solid rgba(240,198,116,0.2)',
