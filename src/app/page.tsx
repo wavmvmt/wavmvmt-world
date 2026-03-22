@@ -35,7 +35,7 @@ export default function HomePage() {
         </p>
 
         {/* CTA */}
-        <Link href="/world/login"
+        <Link href="/world"
           className="inline-block px-10 py-4 rounded-full text-sm font-semibold tracking-[0.3em] uppercase transition-all duration-500 hover:shadow-[0_0_40px_rgba(240,198,116,0.15)]"
           style={{
             border: '1px solid rgba(240,198,116,0.3)',
