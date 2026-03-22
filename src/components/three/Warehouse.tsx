@@ -1,6 +1,7 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import { type ReactNode, useRef, useEffect, useState } from 'react'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 import { COLORS, ROOMS, SCAFFOLD_POSITIONS } from '@/lib/roomConfig'
@@ -37,10 +38,39 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
   name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number; sqft: number; vision: string; features: string[]
 }) {
   const hexColor = `#${color.toString(16).padStart(6, '0')}`
+  const glowRef = useRef<THREE.PointLight>(null)
+  const outlineRef = useRef<THREE.LineSegments>(null)
+  const proximityRef = useRef(0)
+
+  // Listen for player position and calculate proximity
+  useFrame(() => {
+    const handler = (e: Event) => {
+      const { x: px, z: pz } = (e as CustomEvent).detail
+      const dist = Math.sqrt((px - x) ** 2 + (pz - z) ** 2)
+      const maxDist = Math.max(w, d) * 0.8
+      proximityRef.current = Math.max(0, 1 - dist / maxDist)
+    }
+    window.addEventListener('playerMove', handler as EventListener)
+
+    // Apply proximity glow
+    if (glowRef.current) {
+      glowRef.current.intensity = proximityRef.current * 0.8
+    }
+    if (outlineRef.current) {
+      const mat = outlineRef.current.material as THREE.LineBasicMaterial
+      mat.opacity = 0.5 + proximityRef.current * 0.5
+    }
+
+    return () => window.removeEventListener('playerMove', handler as EventListener)
+  })
+
   return (
     <group position={[x, 0, z]}>
+      {/* Proximity glow light */}
+      <pointLight ref={glowRef} position={[0, h / 2, 0]} color={color} intensity={0} distance={Math.max(w, d)} decay={2} />
+
       {/* Main wireframe outline — glowing */}
-      <lineSegments position={[0, h / 2, 0]}>
+      <lineSegments ref={outlineRef} position={[0, h / 2, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(w, h, d)]} />
         <lineBasicMaterial color={color} transparent opacity={0.7} />
       </lineSegments>

@@ -71,8 +71,31 @@ function SparkEmitter({ origin }: { origin: [number, number, number] }) {
   )
 }
 
+/** Flickering welding light */
+function WeldFlash({ position }: { position: [number, number, number] }) {
+  const lightRef = useRef<THREE.PointLight>(null)
+
+  useFrame((state) => {
+    if (!lightRef.current) return
+    const t = state.clock.elapsedTime
+    // Rapid flickering — simulates welding arc
+    const flicker = Math.sin(t * 30) * Math.sin(t * 17) * Math.sin(t * 7)
+    lightRef.current.intensity = Math.max(0, flicker) * 1.5
+  })
+
+  return (
+    <pointLight
+      ref={lightRef}
+      position={position}
+      color={0x88ccff}
+      intensity={0}
+      distance={15}
+      decay={2}
+    />
+  )
+}
+
 export function Sparks() {
-  // Place spark emitters near rooms that are being built (buildPct > 0)
   return (
     <group>
       {/* Near Parkour Gym */}
@@ -91,6 +114,10 @@ export function Sparks() {
       <SparkEmitter origin={[20, 3, -90]} />
       {/* Near Recovery Suite */}
       <SparkEmitter origin={[-80, 3, -175]} />
+
+      {/* Welding flashes — blue-white flickers */}
+      <WeldFlash position={[-60, 3, -60]} />
+      <WeldFlash position={[170, 3, -25]} />
     </group>
   )
 }
