@@ -153,15 +153,15 @@ function Scaffolding({ x, z, levels }: { x: number; z: number; levels: number })
 function PracticalLight({ position }: { position: [number, number, number] }) {
   return (
     <group>
-      <pointLight position={position} intensity={0.5} color={0xffe0b0} distance={25} decay={2} />
+      <pointLight position={position} intensity={0.8} color={0xffe0b0} distance={60} decay={2} />
       <mesh position={position}>
-        <sphereGeometry args={[0.12, 8, 8]} />
+        <sphereGeometry args={[0.2, 8, 8]} />
         <meshBasicMaterial color={0xffeebb} />
       </mesh>
       {/* Volumetric cone */}
-      <mesh position={[position[0], position[1] - 4, position[2]]}>
-        <cylinderGeometry args={[0.1, 2.5, 8, 12, 1, true]} />
-        <meshBasicMaterial color={0xffe8c0} transparent opacity={0.015} side={THREE.DoubleSide} depthWrite={false} />
+      <mesh position={[position[0], position[1] - 8, position[2]]}>
+        <cylinderGeometry args={[0.15, 5, 16, 12, 1, true]} />
+        <meshBasicMaterial color={0xffe8c0} transparent opacity={0.012} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
     </group>
   )
@@ -200,7 +200,7 @@ export function Warehouse() {
     <group>
       {/* Floor — polished concrete warehouse */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[200, 140, 40, 28]} />
+        <planeGeometry args={[500, 350, 50, 35]} />
         <meshStandardMaterial
           color={COLORS.floor}
           roughness={0.75}
@@ -210,70 +210,72 @@ export function Warehouse() {
       </mesh>
 
       {/* Subtle floor grid — construction site markings */}
-      <gridHelper args={[200, 50, 0x2a2535, 0x201a2a]} position={[0, 0.02, 0]}>
+      <gridHelper args={[500, 80, 0x2a2535, 0x201a2a]} position={[0, 0.02, 0]}>
         <meshBasicMaterial transparent opacity={0.1} />
       </gridHelper>
 
       {/* Floor detail lines — construction zone tape markers */}
-      {[-40, 0, 40].map(x => (
+      {[-100, -50, 0, 50, 100].map(x => (
         <mesh key={`fl-${x}`} position={[x, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[0.15, 120]} />
+          <planeGeometry args={[0.2, 300]} />
           <meshBasicMaterial color={COLORS.amber} transparent opacity={0.06} />
         </mesh>
       ))}
-      {[-30, 0, 30].map(z => (
+      {[-75, 0, 75].map(z => (
         <mesh key={`fl2-${z}`} position={[0, 0.03, z]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-          <planeGeometry args={[0.15, 180]} />
+          <planeGeometry args={[0.2, 450]} />
           <meshBasicMaterial color={COLORS.amber} transparent opacity={0.04} />
         </mesh>
       ))}
 
-      {/* Walls — expanded warehouse */}
-      <Wall width={200} height={18} position={[0, 9, -60]} />
-      <Wall width={140} height={18} position={[-100, 9, 0]} rotationY={Math.PI / 2} />
-      <Wall width={140} height={18} position={[100, 9, 0]} rotationY={Math.PI / 2} />
+      {/* Walls — massive warehouse */}
+      <Wall width={500} height={45} position={[0, 22.5, -160]} />
+      <Wall width={350} height={45} position={[-250, 22.5, 0]} rotationY={Math.PI / 2} />
+      <Wall width={350} height={45} position={[250, 22.5, 0]} rotationY={Math.PI / 2} />
 
       {/* Ceiling beams — spanning the warehouse */}
-      {Array.from({ length: 15 }, (_, i) => {
-        const z = -60 + i * 9
+      {Array.from({ length: 22 }, (_, i) => {
+        const z = -160 + i * 16
         return (
-          <mesh key={`cb-${i}`} position={[0, 17, z]} castShadow>
-            <boxGeometry args={[200, 0.6, 0.8]} />
+          <mesh key={`cb-${i}`} position={[0, 43, z]} castShadow>
+            <boxGeometry args={[500, 1, 1.2]} />
             <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
           </mesh>
         )
       })}
-      {Array.from({ length: 20 }, (_, i) => {
-        const x = -90 + i * 10
+      {Array.from({ length: 30 }, (_, i) => {
+        const x = -225 + i * 16
         return (
-          <mesh key={`cb2-${i}`} position={[x, 16.5, 0]}>
-            <boxGeometry args={[0.6, 0.5, 140]} />
+          <mesh key={`cb2-${i}`} position={[x, 42, 0]}>
+            <boxGeometry args={[1, 0.8, 350]} />
             <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
           </mesh>
         )
       })}
 
       {/* Columns with copper bands — grid across warehouse */}
-      {[-80, -60, -40, -20, 0, 20, 40, 60, 80].flatMap(x =>
-        [-50, -30, -10, 10, 30, 50].map(z => (
+      {[-200, -150, -100, -50, 0, 50, 100, 150, 200].flatMap(x =>
+        [-130, -80, -30, 20, 70, 120].map(z => (
           <group key={`col-${x}-${z}`}>
-            <mesh position={[x, 9, z]} castShadow>
-              <cylinderGeometry args={[0.35, 0.45, 18, 8]} />
+            <mesh position={[x, 22, z]} castShadow>
+              <cylinderGeometry args={[0.6, 0.75, 44, 8]} />
               <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
             </mesh>
-            <mesh position={[x, 3, z]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[0.48, 0.06, 8, 16]} />
+            <mesh position={[x, 8, z]} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[0.8, 0.1, 8, 16]} />
               <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
             </mesh>
           </group>
         ))
       )}
 
-      {/* Practical lights — spread across warehouse */}
+      {/* Practical lights — spread across massive warehouse */}
       {([
-        [-40, 15, -20], [0, 15, 0], [40, 15, -20], [-40, 15, 20], [40, 15, 20],
-        [-70, 15, 0], [70, 15, 0], [0, 15, -40], [0, 15, 40],
-        [-30, 15, -40], [30, 15, -40], [-30, 15, 40], [30, 15, 40],
+        [-100, 38, -50], [0, 38, 0], [100, 38, -50], [-100, 38, 50], [100, 38, 50],
+        [-175, 38, 0], [175, 38, 0], [0, 38, -100], [0, 38, 100],
+        [-75, 38, -100], [75, 38, -100], [-75, 38, 100], [75, 38, 100],
+        [-175, 38, -80], [175, 38, -80], [-175, 38, 80], [175, 38, 80],
+        [-50, 38, -50], [50, 38, -50], [-50, 38, 50], [50, 38, 50],
       ] as [number, number, number][]).map((p, i) => (
         <PracticalLight key={i} position={p} />
       ))}
@@ -288,11 +290,15 @@ export function Warehouse() {
         <Scaffolding key={i} x={s.x} z={s.z} levels={s.levels} />
       ))}
 
-      {/* Material piles */}
-      <MaterialPile position={[5, 0, -17]} type="beams" />
-      <MaterialPile position={[-8, 0, 13]} type="crates" />
-      <MaterialPile position={[20, 0, 5]} type="beams" />
-      <MaterialPile position={[-20, 0, 9]} type="crates" />
+      {/* Material piles — scattered across the warehouse */}
+      <MaterialPile position={[12, 0, -40]} type="beams" />
+      <MaterialPile position={[-20, 0, 30]} type="crates" />
+      <MaterialPile position={[50, 0, 12]} type="beams" />
+      <MaterialPile position={[-50, 0, 20]} type="crates" />
+      <MaterialPile position={[-80, 0, -60]} type="beams" />
+      <MaterialPile position={[80, 0, -60]} type="crates" />
+      <MaterialPile position={[0, 0, 80]} type="beams" />
+      <MaterialPile position={[-120, 0, 0]} type="crates" />
     </group>
   )
 }

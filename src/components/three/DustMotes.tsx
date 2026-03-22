@@ -18,9 +18,9 @@ export function DustMotes() {
     const sizes = new Float32Array(DUST_COUNT)
     const spd = []
     for (let i = 0; i < DUST_COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 160
-      pos[i * 3 + 1] = Math.random() * 16
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 110
+      pos[i * 3] = (Math.random() - 0.5) * 400
+      pos[i * 3 + 1] = Math.random() * 40
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 280
       sizes[i] = 0.04 + Math.random() * 0.08
       spd.push({
         x: (Math.random() - 0.5) * 0.004,
@@ -37,9 +37,9 @@ export function DustMotes() {
     const pos = new Float32Array(EMBER_COUNT * 3)
     const spd = []
     for (let i = 0; i < EMBER_COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 80
-      pos[i * 3 + 1] = Math.random() * 5
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 60
+      pos[i * 3] = (Math.random() - 0.5) * 200
+      pos[i * 3 + 1] = Math.random() * 10
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 150
       spd.push({
         x: (Math.random() - 0.5) * 0.01,
         y: Math.random() * 0.015 + 0.005,
@@ -64,10 +64,10 @@ export function DustMotes() {
         arr[i * 3 + 2] += s.z + Math.cos(s.drift) * 0.001
         s.drift += delta * 0.3
 
-        if (arr[i * 3 + 1] > 17) {
+        if (arr[i * 3 + 1] > 42) {
           arr[i * 3 + 1] = 0
-          arr[i * 3] = (Math.random() - 0.5) * 160
-          arr[i * 3 + 2] = (Math.random() - 0.5) * 110
+          arr[i * 3] = (Math.random() - 0.5) * 400
+          arr[i * 3 + 2] = (Math.random() - 0.5) * 280
         }
       }
       pos.needsUpdate = true
@@ -85,10 +85,10 @@ export function DustMotes() {
         arr[i * 3 + 2] += s.z
         s.life -= delta * 0.15
 
-        if (s.life <= 0 || arr[i * 3 + 1] > 16) {
-          arr[i * 3] = (Math.random() - 0.5) * 80
-          arr[i * 3 + 1] = 0.5 + Math.random() * 2
-          arr[i * 3 + 2] = (Math.random() - 0.5) * 60
+        if (s.life <= 0 || arr[i * 3 + 1] > 40) {
+          arr[i * 3] = (Math.random() - 0.5) * 200
+          arr[i * 3 + 1] = 0.5 + Math.random() * 4
+          arr[i * 3 + 2] = (Math.random() - 0.5) * 150
           s.x = (Math.random() - 0.5) * 0.01
           s.y = Math.random() * 0.015 + 0.005
           s.z = (Math.random() - 0.5) * 0.01

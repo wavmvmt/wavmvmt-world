@@ -5,7 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
-const SPEED = 10
+const SPEED = 18
 const JUMP_FORCE = 7.5
 const GRAVITY = -20
 const GROUND_Y = 0
@@ -104,9 +104,9 @@ export function Player() {
       s.onGround = true
     }
 
-    // Bounds — expanded warehouse
-    pos.x = Math.max(-95, Math.min(95, pos.x))
-    pos.z = Math.max(-55, Math.min(65, pos.z))
+    // Bounds — massive warehouse
+    pos.x = Math.max(-240, Math.min(240, pos.x))
+    pos.z = Math.max(-150, Math.min(160, pos.z))
 
     // Rotate player to face movement direction
     if (moveDir.length() > 0) {
@@ -120,14 +120,14 @@ export function Player() {
       rightLegRef.current.rotation.x = -legSwing
     }
 
-    // Camera follows player (third person)
+    // Camera follows player (third person — pulled back for scale)
     const camOffset = new THREE.Vector3(
-      Math.sin(s.yaw) * 6,
-      3.5 + Math.sin(s.pitch) * 2,
-      Math.cos(s.yaw) * 6
+      Math.sin(s.yaw) * 10,
+      5 + Math.sin(s.pitch) * 3,
+      Math.cos(s.yaw) * 10
     )
-    camera.position.lerp(pos.clone().add(camOffset), 0.08)
-    camera.lookAt(pos.x, pos.y + 1.5, pos.z)
+    camera.position.lerp(pos.clone().add(camOffset), 0.07)
+    camera.lookAt(pos.x, pos.y + 2, pos.z)
   })
 
   const outlineMat = <meshBasicMaterial color={COLORS.outline} side={THREE.BackSide} />

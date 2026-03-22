@@ -22,7 +22,7 @@ export default function World3D() {
     <div className="w-screen h-screen relative">
       <Canvas
         shadows
-        camera={{ fov: 55, near: 0.1, far: 500, position: [0, 6, 60] }}
+        camera={{ fov: 55, near: 0.1, far: 800, position: [0, 8, 80] }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -34,7 +34,7 @@ export default function World3D() {
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
-        <fogExp2 attach="fog" args={[0x1e1828, 0.005]} />
+        <fogExp2 attach="fog" args={[0x1e1828, 0.002]} />
 
         {/* Ghibli lighting — warm and cinematic */}
         <ambientLight intensity={0.4} color={0x3a2850} />
@@ -42,18 +42,18 @@ export default function World3D() {
 
         {/* Main sun — golden hour */}
         <directionalLight
-          position={[40, 35, 25]}
+          position={[100, 80, 60]}
           intensity={1.0}
           color={0xffe0a0}
           castShadow
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
           shadow-camera-near={0.5}
-          shadow-camera-far={200}
-          shadow-camera-left={-100}
-          shadow-camera-right={100}
-          shadow-camera-top={80}
-          shadow-camera-bottom={-80}
+          shadow-camera-far={500}
+          shadow-camera-left={-250}
+          shadow-camera-right={250}
+          shadow-camera-top={180}
+          shadow-camera-bottom={-180}
           shadow-bias={-0.0001}
         />
 
@@ -64,13 +64,13 @@ export default function World3D() {
           color={0xb0c8e8}
         />
 
-        {/* Accent lights — color wash across the space */}
-        <pointLight position={[-60, 10, -25]} intensity={0.4} color={COLORS.lavender} distance={60} decay={1.5} />
-        <pointLight position={[60, 10, 25]} intensity={0.35} color={COLORS.sage} distance={60} decay={1.5} />
-        <pointLight position={[0, 10, -45]} intensity={0.3} color={COLORS.rose} distance={50} decay={1.5} />
-        <pointLight position={[0, 10, 45]} intensity={0.3} color={COLORS.sky} distance={50} decay={1.5} />
-        <pointLight position={[-35, 6, -20]} intensity={0.5} color={COLORS.gold} distance={40} decay={2} />
-        <pointLight position={[35, 6, -28]} intensity={0.4} color={COLORS.amber} distance={40} decay={2} />
+        {/* Accent lights — color wash across the massive space */}
+        <pointLight position={[-150, 20, -60]} intensity={0.6} color={COLORS.lavender} distance={120} decay={1.5} />
+        <pointLight position={[150, 20, 60]} intensity={0.5} color={COLORS.sage} distance={120} decay={1.5} />
+        <pointLight position={[0, 20, -110]} intensity={0.5} color={COLORS.rose} distance={100} decay={1.5} />
+        <pointLight position={[0, 20, 110]} intensity={0.4} color={COLORS.sky} distance={100} decay={1.5} />
+        <pointLight position={[-90, 12, -50]} intensity={0.6} color={COLORS.gold} distance={80} decay={2} />
+        <pointLight position={[90, 12, -70]} intensity={0.5} color={COLORS.amber} distance={80} decay={2} />
 
         <Suspense fallback={null}>
           {/* Environment map for metallic reflections */}
