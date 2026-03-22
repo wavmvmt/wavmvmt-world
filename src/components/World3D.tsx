@@ -44,6 +44,8 @@ import { ParkourTimer } from './ParkourTimer'
 import { QuestTracker } from './QuestTracker'
 import { VisitorLogger } from './VisitorLogger'
 import { Decorations } from './three/Decorations'
+import { IntroFlyover } from './three/IntroFlyover'
+import { EmojiReactions } from './EmojiReactions'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -100,6 +102,7 @@ export default function World3D() {
           <DroneCamera />
           <ParkourTrampolines />
           <Decorations />
+          <IntroFlyover />
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />
@@ -135,6 +138,7 @@ export default function World3D() {
       <ParkourTimer />
       <QuestTracker />
       <VisitorLogger />
+      <EmojiReactions />
     </div>
   )
 }

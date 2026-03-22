@@ -168,7 +168,7 @@ export default function HomePage() {
         </div>
 
         <p className="mt-10 text-[0.6rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.12)' }}>
-          Built by Arc.wav · Built for builders
+          Built by Arc.wav · Built for builders · Since March 22, 2026
         </p>
         <p className="mt-1 text-[0.5rem] italic" style={{ color: 'rgba(255,200,150,0.08)' }}>
           The world is always under construction — just like us
