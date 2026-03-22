@@ -42,6 +42,8 @@ import { CompletionReward } from './CompletionReward'
 import { KeyboardHelp } from './KeyboardHelp'
 import { ParkourTimer } from './ParkourTimer'
 import { QuestTracker } from './QuestTracker'
+import { VisitorLogger } from './VisitorLogger'
+import { Decorations } from './three/Decorations'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -97,6 +99,7 @@ export default function World3D() {
           <Confetti />
           <DroneCamera />
           <ParkourTrampolines />
+          <Decorations />
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />
@@ -131,6 +134,7 @@ export default function World3D() {
       <KeyboardHelp />
       <ParkourTimer />
       <QuestTracker />
+      <VisitorLogger />
     </div>
   )
 }
