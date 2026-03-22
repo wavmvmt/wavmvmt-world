@@ -17,12 +17,14 @@ import { ConstructionEquipment } from './three/ConstructionEquipment'
 import { ConstructionProps } from './three/ConstructionProps'
 import { AmbientAudio } from './three/AmbientAudio'
 import { BeatPads } from './three/BeatPads'
+import { SoundBathBowls } from './three/SoundBathBowls'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
 import { DayNightCycle } from './three/DayNightCycle'
 import { NightSky } from './three/NightSky'
 import { HUD } from './HUD'
 import { Minimap } from './Minimap'
+import { FPSCounter } from './FPSCounter'
 import * as THREE from 'three'
 
 export default function World3D() {
@@ -70,6 +72,7 @@ export default function World3D() {
           <ConstructionProps />
           <AmbientAudio />
           <BeatPads />
+          <SoundBathBowls />
           <PhaseProps />
           <Skateboards />
         </Suspense>
@@ -91,6 +94,7 @@ export default function World3D() {
       </Canvas>
       <HUD />
       <Minimap />
+      <FPSCounter />
     </div>
   )
 }
