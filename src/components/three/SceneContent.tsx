@@ -43,6 +43,7 @@ import { BulletinBoard } from './BulletinBoard'
 import { BirdSounds } from './BirdSounds'
 import { CeilingFans } from './CeilingFans'
 import { SiteClock } from './SiteClock'
+import { FloorMarkings } from './FloorMarkings'
 import { NPCCoaches } from './NPCCoaches'
 import { DemoScreens } from './DemoScreens'
 import { QuestPath } from './QuestPath'
@@ -104,6 +105,7 @@ export function SceneContent() {
       <Decorations />
       <BulletinBoard />
       <SiteClock />
+      <FloorMarkings />
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
