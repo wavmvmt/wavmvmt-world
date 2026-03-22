@@ -22,6 +22,7 @@ import { RoomNotification } from './RoomNotification'
 import { BuildLog } from './BuildLog'
 import { ShareCard } from './ShareCard'
 import { SessionSummary } from './SessionSummary'
+import { MilestoneCountdown } from './MilestoneCountdown'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -58,6 +59,7 @@ export function UIOverlay() {
       <WelcomeTour />
       <VisitorLogger />
       <SessionSummary />
+      <MilestoneCountdown />
       <KeyboardHelp />
       <ShareCard />
 

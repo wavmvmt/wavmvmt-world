@@ -33,6 +33,8 @@ import { Decorations } from './Decorations'
 import { IntroFlyover } from './IntroFlyover'
 import { RainEffect } from './RainEffect'
 import { AnimatedDoors } from './AnimatedDoors'
+import { RoomIcons } from './RoomIcons'
+import { PlayerTrail } from './PlayerTrail'
 import { CafeAmbient } from './CafeAmbient'
 
 export function SceneContent() {
@@ -71,8 +73,12 @@ export function SceneContent() {
       <Sparks />
       <ParkourTrampolines />
 
-      {/* Doors */}
+      {/* Room markers */}
       <AnimatedDoors />
+      <RoomIcons />
+
+      {/* Player effects */}
+      <PlayerTrail />
 
       {/* Effects & systems */}
       <CafeAmbient />
