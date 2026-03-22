@@ -20,6 +20,7 @@ import { BeatPads } from './three/BeatPads'
 import { PhaseProps } from './three/PhaseProps'
 import { Skateboards } from './three/Skateboard'
 import { DayNightCycle } from './three/DayNightCycle'
+import { NightSky } from './three/NightSky'
 import { HUD } from './HUD'
 import { Minimap } from './Minimap'
 import * as THREE from 'three'
@@ -56,6 +57,7 @@ export default function World3D() {
         <pointLight position={[0, 18, -80]} intensity={0.4} color={COLORS.rose} distance={120} decay={2} />
 
         <Suspense fallback={null}>
+          <NightSky />
           <Warehouse />
           <Workers />
           <DustMotes />
