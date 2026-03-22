@@ -140,8 +140,11 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           className="mt-8 transition-all duration-[2s] delay-1000"
           style={{ opacity: phase === 'ready' ? 0.4 : 0 }}
         >
-          <p className="text-[0.65rem] tracking-[0.1em]" style={{ color: 'rgba(255,220,180,0.4)' }}>
+          <p className="text-[0.65rem] tracking-[0.1em] hidden md:block" style={{ color: 'rgba(255,220,180,0.4)' }}>
             WASD to move · Mouse to look · Space to jump
+          </p>
+          <p className="text-[0.65rem] tracking-[0.1em] md:hidden" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            Touch controls · Joystick to move · Swipe to look
           </p>
         </div>
       </div>

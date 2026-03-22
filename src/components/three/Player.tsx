@@ -35,12 +35,15 @@ export function Player() {
     state.current.keys.delete(e.key.toLowerCase())
   }, [])
 
+  const isMobile = typeof window !== 'undefined' && 'ontouchstart' in window
+
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!state.current.locked) return
+    // On mobile, accept mouse events from touch controls (no pointer lock needed)
+    if (!state.current.locked && !isMobile) return
     state.current.yaw -= e.movementX * 0.002
     state.current.pitch -= e.movementY * 0.002
     state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
-  }, [])
+  }, [isMobile])
 
   const handleClick = useCallback(() => {
     document.body.requestPointerLock()
