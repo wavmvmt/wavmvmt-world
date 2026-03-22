@@ -21,6 +21,7 @@ import { FullscreenToggle } from './FullscreenToggle'
 import { RoomNotification } from './RoomNotification'
 import { BuildLog } from './BuildLog'
 import { ShareCard } from './ShareCard'
+import { SessionSummary } from './SessionSummary'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -56,6 +57,7 @@ export function UIOverlay() {
       <CompletionReward />
       <WelcomeTour />
       <VisitorLogger />
+      <SessionSummary />
       <KeyboardHelp />
       <ShareCard />
 
