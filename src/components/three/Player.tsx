@@ -5,10 +5,34 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
-const SPEED = 18
+const WALK_SPEED = 18
+const SPRINT_SPEED = 32
 const JUMP_FORCE = 7.5
 const GRAVITY = -20
 const GROUND_Y = 0
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function playFootstep(s: any, impact = false) {
+  if (!s.audioCtx) {
+    try { s.audioCtx = new AudioContext() } catch { return }
+  }
+  const ctx = s.audioCtx as AudioContext
+  const now = ctx.currentTime
+  const osc = ctx.createOscillator()
+  osc.type = 'sine'
+  osc.frequency.value = impact ? 50 + Math.random() * 30 : 100 + Math.random() * 60
+  const gain = ctx.createGain()
+  gain.gain.setValueAtTime(impact ? 0.04 : 0.015, now)
+  gain.gain.exponentialRampToValueAtTime(0.001, now + (impact ? 0.15 : 0.08))
+  const filter = ctx.createBiquadFilter()
+  filter.type = 'lowpass'
+  filter.frequency.value = impact ? 200 : 400
+  osc.connect(filter)
+  filter.connect(gain)
+  gain.connect(ctx.destination)
+  osc.start(now)
+  osc.stop(now + (impact ? 0.2 : 0.1))
+}
 
 export function Player() {
   const groupRef = useRef<THREE.Group>(null)
@@ -25,6 +49,9 @@ export function Player() {
     keys: new Set<string>(),
     locked: false,
     walkPhase: 0,
+    cameraShake: 0,
+    lastFootstep: 0,
+    audioCtx: null as AudioContext | null,
   })
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -84,11 +111,20 @@ export function Player() {
     if (s.keys.has('a')) moveDir.sub(right)
     if (s.keys.has('d')) moveDir.add(right)
 
+    const sprinting = s.keys.has('shift')
+    const speed = sprinting ? SPRINT_SPEED : WALK_SPEED
+
     if (moveDir.length() > 0) {
       moveDir.normalize()
-      pos.x += moveDir.x * SPEED * delta
-      pos.z += moveDir.z * SPEED * delta
-      s.walkPhase += delta * 8
+      pos.x += moveDir.x * speed * delta
+      pos.z += moveDir.z * speed * delta
+      s.walkPhase += delta * (sprinting ? 12 : 8)
+
+      // Footstep sounds
+      if (s.onGround && s.walkPhase - s.lastFootstep > (sprinting ? 1.5 : 2.2)) {
+        s.lastFootstep = s.walkPhase
+        playFootstep(s)
+      }
     }
 
     // Jump
@@ -102,10 +138,18 @@ export function Player() {
     pos.y += s.velocity.y * delta
 
     if (pos.y <= GROUND_Y) {
+      // Camera shake on hard landing
+      if (!s.onGround && s.velocity.y < -5) {
+        s.cameraShake = Math.min(0.15, Math.abs(s.velocity.y) * 0.015)
+        playFootstep(s, true) // impact sound
+      }
       pos.y = GROUND_Y
       s.velocity.y = 0
       s.onGround = true
     }
+
+    // Decay camera shake
+    if (s.cameraShake > 0) s.cameraShake *= 0.85
 
     // Bounds — massive warehouse with recovery wing
     pos.x = Math.max(-240, Math.min(240, pos.x))
@@ -127,9 +171,10 @@ export function Player() {
     window.dispatchEvent(new CustomEvent('playerMove', { detail: { x: pos.x, z: pos.z } }))
 
     // Camera follows player (third person — pulled back for scale)
+    const shake = s.cameraShake
     const camOffset = new THREE.Vector3(
-      Math.sin(s.yaw) * 10,
-      5 + Math.sin(s.pitch) * 3,
+      Math.sin(s.yaw) * 10 + (shake > 0.001 ? (Math.random() - 0.5) * shake * 2 : 0),
+      5 + Math.sin(s.pitch) * 3 + (shake > 0.001 ? (Math.random() - 0.5) * shake : 0),
       Math.cos(s.yaw) * 10
     )
     camera.position.lerp(pos.clone().add(camOffset), 0.07)

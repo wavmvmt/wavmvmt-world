@@ -1,9 +1,28 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COLORS, SKIN_TONES, WORKER_DATA, WORKER_POSITIONS } from '@/lib/roomConfig'
+
+const SPEECH_LINES = [
+  'Building the future!',
+  'Almost got this wall up',
+  'Hand me that wrench',
+  'Looking good so far',
+  'This is gonna be epic',
+  'One brick at a time',
+  'Need more nails over here',
+  'The vision is real',
+  'Watch your step!',
+  'Coffee break soon?',
+  'Check these blueprints',
+  'Measure twice, cut once',
+  'We\'re making history',
+  'The community needs this',
+  'Music + wellness + movement',
+]
 
 // Create a 3-step gradient texture for toon shading
 function useToonGradient() {
@@ -32,10 +51,19 @@ function Worker({ position, index }: { position: [number, number]; index: number
   const phase = useRef(Math.random() * Math.PI * 2)
   const type = ['hammer', 'measure', 'walk', 'dance', 'hammer', 'walk', 'weld', 'carry', 'idle', 'dance'][index % 10]
   const toonGradient = useToonGradient()
+  const [speech, setSpeech] = useState<string | null>(null)
+  const nextSpeechRef = useRef(5 + Math.random() * 15)
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const t = phase.current
     phase.current += delta * 3
+
+    // Speech bubble timing
+    if (state.clock.elapsedTime > nextSpeechRef.current) {
+      setSpeech(SPEECH_LINES[Math.floor(Math.random() * SPEECH_LINES.length)])
+      nextSpeechRef.current = state.clock.elapsedTime + 10 + Math.random() * 20
+      setTimeout(() => setSpeech(null), 3000 + Math.random() * 2000)
+    }
 
     if (leftArmRef.current && rightArmRef.current && headRef.current) {
       // Gentle idle breathing on all workers
@@ -290,6 +318,25 @@ function Worker({ position, index }: { position: [number, number]; index: number
         <boxGeometry args={[0.14, 0.03, 0.18]} />
         <meshBasicMaterial color={0x1a1010} />
       </mesh>
+
+      {/* Speech bubble */}
+      {speech && (
+        <Html position={[0, 2.5, 0]} center distanceFactor={12}>
+          <div style={{
+            background: 'rgba(26,21,32,0.85)',
+            border: '1px solid rgba(240,198,116,0.2)',
+            borderRadius: '12px',
+            padding: '4px 10px',
+            color: 'rgba(255,220,180,0.7)',
+            fontSize: '9px',
+            fontFamily: "'DM Sans', sans-serif",
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+          }}>
+            {speech}
+          </div>
+        </Html>
+      )}
     </group>
   )
 }

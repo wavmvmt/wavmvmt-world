@@ -14,6 +14,7 @@ import { Signage } from './three/Signage'
 import { RoomInteriors } from './three/RoomInteriors'
 import { Player } from './three/Player'
 import { ConstructionEquipment } from './three/ConstructionEquipment'
+import { ConstructionProps } from './three/ConstructionProps'
 import { AmbientAudio } from './three/AmbientAudio'
 import { DayNightCycle } from './three/DayNightCycle'
 import { HUD } from './HUD'
@@ -60,6 +61,7 @@ export default function World3D() {
           <RoomInteriors />
           <Player />
           <ConstructionEquipment />
+          <ConstructionProps />
           <AmbientAudio />
         </Suspense>
 
