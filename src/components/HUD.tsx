@@ -103,6 +103,32 @@ function Panel({ title, icon, children, defaultOpen, position }: {
   )
 }
 
+function SoundToggle() {
+  const [muted, setMuted] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setMuted((e as CustomEvent).detail.muted)
+    }
+    window.addEventListener('audioState', handler as EventListener)
+    return () => window.removeEventListener('audioState', handler as EventListener)
+  }, [])
+
+  return (
+    <button
+      onClick={() => window.dispatchEvent(new CustomEvent('toggleAudio'))}
+      className="pointer-events-auto px-1.5 py-0.5 rounded text-[0.6rem] cursor-pointer transition-all"
+      style={{
+        color: muted ? 'rgba(255,220,180,0.25)' : 'rgba(255,220,180,0.5)',
+        background: 'rgba(240,198,116,0.05)',
+      }}
+      title={muted ? 'Unmute' : 'Mute'}
+    >
+      {muted ? '🔇' : '🔊'}
+    </button>
+  )
+}
+
 export function HUD() {
   const raisedPct = Math.min(100, (FUNDRAISING.raised / FUNDRAISING.goal) * 100)
   const isMobile = useIsMobile()
@@ -123,6 +149,7 @@ export function HUD() {
           {isMobile ? 'WAVMVMT · Building' : `WAVMVMT Center · ${FUNDRAISING.location} · Building in Progress`}
         </span>
         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#80d4a8', boxShadow: '0 0 8px #80d4a8' }} />
+        <SoundToggle />
       </div>
 
       {/* Right panel — Build progress */}

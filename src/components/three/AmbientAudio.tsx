@@ -127,7 +127,7 @@ export function AmbientAudio() {
     ctxRef.current = ctx
 
     const master = ctx.createGain()
-    master.gain.value = 0.6
+    master.gain.value = 0.25
     master.connect(ctx.destination)
     masterRef.current = master
 
@@ -154,6 +154,16 @@ export function AmbientAudio() {
     window.addEventListener('touchstart', start)
     window.addEventListener('startAudio', start)
 
+    // Listen for mute toggle from HUD
+    const onToggleMute = () => {
+      if (masterRef.current) {
+        const current = masterRef.current.gain.value
+        masterRef.current.gain.value = current > 0 ? 0 : 0.25
+        window.dispatchEvent(new CustomEvent('audioState', { detail: { muted: current > 0 } }))
+      }
+    }
+    window.addEventListener('toggleAudio', onToggleMute)
+
     // Listen for footstep events from Player
     const onFootstep = () => {
       const url = FOOTSTEPS[Math.floor(Math.random() * FOOTSTEPS.length)]
@@ -164,6 +174,7 @@ export function AmbientAudio() {
     return () => {
       cleanup()
       window.removeEventListener('playFootstep', onFootstep)
+      window.removeEventListener('toggleAudio', onToggleMute)
       if (ctxRef.current) ctxRef.current.close()
     }
   }, [initAudio, playSFX])
