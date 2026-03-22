@@ -26,6 +26,8 @@ import { NightSky } from './three/NightSky'
 import { HUD } from './HUD'
 import { Minimap } from './Minimap'
 import { FPSCounter } from './FPSCounter'
+import { SettingsPanel } from './SettingsPanel'
+import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
 export default function World3D() {
@@ -61,6 +63,7 @@ export default function World3D() {
 
         <Suspense fallback={null}>
           <NightSky />
+          <Fireflies />
           <Warehouse />
           <Workers />
           <DustMotes />
@@ -97,6 +100,7 @@ export default function World3D() {
       <HUD />
       <Minimap />
       <FPSCounter />
+      <SettingsPanel />
     </div>
   )
 }
