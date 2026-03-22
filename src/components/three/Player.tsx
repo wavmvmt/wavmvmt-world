@@ -128,10 +128,10 @@ export function Player() {
       pos.z += moveDir.z * speed * delta
       s.walkPhase += delta * (sprinting ? 12 : 8)
 
-      // Footstep sounds
+      // Footstep sounds — dispatch to AmbientAudio system
       if (s.onGround && s.walkPhase - s.lastFootstep > (sprinting ? 1.5 : 2.2)) {
         s.lastFootstep = s.walkPhase
-        playFootstep(s)
+        window.dispatchEvent(new CustomEvent('playFootstep'))
       }
     }
 
@@ -149,7 +149,7 @@ export function Player() {
       // Camera shake on hard landing
       if (!s.onGround && s.velocity.y < -5) {
         s.cameraShake = Math.min(0.15, Math.abs(s.velocity.y) * 0.015)
-        playFootstep(s, true) // impact sound
+        window.dispatchEvent(new CustomEvent('playFootstep')) // impact sound
       }
       pos.y = GROUND_Y
       s.velocity.y = 0
