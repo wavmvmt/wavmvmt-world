@@ -33,8 +33,8 @@ function Wall({ width, height, position, rotationY = 0 }: {
   )
 }
 
-function WireframeRoom({ name, x, z, w, d, h, color, buildPct }: {
-  name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number
+function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, features }: {
+  name: string; x: number; z: number; w: number; d: number; h: number; color: number; buildPct: number; sqft: number; vision: string; features: string[]
 }) {
   const hexColor = `#${color.toString(16).padStart(6, '0')}`
   return (
@@ -100,21 +100,79 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct }: {
         <meshBasicMaterial color={color} transparent opacity={0.02} />
       </mesh>
 
-      {/* Floating room label */}
-      <Html position={[0, h + 1.5, 0]} center distanceFactor={25}>
+      {/* Floating room label + info card */}
+      <Html position={[0, h + 3, 0]} center distanceFactor={35}>
         <div style={{
-          color: hexColor,
-          fontSize: '13px',
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 600,
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          whiteSpace: 'nowrap',
-          opacity: 0.7,
-          textShadow: `0 0 12px ${hexColor}40, 0 0 4px rgba(0,0,0,0.8)`,
+          textAlign: 'center',
           userSelect: 'none',
+          pointerEvents: 'none',
         }}>
-          {name} · {buildPct}%
+          {/* Room name */}
+          <div style={{
+            color: hexColor,
+            fontSize: '14px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 700,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+            textShadow: `0 0 12px ${hexColor}40, 0 0 4px rgba(0,0,0,0.8)`,
+          }}>
+            {name}
+          </div>
+          {/* Sq ft + build % */}
+          <div style={{
+            color: 'rgba(255,220,180,0.5)',
+            fontSize: '10px',
+            fontFamily: "'DM Mono', monospace",
+            letterSpacing: '0.15em',
+            marginTop: '2px',
+          }}>
+            {sqft.toLocaleString()} sq ft · {buildPct}% built
+          </div>
+          {/* Vision statement */}
+          <div style={{
+            color: 'rgba(255,220,180,0.3)',
+            fontSize: '9px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontStyle: 'italic',
+            marginTop: '4px',
+            maxWidth: '200px',
+          }}>
+            {vision}
+          </div>
+          {/* Feature list — shows on closer approach */}
+          <div style={{
+            marginTop: '6px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '3px',
+            justifyContent: 'center',
+            maxWidth: '220px',
+          }}>
+            {features.slice(0, 4).map((f, i) => (
+              <span key={i} style={{
+                fontSize: '7px',
+                padding: '2px 6px',
+                borderRadius: '8px',
+                background: `${hexColor}15`,
+                border: `1px solid ${hexColor}25`,
+                color: `${hexColor}aa`,
+                whiteSpace: 'nowrap',
+              }}>
+                {f}
+              </span>
+            ))}
+            {features.length > 4 && (
+              <span style={{
+                fontSize: '7px',
+                padding: '2px 6px',
+                color: 'rgba(255,220,180,0.25)',
+              }}>
+                +{features.length - 4} more
+              </span>
+            )}
+          </div>
         </div>
       </Html>
     </group>
