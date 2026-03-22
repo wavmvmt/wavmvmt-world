@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { DM_Sans, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#1a1520] text-white antialiased" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

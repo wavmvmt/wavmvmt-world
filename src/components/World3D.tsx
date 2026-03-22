@@ -49,6 +49,8 @@ import { EmojiReactions } from './EmojiReactions'
 import { GuestBook } from './GuestBook'
 import { FullscreenToggle } from './FullscreenToggle'
 import { RoomNotification } from './RoomNotification'
+import { BuildLog } from './BuildLog'
+import { ShareCard } from './ShareCard'
 import { RainEffect } from './three/RainEffect'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
@@ -147,6 +149,8 @@ export default function World3D() {
       <GuestBook />
       <FullscreenToggle />
       <RoomNotification />
+      <BuildLog />
+      <ShareCard />
     </div>
   )
 }
