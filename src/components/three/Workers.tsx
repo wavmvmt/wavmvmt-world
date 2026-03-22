@@ -14,35 +14,82 @@ function Worker({ position, index }: { position: [number, number]; index: number
   const info = WORKER_DATA[index % WORKER_DATA.length]
   const skin = SKIN_TONES[index % SKIN_TONES.length]
   const phase = useRef(Math.random() * Math.PI * 2)
-  const type = ['hammer', 'measure', 'walk', 'idle', 'hammer', 'walk'][index % 6]
+  const type = ['hammer', 'measure', 'walk', 'dance', 'hammer', 'walk', 'weld', 'carry', 'idle', 'dance'][index % 10]
 
   useFrame((_, delta) => {
     const t = phase.current
     phase.current += delta * 3
 
     if (leftArmRef.current && rightArmRef.current && headRef.current) {
+      // Gentle idle breathing on all workers
+      if (groupRef.current) {
+        groupRef.current.scale.y = 1 + Math.sin(t * 0.8) * 0.008
+      }
+
       switch (type) {
         case 'hammer':
           rightArmRef.current.rotation.z = -0.3 + Math.sin(t * 2) * 0.8
           leftArmRef.current.rotation.z = 0.3
+          // Slight body bob with each hit
+          if (groupRef.current) {
+            groupRef.current.position.y = Math.abs(Math.sin(t * 2)) * 0.03
+          }
           break
         case 'measure':
           leftArmRef.current.rotation.z = 0.3 + Math.sin(t * 0.5) * 0.15
           rightArmRef.current.rotation.z = -0.8
           headRef.current.rotation.y = Math.sin(t * 0.3) * 0.3
+          // Look up and down too
+          headRef.current.rotation.x = Math.sin(t * 0.2) * 0.15
           break
         case 'walk':
           leftArmRef.current.rotation.z = 0.3 + Math.sin(t) * 0.25
           rightArmRef.current.rotation.z = -0.3 - Math.sin(t) * 0.25
           if (groupRef.current) {
             groupRef.current.position.x = position[0] + Math.sin(t * 0.3) * 1.5
+            groupRef.current.position.z = position[1] + Math.cos(t * 0.2) * 0.8
+            groupRef.current.rotation.y = Math.sin(t * 0.3) * 0.3
+            // Walking bob
+            groupRef.current.position.y = Math.abs(Math.sin(t * 1.2)) * 0.04
+          }
+          break
+        case 'dance':
+          // The signature WAVMVMT move — a worker busting out
+          leftArmRef.current.rotation.z = 0.5 + Math.sin(t * 1.5) * 0.6
+          rightArmRef.current.rotation.z = -0.5 - Math.sin(t * 1.5 + 1) * 0.6
+          leftArmRef.current.rotation.x = Math.sin(t * 3) * 0.3
+          rightArmRef.current.rotation.x = Math.cos(t * 3) * 0.3
+          headRef.current.rotation.z = Math.sin(t * 1.5) * 0.15
+          if (groupRef.current) {
+            groupRef.current.position.y = Math.abs(Math.sin(t * 3)) * 0.08
+            groupRef.current.rotation.y = Math.sin(t * 0.8) * 0.4
+          }
+          break
+        case 'weld':
+          // Focused forward lean, steady arm, slight vibration
+          rightArmRef.current.rotation.z = -0.7 + Math.sin(t * 8) * 0.03
+          rightArmRef.current.rotation.x = -0.5
+          leftArmRef.current.rotation.z = 0.2
+          leftArmRef.current.rotation.x = -0.3
+          headRef.current.rotation.x = 0.2
+          break
+        case 'carry':
+          // Both arms forward, steady walk
+          leftArmRef.current.rotation.z = 0.1
+          leftArmRef.current.rotation.x = -0.8
+          rightArmRef.current.rotation.z = -0.1
+          rightArmRef.current.rotation.x = -0.8
+          if (groupRef.current) {
+            groupRef.current.position.x = position[0] + Math.sin(t * 0.15) * 2
+            groupRef.current.rotation.y = Math.sin(t * 0.15) > 0 ? 0 : Math.PI
+            groupRef.current.position.y = Math.abs(Math.sin(t * 0.8)) * 0.02
           }
           break
         case 'idle':
-          // Gentle breathing
-          if (groupRef.current) {
-            groupRef.current.scale.y = 1 + Math.sin(t * 0.8) * 0.01
-          }
+          // Scratching head, looking around
+          headRef.current.rotation.y = Math.sin(t * 0.2) * 0.5
+          rightArmRef.current.rotation.z = -0.3 + Math.sin(t * 0.4) * 0.1
+          leftArmRef.current.rotation.z = 0.3
           break
       }
     }

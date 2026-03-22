@@ -2,6 +2,7 @@
 
 import { type ReactNode } from 'react'
 import * as THREE from 'three'
+import { Html } from '@react-three/drei'
 import { COLORS, ROOMS, SCAFFOLD_POSITIONS } from '@/lib/roomConfig'
 
 function Wall({ width, height, position, rotationY = 0 }: {
@@ -50,6 +51,24 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct }: {
         <planeGeometry args={[w, d, Math.floor(w), Math.floor(d)]} />
         <meshBasicMaterial color={color} wireframe transparent opacity={0.06} />
       </mesh>
+
+      {/* Floating room label */}
+      <Html position={[0, h + 0.5, 0]} center distanceFactor={20}>
+        <div style={{
+          color: `#${color.toString(16).padStart(6, '0')}`,
+          fontSize: '11px',
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 500,
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          opacity: 0.6,
+          textShadow: '0 0 8px rgba(0,0,0,0.5)',
+          userSelect: 'none',
+        }}>
+          {name} · {buildPct}%
+        </div>
+      </Html>
     </group>
   )
 }
