@@ -36,6 +36,8 @@ import { AnimatedDoors } from './AnimatedDoors'
 import { RoomIcons } from './RoomIcons'
 import { PlayerTrail } from './PlayerTrail'
 import { CafeAmbient } from './CafeAmbient'
+import { BulletinBoard } from './BulletinBoard'
+import { BirdSounds } from './BirdSounds'
 
 export function SceneContent() {
   return (
@@ -82,6 +84,8 @@ export function SceneContent() {
 
       {/* Effects & systems */}
       <CafeAmbient />
+      <BulletinBoard />
+      <BirdSounds />
       <Confetti />
       <DroneCamera />
       <IntroFlyover />

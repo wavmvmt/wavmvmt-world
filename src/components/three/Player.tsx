@@ -246,6 +246,12 @@ export function Player() {
 
   return (
     <group ref={groupRef} position={[0, 0, 12]}>
+      {/* Shadow blob under player */}
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.4, 12]} />
+        <meshBasicMaterial color={0x000000} transparent opacity={0.15} depthWrite={false} />
+      </mesh>
+
       {/* Body */}
       <mesh position={[0, 1.1, 0]}>
         <cylinderGeometry args={[0.18, 0.24, 0.85, 10]} />
