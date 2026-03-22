@@ -28,6 +28,17 @@ export const metadata: Metadata = {
     description: "42,500 sq ft flagship wellness center. Watch anime construction workers build it in real-time 3D.",
   },
   robots: { index: true, follow: true },
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
+  other: {
+    'theme-color': '#f0c674',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'apple-mobile-web-app-title': 'WAVMVMT',
+  },
 };
 
 export default function RootLayout({
@@ -40,6 +51,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${playfair.variable} ${jetbrains.variable}`}
     >
+      <head>
+        <link rel="preload" href="/audio/construction_loop.ogg" as="fetch" crossOrigin="anonymous" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+      </head>
       <body className="min-h-screen bg-[#1a1520] text-white antialiased" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
         {children}
         <Analytics />
