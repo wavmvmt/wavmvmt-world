@@ -15,6 +15,7 @@ import { RoomInteriors } from './three/RoomInteriors'
 import { Player } from './three/Player'
 import { ConstructionEquipment } from './three/ConstructionEquipment'
 import { AmbientAudio } from './three/AmbientAudio'
+import { DayNightCycle } from './three/DayNightCycle'
 import { HUD } from './HUD'
 import { Minimap } from './Minimap'
 import * as THREE from 'three'
@@ -38,26 +39,8 @@ export default function World3D() {
         <color attach="background" args={[COLORS.bg]} />
         <fogExp2 attach="fog" args={[0x1e1828, 0.003]} /> {/* Slightly denser fog hides far objects */}
 
-        {/* Ghibli lighting — simplified for performance */}
-        <ambientLight intensity={0.5} color={0x3a2850} />
-        <hemisphereLight args={[0xf0d8b0, 0x2a2040, 0.6]} />
-
-        {/* Main sun — golden hour (only shadow caster) */}
-        <directionalLight
-          position={[100, 80, 60]}
-          intensity={1.0}
-          color={0xffe0a0}
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-near={10}
-          shadow-camera-far={300}
-          shadow-camera-left={-100}
-          shadow-camera-right={100}
-          shadow-camera-top={80}
-          shadow-camera-bottom={-80}
-          shadow-bias={-0.001}
-        />
+        {/* Dynamic day/night cycle — replaces static sun/ambient/hemisphere */}
+        <DayNightCycle />
 
         {/* Fill light — no shadows */}
         <directionalLight position={[-60, 30, -30]} intensity={0.2} color={0xb0c8e8} />
