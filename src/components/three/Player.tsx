@@ -52,6 +52,7 @@ export function Player() {
     cameraShake: 0,
     lastFootstep: 0,
     audioCtx: null as AudioContext | null,
+    speedOverride: 0, // 0 means no override
   })
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -87,7 +88,14 @@ export function Player() {
     window.addEventListener('click', handleClick)
     document.addEventListener('pointerlockchange', handleLockChange)
 
+    // Vehicle speed override
+    const handleSpeedOverride = (e: Event) => {
+      state.current.speedOverride = (e as CustomEvent).detail.speed
+    }
+    window.addEventListener('speedOverride', handleSpeedOverride as EventListener)
+
     return () => {
+      window.removeEventListener('speedOverride', handleSpeedOverride as EventListener)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
       window.removeEventListener('mousemove', handleMouseMove)
@@ -112,7 +120,7 @@ export function Player() {
     if (s.keys.has('d')) moveDir.add(right)
 
     const sprinting = s.keys.has('shift')
-    const speed = sprinting ? SPRINT_SPEED : WALK_SPEED
+    const speed = s.speedOverride > 0 ? s.speedOverride : (sprinting ? SPRINT_SPEED : WALK_SPEED)
 
     if (moveDir.length() > 0) {
       moveDir.normalize()

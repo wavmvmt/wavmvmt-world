@@ -21,9 +21,9 @@ export function AmbientAudio() {
     const ctx = new AudioContext()
     audioCtxRef.current = ctx
 
-    // Master gain — keep it subtle
+    // Master gain — audible but not overwhelming
     const master = ctx.createGain()
-    master.gain.value = 0.06
+    master.gain.value = 0.15
     master.connect(ctx.destination)
     gainRef.current = master
 
@@ -32,7 +32,7 @@ export function AmbientAudio() {
     rumbleOsc.type = 'sawtooth'
     rumbleOsc.frequency.value = 35
     const rumbleGain = ctx.createGain()
-    rumbleGain.gain.value = 0.03
+    rumbleGain.gain.value = 0.06
     const rumbleFilter = ctx.createBiquadFilter()
     rumbleFilter.type = 'lowpass'
     rumbleFilter.frequency.value = 80
@@ -49,7 +49,7 @@ export function AmbientAudio() {
     windOsc2.type = 'sine'
     windOsc2.frequency.value = 223 // slight detune = beating/wind effect
     const windGain = ctx.createGain()
-    windGain.gain.value = 0.008
+    windGain.gain.value = 0.02
     windOsc1.connect(windGain)
     windOsc2.connect(windGain)
     windGain.connect(master)
@@ -95,7 +95,7 @@ export function AmbientAudio() {
       osc.type = 'square'
       osc.frequency.value = 800 + Math.random() * 400
       const env = ctx.createGain()
-      env.gain.setValueAtTime(0.015, now)
+      env.gain.setValueAtTime(0.04, now)
       env.gain.exponentialRampToValueAtTime(0.001, now + 0.08)
       osc.connect(env)
       env.connect(gainRef.current)
@@ -107,7 +107,7 @@ export function AmbientAudio() {
       osc.type = 'sine'
       osc.frequency.value = 2000 + Math.random() * 1500
       const env = ctx.createGain()
-      env.gain.setValueAtTime(0.008, now)
+      env.gain.setValueAtTime(0.025, now)
       env.gain.exponentialRampToValueAtTime(0.001, now + 0.05)
       osc.connect(env)
       env.connect(gainRef.current)
@@ -119,7 +119,7 @@ export function AmbientAudio() {
       osc.type = 'sine'
       osc.frequency.value = 60 + Math.random() * 40
       const env = ctx.createGain()
-      env.gain.setValueAtTime(0.02, now)
+      env.gain.setValueAtTime(0.05, now)
       env.gain.exponentialRampToValueAtTime(0.001, now + 0.3)
       osc.connect(env)
       env.connect(gainRef.current)

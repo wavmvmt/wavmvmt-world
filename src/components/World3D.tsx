@@ -17,6 +17,8 @@ import { ConstructionEquipment } from './three/ConstructionEquipment'
 import { ConstructionProps } from './three/ConstructionProps'
 import { AmbientAudio } from './three/AmbientAudio'
 import { BeatPads } from './three/BeatPads'
+import { PhaseProps } from './three/PhaseProps'
+import { Skateboards } from './three/Skateboard'
 import { DayNightCycle } from './three/DayNightCycle'
 import { HUD } from './HUD'
 import { Minimap } from './Minimap'
@@ -65,6 +67,8 @@ export default function World3D() {
           <ConstructionProps />
           <AmbientAudio />
           <BeatPads />
+          <PhaseProps />
+          <Skateboards />
         </Suspense>
 
         {/* Post-processing — just bloom + vignette (dropped chromatic aberration + SMAA) */}
