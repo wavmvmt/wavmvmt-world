@@ -1,42 +1,103 @@
+'use client'
+
 import Link from 'next/link'
+import { TOTAL_SQFT } from '@/lib/roomConfig'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
       style={{ background: 'linear-gradient(160deg, #1a1520 0%, #2a1f35 30%, #1f2a3a 60%, #1a2030 100%)' }}>
 
-      {/* Subtle animated background dots */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 rounded-full bg-[#f0c674] animate-ping" style={{ animationDuration: '4s' }} />
-        <div className="absolute top-3/4 right-1/3 w-1 h-1 rounded-full bg-[#80d4a8] animate-ping" style={{ animationDuration: '6s' }} />
-        <div className="absolute top-1/2 right-1/4 w-1 h-1 rounded-full bg-[#b48ead] animate-ping" style={{ animationDuration: '5s' }} />
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 20 }, (_, i) => (
+          <div key={i} className="absolute rounded-full"
+            style={{
+              width: `${1 + Math.random() * 2}px`,
+              height: `${1 + Math.random() * 2}px`,
+              background: ['rgba(240,198,116,0.12)', 'rgba(128,212,168,0.1)', 'rgba(180,142,173,0.1)'][i % 3],
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float-up ${10 + Math.random() * 15}s linear infinite`,
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Concentric rings */}
+      <div className="absolute opacity-[0.02]">
+        {[150, 280, 420].map((size, i) => (
+          <div key={i} className="absolute rounded-full border"
+            style={{
+              width: size, height: size,
+              top: `calc(50% - ${size / 2}px)`,
+              left: `calc(50% - ${size / 2}px)`,
+              borderColor: 'rgba(240,198,116,0.3)',
+              animation: `pulse-ring ${5 + i}s ease-in-out infinite`,
+              animationDelay: `${i * 0.8}s`,
+            }}
+          />
+        ))}
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-2xl">
-        {/* Wave */}
-        <div className="text-7xl md:text-9xl mb-6 animate-bounce" style={{
+      <div className="relative z-10 text-center px-6 max-w-3xl">
+        {/* Wave symbol */}
+        <div className="text-7xl md:text-[8rem] mb-4" style={{
           color: '#f0c674',
           opacity: 0.3,
           fontFamily: 'var(--font-playfair), serif',
           textShadow: '0 0 60px rgba(240,198,116,0.15)',
-          animationDuration: '5s',
+          animation: 'gentle-float 6s ease-in-out infinite',
         }}>~</div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-bold tracking-[0.12em] mb-3"
+        <h1 className="text-4xl md:text-7xl font-bold tracking-[0.12em] mb-3"
           style={{ fontFamily: 'var(--font-playfair), serif', color: 'rgba(255,240,220,0.9)' }}>
           WAVMVMT
         </h1>
 
-        <p className="text-xs md:text-sm tracking-[0.4em] uppercase mb-12"
-          style={{ color: 'rgba(255,200,150,0.35)' }}>
-          Music · Wellness · Education · Technology · Community
+        <p className="text-xs md:text-sm tracking-[0.35em] uppercase mb-4"
+          style={{ color: 'rgba(255,200,150,0.4)' }}>
+          The First App for the Whole Person
         </p>
+
+        {/* Facility stats */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
+          {[
+            { value: `${(TOTAL_SQFT / 1000).toFixed(0)}K`, label: 'SQ FT' },
+            { value: '12', label: 'ROOMS' },
+            { value: '$20M', label: 'BUILD' },
+            { value: 'Toronto', label: 'LOCATION' },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-lg md:text-2xl font-bold font-mono" style={{ color: '#f0c674' }}>
+                {stat.value}
+              </div>
+              <div className="text-[0.5rem] md:text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: 'rgba(255,200,150,0.25)' }}>
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pillars */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {['Music', 'Wellness', 'Fitness', 'Education', 'Technology', 'Community'].map((pillar) => (
+            <span key={pillar} className="px-3 py-1 rounded-full text-[0.6rem] md:text-[0.65rem] tracking-[0.2em] uppercase"
+              style={{
+                border: '1px solid rgba(240,198,116,0.12)',
+                color: 'rgba(255,220,180,0.35)',
+              }}>
+              {pillar}
+            </span>
+          ))}
+        </div>
 
         {/* CTA */}
         <Link href="/world"
-          className="inline-block px-10 py-4 rounded-full text-sm font-semibold tracking-[0.3em] uppercase transition-all duration-500 hover:shadow-[0_0_40px_rgba(240,198,116,0.15)]"
+          className="inline-block px-10 md:px-14 py-4 rounded-full text-sm font-semibold tracking-[0.3em] uppercase transition-all duration-500 hover:shadow-[0_0_40px_rgba(240,198,116,0.15)] hover:border-[rgba(240,198,116,0.5)]"
           style={{
             border: '1px solid rgba(240,198,116,0.3)',
             color: '#f0c674',
@@ -45,13 +106,34 @@ export default function HomePage() {
           Enter the World
         </Link>
 
-        <p className="mt-16 text-[0.6rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.15)' }}>
+        <p className="mt-4 text-[0.55rem] tracking-[0.15em]" style={{ color: 'rgba(255,200,150,0.2)' }}>
+          Walk through our digital construction site
+        </p>
+
+        <p className="mt-14 text-[0.6rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.12)' }}>
           Built by Arc.wav · Built for builders
         </p>
-        <p className="mt-1 text-[0.55rem] italic" style={{ color: 'rgba(255,200,150,0.1)' }}>
+        <p className="mt-1 text-[0.5rem] italic" style={{ color: 'rgba(255,200,150,0.08)' }}>
           The world is always under construction — just like us
         </p>
       </div>
+
+      <style jsx>{`
+        @keyframes float-up {
+          0% { transform: translateY(100vh); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-20px); opacity: 0; }
+        }
+        @keyframes pulse-ring {
+          0%, 100% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.05); opacity: 0.6; }
+        }
+        @keyframes gentle-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+      `}</style>
     </div>
   )
 }

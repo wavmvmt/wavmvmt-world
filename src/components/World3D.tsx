@@ -14,6 +14,7 @@ import { LightShafts } from './three/LightShafts'
 import { Signage } from './three/Signage'
 import { RoomInteriors } from './three/RoomInteriors'
 import { Player } from './three/Player'
+import { AmbientAudio } from './three/AmbientAudio'
 import { HUD } from './HUD'
 import * as THREE from 'three'
 
@@ -84,6 +85,7 @@ export default function World3D() {
           <Signage />
           <RoomInteriors />
           <Player />
+          <AmbientAudio />
         </Suspense>
 
         {/* Post-processing — cinematic Ghibli feel */}

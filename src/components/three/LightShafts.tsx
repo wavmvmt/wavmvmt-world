@@ -4,15 +4,13 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-/** Volumetric light shafts coming through skylights in the warehouse roof */
-function LightShaft({ position, width = 4, depth = 4, opacity = 0.02 }: {
+function LightShaft({ position, width = 6, depth = 6, opacity = 0.02 }: {
   position: [number, number, number]; width?: number; depth?: number; opacity?: number
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Subtle shimmer — dust in the light
       const t = state.clock.elapsedTime
       const mat = meshRef.current.material as THREE.MeshBasicMaterial
       mat.opacity = opacity + Math.sin(t * 0.5 + position[0]) * 0.005
@@ -21,7 +19,7 @@ function LightShaft({ position, width = 4, depth = 4, opacity = 0.02 }: {
 
   return (
     <mesh ref={meshRef} position={position}>
-      <boxGeometry args={[width, 18, depth]} />
+      <boxGeometry args={[width, 44, depth]} />
       <meshBasicMaterial
         color={0xffe8c0}
         transparent
@@ -34,24 +32,21 @@ function LightShaft({ position, width = 4, depth = 4, opacity = 0.02 }: {
   )
 }
 
-/** Skylight opening in the roof — bright rectangle */
-function SkylightOpening({ position, width = 4, depth = 4 }: {
+function SkylightOpening({ position, width = 6, depth = 6 }: {
   position: [number, number, number]; width?: number; depth?: number
 }) {
   return (
     <group>
-      {/* Bright opening */}
-      <mesh position={[position[0], 17.5, position[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[position[0], 43, position[2]]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, depth]} />
-        <meshBasicMaterial color={0xfff8e8} transparent opacity={0.15} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={0xfff8e8} transparent opacity={0.12} side={THREE.DoubleSide} />
       </mesh>
-      {/* Frame */}
       {[
-        [position[0] - width / 2, 17.5, position[2]],
-        [position[0] + width / 2, 17.5, position[2]],
+        [position[0] - width / 2, 43, position[2]],
+        [position[0] + width / 2, 43, position[2]],
       ].map((p, i) => (
         <mesh key={i} position={p as [number, number, number]}>
-          <boxGeometry args={[0.2, 0.2, depth]} />
+          <boxGeometry args={[0.3, 0.3, depth]} />
           <meshStandardMaterial color={0x5a5060} metalness={0.6} roughness={0.4} />
         </mesh>
       ))}
@@ -60,31 +55,45 @@ function SkylightOpening({ position, width = 4, depth = 4 }: {
 }
 
 export function LightShafts() {
+  // Spread across the massive warehouse
   const positions: [number, number, number][] = [
-    [-30, 8, -20],
-    [10, 8, -35],
-    [50, 8, 5],
-    [-50, 8, 15],
-    [0, 8, 20],
-    [-20, 8, -40],
-    [30, 8, 30],
+    [-75, 20, -50],
+    [25, 20, -85],
+    [125, 20, 12],
+    [-125, 20, 35],
+    [0, 20, 50],
+    [-50, 20, -100],
+    [75, 20, 75],
+    [-150, 20, -20],
+    [150, 20, -40],
+    [0, 20, -150],
+    [-100, 20, 80],
+    [100, 20, -120],
   ]
 
   return (
     <group>
       {positions.map((pos, i) => (
         <group key={i}>
-          <LightShaft position={pos} width={3 + i % 3} depth={3 + i % 2} opacity={0.015 + (i % 3) * 0.005} />
-          <SkylightOpening position={pos} width={3 + i % 3} depth={3 + i % 2} />
-          {/* Spot light from skylight */}
+          <LightShaft
+            position={pos}
+            width={5 + (i % 3) * 2}
+            depth={5 + (i % 2) * 2}
+            opacity={0.012 + (i % 3) * 0.004}
+          />
+          <SkylightOpening
+            position={pos}
+            width={5 + (i % 3) * 2}
+            depth={5 + (i % 2) * 2}
+          />
           <spotLight
-            position={[pos[0], 17, pos[2]]}
+            position={[pos[0], 42, pos[2]]}
             target-position={[pos[0], 0, pos[2]]}
-            intensity={0.3}
+            intensity={0.4}
             color={0xfff0d0}
-            angle={0.4}
+            angle={0.35}
             penumbra={0.8}
-            distance={20}
+            distance={50}
             decay={2}
           />
         </group>

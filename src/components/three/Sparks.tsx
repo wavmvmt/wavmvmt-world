@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
-const SPARK_COUNT = 25
+const SPARK_COUNT = 30
 
 function SparkEmitter({ origin }: { origin: [number, number, number] }) {
   const pointsRef = useRef<THREE.Points>(null)
@@ -18,9 +18,9 @@ function SparkEmitter({ origin }: { origin: [number, number, number] }) {
       pos[i * 3 + 1] = origin[1]
       pos[i * 3 + 2] = origin[2]
       vel.push({
-        x: (Math.random() - 0.5) * 0.12,
-        y: Math.random() * 0.1 + 0.02,
-        z: (Math.random() - 0.5) * 0.12,
+        x: (Math.random() - 0.5) * 0.2,
+        y: Math.random() * 0.15 + 0.03,
+        z: (Math.random() - 0.5) * 0.2,
         life: Math.random(),
       })
     }
@@ -37,16 +37,16 @@ function SparkEmitter({ origin }: { origin: [number, number, number] }) {
       arr[i * 3] += v.x
       arr[i * 3 + 1] += v.y
       arr[i * 3 + 2] += v.z
-      v.y -= 0.003 // gravity
+      v.y -= 0.004
       v.life -= 0.02
 
       if (v.life <= 0) {
-        arr[i * 3] = origin[0]
+        arr[i * 3] = origin[0] + (Math.random() - 0.5) * 0.5
         arr[i * 3 + 1] = origin[1]
-        arr[i * 3 + 2] = origin[2]
-        v.x = (Math.random() - 0.5) * 0.12
-        v.y = Math.random() * 0.1 + 0.02
-        v.z = (Math.random() - 0.5) * 0.12
+        arr[i * 3 + 2] = origin[2] + (Math.random() - 0.5) * 0.5
+        v.x = (Math.random() - 0.5) * 0.2
+        v.y = Math.random() * 0.15 + 0.03
+        v.z = (Math.random() - 0.5) * 0.2
         v.life = Math.random()
       }
     }
@@ -56,30 +56,41 @@ function SparkEmitter({ origin }: { origin: [number, number, number] }) {
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-          count={SPARK_COUNT}
-        />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} count={SPARK_COUNT} />
       </bufferGeometry>
       <pointsMaterial
         color={COLORS.amber}
-        size={0.06}
+        size={0.1}
         transparent
-        opacity={0.7}
+        opacity={0.8}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
+        sizeAttenuation
       />
     </points>
   )
 }
 
 export function Sparks() {
+  // Place spark emitters near rooms that are being built (buildPct > 0)
   return (
     <group>
-      <SparkEmitter origin={[-10, 2, -7]} />
-      <SparkEmitter origin={[12, 1.5, -10]} />
-      <SparkEmitter origin={[22, 1.5, -5]} />
+      {/* Near Parkour Gym */}
+      <SparkEmitter origin={[-60, 4, -60]} />
+      <SparkEmitter origin={[-120, 4, -80]} />
+      {/* Near Sound Bath */}
+      <SparkEmitter origin={[90, 3, -70]} />
+      {/* Near Music Studio */}
+      <SparkEmitter origin={[130, 3, 40]} />
+      {/* Near Front Desk */}
+      <SparkEmitter origin={[15, 3, 120]} />
+      <SparkEmitter origin={[-15, 3, 125]} />
+      {/* Near Weight Training */}
+      <SparkEmitter origin={[170, 3, -25]} />
+      {/* Near Amphitheatre */}
+      <SparkEmitter origin={[20, 3, -90]} />
+      {/* Near Recovery Suite */}
+      <SparkEmitter origin={[-80, 3, -175]} />
     </group>
   )
 }
