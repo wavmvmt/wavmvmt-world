@@ -41,6 +41,7 @@ import { PhotoMode } from './PhotoMode'
 import { CompletionReward } from './CompletionReward'
 import { KeyboardHelp } from './KeyboardHelp'
 import { ParkourTimer } from './ParkourTimer'
+import { QuestTracker } from './QuestTracker'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -129,6 +130,7 @@ export default function World3D() {
       <CompletionReward />
       <KeyboardHelp />
       <ParkourTimer />
+      <QuestTracker />
     </div>
   )
 }
