@@ -290,10 +290,10 @@ export function HUD() {
         </div>
       </Panel>
 
-      {/* Main site link */}
+      {/* Main site link — top on mobile to avoid button overlap */}
       <a href="https://wav-mvmt.vercel.app" target="_blank" rel="noopener noreferrer"
         className={`absolute px-3 md:px-4 py-2 rounded-xl pointer-events-auto text-[0.6rem] md:text-[0.65rem] tracking-[0.15em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)] ${
-          isMobile ? 'bottom-28 right-3' : 'bottom-24 right-5'
+          isMobile ? 'top-14 left-1/2 -translate-x-1/2' : 'bottom-24 right-5'
         }`}
         style={{
           ...panelStyle,
@@ -301,7 +301,7 @@ export function HUD() {
           textDecoration: 'none',
           cursor: 'pointer',
         }}>
-        View Full Pitch →
+        Pitch →
       </a>
 
       {/* Controls — different for mobile vs desktop */}
@@ -486,10 +486,10 @@ function MobileControls() {
         JUMP
       </button>
 
-      {/* Interact button (E key equivalent) */}
+      {/* Interact button (E key equivalent) — above jump, offset left */}
       <button
         id="mobile-interact"
-        className="fixed bottom-28 right-6 w-12 h-12 rounded-full pointer-events-auto z-20 text-[0.5rem] font-mono font-bold"
+        className="fixed bottom-8 right-24 w-12 h-12 rounded-full pointer-events-auto z-20 text-[0.5rem] font-mono font-bold"
         style={touchBtnStyle}
         onTouchStart={(e) => {
           e.preventDefault()
