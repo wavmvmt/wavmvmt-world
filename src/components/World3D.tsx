@@ -47,6 +47,9 @@ import { Decorations } from './three/Decorations'
 import { IntroFlyover } from './three/IntroFlyover'
 import { EmojiReactions } from './EmojiReactions'
 import { GuestBook } from './GuestBook'
+import { FullscreenToggle } from './FullscreenToggle'
+import { RoomNotification } from './RoomNotification'
+import { RainEffect } from './three/RainEffect'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -104,6 +107,7 @@ export default function World3D() {
           <ParkourTrampolines />
           <Decorations />
           <IntroFlyover />
+          <RainEffect />
           <PhaseProps />
           <Skateboards />
           <StageSpotlight />
@@ -141,6 +145,8 @@ export default function World3D() {
       <VisitorLogger />
       <EmojiReactions />
       <GuestBook />
+      <FullscreenToggle />
+      <RoomNotification />
     </div>
   )
 }
