@@ -46,6 +46,7 @@ import { VisitorLogger } from './VisitorLogger'
 import { Decorations } from './three/Decorations'
 import { IntroFlyover } from './three/IntroFlyover'
 import { EmojiReactions } from './EmojiReactions'
+import { GuestBook } from './GuestBook'
 import { Fireflies } from './three/Fireflies'
 import * as THREE from 'three'
 
@@ -139,6 +140,7 @@ export default function World3D() {
       <QuestTracker />
       <VisitorLogger />
       <EmojiReactions />
+      <GuestBook />
     </div>
   )
 }
