@@ -2,8 +2,9 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
-import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette, ChromaticAberration, SMAA } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
+import { Environment } from '@react-three/drei'
 import { COLORS } from '@/lib/roomConfig'
 import { Warehouse } from './three/Warehouse'
 import { Workers } from './three/Workers'
@@ -11,6 +12,7 @@ import { DustMotes } from './three/DustMotes'
 import { Sparks } from './three/Sparks'
 import { LightShafts } from './three/LightShafts'
 import { Signage } from './three/Signage'
+import { RoomInteriors } from './three/RoomInteriors'
 import { Player } from './three/Player'
 import { HUD } from './HUD'
 import * as THREE from 'three'
@@ -71,12 +73,16 @@ export default function World3D() {
         <pointLight position={[35, 6, -28]} intensity={0.4} color={COLORS.amber} distance={40} decay={2} />
 
         <Suspense fallback={null}>
+          {/* Environment map for metallic reflections */}
+          <Environment preset="warehouse" environmentIntensity={0.15} />
+
           <Warehouse />
           <Workers />
           <DustMotes />
           <Sparks />
           <LightShafts />
           <Signage />
+          <RoomInteriors />
           <Player />
         </Suspense>
 
@@ -97,6 +103,7 @@ export default function World3D() {
             offset={new THREE.Vector2(0.0005, 0.0005)}
             blendFunction={BlendFunction.NORMAL}
           />
+          <SMAA />
         </EffectComposer>
       </Canvas>
       <HUD />
