@@ -12,6 +12,8 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
 
   function handleEnter() {
     setPhase('fading')
+    // Trigger audio start — browser requires user gesture
+    window.dispatchEvent(new CustomEvent('startAudio'))
     setTimeout(onEnter, 1200)
   }
 

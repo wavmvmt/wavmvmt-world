@@ -57,18 +57,22 @@ export function AmbientAudio() {
     windOsc2.start()
   }, [])
 
-  // Start on first click (browser requires user gesture)
+  // Start on first click, touch, or explicit startAudio event
   useEffect(() => {
     const start = () => {
       initAudio()
+      cleanup()
+    }
+    const cleanup = () => {
       window.removeEventListener('click', start)
       window.removeEventListener('touchstart', start)
+      window.removeEventListener('startAudio', start)
     }
     window.addEventListener('click', start)
     window.addEventListener('touchstart', start)
+    window.addEventListener('startAudio', start)
     return () => {
-      window.removeEventListener('click', start)
-      window.removeEventListener('touchstart', start)
+      cleanup()
       if (audioCtxRef.current) {
         audioCtxRef.current.close()
       }
