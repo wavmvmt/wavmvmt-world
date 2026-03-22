@@ -149,6 +149,15 @@ export default function HomePage() {
           </form>
         </div>
 
+        {/* Stats link */}
+        <div className="mt-6">
+          <Link href="/stats"
+            className="text-[0.55rem] tracking-[0.2em] uppercase"
+            style={{ color: 'rgba(255,200,150,0.25)', textDecoration: 'none', borderBottom: '1px solid rgba(255,200,150,0.1)' }}>
+            View Full Project Breakdown →
+          </Link>
+        </div>
+
         {/* Social share */}
         <div className="mt-8 flex gap-4 justify-center">
           {[
