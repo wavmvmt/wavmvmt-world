@@ -61,10 +61,10 @@ function Worker({ position, index }: { position: [number, number]; index: number
           leftArmRef.current.rotation.z = 0.3 + Math.sin(t) * 0.25
           rightArmRef.current.rotation.z = -0.3 - Math.sin(t) * 0.25
           if (groupRef.current) {
-            groupRef.current.position.x = position[0] + Math.sin(t * 0.3) * 1.5
-            groupRef.current.position.z = position[1] + Math.cos(t * 0.2) * 0.8
+            groupRef.current.position.x = position[0] + Math.sin(t * 0.3) * 4
+            groupRef.current.position.z = position[1] + Math.cos(t * 0.2) * 2
             groupRef.current.rotation.y = Math.sin(t * 0.3) * 0.3
-            groupRef.current.position.y = Math.abs(Math.sin(t * 1.2)) * 0.04
+            groupRef.current.position.y = Math.abs(Math.sin(t * 1.2)) * 0.06
           }
           break
         case 'dance':
@@ -91,9 +91,9 @@ function Worker({ position, index }: { position: [number, number]; index: number
           rightArmRef.current.rotation.z = -0.1
           rightArmRef.current.rotation.x = -0.8
           if (groupRef.current) {
-            groupRef.current.position.x = position[0] + Math.sin(t * 0.15) * 2
+            groupRef.current.position.x = position[0] + Math.sin(t * 0.15) * 5
             groupRef.current.rotation.y = Math.sin(t * 0.15) > 0 ? 0 : Math.PI
-            groupRef.current.position.y = Math.abs(Math.sin(t * 0.8)) * 0.02
+            groupRef.current.position.y = Math.abs(Math.sin(t * 0.8)) * 0.03
           }
           break
         case 'idle':
@@ -113,8 +113,10 @@ function Worker({ position, index }: { position: [number, number]; index: number
   const hatMat = <meshToonMaterial color={info.hat} gradientMap={toonGradient} />
 
   // Scale factor for anime proportions — bigger head, shorter legs
+  // Varied sizes for visual interest (1.8-2.6x)
+  const workerScale = 1.8 + (index % 5) * 0.2
   return (
-    <group ref={groupRef} position={[position[0], 0, position[1]]} scale={1.2} castShadow>
+    <group ref={groupRef} position={[position[0], 0, position[1]]} scale={workerScale} castShadow>
       {/* === TORSO === */}
       {/* Main torso — rounder, chubbier */}
       <mesh position={[0, 1.05, 0]}>
