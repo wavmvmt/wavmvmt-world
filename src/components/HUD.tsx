@@ -454,6 +454,20 @@ function MobileControls() {
         JUMP
       </button>
 
+      {/* Interact button (E key equivalent) */}
+      <button
+        id="mobile-interact"
+        className="fixed bottom-28 right-6 w-12 h-12 rounded-full pointer-events-auto z-20 text-[0.5rem] font-mono font-bold"
+        style={touchBtnStyle}
+        onTouchStart={(e) => {
+          e.preventDefault()
+          window.dispatchEvent(new KeyboardEvent('keydown', { key: 'e' }))
+          setTimeout(() => window.dispatchEvent(new KeyboardEvent('keyup', { key: 'e' })), 100)
+        }}
+      >
+        E
+      </button>
+
       {/* Hint */}
       <div className="fixed bottom-1 left-1/2 -translate-x-1/2 z-20">
         <p className="text-[0.5rem]" style={{ color: 'rgba(255,220,180,0.25)' }}>

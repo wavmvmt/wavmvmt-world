@@ -37,7 +37,8 @@ export default function World3D() {
           powerPreference: 'high-performance',
         }}
         onCreated={({ gl }) => {
-          gl.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)) // Cap at 1.5x for perf
+          const isMobile = window.innerWidth < 768
+          gl.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5))
         }}
       >
         <color attach="background" args={[COLORS.bg]} />

@@ -5,8 +5,9 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
-const DUST_COUNT = 350
-const EMBER_COUNT = 40
+const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth < 768
+const DUST_COUNT = IS_MOBILE ? 120 : 350
+const EMBER_COUNT = IS_MOBILE ? 15 : 40
 
 /** Floating dust motes — Ghibli signature atmospheric particles */
 export function DustMotes() {
