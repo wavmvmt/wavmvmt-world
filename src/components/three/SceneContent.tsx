@@ -38,6 +38,8 @@ import { PlayerTrail } from './PlayerTrail'
 import { CafeAmbient } from './CafeAmbient'
 import { BulletinBoard } from './BulletinBoard'
 import { BirdSounds } from './BirdSounds'
+import { CeilingFans } from './CeilingFans'
+import { SiteClock } from './SiteClock'
 
 export function SceneContent() {
   return (
@@ -86,6 +88,8 @@ export function SceneContent() {
       <CafeAmbient />
       <BulletinBoard />
       <BirdSounds />
+      <CeilingFans />
+      <SiteClock />
       <Confetti />
       <DroneCamera />
       <IntroFlyover />

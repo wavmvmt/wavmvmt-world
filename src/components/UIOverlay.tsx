@@ -23,6 +23,7 @@ import { BuildLog } from './BuildLog'
 import { ShareCard } from './ShareCard'
 import { SessionSummary } from './SessionSummary'
 import { MilestoneCountdown } from './MilestoneCountdown'
+import { Compass } from './Compass'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -60,6 +61,7 @@ export function UIOverlay() {
       <VisitorLogger />
       <SessionSummary />
       <MilestoneCountdown />
+      {!isMobile && <Compass />}
       <KeyboardHelp />
       <ShareCard />
 
