@@ -4,8 +4,10 @@ const panelStyle = {
   background: 'rgba(26,21,32,0.85)',
   border: '1px solid rgba(240,198,116,0.12)',
   borderRadius: '16px',
-  padding: '20px',
 }
+
+const sectionTitle = "text-[0.55rem] tracking-[0.25em] uppercase mb-4"
+const bodyText = "text-sm leading-relaxed"
 
 export default function FounderPage() {
   return (
@@ -23,62 +25,123 @@ export default function FounderPage() {
           <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: 'rgba(255,200,150,0.4)' }}>
             Saadiq Khan
           </p>
-          <p className="text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(255,200,150,0.25)' }}>
-            Founder · Artist · Builder
+          <p className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,200,150,0.25)' }}>
+            Artist · Ecosystem Builder · Frequency-Based Creator
+          </p>
+          <p className="text-[0.65rem] italic max-w-lg mx-auto" style={{ color: 'rgba(255,200,150,0.3)', fontFamily: "'Playfair Display', serif" }}>
+            &ldquo;Everything is energy. Everything is movement.&rdquo;
           </p>
         </div>
 
-        {/* Arc.wav */}
-        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
-            Arc.wav
-          </h2>
-          <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,220,180,0.6)' }}>
-            Arc.wav is the creative engine behind WAVMVMT — a fusion of music production,
-            AI development, and community building. Every beat, every line of code, every
-            space designed comes through this lens of bridging art and technology.
+        {/* Core Identity */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Core</h2>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
+            Not just an artist who makes music. Not just an entrepreneur who builds businesses.
+            A frequency-based creator merging music, movement, money, healing, and technology
+            into one unified system. Someone who experiences reality through vibration —
+            who feels every kick drum in the gut and every hi-hat in the air above.
           </p>
-          <div className="flex flex-wrap gap-2">
-            {['Music Production', 'AI Development', 'Community Building', 'Sound Design',
-              'Creative Direction', 'Tech Architecture'].map((skill) => (
-              <span key={skill} className="text-[0.5rem] px-2 py-1 rounded-full tracking-wider"
-                style={{ border: '1px solid rgba(240,198,116,0.1)', color: 'rgba(255,220,180,0.3)' }}>
-                {skill}
-              </span>
+          <div className="flex flex-wrap gap-2 mt-4">
+            {[
+              { label: 'shim.wav', desc: 'The Artist' },
+              { label: 'WAVMVMT', desc: 'The System' },
+              { label: 'Arc.wav', desc: 'The Engine' },
+              { label: 'SET Ventures', desc: 'The Capital' },
+            ].map((item) => (
+              <div key={item.label} className="px-3 py-2 rounded-xl"
+                style={{ background: 'rgba(240,198,116,0.04)', border: '1px solid rgba(240,198,116,0.08)' }}>
+                <div className="text-xs font-bold" style={{ color: '#f0c674' }}>{item.label}</div>
+                <div className="text-[0.5rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>{item.desc}</div>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* SET Ventures */}
-        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
-            SET Ventures / Enterprises
-          </h2>
-          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,220,180,0.6)' }}>
-            Deal origination and capital markets. Connecting opportunities with capital
-            across real estate, technology, and creative industries.
-          </p>
+        {/* The Journey */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Journey</h2>
+
+          {/* Timeline */}
+          <div className="space-y-6">
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Foundation</div>
+              <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+                Parkour became the first language of freedom — movement as expression,
+                control, discipline, and flow. Identity built through physical mastery
+                and exploration. Learning to create paths where none exist.
+              </p>
+            </div>
+
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Music Awakening</div>
+              <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+                Transition into music and studio life. Real sessions, real collaborations,
+                real songs. Learning how to translate energy into sound. Genre-blending —
+                rap, rock, experimental — because the feeling doesn&apos;t fit in one box.
+              </p>
+            </div>
+
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Transformation</div>
+              <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+                The realization crystallized: parkour, music, wellness, community —
+                they&apos;re all the same thing. Movement through obstacles. Adapting. Flowing.
+                Creating paths where none exist. WAVMVMT became one unified idea.
+              </p>
+            </div>
+
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(225,48,108,0.4)' }}>Industry Reality</div>
+              <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+                Broken systems. Missing royalties. Millions of streams, pennies in return.
+                This phase broke trust in existing structures — but forced a level-up
+                into ownership, control, and building from scratch.
+              </p>
+            </div>
+
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.3)' }}>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: '#f0c674' }}>Now</div>
+              <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
+                Reclaiming the narrative. Building WAVMVMT as a global system.
+                Creating content daily. Preparing tours and investor decks.
+                Designing an ecosystem that doesn&apos;t exist yet — because
+                what needs to be built hasn&apos;t been built.
+              </p>
+            </div>
+          </div>
         </section>
 
-        {/* The Vision */}
-        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
-            The Vision
-          </h2>
-          <p className="text-sm leading-relaxed italic" style={{ color: 'rgba(255,220,180,0.5)', fontFamily: "'Playfair Display', serif" }}>
-            &ldquo;Full interview coming soon. We&apos;re building something that doesn&apos;t exist yet —
-            a space where wellness, fitness, music, technology, and education aren&apos;t separate
-            industries but one integrated experience. The world is always under construction,
-            just like us.&rdquo;
+        {/* Parkour Philosophy */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Parkour as Philosophy</h2>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Parkour isn&apos;t just a skill. It&apos;s the blueprint for everything.
+            Freedom. Flow state. Risk mastery. Body intelligence. Environmental awareness.
           </p>
+          <p className="text-sm leading-relaxed mt-3 italic" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
+            WAVMVMT is parkour philosophy applied to life: move through obstacles,
+            adapt, flow, create paths where none exist.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-4">
+            {['Freedom', 'Flow State', 'Risk Mastery', 'Body Intelligence', 'Adaptation'].map((v) => (
+              <div key={v} className="text-center py-2 rounded-lg text-[0.5rem] tracking-wider uppercase"
+                style={{ background: 'rgba(240,198,116,0.04)', color: 'rgba(255,220,180,0.35)' }}>
+                {v}
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Music */}
-        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
-            Music
-          </h2>
-          <div className="rounded-xl overflow-hidden mb-4">
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Music</h2>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Genre-blending. Emotional, spiritual, raw. Rap, rock, experimental — because the
+            feeling doesn&apos;t fit in one box. Every song is a frequency transmission designed to
+            heal, activate, and shift consciousness. Not just performances — transformation experiences.
+          </p>
+          <div className="rounded-xl overflow-hidden mt-4">
             <iframe
               src="https://open.spotify.com/embed/artist/4HHt60CmwO8nAS9RFBBO9u?utm_source=generator&theme=0"
               width="100%"
@@ -91,11 +154,59 @@ export default function FounderPage() {
           </div>
         </section>
 
-        {/* Links */}
-        <section className="mb-8 p-5 md:p-8 rounded-2xl text-center" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
-            Connect
-          </h2>
+        {/* The Ecosystem */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Ecosystem</h2>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Not one income stream. Not one platform. A full ecosystem where
+            every piece feeds every other piece.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {[
+              { name: 'Music & Streaming', icon: '🎶' },
+              { name: 'Events & Tours', icon: '🎪' },
+              { name: 'Content Creation', icon: '🎥' },
+              { name: 'WAVMVMT Centers', icon: '🏢' },
+              { name: 'Memberships', icon: '🏋️' },
+              { name: 'Studio Services', icon: '🎧' },
+              { name: 'Merch & Fashion', icon: '👕' },
+              { name: 'Food & Wellness', icon: '🥤' },
+              { name: 'Education & Tech', icon: '🧠' },
+              { name: 'Deal Origination', icon: '💰' },
+              { name: 'AI & Synesthesia', icon: '🤖' },
+              { name: 'Global Expansion', icon: '🌍' },
+            ].map((item) => (
+              <div key={item.name} className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                style={{ background: 'rgba(240,198,116,0.03)', border: '1px solid rgba(240,198,116,0.06)' }}>
+                <span className="text-sm">{item.icon}</span>
+                <span className="text-[0.55rem] tracking-wider" style={{ color: 'rgba(255,220,180,0.4)' }}>{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* The Mission */}
+        <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Mission</h2>
+          <p className="text-lg italic mb-4" style={{ color: 'rgba(255,220,180,0.6)', fontFamily: "'Playfair Display', serif" }}>
+            Change people&apos;s lives at scale.
+          </p>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.4)' }}>
+            Through energy. Through music. Through movement. Through money. Through community.
+          </p>
+          <div className="mt-6 px-4 py-3 rounded-xl inline-block"
+            style={{ background: 'rgba(240,198,116,0.04)', border: '1px solid rgba(240,198,116,0.1)' }}>
+            <p className="text-[0.6rem] italic" style={{ color: 'rgba(255,220,180,0.3)' }}>
+              &ldquo;You&apos;re not confused. You&apos;re early. What you&apos;re trying to build
+              is a new type of ecosystem that blends creator economy, wellness, experiences,
+              finance, and technology. That&apos;s why it feels overwhelming sometimes.&rdquo;
+            </p>
+          </div>
+        </section>
+
+        {/* Connect */}
+        <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Connect</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {[
               { label: 'Linktree', href: 'https://linktr.ee/shim.wav' },
@@ -103,12 +214,17 @@ export default function FounderPage() {
               { label: 'Twitter/X', href: 'https://x.com/shimwav' },
               { label: 'Spotify', href: 'https://open.spotify.com/artist/4HHt60CmwO8nAS9RFBBO9u' },
               { label: 'Synesthesia', href: '/visualizer' },
+              { label: 'Explore the World', href: '/world' },
             ].map((link) => (
               <a key={link.label} href={link.href}
                 target={link.href.startsWith('/') ? undefined : '_blank'}
                 rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
-                className="px-4 py-2 rounded-full text-[0.55rem] tracking-[0.1em] uppercase"
-                style={{ border: '1px solid rgba(240,198,116,0.2)', color: '#f0c674', textDecoration: 'none' }}>
+                className="px-4 py-2 rounded-full text-[0.55rem] tracking-[0.1em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)]"
+                style={{
+                  border: `1px solid ${link.label === 'Explore the World' ? 'rgba(128,212,168,0.2)' : 'rgba(240,198,116,0.2)'}`,
+                  color: link.label === 'Explore the World' ? '#80d4a8' : '#f0c674',
+                  textDecoration: 'none',
+                }}>
                 {link.label}
               </a>
             ))}
@@ -117,11 +233,10 @@ export default function FounderPage() {
 
         {/* Footer */}
         <div className="text-center">
-          <Link href="/world" className="text-[0.55rem] inline-block"
-            style={{ color: 'rgba(128,212,168,0.3)', textDecoration: 'none' }}>
-            Explore the 3D World →
-          </Link>
-          <p className="text-[0.45rem] mt-2 italic" style={{ color: 'rgba(255,200,150,0.1)' }}>
+          <p className="text-[0.5rem]" style={{ color: 'rgba(255,200,150,0.15)' }}>
+            Full interview coming soon.
+          </p>
+          <p className="text-[0.45rem] mt-1 italic" style={{ color: 'rgba(255,200,150,0.1)' }}>
             © 2026 WAVMVMT / Arc.wav. All rights reserved.
           </p>
         </div>
