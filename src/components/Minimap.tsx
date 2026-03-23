@@ -143,7 +143,7 @@ export function Minimap() {
     return (
       <button
         onClick={() => setCollapsed(false)}
-        className="fixed bottom-20 md:bottom-8 left-3 md:left-5 pointer-events-auto px-3 py-2 rounded-xl text-[0.6rem] tracking-wider uppercase cursor-pointer z-10"
+        className="fixed bottom-8 right-5 pointer-events-auto px-3 py-2 rounded-xl text-[0.6rem] tracking-wider uppercase cursor-pointer z-10"
         style={{
           background: 'rgba(26,21,32,0.75)',
           backdropFilter: 'blur(16px)',
@@ -158,7 +158,7 @@ export function Minimap() {
 
   return (
     <div
-      className="fixed bottom-20 md:bottom-8 left-3 md:left-5 pointer-events-auto z-10 rounded-2xl overflow-hidden"
+      className="fixed bottom-8 right-5 pointer-events-auto z-10 rounded-2xl overflow-hidden"
       style={{
         background: 'rgba(26,21,32,0.75)',
         backdropFilter: 'blur(16px)',
