@@ -179,7 +179,27 @@ export default function VisualizerPage() {
             SYNESTHESIA
           </div>
           <button
-            onClick={() => setShowSpotify(!showSpotify)}
+            onClick={async () => {
+              const newState = !showSpotify
+              setShowSpotify(newState)
+              // Auto-enable mic when Spotify opens so visualizer reacts
+              if (newState && source !== 'mic') {
+                try {
+                  if (audioRef.current) {
+                    audioRef.current.pause()
+                    audioRef.current.src = ''
+                  }
+                  analyzerRef.current.cleanup()
+                  await new Promise(r => setTimeout(r, 100))
+                  await analyzerRef.current.connectMicrophone()
+                  setIsPlaying(true)
+                  setTrackName('Listening via microphone — play a track on Spotify')
+                  setSource('mic')
+                } catch {
+                  // Mic failed — still show Spotify, just no visualization
+                }
+              }
+            }}
             className="text-xs px-3 py-1 rounded-full cursor-pointer"
             style={{ border: '1px solid rgba(30,215,96,0.2)', color: 'rgba(30,215,96,0.5)' }}
           >
@@ -290,8 +310,8 @@ export default function VisualizerPage() {
         <div className="fixed top-16 right-4 bottom-20 w-80 z-20 rounded-xl overflow-hidden"
           style={{ boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
           <div className="px-3 py-2 text-center" style={{ background: 'rgba(26,21,32,0.95)' }}>
-            <p className="text-[0.45rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>
-              Play Spotify below, then tap 🎤 Microphone to visualize the sound
+            <p className="text-[0.45rem]" style={{ color: 'rgba(30,215,96,0.4)' }}>
+              🎤 Mic active — play a track and watch the colors react
             </p>
           </div>
           <iframe
