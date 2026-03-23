@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { AdminDashboard } from '@/components/AdminDashboard'
+import { AdminGate } from '@/components/AdminGate'
 
 // Only these emails can access admin
 const ADMIN_EMAILS = [
@@ -24,7 +24,7 @@ export default async function AdminPage() {
   ])
 
   return (
-    <AdminDashboard
+    <AdminGate
       contestants={contestants.data || []}
       shares={shares.data || []}
       visits={visits.data || []}
