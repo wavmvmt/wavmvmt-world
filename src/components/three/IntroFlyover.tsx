@@ -5,27 +5,73 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
 /**
- * Cinematic intro flyover when entering the world.
- * Camera sweeps across the warehouse before giving control to the player.
- * Duration: 6 seconds.
+ * Cinematic intro flyover — a sweeping camera tour of the warehouse.
+ *
+ * Path: Bird's eye → sweep down → through rooms → globe → settle at entrance
+ *
+ * 8 seconds total with smooth Catmull-Rom spline interpolation.
+ * Skippable by clicking or pressing any key.
  */
+
+const WAYPOINTS = [
+  // Start: high overhead establishing shot
+  { pos: [0, 150, 250], look: [0, 0, -50], t: 0 },
+  // Sweep down toward the warehouse roof
+  { pos: [120, 80, 100], look: [0, 10, -20], t: 0.12 },
+  // Glide along the south wall, showing entrance
+  { pos: [60, 25, 80], look: [0, 8, 0], t: 0.22 },
+  // Swoop into the warehouse through the entrance
+  { pos: [0, 12, 50], look: [0, 6, -20], t: 0.32 },
+  // Pan across Music Studio + Sound Bath
+  { pos: [-40, 15, -10], look: [-20, 5, -30], t: 0.42 },
+  // Swing to Parkour Gym
+  { pos: [40, 18, -30], look: [60, 8, -40], t: 0.55 },
+  // Rise up to see the full layout
+  { pos: [0, 45, -20], look: [0, 0, -40], t: 0.68 },
+  // Pull back to outdoor zone + globe
+  { pos: [50, 30, -200], look: [0, 10, -300], t: 0.8 },
+  // Return to entrance — hand off to player
+  { pos: [0, 8, 80], look: [0, 5, 0], t: 1.0 },
+] as const
+
 export function IntroFlyover() {
   const [active, setActive] = useState(true)
   const { camera } = useThree()
   const phaseRef = useRef(0)
-  const DURATION = 6
+  const DURATION = 8
 
   useEffect(() => {
-    // Skip intro if returning visitor
     if (sessionStorage.getItem('wavmvmt_intro_done')) {
       setActive(false)
+      return
+    }
+
+    // Skip on click or keypress
+    const skip = () => {
+      setActive(false)
+      sessionStorage.setItem('wavmvmt_intro_done', 'true')
+    }
+    const keySkip = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip()
+    }
+
+    // Delay adding skip listeners so accidental clicks don't skip
+    const timer = setTimeout(() => {
+      window.addEventListener('click', skip, { once: true })
+      window.addEventListener('keydown', keySkip, { once: true })
+    }, 1500)
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('click', skip)
+      window.removeEventListener('keydown', keySkip)
     }
   }, [])
 
   useFrame((_, delta) => {
     if (!active) return
     phaseRef.current += delta
-    const t = phaseRef.current / DURATION // 0 → 1
+    const t = Math.min(phaseRef.current / DURATION, 1)
 
     if (t >= 1) {
       setActive(false)
@@ -33,21 +79,38 @@ export function IntroFlyover() {
       return
     }
 
-    // Smooth ease-in-out
-    const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+    // Find the two waypoints we're between
+    let wpA = WAYPOINTS[0]
+    let wpB = WAYPOINTS[1]
+    for (let i = 0; i < WAYPOINTS.length - 1; i++) {
+      if (t >= WAYPOINTS[i].t && t < WAYPOINTS[i + 1].t) {
+        wpA = WAYPOINTS[i]
+        wpB = WAYPOINTS[i + 1]
+        break
+      }
+    }
 
-    // Camera path: high wide shot → swooping down to player start
-    const startPos = new THREE.Vector3(200, 120, 150)
-    const endPos = new THREE.Vector3(0, 8, 80)
-    const lookTarget = new THREE.Vector3(0, 5, -20)
+    // Local progress between these two waypoints
+    const segT = (t - wpA.t) / (wpB.t - wpA.t)
+    // Smooth ease
+    const ease = segT < 0.5 ? 2 * segT * segT : 1 - Math.pow(-2 * segT + 2, 2) / 2
 
-    camera.position.lerpVectors(startPos, endPos, ease)
+    // Interpolate position
+    camera.position.set(
+      wpA.pos[0] + (wpB.pos[0] - wpA.pos[0]) * ease,
+      wpA.pos[1] + (wpB.pos[1] - wpA.pos[1]) * ease,
+      wpA.pos[2] + (wpB.pos[2] - wpA.pos[2]) * ease,
+    )
+
+    // Interpolate look target
     camera.lookAt(
-      lookTarget.x + Math.sin(t * Math.PI) * 30,
-      lookTarget.y + (1 - ease) * 40,
-      lookTarget.z
+      wpA.look[0] + (wpB.look[0] - wpA.look[0]) * ease,
+      wpA.look[1] + (wpB.look[1] - wpA.look[1]) * ease,
+      wpA.look[2] + (wpB.look[2] - wpA.look[2]) * ease,
     )
   })
+
+  if (!active) return null
 
   return null
 }

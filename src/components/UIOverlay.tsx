@@ -29,6 +29,7 @@ import { CommunityVote } from './CommunityVote'
 import { InvestorView } from './InvestorView'
 import { ContestWelcome } from './ContestWelcome'
 import { TimeLapseMode } from './three/TimeLapseMode'
+import { RoomTooltip } from './RoomTooltip'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -74,6 +75,7 @@ export function UIOverlay() {
       <ShareCard />
       <ContestWelcome />
       <TimeLapseMode />
+      <RoomTooltip />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
