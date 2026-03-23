@@ -33,6 +33,7 @@ import { RoomTooltip } from './RoomTooltip'
 import { VolumeControl } from './VolumeControl'
 import { ProgressBadge } from './ProgressBadge'
 import { WhatsNew } from './WhatsNew'
+import { RoomGalleryPopup } from './RoomGalleryPopup'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -82,6 +83,7 @@ export function UIOverlay() {
       <VolumeControl />
       <ProgressBadge />
       <WhatsNew />
+      <RoomGalleryPopup />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
