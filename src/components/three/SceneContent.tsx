@@ -51,6 +51,7 @@ import { OutdoorZone } from './OutdoorZone'
 import { ExteriorDetails } from './ExteriorDetails'
 import { GuideDog } from './GuideDog'
 import { RoomAmbience } from './RoomAmbience'
+import { RoomProximityGlow } from './RoomProximityGlow'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -87,6 +88,7 @@ export function SceneContent() {
       <CafeAmbient />
       <BirdSounds />
       <RoomAmbience />
+      <RoomProximityGlow />
 
       {/* Confetti + drone — event-driven, zero cost when idle */}
       <Confetti />
