@@ -175,7 +175,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         >
           {[
             { label: 'Business Overview', href: '/pitch', icon: '📋' },
-            { label: 'Music', href: 'https://linktr.ee/shimwav', icon: '🎵', external: true },
+            { label: 'Music & Links', href: 'https://linktr.ee/shim.wav', icon: '🎵', external: true },
             { label: 'Instagram', href: 'https://instagram.com/shim.wav', icon: '📸', external: true },
             { label: 'Twitter/X', href: 'https://x.com/shimwav', icon: '𝕏', external: true },
           ].map((link) => (

@@ -53,6 +53,7 @@ import { GuideDog } from './GuideDog'
 import { RoomAmbience } from './RoomAmbience'
 import { RoomProximityGlow } from './RoomProximityGlow'
 import { GlobalExpansionGlobe } from './GlobalExpansionGlobe'
+import { WarehouseEntrance } from './WarehouseEntrance'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -123,6 +124,7 @@ export function SceneContent() {
       <OutdoorZone />
       <ExteriorDetails />
       <GlobalExpansionGlobe />
+      <WarehouseEntrance />
     </>
   )
 }
