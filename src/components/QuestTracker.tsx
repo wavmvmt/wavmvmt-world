@@ -245,7 +245,7 @@ export function QuestTracker() {
       )}
 
       {/* Main quest panel — compact on mobile */}
-      <div className="fixed top-14 left-3 right-3 md:top-[70px] md:left-auto md:right-5 md:w-[280px] pointer-events-auto z-15 p-2.5 md:p-3 rounded-2xl" style={panelStyle}>
+      <div className="fixed top-14 left-3 right-3 md:top-[70px] md:left-auto md:right-5 md:w-[280px] lg:w-[320px] xl:w-[360px] pointer-events-auto z-15 p-2.5 md:p-3 lg:p-4 rounded-2xl" style={panelStyle}>
         <div className="flex justify-between items-center mb-2">
           <span className="text-[0.5rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(240,198,116,0.5)' }}>
             Quests {completed.size}/100
@@ -292,10 +292,10 @@ export function QuestTracker() {
                 </span>
                 <span className="text-[0.45rem] font-mono" style={{ color: 'rgba(255,220,180,0.3)' }}>#{quest.id}</span>
               </div>
-              <div className="text-[0.65rem] font-bold mb-1" style={{ color: '#f0c674' }}>
+              <div className="text-[0.65rem] lg:text-[0.8rem] font-bold mb-1" style={{ color: '#f0c674' }}>
                 {quest.title}
               </div>
-              <div className="text-[0.55rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.5)' }}>
+              <div className="text-[0.55rem] lg:text-[0.65rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.5)' }}>
                 {quest.instruction}
               </div>
             </>

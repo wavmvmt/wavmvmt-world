@@ -21,14 +21,23 @@ export default function World3D() {
         shadows={perf.enableShadows}
         camera={{ fov: 55, near: 0.5, far: 600, position: [0, 8, 80] }}
         gl={{
-          antialias: false,
+          antialias: typeof window !== 'undefined' && window.innerWidth >= 768,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
           powerPreference: 'high-performance',
         }}
         onCreated={({ gl }) => {
           const level = detectPerformanceLevel()
-          gl.setPixelRatio(Math.min(window.devicePixelRatio, level === 'low' ? 0.75 : level === 'medium' ? 1 : 1.5))
+          const isMobile = window.innerWidth < 768
+          // Desktop gets full pixel ratio, mobile gets capped
+          gl.setPixelRatio(Math.min(
+            window.devicePixelRatio,
+            isMobile ? (level === 'low' ? 0.75 : 1) : (level === 'low' ? 1 : 2)
+          ))
+          // Higher shadow quality on desktop
+          if (!isMobile && gl.shadowMap) {
+            gl.shadowMap.type = THREE.PCFSoftShadowMap
+          }
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
@@ -45,9 +54,9 @@ export default function World3D() {
         </Suspense>
 
         {perf.enablePostProcessing && (
-          <EffectComposer multisampling={4}>
-            <Bloom intensity={0.3} luminanceThreshold={0.7} luminanceSmoothing={0.9} mipmapBlur />
-            <Vignette offset={0.3} darkness={0.5} blendFunction={BlendFunction.NORMAL} />
+          <EffectComposer multisampling={typeof window !== 'undefined' && window.innerWidth >= 768 ? 8 : 4}>
+            <Bloom intensity={0.35} luminanceThreshold={0.65} luminanceSmoothing={0.9} mipmapBlur />
+            <Vignette offset={0.25} darkness={0.55} blendFunction={BlendFunction.NORMAL} />
           </EffectComposer>
         )}
       </Canvas>

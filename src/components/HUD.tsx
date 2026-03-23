@@ -74,8 +74,8 @@ function Panel({ title, icon, children, defaultOpen, position }: {
         isMobile
           ? 'top-14 left-3 right-3 max-h-[55vh] overflow-y-auto'
           : position === 'left'
-            ? 'top-5 left-5 min-w-[210px] max-h-[60vh] overflow-y-auto'
-            : 'top-5 right-5 min-w-[200px] max-h-[45vh] overflow-y-auto'
+            ? 'top-5 left-5 min-w-[240px] lg:min-w-[280px] xl:min-w-[320px] max-h-[70vh] overflow-y-auto'
+            : 'top-5 right-5 min-w-[220px] lg:min-w-[260px] xl:min-w-[300px] max-h-[55vh] overflow-y-auto'
       }`}
       style={panelStyle}
     >
@@ -156,7 +156,7 @@ export function HUD() {
       {/* Top bar */}
       <div className="absolute top-3 md:top-5 left-1/2 -translate-x-1/2 flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-2.5 rounded-2xl" style={panelStyle}>
         <span className="text-base md:text-lg font-bold" style={{ color: '#f0c674', fontFamily: "'Playfair Display', serif" }}>~W</span>
-        <span className="text-[0.55rem] md:text-[0.65rem] tracking-[0.1em] md:tracking-[0.15em] uppercase" style={{ color: 'rgba(255,220,180,0.5)' }}>
+        <span className="text-[0.55rem] md:text-[0.65rem] lg:text-[0.75rem] tracking-[0.1em] md:tracking-[0.15em] uppercase" style={{ color: 'rgba(255,220,180,0.5)' }}>
           {isMobile ? 'WAVMVMT · Building' : `WAVMVMT Center · ${FUNDRAISING.location} · Building in Progress`}
         </span>
         <span className="text-[0.5rem] font-mono" style={{ color: 'rgba(128,212,168,0.5)' }}>
@@ -185,17 +185,17 @@ export function HUD() {
       {showPanels && (
         <Panel title="Digital Construction" icon="◧" defaultOpen={!isMobile} position="right">
           {ROOMS.map((room) => (
-            <div key={room.name} className="flex items-center gap-2 my-1 md:my-1.5">
-              <span className="text-[0.55rem] md:text-[0.62rem] min-w-[65px] md:min-w-[75px]" style={{ color: 'rgba(255,220,180,0.45)' }}>
+            <div key={room.name} className="flex items-center gap-2 my-1 md:my-1.5 lg:my-2">
+              <span className="text-[0.55rem] md:text-[0.62rem] lg:text-[0.7rem] min-w-[65px] md:min-w-[75px] lg:min-w-[90px]" style={{ color: 'rgba(255,220,180,0.45)' }}>
                 {room.name}
               </span>
-              <div className="flex-1 h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <div className="flex-1 h-0.5 lg:h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
                 <div
                   className="h-full rounded-full transition-all duration-[2s]"
                   style={{ width: `${room.buildPct}%`, background: colorToHex(room.color) }}
                 />
               </div>
-              <span className="text-[0.55rem] md:text-[0.62rem] min-w-[24px] md:min-w-[28px] text-right font-mono" style={{ color: 'rgba(255,220,180,0.7)' }}>
+              <span className="text-[0.55rem] md:text-[0.62rem] lg:text-[0.7rem] min-w-[24px] md:min-w-[28px] text-right font-mono" style={{ color: 'rgba(255,220,180,0.7)' }}>
                 {room.buildPct}%
               </span>
             </div>
