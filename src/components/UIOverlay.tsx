@@ -26,6 +26,7 @@ import { MilestoneCountdown } from './MilestoneCountdown'
 import { Compass } from './Compass'
 import { TimeCapsule } from './TimeCapsule'
 import { CommunityVote } from './CommunityVote'
+import { InvestorView } from './InvestorView'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -66,6 +67,7 @@ export function UIOverlay() {
       {!isMobile && <Compass />}
       <TimeCapsule />
       <CommunityVote />
+      <InvestorView />
       <KeyboardHelp />
       <ShareCard />
 
