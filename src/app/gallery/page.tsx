@@ -1,5 +1,6 @@
+'use client'
+
 import Link from 'next/link'
-import Image from 'next/image'
 import { PageNav } from '@/components/PageNav'
 
 // Add renders here as they're placed in public/images/renders/
@@ -45,21 +46,19 @@ export default function GalleryPage() {
           {RENDERS.map((render, i) => (
             <div key={i} className="rounded-2xl overflow-hidden group cursor-pointer" style={panelStyle}>
               <div className="relative aspect-[16/10] bg-[#1a1520] overflow-hidden">
-                {/* Image — will show when files exist, placeholder otherwise */}
+                {/* Image with fallback */}
                 <div className="absolute inset-0 flex items-center justify-center"
                   style={{ background: 'rgba(26,21,32,0.5)' }}>
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={render.src}
                     alt={render.label}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
-                      // Hide broken images gracefully
                       (e.target as HTMLImageElement).style.display = 'none'
                     }}
                   />
-                  {/* Fallback placeholder */}
+                  {/* Fallback placeholder (shows when image fails) */}
                   <div className="text-center z-0">
                     <div className="text-3xl mb-2" style={{ color: 'rgba(240,198,116,0.1)' }}>~</div>
                     <div className="text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,220,180,0.15)' }}>
