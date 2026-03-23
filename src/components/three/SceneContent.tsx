@@ -48,6 +48,7 @@ import { NPCCoaches } from './NPCCoaches'
 import { DemoScreens } from './DemoScreens'
 import { QuestPath } from './QuestPath'
 import { OutdoorZone } from './OutdoorZone'
+import { ExteriorDetails } from './ExteriorDetails'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -113,6 +114,7 @@ export function SceneContent() {
       <Fireflies />
       <RainEffect />
       <OutdoorZone />
+      <ExteriorDetails />
     </>
   )
 }
