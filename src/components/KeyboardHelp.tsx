@@ -14,15 +14,21 @@ const SHORTCUTS = [
   { key: 'W A S D', action: 'Move around' },
   { key: 'Shift', action: 'Sprint (1.8x speed)' },
   { key: 'Space', action: 'Jump' },
-  { key: 'Mouse / Touch', action: 'Look around' },
+  { key: 'Mouse', action: 'Look around' },
   { section: 'Interaction' },
   { key: 'E', action: 'Interact / mount vehicle' },
   { key: 'Click', action: 'Play beat pads & bowls' },
+  { section: 'Features' },
+  { key: 'X', action: 'Share & Win (contest)' },
+  { key: 'B', action: 'Progress badge (screenshot it!)' },
+  { key: 'T', action: 'Time-lapse construction replay' },
+  { key: 'N', action: 'What\'s new changelog' },
   { section: 'Camera & Tools' },
   { key: 'C', action: 'Toggle drone camera' },
-  { key: 'P', action: 'Photo mode (screenshot)' },
-  { key: 'F', action: 'Toggle FPS counter' },
-  { key: 'H', action: 'This help screen' },
+  { key: 'P', action: 'Photo mode' },
+  { key: 'F', action: 'FPS counter' },
+  { key: 'H', action: 'Heatmap (where you\'ve walked)' },
+  { key: '?', action: 'This help screen' },
 ]
 
 export function KeyboardHelp() {
@@ -30,7 +36,7 @@ export function KeyboardHelp() {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'h' && !e.ctrlKey && !e.metaKey) setOpen(v => !v)
+      if ((e.key === '?' || e.key === '/') && !e.ctrlKey && !e.metaKey) setOpen(v => !v)
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -70,7 +76,7 @@ export function KeyboardHelp() {
         ))}
 
         <p className="text-[0.45rem] text-center mt-4" style={{ color: 'rgba(255,220,180,0.15)' }}>
-          Press H to close
+          Press ? to close
         </p>
       </div>
     </div>
