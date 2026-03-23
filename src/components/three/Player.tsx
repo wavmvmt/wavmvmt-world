@@ -69,8 +69,8 @@ export function Player() {
     // On desktop: need pointer lock. On mobile: accept touch-dispatched events
     if (!state.current.locked && !isMobile) return
 
-    // Mobile touch events have movementX/Y but they can be 0 — use larger sensitivity
-    const sensitivity = isMobile ? 0.004 : 0.002
+    // Desktop: standard FPS sensitivity. Mobile: handled by touchLook event separately
+    const sensitivity = isMobile ? 0.005 : 0.003
     const mx = e.movementX || 0
     const my = e.movementY || 0
 
@@ -91,7 +91,7 @@ export function Player() {
     // Touch look handler — custom event from mobile controls
     const handleTouchLook = (e: Event) => {
       const { dx, dy } = (e as CustomEvent).detail
-      state.current.yaw -= dx * 0.004
+      state.current.yaw -= dx * 0.006
       state.current.pitch -= dy * 0.004
       state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
     }

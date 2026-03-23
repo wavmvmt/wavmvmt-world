@@ -436,8 +436,11 @@ function MobileControls() {
     }
 
     const onLookStart = (e: TouchEvent) => {
+      // Only activate if touch is on the right half of screen
+      const touch = e.touches[0]
+      if (touch.clientX < window.innerWidth * 0.4) return // ignore left 40%
       lookActive = true
-      lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      lastTouch = { x: touch.clientX, y: touch.clientY }
     }
     const onLookMove = (e: TouchEvent) => {
       if (!lookActive) return
@@ -446,8 +449,8 @@ function MobileControls() {
       const dx = t.clientX - lastTouch.x
       const dy = t.clientY - lastTouch.y
       lastTouch = { x: t.clientX, y: t.clientY }
-      // Use custom event — MouseEvent.movementX is read-only in many browsers
-      window.dispatchEvent(new CustomEvent('touchLook', { detail: { dx, dy } }))
+      // Higher sensitivity multiplier for responsive camera
+      window.dispatchEvent(new CustomEvent('touchLook', { detail: { dx: dx * 1.5, dy: dy * 1.5 } }))
     }
     const onLookEnd = () => { lookActive = false }
 
@@ -486,10 +489,10 @@ function MobileControls() {
 
   return (
     <>
-      {/* Right side — look area */}
+      {/* Look area — covers right 60% of screen, below all UI */}
       <div
         id="mobile-look"
-        className="fixed top-0 right-0 w-1/2 h-full pointer-events-auto z-[5]"
+        className="fixed top-0 right-0 w-[60%] h-full pointer-events-auto z-[3]"
         style={{ touchAction: 'none' }}
       />
 
