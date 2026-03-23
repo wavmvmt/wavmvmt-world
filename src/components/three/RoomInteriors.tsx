@@ -216,6 +216,59 @@ function AmphitheatreInterior({ buildPct }: { buildPct: number }) {
   )
 }
 
+function EducationWingInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Classroom desks — 2 rows of 5 */}
+      {Array.from({ length: 10 }, (_, i) => {
+        const row = Math.floor(i / 5)
+        const col = i % 5
+        return (
+          <group key={`desk-${i}`} position={[-20 + col * 10, 0, -10 + row * 12]}>
+            {/* Desk surface */}
+            <mesh position={[0, 1.8, 0]}>
+              <boxGeometry args={[4, 0.15, 2.5]} />
+              <meshStandardMaterial color={COLORS.woodLt} transparent opacity={opacity * 0.4} roughness={0.8} />
+            </mesh>
+            {/* Chair */}
+            <mesh position={[0, 1, 1.5]}>
+              <boxGeometry args={[1.5, 0.15, 1.5]} />
+              <meshStandardMaterial color={COLORS.steel} transparent opacity={opacity * 0.3} />
+            </mesh>
+          </group>
+        )
+      })}
+      {/* Whiteboard / smart board */}
+      <mesh position={[0, 5, -18]}>
+        <boxGeometry args={[16, 6, 0.3]} />
+        <meshStandardMaterial color={0xf0f0f0} emissive={COLORS.sky} emissiveIntensity={0.03} transparent opacity={opacity * 0.5} />
+      </mesh>
+      {/* Computer lab stations (back wall) */}
+      {buildPct > 2 && Array.from({ length: 6 }, (_, i) => (
+        <group key={`pc-${i}`} position={[-25 + i * 10, 0, 20]}>
+          <mesh position={[0, 1.8, 0]}>
+            <boxGeometry args={[3, 0.1, 2]} />
+            <meshStandardMaterial color={0x2a2030} transparent opacity={opacity * 0.4} />
+          </mesh>
+          {/* Monitor */}
+          <mesh position={[0, 3, -0.5]}>
+            <boxGeometry args={[2, 1.5, 0.1]} />
+            <meshStandardMaterial color={0x1a1520} emissive={COLORS.sage} emissiveIntensity={0.05} transparent opacity={opacity * 0.4} />
+          </mesh>
+        </group>
+      ))}
+      {/* Schedule board — rotating class listings */}
+      <mesh position={[30, 4, 0]}>
+        <boxGeometry args={[0.3, 8, 12]} />
+        <meshStandardMaterial color={0x1a1520} emissive={COLORS.gold} emissiveIntensity={0.06} transparent opacity={opacity * 0.5} />
+      </mesh>
+    </group>
+  )
+}
+
 export function RoomInteriors() {
   return (
     <group>
@@ -227,6 +280,7 @@ export function RoomInteriors() {
           'Front Desk': FrontDeskInterior,
           'Weight Training': WeightTrainingInterior,
           'Amphitheatre': AmphitheatreInterior,
+          'Education Wing': EducationWingInterior,
         }[room.name]
 
         if (!Interior) return null

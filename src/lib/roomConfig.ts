@@ -119,6 +119,40 @@ export const ROOMS: RoomDef[] = [
     vision: 'Intentional rest as a practice', buildCost: 900_000,
     features: ['Massage therapy rooms (4)', 'Cryotherapy chamber', 'Compression therapy', 'Salt room / halotherapy', 'Relaxation lounge', 'Aromatherapy steam'],
   },
+  {
+    name: 'Education Wing', x: 0, z: 200, w: 120, d: 70, h: 26,
+    color: COLORS.gold, buildPct: 0, sqft: 4000,
+    vision: 'Essential skills for the whole person — business, tech, and life', buildCost: 1_100_000,
+    features: ['2 classrooms (30-seat)', 'Computer lab (20 stations)', 'Workshop/maker space', 'Presentation stage', 'Mentorship lounge', 'Digital schedule board'],
+  },
+]
+
+/** Outdoor campus rooms (Phase 2 — shown as exterior zone) */
+export const OUTDOOR_ZONES = [
+  {
+    name: 'Sports Field', x: 0, z: -320, w: 160, d: 100, h: 0,
+    color: COLORS.sage, buildPct: 0,
+    vision: 'Retractable-roof multi-sport field — open in summer, covered in winter',
+    features: ['Soccer/football pitch', 'Modular retractable tent roof', 'LED field lighting', 'Spectator seating (200)', 'All-weather turf surface'],
+  },
+  {
+    name: 'Skatepark', x: -140, z: -320, w: 80, d: 70, h: 0,
+    color: COLORS.lavender, buildPct: 0,
+    vision: 'Bowl and street — skate culture meets community',
+    features: ['Bowl section (6ft deep)', 'Street section (rails, ledges, stairs)', 'Spectator seating', 'Night lighting', 'Connected to Amphitheatre viewing'],
+  },
+  {
+    name: 'Parking Garage', x: 160, z: -320, w: 70, d: 80, h: 30,
+    color: COLORS.steel, buildPct: 0,
+    vision: 'Multi-level parking with rooftop terrace connected to main building',
+    features: ['3-level parking (200 spots)', 'Rooftop terrace bar & lounge', 'EV charging stations (20)', 'Ground floor retail space', 'Skybridge to main building'],
+  },
+  {
+    name: 'Outdoor Training', x: 140, z: -280, w: 60, d: 50, h: 0,
+    color: COLORS.amber, buildPct: 0,
+    vision: 'Train under the sky — calisthenics, sprints, and agility',
+    features: ['Calisthenics bars & rigs', 'Sprint track (100m)', 'Agility course', 'Pull-up stations', 'Connected to indoor Parkour Gym'],
+  },
 ]
 
 /** Total facility square footage */

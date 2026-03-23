@@ -70,6 +70,46 @@ export const PHASE_2 = {
   ],
 }
 
+// Phase 3: Outdoor Campus
+export const PHASE_3 = {
+  name: 'Outdoor Campus',
+  additionalCost: 8_000_000,
+  status: 'vision' as const,
+  description: 'Retractable-roof sports field, skatepark, outdoor training, and parking garage with rooftop terrace.',
+  components: [
+    { name: 'Retractable-Roof Field', cost: 3_500_000, features: ['Soccer/football', 'Modular tent system', 'LED lighting', 'All-weather turf'] },
+    { name: 'Skatepark', cost: 1_200_000, features: ['Bowl section', 'Street section', 'Night lighting', 'Spectator seating'] },
+    { name: 'Parking Garage', cost: 2_800_000, features: ['200 spots (3 levels)', 'Rooftop terrace', 'EV charging (20)', 'Ground floor retail'] },
+    { name: 'Outdoor Training', cost: 500_000, features: ['Calisthenics rigs', 'Sprint track', 'Agility course'] },
+  ],
+}
+
+// Education & Skills Programming (runs in Education Wing)
+export const EDUCATION_PROGRAMS = {
+  categories: [
+    {
+      name: 'Business & Entrepreneurship',
+      classes: ['Startup Fundamentals', 'Pitch Practice Lab', 'Business Plan Workshop', 'Marketing 101', 'Sales & Negotiation'],
+    },
+    {
+      name: 'Financial Literacy',
+      classes: ['Budgeting & Saving', 'Investing Basics', 'Tax Planning', 'Credit Building', 'Real Estate Fundamentals'],
+    },
+    {
+      name: 'Tech & AI',
+      classes: ['Intro to Coding (Python)', 'Web Development Bootcamp', 'AI & Machine Learning', 'App Development', 'Cybersecurity Basics'],
+    },
+    {
+      name: 'Creative Skills',
+      classes: ['Music Production', 'Video Editing', 'Graphic Design', 'Photography', 'Content Creation'],
+    },
+    {
+      name: 'Life Skills',
+      classes: ['Mental Health & EQ', 'Nutrition & Meal Prep', 'Public Speaking', 'Leadership', 'Time Management'],
+    },
+  ],
+}
+
 export function formatCurrency(amount: number): string {
   if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M`
   if (amount >= 1_000) return `$${(amount / 1_000).toFixed(0)}K`
