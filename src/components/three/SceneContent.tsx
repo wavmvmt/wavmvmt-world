@@ -50,6 +50,7 @@ import { QuestPath } from './QuestPath'
 import { OutdoorZone } from './OutdoorZone'
 import { ExteriorDetails } from './ExteriorDetails'
 import { GuideDog } from './GuideDog'
+import { RoomAmbience } from './RoomAmbience'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -85,6 +86,7 @@ export function SceneContent() {
       <AmbientAudio />
       <CafeAmbient />
       <BirdSounds />
+      <RoomAmbience />
 
       {/* Confetti + drone — event-driven, zero cost when idle */}
       <Confetti />
