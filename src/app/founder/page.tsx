@@ -165,27 +165,45 @@ export default function FounderPage() {
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Active Ventures</h2>
           <div className="space-y-4">
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Varunex Capital Advisory</div>
-              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
-                Working with Nick Patterson on capital advisory. Actively working with developers
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-bold" style={{ color: '#f0c674' }}>Varunex Capital Advisory & Jupiter Digital Strategies</span>
+              </div>
+              <p className="text-[0.6rem] mb-1.5" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Working with{' '}
+                <a href="https://www.linkedin.com/in/nicholas-patterson-651053151/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Nick Patterson</a>
+                {' '}on capital advisory. Actively working with developers
                 in the 8-12 figure deal range with projects currently in motion at that level.
               </p>
             </div>
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
               <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>SET Ventures / Enterprises</div>
-              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
-                Co-founded with Chris Marchese and Tyler Ferguson. Deal origination, capital markets,
+              <p className="text-[0.6rem] mb-1.5" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Co-founded with{' '}
+                <a href="https://www.linkedin.com/in/thechrismarchese/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Chris Marchese</a>
+                {' '}and{' '}
+                <a href="https://www.linkedin.com/in/tylerjamesferguson/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Tyler Ferguson</a>
+                . Deal origination, capital markets,
                 marketing (SET Marketing), and enterprise solutions (SET Enterprises).
               </p>
+              <div className="flex gap-2">
+                <a href="https://www.instagram.com/thechrismarchese/" target="_blank" rel="noopener noreferrer"
+                  className="text-[0.45rem] px-2 py-0.5 rounded-full" style={{ border: '1px solid rgba(225,48,108,0.15)', color: 'rgba(225,48,108,0.5)', textDecoration: 'none' }}>
+                  Chris IG
+                </a>
+              </div>
             </div>
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Contraband Beauty</div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>
+                <a href="https://contrabandbeautycbd.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Contraband Beauty</a>
+              </div>
               <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
                 Creative Director alongside Kim Allegra. Brand direction, visual identity, and creative strategy.
               </p>
             </div>
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Sarah R Adams</div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>
+                <a href="https://www.instagram.com/sarahradamsofficial/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Sarah R Adams</a>
+              </div>
               <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
                 Creative Director &amp; Executive Assistant. Strategic support and creative operations.
               </p>
@@ -198,15 +216,22 @@ export default function FounderPage() {
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>WAVMVMT Team</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { name: 'Shim', role: 'Founder / Visionary' },
-              { name: 'Cody Haze', role: 'Photographer & Creative Director' },
-              { name: 'Nathan', role: 'Team' },
-              { name: 'Marvin', role: 'Team' },
-              { name: 'Gra', role: 'Team' },
+              { name: 'Shim', role: 'Founder / Visionary', link: 'https://instagram.com/shim.wav' },
+              { name: 'Cody Haze', role: 'Photographer & Creative Director', link: 'https://www.instagram.com/codyhaze/' },
+              { name: 'Nathan', role: 'Team', link: '' },
+              { name: 'Marvin', role: 'Team', link: '' },
+              { name: 'Gra', role: 'Team', link: '' },
             ].map((member) => (
               <div key={member.name} className="p-3 rounded-xl text-center"
                 style={{ background: 'rgba(240,198,116,0.03)', border: '1px solid rgba(240,198,116,0.08)' }}>
-                <div className="text-xs font-bold mb-0.5" style={{ color: 'rgba(255,220,180,0.6)' }}>{member.name}</div>
+                {member.link ? (
+                  <a href={member.link} target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-bold mb-0.5 block" style={{ color: 'rgba(255,220,180,0.6)', textDecoration: 'none' }}>
+                    {member.name}
+                  </a>
+                ) : (
+                  <div className="text-xs font-bold mb-0.5" style={{ color: 'rgba(255,220,180,0.6)' }}>{member.name}</div>
+                )}
                 <div className="text-[0.45rem] tracking-wider uppercase" style={{ color: 'rgba(255,220,180,0.25)' }}>{member.role}</div>
               </div>
             ))}
