@@ -336,6 +336,9 @@ export default function FounderPage() {
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Dedication</h2>
           <p className="text-sm leading-relaxed italic" style={{ color: 'rgba(255,220,180,0.5)', fontFamily: "'Playfair Display', serif" }}>
             For my family and my friends — I love you more than words will ever carry.
+            You showed me what support looks like when it&apos;s real. What love feels like
+            when it doesn&apos;t ask for anything back. What faith means when the vision
+            is still just a feeling in your chest and nothing on paper yet.
             Everything I build, I build because of you.
           </p>
           <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,220,180,0.45)' }}>
