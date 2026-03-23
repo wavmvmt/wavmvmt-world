@@ -19,8 +19,19 @@ export default function PitchPage() {
             style={{ fontFamily: "'Playfair Display', serif", color: 'rgba(255,240,220,0.9)' }}>
             WAVMVMT
           </h1>
-          <p className="text-xs tracking-[0.3em] uppercase" style={{ color: 'rgba(255,200,150,0.3)' }}>
-            The First App for the Whole Person
+          <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: 'rgba(255,200,150,0.3)' }}>
+            A New Renaissance
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-2">
+            {['Freedom Through Expression', 'Elevating Consciousness', 'Community'].map((val) => (
+              <span key={val} className="text-[0.5rem] tracking-[0.15em] uppercase px-3 py-1 rounded-full"
+                style={{ border: '1px solid rgba(240,198,116,0.1)', color: 'rgba(255,200,150,0.25)' }}>
+                {val}
+              </span>
+            ))}
+          </div>
+          <p className="text-[0.65rem] italic max-w-md mx-auto" style={{ color: 'rgba(255,200,150,0.2)', fontFamily: "'Playfair Display', serif" }}>
+            &ldquo;We don&apos;t build spaces. We build the conditions for people to become who they were meant to be.&rdquo;
           </p>
         </div>
 
@@ -28,10 +39,10 @@ export default function PitchPage() {
         <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
           <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Vision</h2>
           <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,220,180,0.6)' }}>
-            WAVMVMT is building a global network of wellness, fitness, music, tech, and education centers.
-            Each location combines world-class facilities with community-driven programming —
-            parkour gyms, sound baths, music studios, recovery suites, cafés, amphitheatres,
-            and education wings — all under one roof.
+            WAVMVMT is building a global network of spaces where wellness, fitness, music,
+            technology, and education converge under one roof. Not a gym. Not a studio.
+            Not a school. All of it — designed for the whole person. A place where you
+            train your body, expand your mind, create your art, and find your people.
           </p>
         </section>
 
