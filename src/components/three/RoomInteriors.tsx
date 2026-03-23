@@ -269,6 +269,105 @@ function EducationWingInterior({ buildPct }: { buildPct: number }) {
   )
 }
 
+function PhotoStudioInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Cyclorama wall — curved backdrop */}
+      <mesh position={[0, 5, -14]} rotation={[0, 0, 0]}>
+        <cylinderGeometry args={[16, 16, 10, 16, 1, true, -Math.PI * 0.4, Math.PI * 0.8]} />
+        <meshStandardMaterial color={0xf0f0f0} transparent opacity={opacity * 0.2} roughness={0.95} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* Lighting stands — 3 point setup */}
+      {[[-8, 5], [8, 5], [0, -8]].map(([x, z], i) => (
+        <group key={i} position={[x, 0, z]}>
+          {/* Stand pole */}
+          <mesh position={[0, 3, 0]}>
+            <cylinderGeometry args={[0.08, 0.08, 6, 6]} />
+            <meshStandardMaterial color={COLORS.steel} metalness={0.5} transparent opacity={opacity * 0.4} />
+          </mesh>
+          {/* Light head */}
+          <mesh position={[0, 5.5, 0]}>
+            <cylinderGeometry args={[0.8, 0.3, 0.5, 8]} />
+            <meshStandardMaterial color={COLORS.steel} metalness={0.6} transparent opacity={opacity * 0.4} />
+          </mesh>
+          {/* Softbox */}
+          <mesh position={[0, 5.5, 0.5]}>
+            <boxGeometry args={[2.5, 2.5, 0.3]} />
+            <meshStandardMaterial color={0xf0f0f0} transparent opacity={opacity * 0.15} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Tethered shooting station — desk + monitor */}
+      <mesh position={[12, 1.5, 5]}>
+        <boxGeometry args={[4, 0.15, 2]} />
+        <meshStandardMaterial color={COLORS.woodDk} transparent opacity={opacity * 0.4} />
+      </mesh>
+      <mesh position={[12, 2.8, 4.5]}>
+        <boxGeometry args={[2.5, 1.8, 0.1]} />
+        <meshStandardMaterial color={0x1a1520} emissive={COLORS.sky} emissiveIntensity={0.04} transparent opacity={opacity * 0.4} />
+      </mesh>
+    </group>
+  )
+}
+
+function VideoStudioInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Green screen wall */}
+      <mesh position={[0, 4, -14]}>
+        <planeGeometry args={[18, 8]} />
+        <meshStandardMaterial color={0x00b140} transparent opacity={opacity * 0.2} roughness={0.95} />
+      </mesh>
+
+      {/* Camera on tripod — center */}
+      <group position={[0, 0, 5]}>
+        <mesh position={[0, 2.5, 0]}>
+          <cylinderGeometry args={[0.05, 0.08, 5, 6]} />
+          <meshStandardMaterial color={COLORS.steel} metalness={0.5} transparent opacity={opacity * 0.4} />
+        </mesh>
+        {/* Camera body */}
+        <mesh position={[0, 4.8, 0]}>
+          <boxGeometry args={[1, 0.7, 1.2]} />
+          <meshStandardMaterial color={0x1a1015} transparent opacity={opacity * 0.5} />
+        </mesh>
+      </group>
+
+      {/* Editing suite — 3 workstations */}
+      {[-8, 0, 8].map((x, i) => (
+        <group key={i} position={[x, 0, 12]}>
+          <mesh position={[0, 1.5, 0]}>
+            <boxGeometry args={[4, 0.12, 2]} />
+            <meshStandardMaterial color={COLORS.woodDk} transparent opacity={opacity * 0.4} />
+          </mesh>
+          {/* Dual monitors */}
+          {[-0.9, 0.9].map((dx, j) => (
+            <mesh key={j} position={[dx, 2.8, -0.5]}>
+              <boxGeometry args={[1.5, 1.2, 0.08]} />
+              <meshStandardMaterial color={0x1a1520} emissive={COLORS.rose} emissiveIntensity={0.03} transparent opacity={opacity * 0.4} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* Teleprompter */}
+      {buildPct > 3 && (
+        <mesh position={[0, 3.5, 3]} rotation={[0.3, 0, 0]}>
+          <boxGeometry args={[2, 1.5, 0.08]} />
+          <meshStandardMaterial color={0x1a1520} emissive={COLORS.gold} emissiveIntensity={0.03} transparent opacity={opacity * 0.3} />
+        </mesh>
+      )}
+    </group>
+  )
+}
+
 function RecoverySuiteInterior({ buildPct }: { buildPct: number }) {
   if (buildPct < 1) return null
   const opacity = Math.min(1, buildPct / 100)
@@ -456,6 +555,8 @@ export function RoomInteriors() {
           'Spa & Wellness': SpaWellnessInterior,
           'Cafe & Lounge': CafeLoungeInterior,
           'Yoga Room': YogaRoomInterior,
+          'Photo Studio': PhotoStudioInterior,
+          'Video Studio': VideoStudioInterior,
         }[room.name]
 
         if (!Interior) return null

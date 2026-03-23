@@ -67,7 +67,7 @@ export const ROOMS: RoomDef[] = [
   },
   {
     name: 'Cafe & Lounge', x: -105, z: 55, w: 100, d: 75, h: 24,
-    color: COLORS.sky, buildPct: 0, sqft: 3500,
+    color: COLORS.sky, buildPct: 3, sqft: 3500,
     vision: 'Where community happens between sessions', buildCost: 950_000,
     features: ['Full espresso bar & kitchen', '40-seat lounge area', 'Merch display wall', 'Community event board', 'Co-working nooks', 'Smoothie & juice bar'],
   },
@@ -79,7 +79,7 @@ export const ROOMS: RoomDef[] = [
   },
   {
     name: 'Yoga Room', x: -190, z: -35, w: 60, d: 60, h: 24,
-    color: COLORS.gold, buildPct: 0, sqft: 2000,
+    color: COLORS.gold, buildPct: 3, sqft: 2000,
     vision: 'Mind-body connection in a sacred space', buildCost: 600_000,
     features: ['Heated bamboo floor', 'Full mirror wall', '30 premium yoga mats', 'Aerial silks rigging', 'Sound system for flow', 'Natural light panels'],
   },
@@ -97,25 +97,25 @@ export const ROOMS: RoomDef[] = [
   },
   {
     name: 'Photo Studio', x: 190, z: 70, w: 60, d: 55, h: 24,
-    color: COLORS.lavender, buildPct: 0, sqft: 1500,
+    color: COLORS.lavender, buildPct: 2, sqft: 1500,
     vision: 'Visual storytelling made accessible', buildCost: 500_000,
     features: ['2 shooting bays', 'Cyclorama wall (white/green)', 'Professional lighting kits', 'Backdrop system (12 options)', 'Tethered shooting station', 'Client review area'],
   },
   {
     name: 'Video Studio', x: -190, z: 70, w: 60, d: 55, h: 24,
-    color: COLORS.sky, buildPct: 0, sqft: 2000,
+    color: COLORS.sky, buildPct: 2, sqft: 2000,
     vision: 'Broadcast-ready content from day one', buildCost: 650_000,
     features: ['Sound stage (20x15ft)', 'Green screen wall', 'Editing suite (3 stations)', 'Live streaming setup', 'Teleprompter system', 'Podcast recording booth'],
   },
   {
     name: 'Recovery Suite', x: -100, z: -190, w: 100, d: 70, h: 24,
-    color: COLORS.sky, buildPct: 0, sqft: 4000,
+    color: COLORS.sky, buildPct: 2, sqft: 4000,
     vision: 'Where performance meets restoration', buildCost: 1_400_000,
     features: ['Finnish sauna (180°F)', 'Cold plunge pool (39°F)', 'Ice bath stations', 'Steam room', 'Infrared sauna pods', 'Contrast therapy circuit'],
   },
   {
     name: 'Spa & Wellness', x: 100, z: -190, w: 80, d: 60, h: 22,
-    color: COLORS.cream, buildPct: 0, sqft: 2500,
+    color: COLORS.cream, buildPct: 2, sqft: 2500,
     vision: 'Intentional rest as a practice', buildCost: 900_000,
     features: ['Massage therapy rooms (4)', 'Cryotherapy chamber', 'Compression therapy', 'Salt room / halotherapy', 'Relaxation lounge', 'Aromatherapy steam'],
   },
