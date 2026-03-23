@@ -189,13 +189,28 @@ export default function HomePage() {
           </form>
         </div>
 
-        {/* Stats link */}
-        <div className="mt-6">
-          <Link href="/stats"
-            className="text-[0.55rem] tracking-[0.2em] uppercase"
-            style={{ color: 'rgba(255,200,150,0.25)', textDecoration: 'none', borderBottom: '1px solid rgba(255,200,150,0.1)' }}>
-            View Full Project Breakdown →
-          </Link>
+        {/* Explore more */}
+        <div className="mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
+          {[
+            { label: '🎨 Synesthesia', href: '/visualizer' },
+            { label: '~ Founder', href: '/founder' },
+            { label: '📋 Business Overview', href: '/pitch' },
+            { label: '🎵 Music', href: 'https://linktr.ee/shim.wav', external: true },
+            { label: '📊 Stats', href: '/stats' },
+          ].map((link) => (
+            <a key={link.label}
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+              className="px-3 py-1.5 rounded-full text-[0.5rem] md:text-[0.55rem] tracking-[0.1em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)]"
+              style={{
+                border: '1px solid rgba(240,198,116,0.15)',
+                color: 'rgba(255,220,180,0.45)',
+                textDecoration: 'none',
+              }}>
+              {link.label}
+            </a>
+          ))}
         </div>
 
         {/* Social share */}
