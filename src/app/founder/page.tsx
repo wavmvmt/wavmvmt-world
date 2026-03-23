@@ -372,7 +372,9 @@ export default function FounderPage() {
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
             Found wandering the streets as a little pup — like he hopped a portal
             between dimensions specifically for this. A soul that showed up
-            exactly when and where it was supposed to.
+            exactly when and where it was supposed to. He brought fun, play,
+            energy, and love back into life in a way that reminded everything
+            what those things feel like when they&apos;re real and unconditional.
             Now he&apos;s co-pilot on every adventure, every site visit, every new city.
             The plan is simple — tour him around the world, let him play on every
             site we build, make friends in every country. He loves meeting people,
