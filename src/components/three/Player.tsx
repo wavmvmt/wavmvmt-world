@@ -5,8 +5,8 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS, ROOMS } from '@/lib/roomConfig'
 
-const WALK_SPEED = 18
-const SPRINT_SPEED = 32
+const WALK_SPEED = 12
+const SPRINT_SPEED = 22
 const JUMP_FORCE = 7.5
 const GRAVITY = -20
 const GROUND_Y = 0

@@ -423,11 +423,20 @@ function MobileControls() {
       const dx = ((cx - rect.left) / rect.width - 0.5) * 2
       const dy = ((cy - rect.top) / rect.height - 0.5) * 2
 
+      // Always move forward when joystick is active, camera turns with left/right
       const newKeys = new Set<string>()
-      if (dy < -0.3) newKeys.add('w')
-      if (dy > 0.3) newKeys.add('s')
-      if (dx < -0.3) newKeys.add('a')
-      if (dx > 0.3) newKeys.add('d')
+      if (dy < -0.2) newKeys.add('w') // push up = move forward
+      if (dy > 0.4) newKeys.add('s') // push down = move back (harder to trigger)
+
+      // Left/right on joystick TURNS the camera instead of strafing
+      // This makes mobile movement intuitive — push where you want to go
+      if (Math.abs(dx) > 0.2) {
+        window.dispatchEvent(new CustomEvent('touchLook', {
+          detail: { dx: dx * 3, dy: 0 } // smooth camera rotation
+        }))
+        // Also move forward slightly when turning
+        if (Math.abs(dy) < 0.3) newKeys.add('w')
+      }
 
       for (const k of activeKeys) {
         if (!newKeys.has(k)) dispatch(k, 'keyup')
