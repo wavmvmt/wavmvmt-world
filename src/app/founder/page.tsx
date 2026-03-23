@@ -333,20 +333,31 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Dedication</h2>
           <p className="text-sm leading-relaxed italic" style={{ color: 'rgba(255,220,180,0.5)', fontFamily: "'Playfair Display', serif" }}>
-            For my family and my friends — I love you more than I know how to say.
+            For my family and my friends — I love you more than words will ever carry.
+            Everything I build, I build because of you.
+          </p>
+          <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,220,180,0.45)' }}>
+            And for my niece and nephew — this is for you. I want you to grow up
+            in a world where someone who looks like you, who comes from where you
+            come from, built something beautiful with their bare hands and refused
+            to stop. I want you to see this and know, deeply and without question,
+            that the size of your dreams is allowed. That the things you imagine
+            late at night when no one&apos;s watching — those are the things worth
+            building. That the world will try to make your vision smaller. Don&apos;t
+            let it. I didn&apos;t.
           </p>
           <p className="text-sm leading-relaxed italic mt-3" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
-            For my niece and nephew, and for every kid who has a vision too big
-            for the room they&apos;re in. Dream anyway. Build anyway. The world will
-            catch up.
+            For every kid sitting somewhere right now with a dream that feels
+            too big and a room that feels too small — keep going. The room is
+            about to get a lot bigger.
           </p>
-          <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,220,180,0.35)' }}>
-            This space is an amalgamation of everything that&apos;s helped people develop —
-            movement, sound, stillness, knowledge, community. Not because it&apos;s trendy,
-            but because the science is clear: when you develop the whole person,
-            everything changes. The neuroscience of flow states, the psychology of
-            environment design, the physiology of recovery — it all points to the same
-            truth. We grow best when we grow together, in spaces designed for growth.
+          <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,220,180,0.3)' }}>
+            This space exists because the science is clear and the heart knows
+            what the research confirms: when you develop the whole person —
+            body, mind, spirit, community — everything transforms. Flow states,
+            environment design, recovery physiology, the neuroscience of
+            belonging. It all points to the same truth. We grow best when we
+            grow together, in spaces designed for exactly that.
           </p>
         </section>
 
