@@ -309,6 +309,47 @@ export default function FounderPage() {
           </div>
         </section>
 
+        {/* Self-Taught Builder */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>On Building</h2>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Serious web design started only last year. Coding and systems architecture
+            even more recently. But the thinking was always there — patterns from
+            music production, spatial awareness from parkour, operational instincts
+            from deal-making — all converging into a new kind of literacy. The technical
+            skills arrived when they were needed, shaped by everything that came before.
+          </p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            This entire project — the 3D world you&apos;re walking through, the synesthesia
+            visualizer, the systems holding it all together — was built by bringing
+            processes and thinking from every discipline into one practice. Proof that
+            the most interesting builders are the ones who arrive from unexpected directions.
+            Built with Claude Code and Arc.wav — proving that the right tools in
+            the right hands can bring any vision to life.
+          </p>
+        </section>
+
+        {/* Dedication */}
+        <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Dedication</h2>
+          <p className="text-sm leading-relaxed italic" style={{ color: 'rgba(255,220,180,0.5)', fontFamily: "'Playfair Display', serif" }}>
+            For my family and my friends — I love you more than I know how to say.
+          </p>
+          <p className="text-sm leading-relaxed italic mt-3" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
+            For my niece and nephew, and for every kid who has a vision too big
+            for the room they&apos;re in. Dream anyway. Build anyway. The world will
+            catch up.
+          </p>
+          <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,220,180,0.35)' }}>
+            This space is an amalgamation of everything that&apos;s helped people develop —
+            movement, sound, stillness, knowledge, community. Not because it&apos;s trendy,
+            but because the science is clear: when you develop the whole person,
+            everything changes. The neuroscience of flow states, the psychology of
+            environment design, the physiology of recovery — it all points to the same
+            truth. We grow best when we grow together, in spaces designed for growth.
+          </p>
+        </section>
+
         {/* Connect */}
         <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Connect</h2>
