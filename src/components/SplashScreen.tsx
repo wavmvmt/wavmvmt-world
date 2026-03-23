@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 export function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [phase, setPhase] = useState<'intro' | 'ready' | 'fading'>('intro')
   const [visitors, setVisitors] = useState(0)
+  const [videoMuted, setVideoMuted] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => setPhase('ready'), 1500)
@@ -33,24 +34,33 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         background: 'linear-gradient(160deg, #1a1520 0%, #2a1f35 30%, #1f2a3a 60%, #1a2030 100%)',
       }}
     >
-      {/* Animated dust particles behind everything */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 30 }, (_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: `${1 + Math.random() * 2}px`,
-              height: `${1 + Math.random() * 2}px`,
-              background: 'rgba(240,198,116,0.15)',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float-up ${8 + Math.random() * 12}s linear infinite`,
-              animationDelay: `${Math.random() * 8}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted={videoMuted}
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.25 }}
+      >
+        <source src="https://znhilrrgmxwedlqs.private.blob.vercel-storage.com/november%2025th%20beat%201%20landscape.mov" type="video/quicktime" />
+      </video>
+
+      {/* Dark overlay on video */}
+      <div className="absolute inset-0" style={{ background: 'rgba(26,21,32,0.7)' }} />
+
+      {/* Sound toggle for video */}
+      <button
+        onClick={() => setVideoMuted(!videoMuted)}
+        className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-[0.5rem] tracking-wider uppercase cursor-pointer pointer-events-auto"
+        style={{
+          background: 'rgba(26,21,32,0.6)',
+          border: '1px solid rgba(240,198,116,0.15)',
+          color: videoMuted ? 'rgba(255,220,180,0.3)' : '#f0c674',
+        }}
+      >
+        {videoMuted ? '🔇 Sound Off' : '🔊 Sound On'}
+      </button>
 
       {/* Concentric rings — construction target */}
       <div className="absolute opacity-[0.03]">
