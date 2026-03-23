@@ -186,10 +186,10 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
               href={link.href}
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              className="px-3 py-1.5 rounded-full text-[0.5rem] tracking-[0.1em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)]"
+              className="px-3 py-1.5 rounded-full text-[0.55rem] tracking-[0.1em] uppercase transition-all hover:border-[rgba(240,198,116,0.5)]"
               style={{
-                border: '1px solid rgba(240,198,116,0.1)',
-                color: 'rgba(255,220,180,0.35)',
+                border: '1px solid rgba(240,198,116,0.2)',
+                color: 'rgba(255,220,180,0.55)',
                 textDecoration: 'none',
               }}
               onMouseEnter={(e) => {
@@ -223,8 +223,11 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
       {/* Bottom tagline */}
       <div className="absolute bottom-8 text-center transition-all duration-[2s] delay-1000"
         style={{ opacity: phase === 'ready' ? 1 : 0 }}>
-        <p className="text-[0.55rem] italic" style={{ color: 'rgba(255,200,150,0.1)' }}>
-          Built by Arc.wav · Built for builders · The world is always under construction — just like us
+        <p className="text-[0.6rem]" style={{ color: 'rgba(255,200,150,0.3)' }}>
+          Built by Arc.wav · Powered by Claude (Anthropic) · Planning by Intrinzic.wav
+        </p>
+        <p className="text-[0.5rem] italic mt-1" style={{ color: 'rgba(255,200,150,0.2)' }}>
+          The world is always under construction — just like us
         </p>
       </div>
 
