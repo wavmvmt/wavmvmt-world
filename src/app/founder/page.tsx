@@ -394,10 +394,18 @@ export default function FounderPage() {
         {/* Special Thanks */}
         <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Special Thanks</h2>
-          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
             To everyone who believed early, showed up consistently, and helped
             shape this vision through their presence, energy, and truth.
             You know who you are. More acknowledgments coming soon.
+          </p>
+          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,220,180,0.35)' }}>
+            Special recognition to Dan Iaboni and Monkey Vault, and Trevor de Groot
+            and PlayProject — for being huge inspirations in this vision. Watching
+            them build their spaces from nothing into something alive, and having the
+            honour to help build parts of those gyms, planted the seed for everything
+            WAVMVMT is becoming. The blueprint was learned by being in the room
+            while it was being built.
           </p>
         </section>
 
