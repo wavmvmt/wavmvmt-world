@@ -28,6 +28,7 @@ import { TimeCapsule } from './TimeCapsule'
 import { CommunityVote } from './CommunityVote'
 import { InvestorView } from './InvestorView'
 import { ContestWelcome } from './ContestWelcome'
+import { TimeLapseMode } from './three/TimeLapseMode'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -72,6 +73,7 @@ export function UIOverlay() {
       <KeyboardHelp />
       <ShareCard />
       <ContestWelcome />
+      <TimeLapseMode />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
