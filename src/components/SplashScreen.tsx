@@ -137,6 +137,19 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           Toronto, ON · Wellness · Fitness · Music · Tech · Education
         </p>
 
+        {/* Pillars */}
+        <div
+          className="flex flex-wrap justify-center gap-2 mb-4 transition-all duration-[2s] delay-750"
+          style={{ opacity: phase === 'intro' ? 0 : 1 }}
+        >
+          {['Freedom Through Expression', 'Elevating Consciousness', 'Community'].map((p) => (
+            <span key={p} className="text-[0.4rem] md:text-[0.45rem] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full"
+              style={{ border: '1px solid rgba(240,198,116,0.08)', color: 'rgba(255,200,150,0.2)' }}>
+              {p}
+            </span>
+          ))}
+        </div>
+
         {/* Contest teaser */}
         <div
           className="mb-8 px-4 py-1.5 rounded-full inline-block transition-all duration-[2s] delay-800"
