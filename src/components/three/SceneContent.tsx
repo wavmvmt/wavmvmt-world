@@ -57,6 +57,7 @@ import { WarehouseEntrance } from './WarehouseEntrance'
 import { LiveWeather } from './LiveWeather'
 import { FootprintHeatmap } from './FootprintHeatmap'
 import { ConstructionCrane } from './ConstructionCrane'
+import { InspirationalQuotes } from './InspirationalQuotes'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -131,6 +132,7 @@ export function SceneContent() {
       <LiveWeather />
       <FootprintHeatmap />
       {/* Tower cranes — visible from anywhere, iconic construction feel */}
+      <InspirationalQuotes />
       <ConstructionCrane position={[-110, 0, -80]} />
       <ConstructionCrane position={[120, 0, -200]} />
     </>

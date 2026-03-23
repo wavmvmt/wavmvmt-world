@@ -8,14 +8,18 @@ export function LoadingScreen({ onLoaded }: { onLoaded: () => void }) {
   const [tip, setTip] = useState('')
 
   const tips = [
-    'Loading construction site...',
-    'Hiring anime workers...',
-    'Pouring foundation...',
-    'Tuning singing bowls...',
-    'Calibrating beat pads...',
-    'Parking the forklifts...',
-    'Hanging banners...',
+    'Pouring the foundation...',
+    'Tuning the singing bowls...',
+    'Calibrating the beat pads...',
     'Warming up the sauna...',
+    'Setting up the squat racks...',
+    'Rolling out the yoga mats...',
+    'Brewing the first espresso...',
+    'Apollo is inspecting the site...',
+    'Hanging the WAVMVMT banner...',
+    'Connecting the frequencies...',
+    'Aligning the chakras of the building...',
+    'Loading 40 million dollars worth of vision...',
   ]
 
   useEffect(() => {
