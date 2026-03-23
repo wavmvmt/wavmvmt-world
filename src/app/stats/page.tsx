@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'WAVMVMT World — Project Stats',
-  description: 'Full breakdown of the WAVMVMT Center: 12 rooms, 42,500 sq ft, $20M build in Toronto.',
+  description: 'Full breakdown of the WAVMVMT campus: 13+ rooms, outdoor campus, $40M build in Toronto.',
 }
 
 export default function StatsPage() {

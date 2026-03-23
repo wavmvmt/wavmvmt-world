@@ -67,8 +67,8 @@ export default function HomePage() {
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
           {[
             { value: `${(TOTAL_SQFT / 1000).toFixed(0)}K`, label: 'SQ FT' },
-            { value: '12', label: 'ROOMS' },
-            { value: '$20M', label: 'BUILD' },
+            { value: '13+', label: 'ROOMS' },
+            { value: '$40M', label: 'BUILD' },
             { value: 'Toronto', label: 'LOCATION' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">

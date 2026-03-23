@@ -13,11 +13,11 @@ const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["lati
 
 export const metadata: Metadata = {
   title: "WAVMVMT World — Under Construction",
-  description: "Walk through the 42,500 sq ft WAVMVMT Center construction site. 12 rooms. $20M build. Music, wellness, fitness, technology — under one roof. Toronto, ON.",
-  keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto"],
+  description: "Walk through the WAVMVMT campus construction site. 13 rooms, outdoor sports field, skatepark, rooftop terrace. $40M build. Music, wellness, fitness, tech, education — all under one roof. Toronto, ON.",
+  keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto", "education", "skatepark", "fitness"],
   openGraph: {
-    title: "WAVMVMT World · Walk the Construction Site",
-    description: "42,500 sq ft. 12 rooms. Parkour gym, music studio, sound bath, recovery suite. Watch it being built in real-time 3D.",
+    title: "WAVMVMT World · Walk the $40M Construction Site",
+    description: "13 rooms + outdoor campus. Parkour gym, music studio, sound bath, education wing, skatepark, rooftop terrace. Watch it being built in real-time 3D.",
     siteName: "WAVMVMT World",
     type: "website",
     locale: "en_US",

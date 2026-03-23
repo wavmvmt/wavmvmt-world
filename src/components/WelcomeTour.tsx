@@ -12,11 +12,11 @@ const panelStyle = {
 const STEPS = [
   {
     title: 'Welcome to WAVMVMT World',
-    text: 'You\'re standing in the digital construction site of a $20M flagship wellness center in Toronto. Everything you see is being built — virtually and in real life.',
+    text: 'You\'re standing in the digital construction site of a $40M wellness, fitness, arts & tech campus in Toronto. Everything you see is being built — virtually and in real life.',
     hint: 'Use WASD to move, mouse/touch to look around',
   },
   {
-    title: '12 Rooms Under Construction',
+    title: '13 Rooms + Outdoor Campus',
     text: 'Each glowing wireframe is a room. Walk up to see its specs — square footage, cost, features. The colored fill shows how far along the build is.',
     hint: 'Walk toward the nearest glowing room',
   },

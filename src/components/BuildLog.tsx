@@ -19,7 +19,7 @@ const BUILD_LOG = [
   { date: 'Mar 22', title: 'Construction Audio', desc: '17 real .ogg sound effects + ambient loops' },
   { date: 'Mar 22', title: 'Phase-Specific Props', desc: 'Cement trucks, excavators, survey stakes based on IRL phase' },
   { date: 'Mar 22', title: 'Skateboards & Vehicles', desc: '4 rideable skateboards, 3 forklifts, 2 cranes' },
-  { date: 'Mar 22', title: '$20M Fundraising Tracker', desc: 'Real-world build progress with Phase 2 vision' },
+  { date: 'Mar 22', title: '$40M Full Campus Vision', desc: 'Phase 1 center + Phase 2 upper floors + Phase 3 outdoor campus' },
   { date: 'Mar 22', title: 'Project Founded', desc: 'WAVMVMT World development begins' },
 ]
 

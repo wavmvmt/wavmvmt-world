@@ -19,7 +19,7 @@ export default async function Image() {
         <div style={{ fontSize: 100, color: '#f0c674', opacity: 0.3, marginBottom: -10 }}>~</div>
         <div style={{ fontSize: 56, fontWeight: 700, color: 'rgba(255,240,220,0.9)', letterSpacing: '0.12em' }}>WAVMVMT WORLD</div>
         <div style={{ fontSize: 18, letterSpacing: '0.35em', color: 'rgba(255,200,150,0.4)', textTransform: 'uppercase', marginTop: 8, marginBottom: 30 }}>
-          Walk the $20M Construction Site in 3D
+          Walk the $40M Campus Construction Site in 3D
         </div>
         <div style={{ display: 'flex', gap: 50 }}>
           {[
