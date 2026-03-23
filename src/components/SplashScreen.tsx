@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 export function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [phase, setPhase] = useState<'intro' | 'ready' | 'fading'>('intro')
   const [visitors, setVisitors] = useState(0)
   const [videoMuted, setVideoMuted] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setPhase('ready'), 1500)
@@ -36,6 +37,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
     >
       {/* Background video */}
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted={videoMuted}
@@ -43,7 +45,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: 0.25 }}
       >
-        <source src="https://znhilrrgmxwedlqs.private.blob.vercel-storage.com/november%2025th%20beat%201%20landscape.mov" type="video/quicktime" />
+        <source src="/api/media?file=november%2025th%20beat%201%20landscape.mov" type="video/mp4" />
       </video>
 
       {/* Dark overlay on video */}
@@ -51,7 +53,14 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
 
       {/* Sound toggle for video */}
       <button
-        onClick={() => setVideoMuted(!videoMuted)}
+        onClick={() => {
+          const newMuted = !videoMuted
+          setVideoMuted(newMuted)
+          if (videoRef.current) {
+            videoRef.current.muted = newMuted
+            if (!newMuted) videoRef.current.play().catch(() => {})
+          }
+        }}
         className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-[0.5rem] tracking-wider uppercase cursor-pointer pointer-events-auto"
         style={{
           background: 'rgba(26,21,32,0.6)',

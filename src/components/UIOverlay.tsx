@@ -34,6 +34,7 @@ import { VolumeControl } from './VolumeControl'
 import { ProgressBadge } from './ProgressBadge'
 import { WhatsNew } from './WhatsNew'
 import { RoomGalleryPopup } from './RoomGalleryPopup'
+import { MobileActionMenu } from './MobileActionMenu'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -84,6 +85,7 @@ export function UIOverlay() {
       <ProgressBadge />
       <WhatsNew />
       <RoomGalleryPopup />
+      <MobileActionMenu />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
