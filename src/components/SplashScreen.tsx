@@ -1,12 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 export function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [phase, setPhase] = useState<'intro' | 'ready' | 'fading'>('intro')
+  const [visitors, setVisitors] = useState(0)
 
   useEffect(() => {
     const timer = setTimeout(() => setPhase('ready'), 1500)
+    // Fetch visitor count
+    const supabase = createClient()
+    supabase.from('world_visits').select('id', { count: 'exact', head: true }).then(({ count }) => {
+      if (count) setVisitors(count)
+    })
     return () => clearTimeout(timer)
   }, [])
 
@@ -111,6 +118,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
             ['$40M', 'vision'],
             ['13+', 'rooms'],
             ['100', 'quests'],
+            ...(visitors > 0 ? [[visitors.toLocaleString(), 'visitors']] : []),
           ].map(([val, label]) => (
             <div key={label} className="text-center">
               <div className="text-lg font-bold font-mono" style={{ color: '#f0c674' }}>{val}</div>

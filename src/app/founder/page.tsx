@@ -350,6 +350,16 @@ export default function FounderPage() {
           </p>
         </section>
 
+        {/* Special Thanks */}
+        <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Special Thanks</h2>
+          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            To everyone who believed early, showed up consistently, and helped
+            shape this vision through their presence, energy, and truth.
+            You know who you are. More acknowledgments coming soon.
+          </p>
+        </section>
+
         {/* Connect */}
         <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Connect</h2>

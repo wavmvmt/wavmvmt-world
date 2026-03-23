@@ -30,6 +30,7 @@ import { InvestorView } from './InvestorView'
 import { ContestWelcome } from './ContestWelcome'
 import { TimeLapseMode } from './three/TimeLapseMode'
 import { RoomTooltip } from './RoomTooltip'
+import { VolumeControl } from './VolumeControl'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -76,6 +77,7 @@ export function UIOverlay() {
       <ContestWelcome />
       <TimeLapseMode />
       <RoomTooltip />
+      <VolumeControl />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
