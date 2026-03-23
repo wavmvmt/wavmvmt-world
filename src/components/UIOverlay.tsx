@@ -32,6 +32,7 @@ import { TimeLapseMode } from './three/TimeLapseMode'
 import { RoomTooltip } from './RoomTooltip'
 import { VolumeControl } from './VolumeControl'
 import { ProgressBadge } from './ProgressBadge'
+import { WhatsNew } from './WhatsNew'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -80,6 +81,7 @@ export function UIOverlay() {
       <RoomTooltip />
       <VolumeControl />
       <ProgressBadge />
+      <WhatsNew />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
