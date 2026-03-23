@@ -37,10 +37,16 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Core</h2>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
-            A frequency-based creator who experiences reality through vibration — every
-            kick drum resonates in the gut, every hi-hat shimmers in the air above.
-            Music, movement, healing, technology, and community woven into one unified
-            system. Building ecosystems where transformation happens naturally.
+            Some people hear music. Shim feels it — every kick drum lands in the gut,
+            every snare hits the chest, every hi-hat dissolves into the air above the head.
+            This isn&apos;t metaphor. It&apos;s how reality is experienced — through frequency,
+            through vibration, through the body as instrument.
+          </p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.5)' }}>
+            That awareness became the foundation for everything being built: spaces where
+            sound heals, movement liberates, technology empowers, and community transforms.
+            Where the line between art and architecture dissolves. Where a gym is also a
+            studio is also a school is also a sanctuary.
           </p>
           <div className="flex flex-wrap gap-2 mt-4">
             {[
@@ -67,52 +73,58 @@ export default function FounderPage() {
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
               <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Foundation</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-                Parkour became the first language of freedom — movement as expression,
-                control, discipline, and flow. Helped build a major parkour facility
-                from the ground up, learning what it takes to create physical spaces
-                where people transform. Was in nursing school studying to heal people
-                through medicine — but realized the impact could be bigger. Dropped out
-                to go all in on a vision: heal through lifestyle, creativity, movement,
-                and community. Not just physical health — emotional, financial, and
-                spiritual empowerment, all in the same scope.
+                The body learned first. Parkour became the mother tongue — walls became
+                launchpads, railings became instruments, the city became a canvas. While
+                studying nursing, helped build a renowned parkour facility from raw space
+                into something alive. That process planted the seed: creating physical
+                environments where people discover what they&apos;re capable of.
+              </p>
+              <p className="text-sm leading-relaxed mt-2" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Then a choice. Medicine heals one body at a time. But what if you could build
+                something that heals thousands — emotionally, financially, spiritually, physically —
+                all at once? Nursing school ended. The real work began.
               </p>
             </div>
 
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
               <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Music Awakening</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-                Transition into music and studio life. Real sessions, real collaborations,
-                real songs. Learning how to translate energy into sound. Genre-blending —
-                rap, rock, experimental — because the feeling doesn&apos;t fit in one box.
+                Sound became the second language. Studio sessions, collaborations, late nights
+                translating feeling into frequency. The music refused to stay in one genre —
+                rap bled into rock, rock dissolved into something experimental, because
+                authentic expression doesn&apos;t respect borders. Every track became a
+                transmission, not just a song.
               </p>
             </div>
 
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Transformation</div>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Crystallization</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-                The realization crystallized: parkour, music, wellness, community —
-                they&apos;re all the same thing. Movement through obstacles. Adapting. Flowing.
-                Creating paths where none exist. WAVMVMT became one unified idea.
+                One truth emerged from the noise: everything is energy. Everything is movement.
+                Parkour, music, wellness, community — they were never separate things. They
+                were always one system viewed from different angles. WAVMVMT wasn&apos;t invented.
+                It was recognized.
               </p>
             </div>
 
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(225,48,108,0.4)' }}>Hardships & Growth</div>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(225,48,108,0.4)' }}>Resistance</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-                Every builder faces resistance. The challenges along the way — navigating
-                industries not designed for creators, learning hard lessons about ownership
-                and control — became fuel. Each obstacle forced a level-up. Each setback
-                reinforced the conviction: build it yourself, build it better, build it for everyone.
+                Builders attract friction. Industries not designed for creators. Systems that
+                extract more than they return. Every wall became a wall-run. Every closed
+                door became a vault. The parkour philosophy held: when the path doesn&apos;t
+                exist, you create it. When the system doesn&apos;t serve you, you build a new one.
               </p>
             </div>
 
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.3)' }}>
               <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: '#f0c674' }}>Now</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
-                Reclaiming the narrative. Building WAVMVMT as a global system.
-                Preparing tours and investor decks.
-                Designing an ecosystem that doesn&apos;t exist yet — because
-                what needs to be built hasn&apos;t been built.
+                The blueprint is drawn. The team is assembled. The capital is in motion.
+                WAVMVMT is becoming real — not as a brand, but as infrastructure for
+                human development. A global system where every room, every frequency,
+                every interaction is designed to elevate consciousness and unlock potential.
+                What needs to be built hasn&apos;t been built. Until now.
               </p>
             </div>
           </div>
@@ -122,12 +134,13 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Parkour as Philosophy</h2>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-            Parkour isn&apos;t just a skill. It&apos;s the blueprint for everything.
-            Freedom. Flow state. Risk mastery. Body intelligence. Environmental awareness.
+            Before there was music, before there was business, there was the body
+            in motion. Parkour taught the fundamental lesson: obstacles are invitations.
+            Every wall is a question — and the answer is always movement.
           </p>
           <p className="text-sm leading-relaxed mt-3 italic" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
-            WAVMVMT is parkour philosophy applied to life: move through obstacles,
-            adapt, flow, create paths where none exist.
+            WAVMVMT is parkour philosophy scaled to civilization: move through obstacles,
+            adapt to terrain, flow through resistance, create paths where none existed before.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-4">
             {['Freedom', 'Flow State', 'Risk Mastery', 'Body Intelligence', 'Adaptation'].map((v) => (
@@ -143,9 +156,11 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Music</h2>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-            Genre-blending. Emotional, spiritual, raw. Rap, rock, experimental — because the
-            feeling doesn&apos;t fit in one box. Every song is a frequency transmission designed to
-            heal, activate, and shift consciousness. Not just performances — transformation experiences.
+            The sound doesn&apos;t ask permission to cross genres. Rap bleeds into rock,
+            rock dissolves into something unnamed, because real feeling refuses to be
+            categorized. Every track is a frequency transmission — designed to land in
+            the body before it reaches the mind. The goal was never streams or charts.
+            The goal is transformation through vibration.
           </p>
           <div className="rounded-xl overflow-hidden mt-4">
             <iframe
@@ -243,8 +258,9 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Ecosystem</h2>
           <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,220,180,0.5)' }}>
-            Not one income stream. Not one platform. A full ecosystem where
-            every piece feeds every other piece.
+            An interconnected system where every element strengthens every other element.
+            The music fills the spaces. The spaces host the events. The events build the
+            community. The community sustains the ecosystem. Nothing exists in isolation.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {[

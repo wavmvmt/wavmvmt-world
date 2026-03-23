@@ -244,8 +244,11 @@ export default function PitchPage() {
         {/* Contact / CTA */}
         <section className="mb-8 p-5 md:p-8 rounded-2xl text-center" style={panelStyle}>
           <h2 className="text-xs tracking-[0.25em] uppercase mb-3" style={{ color: 'rgba(240,198,116,0.5)' }}>Interested?</h2>
-          <p className="text-[0.65rem] mb-4" style={{ color: 'rgba(255,220,180,0.4)' }}>
+          <p className="text-[0.65rem] mb-2" style={{ color: 'rgba(255,220,180,0.4)' }}>
             For detailed financials and investment opportunities, reach out directly.
+          </p>
+          <p className="text-[0.6rem] font-mono mb-4" style={{ color: '#f0c674' }}>
+            wavmvmt@gmail.com
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://instagram.com/shim.wav" target="_blank" rel="noopener noreferrer"
