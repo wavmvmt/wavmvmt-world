@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PageNav } from '@/components/PageNav'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -8,8 +9,9 @@ const panelStyle = {
 
 export default function PitchPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 py-12 md:py-20"
+    <div className="min-h-screen flex flex-col items-center px-4 pt-20 pb-12 md:pt-24 md:pb-20"
       style={{ background: 'linear-gradient(160deg, #1a1520 0%, #2a1f35 30%, #1f2a3a 60%, #1a2030 100%)' }}>
+      <PageNav current="Pitch" />
 
       <div className="w-full max-w-3xl">
         {/* Header */}

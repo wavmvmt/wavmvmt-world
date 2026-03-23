@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { TOTAL_SQFT } from '@/lib/roomConfig'
+import { PageNav } from '@/components/PageNav'
 import { createClient } from '@/lib/supabase/client'
 
 export default function HomePage() {
@@ -38,6 +39,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
       style={{ background: 'linear-gradient(160deg, #1a1520 0%, #2a1f35 30%, #1f2a3a 60%, #1a2030 100%)' }}>
+      <PageNav current="Home" />
 
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
