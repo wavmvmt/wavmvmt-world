@@ -36,12 +36,13 @@ function Panel({ title, icon, children, defaultOpen, position }: {
 }) {
   const [open, setOpen] = useState(false) // ALWAYS start closed
 
-  // Only auto-open on desktop after a short delay (ensures mobile check is accurate)
+  // Only auto-open on desktop after mount (ensures mobile check is accurate)
   useEffect(() => {
     if (!defaultOpen) return
+    // Wait for layout to settle, then check if truly desktop
     const timer = setTimeout(() => {
       if (window.innerWidth >= 768) setOpen(true)
-    }, 500)
+    }, 1200) // longer delay ensures mobile detection is solid
     return () => clearTimeout(timer)
   }, [defaultOpen])
 
@@ -52,10 +53,10 @@ function Panel({ title, icon, children, defaultOpen, position }: {
     return (
       <button
         onClick={() => setOpen(true)}
-        className={`absolute pointer-events-auto flex items-center gap-1.5 px-3 py-2 rounded-xl text-[0.6rem] tracking-wider uppercase cursor-pointer transition-all hover:border-[rgba(240,198,116,0.3)] ${
+        className={`absolute pointer-events-auto flex items-center gap-1.5 rounded-xl cursor-pointer transition-all hover:border-[rgba(240,198,116,0.3)] ${
           isMobile
-            ? position === 'left' ? 'top-14 left-3' : 'top-14 right-3'
-            : position === 'left' ? 'top-5 left-5' : 'top-5 right-5'
+            ? `top-2 ${position === 'left' ? 'left-3' : 'right-16'} px-2 py-1 text-[0.5rem] tracking-wider uppercase`
+            : `${position === 'left' ? 'top-5 left-5' : 'top-5 right-5'} px-3 py-2 text-[0.6rem] tracking-wider uppercase`
         }`}
         style={{
           ...panelStyle,
@@ -72,7 +73,7 @@ function Panel({ title, icon, children, defaultOpen, position }: {
     <div
       className={`absolute p-3 md:p-3.5 rounded-2xl pointer-events-auto ${
         isMobile
-          ? 'top-14 left-3 right-3 max-h-[55vh] overflow-y-auto'
+          ? 'top-10 left-2 right-2 max-h-[50vh] overflow-y-auto'
           : position === 'left'
             ? 'top-5 left-5 min-w-[240px] lg:min-w-[280px] xl:min-w-[320px] max-h-[70vh] overflow-y-auto'
             : 'top-5 right-5 min-w-[220px] lg:min-w-[260px] xl:min-w-[300px] max-h-[55vh] overflow-y-auto'
