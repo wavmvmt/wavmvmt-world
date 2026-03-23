@@ -168,9 +168,45 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           Enter the Site
         </button>
 
+        {/* Quick links — business plan, music, socials */}
+        <div
+          className="mt-6 flex flex-wrap justify-center gap-3 transition-all duration-[2s] delay-900"
+          style={{ opacity: phase === 'ready' ? 1 : 0 }}
+        >
+          {[
+            { label: 'Business Overview', href: '/pitch', icon: '📋' },
+            { label: 'Music', href: 'https://linktr.ee/shimwav', icon: '🎵', external: true },
+            { label: 'Instagram', href: 'https://instagram.com/shim.wav', icon: '📸', external: true },
+            { label: 'Twitter/X', href: 'https://x.com/shimwav', icon: '𝕏', external: true },
+          ].map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+              className="px-3 py-1.5 rounded-full text-[0.5rem] tracking-[0.1em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)]"
+              style={{
+                border: '1px solid rgba(240,198,116,0.1)',
+                color: 'rgba(255,220,180,0.35)',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(240,198,116,0.06)'
+                e.currentTarget.style.color = 'rgba(255,220,180,0.6)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.color = 'rgba(255,220,180,0.35)'
+              }}
+            >
+              <span className="mr-1">{link.icon}</span>{link.label}
+            </a>
+          ))}
+        </div>
+
         {/* Controls hint */}
         <div
-          className="mt-8 transition-all duration-[2s] delay-1000"
+          className="mt-5 transition-all duration-[2s] delay-1000"
           style={{ opacity: phase === 'ready' ? 0.4 : 0 }}
         >
           <p className="text-[0.65rem] tracking-[0.1em] hidden md:block" style={{ color: 'rgba(255,220,180,0.4)' }}>
