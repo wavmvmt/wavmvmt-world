@@ -140,8 +140,18 @@ export default function HomePage() {
         </Link>
 
         <p className="mt-4 text-[0.55rem] tracking-[0.15em]" style={{ color: 'rgba(255,200,150,0.2)' }}>
-          Walk through our digital construction site
+          Walk through our $100M+ digital construction site
         </p>
+
+        {/* Features row */}
+        <div className="mt-3 flex flex-wrap justify-center gap-2">
+          {['3D Walkable', '100 Quests', 'Beat Radio', 'Synesthesia', 'Cash Prizes'].map((f) => (
+            <span key={f} className="text-[0.4rem] md:text-[0.45rem] px-2 py-0.5 rounded-full tracking-wider"
+              style={{ border: '1px solid rgba(128,212,168,0.08)', color: 'rgba(128,212,168,0.3)' }}>
+              {f}
+            </span>
+          ))}
+        </div>
 
         {/* Contest teaser */}
         <div className="mt-4 px-4 py-2 rounded-full inline-block" style={{
@@ -159,6 +169,31 @@ export default function HomePage() {
             {visitorCount.toLocaleString()} visitors have explored the site
           </p>
         )}
+
+        {/* What's inside */}
+        <div className="mt-10 w-full max-w-lg mx-auto">
+          <div className="text-[0.5rem] tracking-[0.2em] uppercase text-center mb-3" style={{ color: 'rgba(255,200,150,0.2)' }}>
+            What you&apos;ll find inside
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {[
+              { icon: '🏗️', label: '3D Construction Site' },
+              { icon: '🎨', label: 'Synesthesia Visualizer' },
+              { icon: '🎹', label: '27-Track Beat Radio' },
+              { icon: '🎮', label: '100 Quests to Complete' },
+              { icon: '🏢', label: 'Architectural Renders' },
+              { icon: '💰', label: 'Investment Overview' },
+              { icon: '🌍', label: 'Global Expansion Map' },
+              { icon: '📤', label: 'Share & Win Prizes' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg"
+                style={{ background: 'rgba(240,198,116,0.03)', border: '1px solid rgba(240,198,116,0.06)' }}>
+                <span className="text-xs">{item.icon}</span>
+                <span className="text-[0.45rem]" style={{ color: 'rgba(255,220,180,0.35)' }}>{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Email capture */}
         <div className="mt-10 w-full max-w-sm mx-auto">

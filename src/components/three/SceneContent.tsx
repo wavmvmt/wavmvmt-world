@@ -57,6 +57,7 @@ import { WarehouseEntrance } from './WarehouseEntrance'
 import { LiveWeather } from './LiveWeather'
 import { FootprintHeatmap } from './FootprintHeatmap'
 import { ConstructionCrane } from './ConstructionCrane'
+import { MembershipBillboard } from './MembershipBillboard'
 import { InspirationalQuotes } from './InspirationalQuotes'
 
 export function SceneContent() {
@@ -133,6 +134,7 @@ export function SceneContent() {
       <FootprintHeatmap />
       {/* Tower cranes — visible from anywhere, iconic construction feel */}
       <InspirationalQuotes />
+      <MembershipBillboard />
       <ConstructionCrane position={[-110, 0, -80]} />
       <ConstructionCrane position={[120, 0, -200]} />
     </>

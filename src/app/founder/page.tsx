@@ -50,6 +50,23 @@ export default function FounderPage() {
             where a studio is also a sanctuary, where a gym session becomes a spiritual
             practice, where technology serves something deeply human.
           </p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            Working as a stagehand at Rogers Centre shaped something essential too —
+            watching massive stages get built from nothing in hours, seeing the
+            transformation happen in real time, the coordination of dozens of trades
+            working in parallel toward one moment. That experience became the art
+            direction for everything: build it in the open, let people watch it
+            come together, make the construction itself part of the show.
+          </p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            And recently — working late nights in Toronto, building deals until
+            the construction workers across the street clock in at dawn. Watching
+            them arrive, set up, coordinate, build — while doing the same thing
+            on a screen. Two kinds of construction happening in parallel.
+            There&apos;s something deeply beautiful about the process of people coming
+            together for a shared cause, pouring themselves into making something
+            real. That energy is what WAVMVMT is built on.
+          </p>
           <div className="flex flex-wrap gap-2 mt-4">
             {[
               { label: 'shim.wav', desc: 'The Artist' },

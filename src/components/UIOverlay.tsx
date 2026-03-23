@@ -35,6 +35,7 @@ import { ProgressBadge } from './ProgressBadge'
 import { WhatsNew } from './WhatsNew'
 import { RoomGalleryPopup } from './RoomGalleryPopup'
 import { MobileActionMenu } from './MobileActionMenu'
+import { LiveActivityFeed } from './LiveActivityFeed'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -86,6 +87,7 @@ export function UIOverlay() {
       <WhatsNew />
       <RoomGalleryPopup />
       <MobileActionMenu />
+      <LiveActivityFeed />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (

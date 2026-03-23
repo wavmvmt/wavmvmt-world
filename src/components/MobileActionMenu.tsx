@@ -16,6 +16,8 @@ const ACTIONS = [
   { icon: '🎨', label: 'Synesthesia', action: () => window.location.href = '/visualizer' },
   { icon: '👤', label: 'Founder', action: () => window.location.href = '/founder' },
   { icon: '📋', label: 'Pitch', action: () => window.location.href = '/pitch' },
+  { icon: '🎟️', label: 'Membership', action: () => window.location.href = '/membership' },
+  { icon: '🗓️', label: 'Book Tour', action: () => window.location.href = '/tour' },
 ]
 
 export function MobileActionMenu() {
