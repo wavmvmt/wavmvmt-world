@@ -196,6 +196,15 @@ export default function PitchPage() {
                 draw for members who want variety in their routine.
               </p>
             </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Dog Park & Pet-Friendly Spaces</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Covered, heated dog park areas usable year-round — open in summer, enclosed
+                and heated in winter. Adjacent café seating lets owners relax with a clear view
+                of the play area. Smart layout keeps dogs comfortable and owners connected.
+                Because wellness means the whole family.
+              </p>
+            </div>
           </div>
         </section>
 

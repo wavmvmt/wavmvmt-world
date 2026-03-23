@@ -361,6 +361,24 @@ export default function FounderPage() {
           </p>
         </section>
 
+        {/* Apollo */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Apollo 🐕</h2>
+          <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Rescued from the street. Now he&apos;s co-pilot on every adventure,
+            every site visit, every new city. The plan is simple — tour him around
+            the world, let him play on every site we build, make friends in every
+            country, and give him the life he deserves. He loves meeting people,
+            and people love meeting him.
+          </p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
+            Every WAVMVMT location will have thoughtfully designed dog-friendly
+            spaces — covered and heated parks for winter, smart seating where
+            owners can watch from a nearby café while their dogs play comfortably.
+            Because wellness extends to every member of the family.
+          </p>
+        </section>
+
         {/* Special Thanks */}
         <section className="mb-8 p-5 md:p-8 text-center" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Special Thanks</h2>
