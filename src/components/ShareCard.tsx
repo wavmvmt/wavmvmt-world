@@ -43,7 +43,35 @@ export function ShareCard() {
     }
   }, [])
 
-  const shareText = `I just explored WAVMVMT World — a 3D construction site for a $40M wellness + fitness + arts + tech campus in Toronto!\n\n🏗️ ${questCount}/100 quests completed\n🎵 Music studio, sound bath, amphitheatre\n🏋️ Parkour gym, weight training, recovery suite\n📚 Education wing: business, coding, AI classes\n🛹 Skatepark, sports field, rooftop terrace\n\n13 rooms + outdoor campus + upper floor practitioner offices\n\nWalk through it yourself: https://wavmvmt-world.vercel.app\n\n#WAVMVMT #BuildInPublic #WellnessTech`
+  // Different text for different platforms (Twitter has character limits)
+  const shareTextFull = `I just explored WAVMVMT World — a 3D construction site for a $40M wellness, fitness, arts & tech campus in Toronto!
+
+🏗️ ${questCount}/100 quests completed
+🎵 Music studio, sound bath, amphitheatre
+🏋️ Parkour gym, weight training, recovery suite
+📚 Education wing: business, coding, AI classes
+🛹 Skatepark, sports field, rooftop terrace
+
+13 rooms + outdoor campus + upper floor practitioner offices
+
+Walk through it yourself: https://wavmvmt-world.vercel.app
+
+Created by @shim.wav | @wavmvmt | Built with @anthropic Claude + Arc.wav
+
+#WAVMVMT #BuildInPublic #WellnessTech #Toronto`
+
+  const shareTextTwitter = `I just explored @wavmvmt World — a 3D walkable construction site for a $40M wellness & tech campus in Toronto 🏗️
+
+${questCount}/100 quests completed 🎮
+
+Walk through it yourself 👇
+https://wavmvmt-world.vercel.app
+
+Created by @shim_wav with @AnthropicAI Claude + Arc.wav
+
+#WAVMVMT #BuildInPublic #WellnessTech`
+
+  const shareTextShort = `Check out WAVMVMT World — a 3D construction site for a $40M wellness campus in Toronto! Walk through it: https://wavmvmt-world.vercel.app @wavmvmt @shim.wav #WAVMVMT #BuildInPublic`
 
   async function handleRegister() {
     if (!form.name || !form.email) return
@@ -67,13 +95,14 @@ export function ShareCard() {
     setSubmitting(false)
   }
 
-  function handleShare(url: string) {
+  function handleShare(url: string, platform: string, countsAsEntry: boolean) {
     // Log the share event
     try {
       const supabase = createClient()
       supabase.from('contestant_shares').insert({
         email: form.email || sessionStorage.getItem('wavmvmt_contestant') || 'unknown',
-        platform: url.includes('twitter') ? 'twitter' : url.includes('linkedin') ? 'linkedin' : url.includes('facebook') ? 'facebook' : url.includes('wa.me') ? 'whatsapp' : 'other',
+        platform,
+        counts_as_entry: countsAsEntry,
         shared_at: new Date().toISOString(),
       }).then(() => {})
     } catch {}
@@ -81,7 +110,7 @@ export function ShareCard() {
   }
 
   function copyToClipboard() {
-    navigator.clipboard.writeText(shareText)
+    navigator.clipboard.writeText(shareTextFull)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -181,52 +210,93 @@ export function ShareCard() {
               </h3>
             </div>
             <p className="text-[0.55rem] mb-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
-              Now share to earn more entries. Each share on a different platform = another entry.
+              Share on social media to earn contest entries. Each platform = +1 entry.
             </p>
 
             {/* Preview card */}
             <div className="p-2.5 rounded-xl mb-3" style={{ background: 'rgba(240,198,116,0.05)', border: '1px solid rgba(240,198,116,0.1)' }}>
-              <pre className="text-[0.5rem] whitespace-pre-wrap" style={{ color: 'rgba(255,220,180,0.5)', fontFamily: "'DM Sans', sans-serif" }}>
-                {shareText}
+              <pre className="text-[0.45rem] whitespace-pre-wrap" style={{ color: 'rgba(255,220,180,0.45)', fontFamily: "'DM Sans', sans-serif" }}>
+                {shareTextShort}
               </pre>
             </div>
 
-            {/* Social buttons */}
-            <div className="grid grid-cols-2 gap-2 mb-2">
-              <button onClick={() => handleShare(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`)}
-                className="py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
+            {/* SOCIAL MEDIA — earns contest entries */}
+            <div className="text-[0.45rem] tracking-[0.2em] uppercase mb-1.5" style={{ color: 'rgba(128,212,168,0.4)' }}>
+              Share for contest entries
+            </div>
+            <div className="grid grid-cols-2 gap-1.5 mb-3">
+              <button onClick={() => handleShare(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTextTwitter)}`, 'twitter', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
                 style={{ border: '1px solid rgba(29,155,240,0.3)', color: '#1d9bf0', background: 'rgba(29,155,240,0.08)' }}>
-                Post to X (+1 entry)
+                X / Twitter (+1)
               </button>
-              <button onClick={() => handleShare(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wavmvmt-world.vercel.app')}`)}
-                className="py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
+              <button onClick={() => handleShare(`https://www.instagram.com/`, 'instagram', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
+                style={{ border: '1px solid rgba(225,48,108,0.3)', color: '#e1306c', background: 'rgba(225,48,108,0.08)' }}>
+                Instagram (+1)
+              </button>
+              <button onClick={() => handleShare(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://wavmvmt-world.vercel.app')}`, 'linkedin', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
                 style={{ border: '1px solid rgba(10,102,194,0.3)', color: '#0a66c2', background: 'rgba(10,102,194,0.08)' }}>
-                LinkedIn (+1 entry)
+                LinkedIn (+1)
               </button>
-              <button onClick={() => handleShare(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wavmvmt-world.vercel.app')}&quote=${encodeURIComponent(shareText)}`)}
-                className="py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
+              <button onClick={() => handleShare(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wavmvmt-world.vercel.app')}&quote=${encodeURIComponent(shareTextShort)}`, 'facebook', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
                 style={{ border: '1px solid rgba(24,119,242,0.3)', color: '#1877f2', background: 'rgba(24,119,242,0.08)' }}>
-                Facebook (+1 entry)
+                Facebook (+1)
               </button>
-              <button onClick={() => handleShare(`https://wa.me/?text=${encodeURIComponent(shareText)}`)}
-                className="py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
-                style={{ border: '1px solid rgba(37,211,102,0.3)', color: '#25d366', background: 'rgba(37,211,102,0.08)' }}>
-                WhatsApp (+1 entry)
+              <button onClick={() => handleShare(`https://www.tiktok.com/`, 'tiktok', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
+                style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', background: 'rgba(255,255,255,0.05)' }}>
+                TikTok (+1)
+              </button>
+              <button onClick={() => handleShare(`https://www.threads.net/intent/post?text=${encodeURIComponent(shareTextShort)}`, 'threads', true)}
+                className="py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
+                style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', background: 'rgba(255,255,255,0.05)' }}>
+                Threads (+1)
+              </button>
+            </div>
+
+            {/* Handles reminder */}
+            <div className="p-2 rounded-lg mb-3 text-center" style={{ background: 'rgba(240,198,116,0.04)', border: '1px solid rgba(240,198,116,0.08)' }}>
+              <div className="text-[0.5rem] mb-1" style={{ color: 'rgba(255,220,180,0.3)' }}>Tag us in your post:</div>
+              <div className="text-[0.55rem] font-mono" style={{ color: '#f0c674' }}>
+                @wavmvmt · @shim.wav
+              </div>
+              <div className="text-[0.45rem] mt-1" style={{ color: 'rgba(255,220,180,0.2)' }}>
+                Built with Claude by Anthropic + Arc.wav
+              </div>
+            </div>
+
+            {/* MESSAGING — share but no contest entry */}
+            <div className="text-[0.45rem] tracking-[0.2em] uppercase mb-1.5" style={{ color: 'rgba(255,220,180,0.25)' }}>
+              Share via message (no entry)
+            </div>
+            <div className="grid grid-cols-2 gap-1.5 mb-3">
+              <button onClick={() => handleShare(`https://wa.me/?text=${encodeURIComponent(shareTextShort)}`, 'whatsapp', false)}
+                className="py-1.5 rounded-xl text-[0.5rem] font-medium tracking-wider uppercase cursor-pointer"
+                style={{ border: '1px solid rgba(37,211,102,0.2)', color: 'rgba(37,211,102,0.6)', background: 'rgba(37,211,102,0.04)' }}>
+                WhatsApp
+              </button>
+              <button onClick={() => handleShare(`sms:?body=${encodeURIComponent(shareTextShort)}`, 'sms', false)}
+                className="py-1.5 rounded-xl text-[0.5rem] font-medium tracking-wider uppercase cursor-pointer"
+                style={{ border: '1px solid rgba(255,220,180,0.15)', color: 'rgba(255,220,180,0.4)', background: 'rgba(255,220,180,0.04)' }}>
+                Text / SMS
               </button>
             </div>
 
             <div className="flex gap-2">
-              <button onClick={copyToClipboard}
-                className="flex-1 py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
+              <button onClick={() => { navigator.clipboard.writeText(shareTextFull); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+                className="flex-1 py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
                 style={{ border: '1px solid rgba(240,198,116,0.3)', color: copied ? '#80d4a8' : '#f0c674', background: 'rgba(240,198,116,0.08)' }}>
-                {copied ? 'Copied!' : 'Copy Text'}
+                {copied ? 'Copied!' : 'Copy Full Text'}
               </button>
               <button onClick={() => {
                 if (navigator.share) {
-                  navigator.share({ title: 'WAVMVMT World', text: shareText, url: 'https://wavmvmt-world.vercel.app' })
+                  navigator.share({ title: 'WAVMVMT World', text: shareTextShort, url: 'https://wavmvmt-world.vercel.app' })
                 }
               }}
-                className="flex-1 py-2 rounded-xl text-[0.6rem] font-medium tracking-wider uppercase cursor-pointer"
+                className="flex-1 py-2 rounded-xl text-[0.55rem] font-medium tracking-wider uppercase cursor-pointer"
                 style={{ border: '1px solid rgba(128,212,168,0.3)', color: '#80d4a8', background: 'rgba(128,212,168,0.08)' }}>
                 Share (Native)
               </button>
