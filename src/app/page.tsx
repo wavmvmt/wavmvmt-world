@@ -199,10 +199,11 @@ export default function HomePage() {
         </div>
 
         {/* Social share */}
-        <div className="mt-8 flex gap-4 justify-center">
+        <div className="mt-8 flex flex-wrap gap-3 justify-center">
           {[
-            { label: 'X', url: 'https://twitter.com/intent/tweet?text=Check%20out%20WAVMVMT%20World%20%E2%80%94%20a%203D%20construction%20site%20for%20the%20future%20of%20wellness&url=https://wavmvmt-world.vercel.app' },
+            { label: 'X / Twitter', url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Check out @wavmvmt World — a 3D walkable construction site for a $40M wellness campus in Toronto 🏗️\n\nCreated by @shim_wav with @AnthropicAI Claude\n\nhttps://wavmvmt-world.vercel.app\n\n#WAVMVMT #BuildInPublic')}` },
             { label: 'LinkedIn', url: 'https://www.linkedin.com/sharing/share-offsite/?url=https://wavmvmt-world.vercel.app' },
+            { label: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wavmvmt-world.vercel.app')}` },
           ].map((social) => (
             <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer"
               className="px-4 py-1.5 rounded-full text-[0.55rem] tracking-[0.2em] uppercase transition-all"
@@ -216,12 +217,17 @@ export default function HomePage() {
           ))}
         </div>
 
-        <p className="mt-10 text-[0.6rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.12)' }}>
-          Built by Arc.wav · Built for builders · Since March 22, 2026
-        </p>
-        <p className="mt-1 text-[0.5rem] italic" style={{ color: 'rgba(255,200,150,0.08)' }}>
-          The world is always under construction — just like us
-        </p>
+        <div className="mt-10 text-center">
+          <p className="text-[0.6rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.15)' }}>
+            Created by <span style={{ color: 'rgba(240,198,116,0.3)' }}>Shim (Saadiq Khan)</span> · <span style={{ color: 'rgba(240,198,116,0.3)' }}>SET Ventures</span>
+          </p>
+          <p className="mt-1 text-[0.5rem] tracking-[0.1em]" style={{ color: 'rgba(255,200,150,0.1)' }}>
+            Built with Claude by <span style={{ color: 'rgba(180,142,173,0.25)' }}>Anthropic</span> + <span style={{ color: 'rgba(128,212,168,0.25)' }}>Arc.wav</span>
+          </p>
+          <p className="mt-1 text-[0.45rem] italic" style={{ color: 'rgba(255,200,150,0.06)' }}>
+            The world is always under construction — just like us · Since March 22, 2026
+          </p>
+        </div>
       </div>
 
       <style jsx>{`
