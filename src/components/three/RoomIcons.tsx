@@ -52,12 +52,6 @@ export function RoomIcons() {
       {ROOMS.map(room => (
         <RoomIcon key={room.name} room={room} />
       ))}
-      <style>{`
-        @keyframes icon-bob {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-      `}</style>
     </group>
   )
 }
