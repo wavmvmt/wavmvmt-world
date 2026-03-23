@@ -54,6 +54,8 @@ import { RoomAmbience } from './RoomAmbience'
 import { RoomProximityGlow } from './RoomProximityGlow'
 import { GlobalExpansionGlobe } from './GlobalExpansionGlobe'
 import { WarehouseEntrance } from './WarehouseEntrance'
+import { LiveWeather } from './LiveWeather'
+import { FootprintHeatmap } from './FootprintHeatmap'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -125,6 +127,8 @@ export function SceneContent() {
       <ExteriorDetails />
       <GlobalExpansionGlobe />
       <WarehouseEntrance />
+      <LiveWeather />
+      <FootprintHeatmap />
     </>
   )
 }
