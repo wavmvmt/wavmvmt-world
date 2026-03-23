@@ -13,11 +13,11 @@ const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["lati
 
 export const metadata: Metadata = {
   title: "WAVMVMT — A New Renaissance",
-  description: "Walk through the WAVMVMT construction site in 3D. A $40M wellness, fitness, music, tech & education campus being built in Toronto. 13+ rooms, outdoor sports field, skatepark, rooftop terrace. Experience the future being built.",
+  description: "Walk through the WAVMVMT construction site in 3D. A $100M+ wellness, fitness, music, tech & education campus being built in Toronto. 13+ rooms, outdoor sports field, skatepark, rooftop terrace. Experience the future being built.",
   keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto", "education", "skatepark", "fitness", "synesthesia", "shim.wav"],
   openGraph: {
     title: "WAVMVMT — A New Renaissance",
-    description: "Walk through a $40M wellness campus being built in real-time 3D. Parkour gym, music studio, sound bath, education wing, skatepark, rooftop terrace. Toronto, ON.",
+    description: "Walk through a $100M+ wellness campus being built in real-time 3D. Parkour gym, music studio, sound bath, education wing, skatepark, rooftop terrace. Toronto, ON.",
     siteName: "WAVMVMT World",
     type: "website",
     locale: "en_US",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "WAVMVMT — A New Renaissance",
-    description: "Walk through a $40M wellness & tech campus being built in real-time 3D. 13+ rooms, outdoor campus, 100 quests. Toronto.",
+    description: "Walk through a $100M+ wellness & tech campus being built in real-time 3D. 13+ rooms, outdoor campus, 100 quests. Toronto.",
     creator: "@shim_wav",
     site: "@wavmvmt",
   },

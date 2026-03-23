@@ -77,7 +77,7 @@ export default async function Image() {
           {[
             { value: `${(TOTAL_SQFT / 1000).toFixed(0)}K`, label: 'SQ FT' },
             { value: '13+', label: 'ROOMS' },
-            { value: '$40M', label: 'VISION' },
+            { value: '$100M+', label: 'VISION' },
             { value: 'Toronto', label: 'LAUNCH' },
           ].map((stat) => (
             <div key={stat.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

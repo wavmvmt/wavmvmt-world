@@ -115,7 +115,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           style={{ opacity: phase === 'intro' ? 0 : 1 }}
         >
           {[
-            ['$40M', 'vision'],
+            ['$100M+', 'vision'],
             ['13+', 'rooms'],
             ['100', 'quests'],
             ...(visitors > 0 ? [[visitors.toLocaleString(), 'visitors']] : []),

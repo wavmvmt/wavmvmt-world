@@ -43,7 +43,7 @@ export function ContestWelcome() {
         </h3>
 
         <p className="text-[0.6rem] text-center mb-3 leading-relaxed" style={{ color: 'rgba(255,220,180,0.5)' }}>
-          Follow the golden path and your guide dog to explore 13 rooms being built for a $40M wellness campus in Toronto.
+          Follow the golden path and your guide dog to explore 13 rooms being built for a $100M+ wellness campus in Toronto.
         </p>
 
         {/* Contest info */}

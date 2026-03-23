@@ -47,7 +47,7 @@ export const QUESTS: Quest[] = [
   { id: 34, title: 'Feel the Steam', instruction: 'Walk to the Recovery Suite and see the steam particles rising.', category: 'interact' },
   { id: 35, title: 'Find the Massage Tables', instruction: 'Walk into the Spa and count the massage tables (hint: 4).', category: 'interact' },
   { id: 36, title: 'Open the Build Panel', instruction: 'Tap the "Digital Construction" button to see room build progress.', category: 'interact' },
-  { id: 37, title: 'Open the Fund Panel', instruction: 'Tap the "Real-World Build" button to see the $40M fundraising tracker.', category: 'interact' },
+  { id: 37, title: 'Open the Fund Panel', instruction: 'Tap the "Real-World Build" button to see the $100M+ fundraising tracker.', category: 'interact' },
   { id: 38, title: 'Check the Minimap', instruction: 'Look at the floor plan (bottom-left). Can you find yourself?', category: 'interact' },
   { id: 39, title: 'Toggle Sound', instruction: 'Click the speaker icon in the top bar to mute/unmute.', category: 'interact' },
   { id: 40, title: 'Open Settings', instruction: 'Click the Settings button (top-right) and explore the options.', category: 'interact' },

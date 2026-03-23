@@ -13,6 +13,7 @@ export function PageNav({ current }: { current?: string }) {
     { label: 'Synesthesia', href: '/visualizer' },
     { label: 'Founder', href: '/founder' },
     { label: 'Pitch', href: '/pitch' },
+    { label: 'Projections', href: '/projections' },
   ]
 
   return (

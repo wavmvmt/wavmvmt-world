@@ -114,7 +114,7 @@ export function Signage() {
       {/* Facility stats banner — center of warehouse */}
       <HangingBanner
         position={[0, 38, 0]}
-        text={`${(TOTAL_SQFT / 1000).toFixed(1)}K SQ FT · 13 ROOMS · $40M VISION`}
+        text={`${(TOTAL_SQFT / 1000).toFixed(1)}K SQ FT · 13 ROOMS · $100M+ VISION`}
         color={COLORS.gold}
         width={10}
       />

@@ -54,7 +54,7 @@ export function ShareCard() {
     }
   }, [])
 
-  const shareText = `I just explored WAVMVMT World — a 3D walkable construction site for a $40M wellness, fitness & tech campus in Toronto 🏗️
+  const shareText = `I just explored WAVMVMT World — a 3D walkable construction site for a $100M+ wellness, fitness & tech campus in Toronto 🏗️
 
 Walk through it yourself 👇
 ${SITE_URL}
@@ -62,7 +62,7 @@ ${SITE_URL}
 @wavmvmt @shim.wav
 #WAVMVMT #BuildInPublic`
 
-  const shareTextTwitter = `I just explored @wavmvmt World — a 3D construction site for a $40M wellness & tech campus 🏗️
+  const shareTextTwitter = `I just explored @wavmvmt World — a 3D construction site for a $100M+ wellness & tech campus 🏗️
 
 Walk through it: ${SITE_URL}
 
@@ -88,7 +88,7 @@ Built by @shim_wav with @AnthropicAI Claude
     if (navigator.share) {
       navigator.share({
         title: 'WAVMVMT World',
-        text: 'Check out this 3D walkable construction site for a $40M wellness campus!',
+        text: 'Check out this 3D walkable construction site for a $100M+ wellness campus!',
         url: SITE_URL,
       })
       setShareCount(c => c + 1)

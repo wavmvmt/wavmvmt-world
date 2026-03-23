@@ -101,7 +101,7 @@ export default function HomePage() {
           {[
             { value: `${(TOTAL_SQFT / 1000).toFixed(0)}K`, label: 'SQ FT' },
             { value: '13+', label: 'ROOMS' },
-            { value: '$40M', label: 'BUILD' },
+            { value: '$100M+', label: 'BUILD' },
             { value: 'Toronto', label: 'LOCATION' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
@@ -218,7 +218,7 @@ export default function HomePage() {
         {/* Social share */}
         <div className="mt-8 flex flex-wrap gap-3 justify-center">
           {[
-            { label: 'X / Twitter', url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Check out @wavmvmt World — a 3D walkable construction site for a $40M wellness campus in Toronto 🏗️\n\nCreated by @shim_wav with @AnthropicAI Claude\n\nhttps://wavmvmt-world.vercel.app\n\n#WAVMVMT #BuildInPublic')}` },
+            { label: 'X / Twitter', url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Check out @wavmvmt World — a 3D walkable construction site for a $100M+ wellness campus in Toronto 🏗️\n\nCreated by @shim_wav with @AnthropicAI Claude\n\nhttps://wavmvmt-world.vercel.app\n\n#WAVMVMT #BuildInPublic')}` },
             { label: 'LinkedIn', url: 'https://www.linkedin.com/sharing/share-offsite/?url=https://wavmvmt-world.vercel.app' },
             { label: 'Facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://wavmvmt-world.vercel.app')}` },
           ].map((social) => (

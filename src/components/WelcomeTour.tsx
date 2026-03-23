@@ -12,7 +12,7 @@ const panelStyle = {
 const STEPS = [
   {
     title: 'Welcome to WAVMVMT World',
-    text: 'You\'re standing in the digital construction site of a $40M wellness, fitness, arts & tech campus in Toronto. Everything you see is being built — virtually and in real life.',
+    text: 'You\'re standing in the digital construction site of a $100M+ wellness, fitness, arts & tech campus in Toronto. Everything you see is being built — virtually and in real life.',
     hint: 'Use WASD to move, mouse/touch to look around',
   },
   {
