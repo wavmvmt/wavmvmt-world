@@ -364,11 +364,16 @@ export default function FounderPage() {
         {/* Apollo */}
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Apollo 🐕</h2>
+          <p className="text-[0.5rem] tracking-[0.15em] uppercase mb-2" style={{ color: 'rgba(128,212,168,0.35)' }}>
+            Founder &amp; CEO, Dog Park Division · Head Consultant
+          </p>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-            Rescued from the street. Now he&apos;s co-pilot on every adventure,
-            every site visit, every new city. The plan is simple — tour him around
-            the world, let him play on every site we build, make friends in every
-            country, and give him the life he deserves. He loves meeting people,
+            He just waddled in one day as a little pup — like he hopped a portal
+            between dimensions specifically for this. No rescue story. Just a
+            soul that showed up exactly when and where it was supposed to.
+            Now he&apos;s co-pilot on every adventure, every site visit, every new city.
+            The plan is simple — tour him around the world, let him play on every
+            site we build, make friends in every country. He loves meeting people,
             and people love meeting him.
           </p>
           <p className="text-sm leading-relaxed mt-3" style={{ color: 'rgba(255,220,180,0.4)' }}>
