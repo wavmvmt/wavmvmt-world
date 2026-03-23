@@ -54,30 +54,40 @@ export default function VisualizerPage() {
   }, [])
 
   const playFile = useCallback(async (url: string, name: string) => {
-    // Create or reuse audio element
-    if (!audioRef.current) {
-      audioRef.current = new Audio()
-      audioRef.current.crossOrigin = 'anonymous'
-    }
-
-    audioRef.current.pause()
-    analyzerRef.current.cleanup()
-
-    audioRef.current.src = url
-    audioRef.current.load()
-
     try {
-      analyzerRef.current.connectElement(audioRef.current)
+      // Clean up previous
+      analyzerRef.current.cleanup()
+
+      // Create fresh audio element each time to avoid CORS/state issues
+      const audio = new Audio()
+      audio.crossOrigin = 'anonymous'
+      audio.preload = 'auto'
+      audioRef.current = audio
+
+      // Wait for audio to be ready
+      await new Promise<void>((resolve, reject) => {
+        audio.oncanplaythrough = () => resolve()
+        audio.onerror = () => reject(new Error('Failed to load audio file'))
+        audio.src = url
+        audio.load()
+        // Timeout after 10s
+        setTimeout(() => resolve(), 10000)
+      })
+
+      // Connect analyzer and play
+      analyzerRef.current.connectElement(audio)
       await analyzerRef.current.resume()
-      await audioRef.current.play()
+      await audio.play()
+
       setIsPlaying(true)
       setTrackName(name)
       setSource('file')
+
+      audio.onended = () => setIsPlaying(false)
     } catch (err) {
       console.error('Playback failed:', err)
+      alert('Could not play this file. Try a different audio file (MP3, WAV, OGG).')
     }
-
-    audioRef.current.onended = () => setIsPlaying(false)
   }, [])
 
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,15 +99,30 @@ export default function VisualizerPage() {
 
   const handleMic = useCallback(async () => {
     try {
+      // Stop any current audio first
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.src = ''
+      }
       analyzerRef.current.cleanup()
-      if (audioRef.current) audioRef.current.pause()
+
+      // Small delay to let cleanup finish
+      await new Promise(r => setTimeout(r, 100))
+
       await analyzerRef.current.connectMicrophone()
       setIsPlaying(true)
-      setTrackName('Microphone Input — speak, play music, or make sounds')
+      setTrackName('Microphone — play music nearby or speak')
       setSource('mic')
-    } catch (err) {
-      console.error('Mic access denied:', err)
-      alert('Microphone access was denied. Please allow microphone access in your browser settings.')
+    } catch (err: unknown) {
+      console.error('Mic error:', err)
+      const msg = err instanceof Error ? err.message : 'Unknown error'
+      if (msg.includes('NotAllowed') || msg.includes('Permission')) {
+        alert('Microphone access was denied. Please allow microphone access in your browser settings, then try again.')
+      } else if (msg.includes('NotFound')) {
+        alert('No microphone found. Please connect a microphone and try again.')
+      } else {
+        alert(`Microphone error: ${msg}. Try using "Upload Audio" instead.`)
+      }
     }
   }, [])
 
@@ -264,14 +289,19 @@ export default function VisualizerPage() {
       {showSpotify && (
         <div className="fixed top-16 right-4 bottom-20 w-80 z-20 rounded-xl overflow-hidden"
           style={{ boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+          <div className="px-3 py-2 text-center" style={{ background: 'rgba(26,21,32,0.95)' }}>
+            <p className="text-[0.45rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>
+              Play Spotify below, then tap 🎤 Microphone to visualize the sound
+            </p>
+          </div>
           <iframe
             src={`https://open.spotify.com/embed/artist/${SPOTIFY_ARTIST_ID}?utm_source=generator&theme=0`}
             width="100%"
-            height="100%"
+            height="calc(100% - 32px)"
             frameBorder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
-            className="rounded-xl"
+            className="rounded-b-xl"
           />
         </div>
       )}

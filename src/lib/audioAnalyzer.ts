@@ -153,17 +153,27 @@ export class AudioAnalyzer {
    * Clean up all audio resources.
    */
   cleanup(): void {
-    if (this.source) {
-      this.source.disconnect()
-      this.source = null
-    }
-    if (this.analyser) {
-      this.analyser.disconnect()
-      this.analyser = null
-    }
-    if (this.ctx) {
-      this.ctx.close()
+    try {
+      if (this.source) {
+        // Stop microphone tracks if this was a mic source
+        if (this.source instanceof MediaStreamAudioSourceNode) {
+          const stream = (this.source as MediaStreamAudioSourceNode).mediaStream
+          stream.getTracks().forEach(track => track.stop())
+        }
+        this.source.disconnect()
+        this.source = null
+      }
+      if (this.analyser) {
+        this.analyser.disconnect()
+        this.analyser = null
+      }
+      if (this.ctx && this.ctx.state !== 'closed') {
+        this.ctx.close()
+      }
       this.ctx = null
+    } catch (e) {
+      // Ignore cleanup errors
+      console.warn('Audio cleanup:', e)
     }
     this.smoothed.fill(0)
     this.prevAmplitudes.fill(0)
