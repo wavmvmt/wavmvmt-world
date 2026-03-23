@@ -134,6 +134,8 @@ export function HUD() {
   const isMobile = useIsMobile()
   const [showHint, setShowHint] = useState(true)
   const [visitorCount, setVisitorCount] = useState(1)
+  // Mobile UI mode: 'explore' = clean controls only, 'info' = show panels
+  const [mobileMode, setMobileMode] = useState<'explore' | 'info'>('explore')
 
   useEffect(() => {
     const handler = (e: Event) => setVisitorCount((e as CustomEvent).detail.count)
@@ -146,6 +148,8 @@ export function HUD() {
     const timer = setTimeout(() => setShowHint(false), 8000)
     return () => clearTimeout(timer)
   }, [])
+
+  const showPanels = !isMobile || mobileMode === 'info'
 
   return (
     <div className="fixed inset-0 pointer-events-none z-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -162,28 +166,46 @@ export function HUD() {
         <SoundToggle />
       </div>
 
-      {/* Right panel — Build progress */}
-      <Panel title="Digital Construction" icon="◧" defaultOpen={!isMobile} position="right">
-        {ROOMS.map((room) => (
-          <div key={room.name} className="flex items-center gap-2 my-1 md:my-1.5">
-            <span className="text-[0.55rem] md:text-[0.62rem] min-w-[65px] md:min-w-[75px]" style={{ color: 'rgba(255,220,180,0.45)' }}>
-              {room.name}
-            </span>
-            <div className="flex-1 h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <div
-                className="h-full rounded-full transition-all duration-[2s]"
-                style={{ width: `${room.buildPct}%`, background: colorToHex(room.color) }}
-              />
-            </div>
-            <span className="text-[0.55rem] md:text-[0.62rem] min-w-[24px] md:min-w-[28px] text-right font-mono" style={{ color: 'rgba(255,220,180,0.7)' }}>
-              {room.buildPct}%
-            </span>
-          </div>
-        ))}
-      </Panel>
+      {/* Mobile mode toggle */}
+      {isMobile && (
+        <button
+          onClick={() => setMobileMode(m => m === 'explore' ? 'info' : 'explore')}
+          className="absolute top-14 left-1/2 -translate-x-1/2 pointer-events-auto px-4 py-1.5 rounded-xl text-[0.55rem] tracking-[0.15em] uppercase cursor-pointer z-30 transition-all"
+          style={{
+            ...panelStyle,
+            color: mobileMode === 'info' ? '#f0c674' : 'rgba(255,220,180,0.5)',
+            borderColor: mobileMode === 'info' ? 'rgba(240,198,116,0.3)' : 'rgba(255,200,120,0.12)',
+          }}
+        >
+          {mobileMode === 'explore' ? '◧ View Info' : '✕ Back to Explore'}
+        </button>
+      )}
 
-      {/* Left panel — Real-world fundraising + construction */}
-      <Panel title="Real-World Build" icon="◨" defaultOpen={!isMobile} position="left">
+      {/* Right panel — Build progress (hidden in mobile explore mode) */}
+      {showPanels && (
+        <Panel title="Digital Construction" icon="◧" defaultOpen={!isMobile} position="right">
+          {ROOMS.map((room) => (
+            <div key={room.name} className="flex items-center gap-2 my-1 md:my-1.5">
+              <span className="text-[0.55rem] md:text-[0.62rem] min-w-[65px] md:min-w-[75px]" style={{ color: 'rgba(255,220,180,0.45)' }}>
+                {room.name}
+              </span>
+              <div className="flex-1 h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <div
+                  className="h-full rounded-full transition-all duration-[2s]"
+                  style={{ width: `${room.buildPct}%`, background: colorToHex(room.color) }}
+                />
+              </div>
+              <span className="text-[0.55rem] md:text-[0.62rem] min-w-[24px] md:min-w-[28px] text-right font-mono" style={{ color: 'rgba(255,220,180,0.7)' }}>
+                {room.buildPct}%
+              </span>
+            </div>
+          ))}
+        </Panel>
+      )}
+
+      {/* Left panel — Real-world fundraising + construction (hidden in mobile explore mode) */}
+      {showPanels && (
+        <Panel title="Real-World Build" icon="◨" defaultOpen={!isMobile} position="left">
         {/* Capital raised */}
         <div className="mb-3">
           <div className="flex justify-between items-baseline mb-1">
@@ -299,20 +321,23 @@ export function HUD() {
           Status: {PHASE_2.status.toUpperCase()} · Requires rezoning
         </div>
       </Panel>
+      )}
 
-      {/* Main site link — top on mobile to avoid button overlap */}
-      <a href="https://wav-mvmt.vercel.app" target="_blank" rel="noopener noreferrer"
-        className={`absolute px-3 md:px-4 py-2 rounded-xl pointer-events-auto text-[0.6rem] md:text-[0.65rem] tracking-[0.15em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)] ${
-          isMobile ? 'top-14 left-1/2 -translate-x-1/2' : 'bottom-24 right-5'
-        }`}
-        style={{
-          ...panelStyle,
-          color: '#f0c674',
-          textDecoration: 'none',
-          cursor: 'pointer',
-        }}>
-        Pitch →
-      </a>
+      {/* Main site link — hidden in mobile explore mode */}
+      {showPanels && (
+        <a href="https://wav-mvmt.vercel.app" target="_blank" rel="noopener noreferrer"
+          className={`absolute px-3 md:px-4 py-2 rounded-xl pointer-events-auto text-[0.6rem] md:text-[0.65rem] tracking-[0.15em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)] ${
+            isMobile ? 'bottom-36 left-1/2 -translate-x-1/2' : 'bottom-24 right-5'
+          }`}
+          style={{
+            ...panelStyle,
+            color: '#f0c674',
+            textDecoration: 'none',
+            cursor: 'pointer',
+          }}>
+          View Full Pitch →
+        </a>
+      )}
 
       {/* Controls — different for mobile vs desktop */}
       {isMobile ? (
