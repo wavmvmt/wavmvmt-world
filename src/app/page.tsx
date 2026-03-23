@@ -91,7 +91,7 @@ export default function HomePage() {
 
         <p className="text-xs md:text-sm tracking-[0.35em] uppercase mb-4"
           style={{ color: 'rgba(255,200,150,0.4)' }}>
-          The First App for the Whole Person
+          A New Renaissance
         </p>
 
         {/* Facility stats */}
