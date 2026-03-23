@@ -370,9 +370,9 @@ export default function FounderPage() {
             Founder &amp; CEO, Dog Park Division · Head Consultant
           </p>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-            He just waddled in one day as a little pup — like he hopped a portal
-            between dimensions specifically for this. No rescue story. Just a
-            soul that showed up exactly when and where it was supposed to.
+            Found wandering the streets as a little pup — like he hopped a portal
+            between dimensions specifically for this. A soul that showed up
+            exactly when and where it was supposed to.
             Now he&apos;s co-pilot on every adventure, every site visit, every new city.
             The plan is simple — tour him around the world, let him play on every
             site we build, make friends in every country. He loves meeting people,
