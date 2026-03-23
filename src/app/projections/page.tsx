@@ -178,6 +178,105 @@ export default function ProjectionsPage() {
           </div>
         </section>
 
+        {/* NOI & Stabilization */}
+        <section className="mb-6 p-5 md:p-6" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
+            Net Operating Income & Stabilization
+          </h2>
+
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Stabilization Period</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Estimated 18-24 months from doors open to full operational capacity.
+                Month 1-6: ramp-up phase (30-50% capacity). Month 6-12: growth phase
+                (50-75%). Month 12-24: stabilization (75-95%). Full capacity target by
+                end of Year 2.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {[
+                { period: 'Year 1', revenue: '$1.5M', expenses: '$1.8M', noi: '-$300K', note: 'Ramp-up', color: '#e1306c' },
+                { period: 'Year 2', revenue: '$2.5M', expenses: '$1.9M', noi: '$600K', note: 'Stabilizing', color: '#f0c674' },
+                { period: 'Year 3+', revenue: '$3.1M', expenses: '$2.0M', noi: '$1.1M', note: 'Stabilized', color: '#80d4a8' },
+              ].map((yr) => (
+                <div key={yr.period} className="p-3 rounded-xl" style={{ background: 'rgba(240,198,116,0.03)', border: '1px solid rgba(240,198,116,0.06)' }}>
+                  <div className="text-xs font-bold mb-1" style={{ color: yr.color }}>{yr.period}</div>
+                  <div className="text-[0.5rem] mb-0.5" style={{ color: 'rgba(255,220,180,0.3)' }}>Revenue: {yr.revenue}</div>
+                  <div className="text-[0.5rem] mb-0.5" style={{ color: 'rgba(255,220,180,0.3)' }}>Expenses: {yr.expenses}</div>
+                  <div className="text-[0.55rem] font-mono font-bold" style={{ color: yr.color }}>NOI: {yr.noi}</div>
+                  <div className="text-[0.4rem] mt-1" style={{ color: 'rgba(255,220,180,0.2)' }}>{yr.note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Operating Expenses */}
+        <section className="mb-6 p-5 md:p-6" style={panelStyle}>
+          <div className="flex justify-between items-baseline mb-4">
+            <h2 className="text-xs tracking-[0.2em] uppercase" style={{ color: 'rgba(225,48,108,0.5)' }}>
+              Estimated Annual Operating Expenses
+            </h2>
+            <span className="text-lg font-mono font-bold" style={{ color: '#e1306c' }}>
+              ~$2.0M/yr
+            </span>
+          </div>
+          <div className="space-y-1.5">
+            {[
+              { name: 'Staff & Payroll (40+ employees)', cost: '$850K' },
+              { name: 'Lease / Mortgage Payments', cost: '$400K' },
+              { name: 'Utilities & Maintenance', cost: '$200K' },
+              { name: 'Insurance', cost: '$120K' },
+              { name: 'Marketing & Content', cost: '$100K' },
+              { name: 'Technology & Software', cost: '$80K' },
+              { name: 'Supplies & Equipment Replacement', cost: '$100K' },
+              { name: 'Professional Services (Legal, Accounting)', cost: '$75K' },
+              { name: 'Contingency (5%)', cost: '$95K' },
+            ].map((item) => (
+              <div key={item.name} className="flex justify-between items-center">
+                <span className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.45)' }}>{item.name}</span>
+                <span className="text-[0.6rem] font-mono" style={{ color: 'rgba(225,48,108,0.5)' }}>{item.cost}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Investor Returns */}
+        <section className="mb-6 p-5 md:p-6" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
+            Projected Investor Returns
+          </h2>
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Phase 1 — Wellness Center</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Stabilized NOI of ~$1.1M/yr on $35M investment = ~3.1% cap rate on operations alone.
+                Combined with brand value growth, membership equity, and IP development, total
+                returns projected at 8-12% annually once stabilized.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#80d4a8' }}>Phase 2 — Condo Presales</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Estimated $30-50M in presale revenue from 40-60 residential units.
+                At $46M construction cost, presales alone could recover the entire
+                vertical build investment, with practitioner office rentals ($600K/yr)
+                providing ongoing returns.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#7eb8da' }}>Full Vision — Combined Returns</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Operations ($1.1M NOI) + Practitioner Rent ($600K) + Parking/Events ($170K)
+                = ~$1.87M annual recurring income. Condo presales provide one-time capital
+                recovery. Global expansion (licensing model) creates exponential upside.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Key metrics */}
         <section className="mb-6 p-5 md:p-6" style={panelStyle}>
           <h2 className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>
@@ -203,12 +302,21 @@ export default function ProjectionsPage() {
         </section>
 
         {/* Disclaimer */}
-        <div className="text-center">
-          <p className="text-[0.5rem] italic" style={{ color: 'rgba(255,200,150,0.15)' }}>
-            These are rough preliminary estimates for planning purposes only.
-            Actual costs will depend on site selection, market conditions, construction timelines,
-            zoning approvals, and detailed architectural plans. Professional financial modeling required.
+        <div className="p-4 rounded-xl mb-6" style={{ background: 'rgba(225,48,108,0.03)', border: '1px solid rgba(225,48,108,0.1)' }}>
+          <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-2 text-center" style={{ color: 'rgba(225,48,108,0.4)' }}>
+            Important Disclaimer
+          </div>
+          <p className="text-[0.55rem] text-center leading-relaxed" style={{ color: 'rgba(255,220,180,0.3)' }}>
+            All numbers presented are rough preliminary estimates currently being refined.
+            These projections are for planning and discussion purposes only and should not be
+            considered financial advice. Actual costs, revenues, and returns will depend on
+            site selection, market conditions, construction timelines, zoning approvals,
+            financing terms, and detailed architectural plans. Professional financial modeling,
+            legal review, and due diligence are required before any investment decisions.
+            Numbers are actively being updated as the project progresses.
           </p>
+        </div>
+        <div className="text-center">
           <div className="mt-4 flex justify-center gap-3">
             <Link href="/pitch" className="text-[0.55rem] px-4 py-1.5 rounded-full"
               style={{ border: '1px solid rgba(240,198,116,0.15)', color: 'rgba(255,220,180,0.3)', textDecoration: 'none' }}>
