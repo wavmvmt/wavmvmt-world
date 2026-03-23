@@ -7,9 +7,37 @@ import Link from 'next/link'
 
 type AudioSource = 'file' | 'mic' | 'spotify'
 
-// Beat tracks will be added when compressed audio files are available
-// For now, use file upload, microphone, or demo mode
-const BEAT_TRACKS: { name: string; file: string }[] = []
+const BLOB_BASE = 'https://znhilrrgmxwedlqs.private.blob.vercel-storage.com/beats'
+
+const BEAT_TRACKS = [
+  { name: 'Grunge', file: `${BLOB_BASE}/Grunge.MP3` },
+  { name: 'Clear 140', file: `${BLOB_BASE}/clear%20140.wav` },
+  { name: 'SFTC', file: `${BLOB_BASE}/sftc_Current.wav` },
+  { name: 'WYDG', file: `${BLOB_BASE}/wydg_Current.wav` },
+  { name: 'This Far', file: `${BLOB_BASE}/this%20far_Current.wav` },
+  { name: 'June 12th Beat 5', file: `${BLOB_BASE}/june%2012th%20beat%205.wav` },
+  { name: 'June 12th Beat 3', file: `${BLOB_BASE}/june%2012th%20beat%203.wav` },
+  { name: 'June 13th Beat 1', file: `${BLOB_BASE}/june%2013th%20beat%201.wav` },
+  { name: 'June 19th Beat 1', file: `${BLOB_BASE}/june%2019th%20beat%201.wav` },
+  { name: 'June 19th Beat 2 (135)', file: `${BLOB_BASE}/june%2019th%20beat%202%20135.wav` },
+  { name: 'June 21st Beat 2 (145)', file: `${BLOB_BASE}/june%2021st%20beat%202%20145bpm.wav` },
+  { name: 'June 21st Beat 3', file: `${BLOB_BASE}/june%2021st%20beat%203.wav` },
+  { name: 'June 22nd Beat 1 (127)', file: `${BLOB_BASE}/june%2022nd%20beat%201%20127.wav` },
+  { name: 'June 26th Beat 4 (136)', file: `${BLOB_BASE}/june%2026th%20beat%204%20136.wav` },
+  { name: 'July 11th Beat 1', file: `${BLOB_BASE}/july%2011th%20beat%201.wav` },
+  { name: 'July 12 Beat 1', file: `${BLOB_BASE}/july%2012%20beat%201.wav` },
+  { name: 'July 14th Beat 1', file: `${BLOB_BASE}/July%2014th%20beat%201.wav` },
+  { name: 'July 26th Beat 1 (155)', file: `${BLOB_BASE}/july%2026th%20beat%201%20155.mp3` },
+  { name: 'July 27th Beat 1', file: `${BLOB_BASE}/july%2027th%20beat%201%207.mp3` },
+  { name: 'August 13th Beat 1', file: `${BLOB_BASE}/august%2013th%20beat%201%202.mp3` },
+  { name: 'August 13th Beat 2', file: `${BLOB_BASE}/august%2013th%20beat%202%201.mp3` },
+  { name: 'Sept 17th Beat 1', file: `${BLOB_BASE}/sept%2017th%20beat%201%2022.mp3` },
+  { name: 'Oct 14th Beat 5', file: `${BLOB_BASE}/oct%2014th%20beat%205.mp3` },
+  { name: 'Nov 12 Beat 1', file: `${BLOB_BASE}/nov%2012%20beat%201.mp3` },
+  { name: 'Nov 18th Beat 1 (127)', file: `${BLOB_BASE}/November%2018th%20beat%201%20%20127%20bpm.wav` },
+  { name: 'Dec 31st Beat', file: `${BLOB_BASE}/dec%2031st%20beat%204%20or%205%20idk.mp3` },
+  { name: 'Feb 12th Beat 3', file: `${BLOB_BASE}/feb%2012th%20beat%203%202.mp3` },
+]
 
 const SPOTIFY_ARTIST_ID = '4HHt60CmwO8nAS9RFBBO9u'
 
@@ -19,6 +47,7 @@ export default function VisualizerPage() {
   const [trackName, setTrackName] = useState('Drop a file or select a source')
   const [showControls, setShowControls] = useState(true)
   const [showSpotify, setShowSpotify] = useState(false)
+  const [showBeats, setShowBeats] = useState(false)
 
   const analyzerRef = useRef(new AudioAnalyzer())
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -255,32 +284,16 @@ export default function VisualizerPage() {
             </button>
 
             {/* Beat radio */}
-            <div className="relative group">
-              <button
-                className="px-4 py-2.5 rounded-full text-xs tracking-wider uppercase cursor-pointer"
-                style={{
-                  border: '1px solid rgba(128,212,168,0.2)',
-                  color: 'rgba(128,212,168,0.5)',
-                }}>
-                🎹 Beat Radio
-              </button>
-              {/* Dropdown */}
-              <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl p-2 hidden group-hover:block"
-                style={{
-                  background: 'rgba(26,21,32,0.95)',
-                  border: '1px solid rgba(240,198,116,0.15)',
-                  backdropFilter: 'blur(12px)',
-                }}>
-                {BEAT_TRACKS.map((track) => (
-                  <button key={track.name}
-                    onClick={() => playFile(track.file, track.name)}
-                    className="w-full text-left px-3 py-2 rounded-lg text-xs cursor-pointer transition-all hover:bg-[rgba(240,198,116,0.05)]"
-                    style={{ color: 'rgba(255,220,180,0.5)' }}>
-                    {track.name}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <button
+              onClick={() => setShowBeats(v => !v)}
+              className="px-4 py-2.5 rounded-full text-xs tracking-wider uppercase cursor-pointer"
+              style={{
+                border: `1px solid ${showBeats ? 'rgba(128,212,168,0.4)' : 'rgba(128,212,168,0.2)'}`,
+                color: showBeats ? '#80d4a8' : 'rgba(128,212,168,0.5)',
+                background: showBeats ? 'rgba(128,212,168,0.08)' : 'transparent',
+              }}>
+              🎹 Beat Radio ({BEAT_TRACKS.length})
+            </button>
           </div>
 
           {/* Frequency legend */}
@@ -304,6 +317,30 @@ export default function VisualizerPage() {
           </div>
         </div>
       </div>
+
+      {/* Beat Radio panel */}
+      {showBeats && (
+        <div className="fixed top-16 left-4 bottom-20 w-64 z-20 rounded-xl overflow-hidden"
+          style={{ background: 'rgba(26,21,32,0.95)', border: '1px solid rgba(128,212,168,0.15)', boxShadow: '0 8px 40px rgba(0,0,0,0.5)' }}>
+          <div className="px-3 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(128,212,168,0.1)' }}>
+            <span className="text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(128,212,168,0.5)' }}>
+              Beat Radio · {BEAT_TRACKS.length} tracks
+            </span>
+            <button onClick={() => setShowBeats(false)} className="text-xs cursor-pointer" style={{ color: 'rgba(255,220,180,0.2)' }}>✕</button>
+          </div>
+          <div className="overflow-y-auto" style={{ maxHeight: 'calc(100% - 36px)' }}>
+            {BEAT_TRACKS.map((track, i) => (
+              <button key={i}
+                onClick={() => { playFile(track.file, `${track.name} — shim.wav`); setShowBeats(false) }}
+                className="w-full text-left px-3 py-2.5 text-[0.6rem] cursor-pointer transition-all hover:bg-[rgba(128,212,168,0.05)]"
+                style={{ color: 'rgba(255,220,180,0.5)', borderBottom: '1px solid rgba(255,220,180,0.03)' }}>
+                <span className="text-[0.5rem] font-mono mr-2" style={{ color: 'rgba(128,212,168,0.3)' }}>{String(i + 1).padStart(2, '0')}</span>
+                {track.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Spotify embed — slides in from right */}
       {showSpotify && (
