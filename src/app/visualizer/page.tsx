@@ -326,6 +326,37 @@ export default function VisualizerPage() {
         </div>
       )}
 
+      {/* Scientific brief — expandable */}
+      <details className="fixed bottom-8 left-4 z-10 max-w-xs pointer-events-auto">
+        <summary className="text-[0.45rem] cursor-pointer" style={{ color: 'rgba(255,220,180,0.15)' }}>
+          How it works ⓘ
+        </summary>
+        <div className="mt-2 p-3 rounded-xl text-[0.5rem] leading-relaxed"
+          style={{ background: 'rgba(26,21,32,0.92)', border: '1px solid rgba(240,198,116,0.1)', color: 'rgba(255,220,180,0.35)' }}>
+          <p className="mb-2">
+            <strong style={{ color: 'rgba(240,198,116,0.5)' }}>Synesthesia</strong> — the neurological phenomenon where one sense
+            triggers another. This visualizer maps the audio spectrum to color using the somatic
+            frequency model: where sound physically resonates in the human body.
+          </p>
+          <p className="mb-2">
+            <strong style={{ color: 'rgba(240,198,116,0.5)' }}>7 frequency bands</strong> are analyzed 60 times per second via
+            Web Audio API (FFT analysis). Each band maps to a color based on its
+            position in the body&apos;s resonance field:
+          </p>
+          <p className="mb-2" style={{ fontSize: '0.42rem' }}>
+            Sub-bass (20-60Hz) → red (gut) · Bass (60-250Hz) → amber (hips) ·
+            Low-mid (250-500Hz) → gold (solar plexus) · Mid (500-2kHz) → teal (chest) ·
+            Upper-mid (2-4kHz) → cyan (throat) · Presence (4-8kHz) → violet (crown) ·
+            Brilliance (8-20kHz) → silver (above)
+          </p>
+          <p>
+            <strong style={{ color: 'rgba(240,198,116,0.5)' }}>Amplitude = brightness.</strong> The louder a frequency band,
+            the brighter its color. Silence produces darkness. The result is an accurate,
+            real-time visual translation of sound into color — you literally see what you hear.
+          </p>
+        </div>
+      </details>
+
       {/* Copyright notice */}
       <div className="fixed bottom-1 left-1/2 -translate-x-1/2 z-10 text-center">
         <p className="text-[0.4rem]" style={{ color: 'rgba(255,220,180,0.08)' }}>
@@ -339,9 +370,12 @@ export default function VisualizerPage() {
         <div className="fixed inset-0 z-5 flex items-center justify-center">
           <div className="text-center max-w-md mx-4">
             <div className="text-6xl mb-4" style={{ color: 'rgba(240,198,116,0.15)' }}>~</div>
-            <h2 className="text-xl mb-2" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-xl mb-1" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
               See What Your Sound Is Saying
             </h2>
+            <p className="text-[0.5rem] mb-3" style={{ color: 'rgba(255,220,180,0.12)' }}>
+              styll 😂
+            </p>
             <p className="text-[0.6rem] mb-6" style={{ color: 'rgba(255,220,180,0.2)' }}>
               Every frequency has a color. Every amplitude has a brightness.
               Upload audio or enable your microphone to begin.
