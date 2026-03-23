@@ -324,19 +324,39 @@ export function HUD() {
       </Panel>
       )}
 
-      {/* Main site link — hidden in mobile explore mode */}
-      {showPanels && (
-        <a href="https://wav-mvmt.vercel.app" target="_blank" rel="noopener noreferrer"
-          className={`absolute px-3 md:px-4 py-2 rounded-xl pointer-events-auto text-[0.6rem] md:text-[0.65rem] tracking-[0.15em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)] ${
-            isMobile ? 'bottom-36 left-1/2 -translate-x-1/2' : 'bottom-24 right-5'
-          }`}
+      {/* SHARE BUTTON — always visible, prominent */}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent('openShare'))}
+        className={`absolute pointer-events-auto rounded-xl cursor-pointer transition-all z-20 ${
+          isMobile
+            ? 'bottom-28 right-4 px-4 py-2.5'
+            : 'bottom-24 right-5 px-5 py-2.5'
+        }`}
+        style={{
+          background: 'linear-gradient(135deg, rgba(240,198,116,0.12), rgba(128,212,168,0.12))',
+          border: '1px solid rgba(240,198,116,0.3)',
+          color: '#f0c674',
+          fontSize: isMobile ? '0.65rem' : '0.7rem',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase' as const,
+          boxShadow: '0 0 20px rgba(240,198,116,0.08)',
+        }}
+      >
+        📤 Share & Win
+      </button>
+
+      {/* Pitch link — below share on desktop, hidden on mobile explore */}
+      {showPanels && !isMobile && (
+        <a href="/pitch" target="_blank" rel="noopener noreferrer"
+          className="absolute bottom-14 right-5 px-4 py-2 rounded-xl pointer-events-auto text-[0.6rem] tracking-[0.15em] uppercase transition-all hover:border-[rgba(240,198,116,0.4)]"
           style={{
             ...panelStyle,
-            color: '#f0c674',
+            color: 'rgba(255,220,180,0.4)',
             textDecoration: 'none',
             cursor: 'pointer',
           }}>
-          View Full Pitch →
+          View Pitch →
         </a>
       )}
 
