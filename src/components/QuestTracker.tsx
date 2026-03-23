@@ -244,8 +244,8 @@ export function QuestTracker() {
         </div>
       )}
 
-      {/* Main quest panel */}
-      <div className="fixed top-14 left-1/2 -translate-x-1/2 md:top-[70px] md:left-auto md:right-5 md:translate-x-0 pointer-events-auto z-15 p-3 rounded-2xl w-[280px]" style={panelStyle}>
+      {/* Main quest panel — compact on mobile */}
+      <div className="fixed top-14 left-3 right-3 md:top-[70px] md:left-auto md:right-5 md:w-[280px] pointer-events-auto z-15 p-2.5 md:p-3 rounded-2xl" style={panelStyle}>
         <div className="flex justify-between items-center mb-2">
           <span className="text-[0.5rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(240,198,116,0.5)' }}>
             Quests {completed.size}/100

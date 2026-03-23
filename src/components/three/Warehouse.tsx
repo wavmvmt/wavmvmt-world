@@ -132,8 +132,8 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
 
       {/* Doors handled by AnimatedDoors component */}
 
-      {/* Floating room label + info card */}
-      <Html position={[0, h + 3, 0]} center distanceFactor={35}>
+      {/* Floating room label + info card — smaller distanceFactor on mobile */}
+      <Html position={[0, h + 3, 0]} center distanceFactor={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 35}>
         <div style={{
           textAlign: 'center',
           userSelect: 'none',
@@ -162,49 +162,53 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
           }}>
             {sqft.toLocaleString()} sq ft · ${(buildCost / 1_000_000).toFixed(1)}M · {buildPct}%
           </div>
-          {/* Vision statement */}
-          <div style={{
-            color: 'rgba(255,220,180,0.3)',
-            fontSize: '9px',
-            fontFamily: "'DM Sans', sans-serif",
-            fontStyle: 'italic',
-            marginTop: '4px',
-            maxWidth: '200px',
-          }}>
-            {vision}
-          </div>
-          {/* Feature list — shows on closer approach */}
-          <div style={{
-            marginTop: '6px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '3px',
-            justifyContent: 'center',
-            maxWidth: '220px',
-          }}>
-            {features.slice(0, 4).map((f, i) => (
-              <span key={i} style={{
-                fontSize: '7px',
-                padding: '2px 6px',
-                borderRadius: '8px',
-                background: `${hexColor}15`,
-                border: `1px solid ${hexColor}25`,
-                color: `${hexColor}aa`,
-                whiteSpace: 'nowrap',
-              }}>
-                {f}
-              </span>
-            ))}
-            {features.length > 4 && (
-              <span style={{
-                fontSize: '7px',
-                padding: '2px 6px',
-                color: 'rgba(255,220,180,0.25)',
-              }}>
-                +{features.length - 4} more
-              </span>
-            )}
-          </div>
+          {/* Vision statement — hidden on mobile */}
+          {typeof window !== 'undefined' && window.innerWidth >= 768 && (
+            <div style={{
+              color: 'rgba(255,220,180,0.3)',
+              fontSize: '9px',
+              fontFamily: "'DM Sans', sans-serif",
+              fontStyle: 'italic',
+              marginTop: '4px',
+              maxWidth: '200px',
+            }}>
+              {vision}
+            </div>
+          )}
+          {/* Feature list — desktop only */}
+          {typeof window !== 'undefined' && window.innerWidth >= 768 && (
+            <div style={{
+              marginTop: '6px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '3px',
+              justifyContent: 'center',
+              maxWidth: '220px',
+            }}>
+              {features.slice(0, 4).map((f, i) => (
+                <span key={i} style={{
+                  fontSize: '7px',
+                  padding: '2px 6px',
+                  borderRadius: '8px',
+                  background: `${hexColor}15`,
+                  border: `1px solid ${hexColor}25`,
+                  color: `${hexColor}aa`,
+                  whiteSpace: 'nowrap',
+                }}>
+                  {f}
+                </span>
+              ))}
+              {features.length > 4 && (
+                <span style={{
+                  fontSize: '7px',
+                  padding: '2px 6px',
+                  color: 'rgba(255,220,180,0.25)',
+                }}>
+                  +{features.length - 4} more
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </Html>
     </group>
