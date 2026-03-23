@@ -13,26 +13,23 @@ import * as THREE from 'three'
  * Skippable by clicking or pressing any key.
  */
 
-const WAYPOINTS = [
-  // Start: high overhead establishing shot
+interface Waypoint {
+  pos: [number, number, number]
+  look: [number, number, number]
+  t: number
+}
+
+const WAYPOINTS: Waypoint[] = [
   { pos: [0, 150, 250], look: [0, 0, -50], t: 0 },
-  // Sweep down toward the warehouse roof
   { pos: [120, 80, 100], look: [0, 10, -20], t: 0.12 },
-  // Glide along the south wall, showing entrance
   { pos: [60, 25, 80], look: [0, 8, 0], t: 0.22 },
-  // Swoop into the warehouse through the entrance
   { pos: [0, 12, 50], look: [0, 6, -20], t: 0.32 },
-  // Pan across Music Studio + Sound Bath
   { pos: [-40, 15, -10], look: [-20, 5, -30], t: 0.42 },
-  // Swing to Parkour Gym
   { pos: [40, 18, -30], look: [60, 8, -40], t: 0.55 },
-  // Rise up to see the full layout
   { pos: [0, 45, -20], look: [0, 0, -40], t: 0.68 },
-  // Pull back to outdoor zone + globe
   { pos: [50, 30, -200], look: [0, 10, -300], t: 0.8 },
-  // Return to entrance — hand off to player
   { pos: [0, 8, 80], look: [0, 5, 0], t: 1.0 },
-] as const
+]
 
 export function IntroFlyover() {
   const [active, setActive] = useState(true)
