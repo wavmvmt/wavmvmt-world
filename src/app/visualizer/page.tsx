@@ -340,7 +340,7 @@ export default function VisualizerPage() {
           <div className="text-center max-w-md mx-4">
             <div className="text-6xl mb-4" style={{ color: 'rgba(240,198,116,0.15)' }}>~</div>
             <h2 className="text-xl mb-2" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
-              See Your Sound
+              See What Your Sound Is Saying
             </h2>
             <p className="text-[0.6rem] mb-6" style={{ color: 'rgba(255,220,180,0.2)' }}>
               Every frequency has a color. Every amplitude has a brightness.
