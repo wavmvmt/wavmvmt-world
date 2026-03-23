@@ -52,6 +52,7 @@ import { ExteriorDetails } from './ExteriorDetails'
 import { GuideDog } from './GuideDog'
 import { RoomAmbience } from './RoomAmbience'
 import { RoomProximityGlow } from './RoomProximityGlow'
+import { GlobalExpansionGlobe } from './GlobalExpansionGlobe'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -121,6 +122,7 @@ export function SceneContent() {
       <RainEffect />
       <OutdoorZone />
       <ExteriorDetails />
+      <GlobalExpansionGlobe />
     </>
   )
 }
