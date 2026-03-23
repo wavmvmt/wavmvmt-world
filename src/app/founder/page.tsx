@@ -37,10 +37,10 @@ export default function FounderPage() {
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Core</h2>
           <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
-            Not just an artist who makes music. Not just an entrepreneur who builds businesses.
-            A frequency-based creator merging music, movement, money, healing, and technology
-            into one unified system. Someone who experiences reality through vibration —
-            who feels every kick drum in the gut and every hi-hat in the air above.
+            A frequency-based creator who experiences reality through vibration — every
+            kick drum resonates in the gut, every hi-hat shimmers in the air above.
+            Music, movement, healing, technology, and community woven into one unified
+            system. Building ecosystems where transformation happens naturally.
           </p>
           <div className="flex flex-wrap gap-2 mt-4">
             {[
@@ -110,7 +110,7 @@ export default function FounderPage() {
               <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: '#f0c674' }}>Now</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.6)' }}>
                 Reclaiming the narrative. Building WAVMVMT as a global system.
-                Creating content daily. Preparing tours and investor decks.
+                Preparing tours and investor decks.
                 Designing an ecosystem that doesn&apos;t exist yet — because
                 what needs to be built hasn&apos;t been built.
               </p>
