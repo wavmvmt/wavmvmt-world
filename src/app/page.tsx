@@ -1,9 +1,40 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { TOTAL_SQFT } from '@/lib/roomConfig'
+import { createClient } from '@/lib/supabase/client'
 
 export default function HomePage() {
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'saving' | 'done'>('idle')
+  const [visitorCount, setVisitorCount] = useState(0)
+
+  useEffect(() => {
+    // Fetch total visitor count from Supabase
+    const supabase = createClient()
+    supabase.from('world_visits').select('id', { count: 'exact', head: true }).then(({ count }) => {
+      if (count) setVisitorCount(count)
+    })
+  }, [])
+
+  async function handleEmailSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const input = (e.currentTarget as HTMLFormElement).querySelector('input') as HTMLInputElement
+    if (!input?.value) return
+    setEmailStatus('saving')
+    try {
+      const supabase = createClient()
+      await supabase.from('email_subscribers').insert({
+        email: input.value,
+        source: 'landing_page',
+        subscribed_at: new Date().toISOString(),
+      })
+    } catch {}
+    setEmailStatus('done')
+    input.value = ''
+    setTimeout(() => setEmailStatus('idle'), 3000)
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
       style={{ background: 'linear-gradient(160deg, #1a1520 0%, #2a1f35 30%, #1f2a3a 60%, #1a2030 100%)' }}>
@@ -110,20 +141,29 @@ export default function HomePage() {
           Walk through our digital construction site
         </p>
 
+        {/* Contest teaser */}
+        <div className="mt-4 px-4 py-2 rounded-full inline-block" style={{
+          background: 'linear-gradient(135deg, rgba(240,198,116,0.06), rgba(128,212,168,0.06))',
+          border: '1px solid rgba(240,198,116,0.12)',
+        }}>
+          <span className="text-[0.55rem] tracking-[0.15em]" style={{ color: 'rgba(240,198,116,0.5)' }}>
+            Explore + Share = Enter to win cash prizes
+          </span>
+        </div>
+
+        {/* Visitor counter */}
+        {visitorCount > 0 && (
+          <p className="mt-3 text-[0.5rem] font-mono" style={{ color: 'rgba(128,212,168,0.3)' }}>
+            {visitorCount.toLocaleString()} visitors have explored the site
+          </p>
+        )}
+
         {/* Email capture */}
         <div className="mt-10 w-full max-w-sm mx-auto">
           <p className="text-[0.6rem] tracking-[0.2em] uppercase mb-3 text-center" style={{ color: 'rgba(255,200,150,0.25)' }}>
             Get updates on the build
           </p>
-          <form onSubmit={(e) => {
-            e.preventDefault()
-            const input = e.currentTarget.querySelector('input') as HTMLInputElement
-            if (input?.value) {
-              // TODO: connect to Supabase or email service
-              alert('Thanks! We\'ll keep you posted on the build.')
-              input.value = ''
-            }
-          }} className="flex gap-2">
+          <form onSubmit={handleEmailSubmit} className="flex gap-2">
             <input
               type="email"
               placeholder="your@email.com"
@@ -144,7 +184,7 @@ export default function HomePage() {
                 cursor: 'pointer',
               }}
             >
-              Join
+              {emailStatus === 'saving' ? '...' : emailStatus === 'done' ? 'Joined!' : 'Join'}
             </button>
           </form>
         </div>
