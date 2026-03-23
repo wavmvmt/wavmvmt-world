@@ -170,8 +170,12 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
 
         {/* Quick links — business plan, music, socials */}
         <div
-          className="mt-6 flex flex-wrap justify-center gap-3 transition-all duration-[2s] delay-900"
-          style={{ opacity: phase === 'ready' ? 1 : 0 }}
+          className="mt-6 flex flex-wrap justify-center gap-2 md:gap-3"
+          style={{
+            opacity: phase === 'ready' ? 1 : 0,
+            transition: 'opacity 1.5s ease',
+            transitionDelay: '0.9s',
+          }}
         >
           {[
             { label: 'Synesthesia', href: '/visualizer', icon: '🎨' },
