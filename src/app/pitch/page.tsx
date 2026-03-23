@@ -126,6 +126,104 @@ export default function PitchPage() {
           </div>
         </section>
 
+        {/* Phase 2 — Why It Works */}
+        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Why the Vertical Build Changes Everything</h2>
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Condo Presales Pay Back the Investment</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Premium residential units above the wellness center create immediate capital recovery
+                through presale commitments. Buyers get soundproofed, acoustically treated condos with
+                vibration-dampened floors — plus built-in access to the entire wellness facility below.
+                Living above a world-class fitness, music, and wellness center is a lifestyle proposition
+                no other development offers.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#80d4a8' }}>Practitioner Offices = Stable Recurring Revenue</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Medical and wellness practitioners (massage therapy, chiropractic, acupuncture,
+                psychology, physiotherapy) pay monthly rent for soundproofed office suites. This creates
+                stable, predictable income independent of membership fluctuations. Their presence also
+                creates a full-spectrum health ecosystem — members can access everything from a workout
+                to a therapy session to a chiropractic adjustment without leaving the building.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Phase 3 — Outdoor Campus */}
+        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Phase 3 · Outdoor Campus</h2>
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Retractable-Roof Sports Field</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Multi-sport field (soccer, football, ultimate frisbee) with a modular retractable roof
+                system — open in summer for natural air and sunlight, covered in winter for year-round
+                play. LED field lighting enables night sessions. This transforms a seasonal asset into
+                a 12-month revenue generator and community hub. Corporate leagues, youth programs,
+                weekend tournaments — the field pays for itself.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Skatepark</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Bowl section plus street section with spectator seating. Skateboarding culture
+                aligns perfectly with the WAVMVMT philosophy — freedom, creativity, flow, community.
+                Connects with the indoor parkour gym to create a full movement campus. Hosts
+                competitions, lessons, and community sessions.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Parking Garage + Rooftop Terrace</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Multi-level parking structure solves the practical need for member and visitor parking,
+                with EV charging stations for sustainability. The rooftop terrace connects directly
+                to the main building — creating an elevated outdoor social space for events, sunset
+                yoga sessions, rooftop concerts, and private gatherings. The terrace transforms dead
+                rooftop space into a premium venue that generates event revenue and increases the
+                overall property value.
+              </p>
+            </div>
+            <div>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Outdoor Training Area</div>
+              <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Calisthenics bars, rigs, sprint track, and agility course connected to the indoor
+                parkour gym. Takes the training experience outside when weather permits, expanding
+                capacity without expanding the building footprint. Fresh air training is a major
+                draw for members who want variety in their routine.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Energy & Sustainability */}
+        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Energy & Sustainability</h2>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: 'rgba(255,220,180,0.5)' }}>
+            Designed with sustainability at the core — reducing operating costs while
+            aligning with the wellness mission.
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { name: 'Solar Panels', desc: 'Rooftop solar on parking garage reduces energy costs' },
+              { name: 'EV Charging', desc: 'Electric vehicle stations attract eco-conscious members' },
+              { name: 'Smart Glass', desc: 'Electrochromic windows — tint on demand, reduce cooling costs' },
+              { name: 'Geothermal Potential', desc: 'Geothermal system for sauna/cold plunge efficiency' },
+              { name: 'LED Throughout', desc: 'Full LED lighting reduces energy consumption 75%' },
+              { name: 'Water Recovery', desc: 'Greywater recycling for landscaping and cooling' },
+            ].map((item) => (
+              <div key={item.name} className="px-3 py-2 rounded-lg"
+                style={{ background: 'rgba(128,212,168,0.04)', border: '1px solid rgba(128,212,168,0.08)' }}>
+                <div className="text-[0.55rem] font-bold mb-0.5" style={{ color: 'rgba(128,212,168,0.5)' }}>{item.name}</div>
+                <div className="text-[0.45rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Global Vision */}
         <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
           <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Global Expansion</h2>
