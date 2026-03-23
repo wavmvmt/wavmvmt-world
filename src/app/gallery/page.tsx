@@ -6,16 +6,34 @@ import { PageNav } from '@/components/PageNav'
 // Add renders here as they're placed in public/images/renders/
 // Each render gets a label describing what it shows
 const RENDERS = [
+  // Exterior & Campus
   { src: '/images/renders/wellness-center.jpg', label: 'Wellness Center — Curved Glass Facade', category: 'Phase 1' },
-  { src: '/images/renders/tower.jpg', label: 'Vertical Build — Flowing Tower Design', category: 'Phase 2' },
-  { src: '/images/renders/waterfront-plaza.jpg', label: 'Waterfront Plaza & Community Space', category: 'Outdoor' },
-  { src: '/images/renders/aerial-campus.jpg', label: 'Aerial View — Full Campus with Dome', category: 'Campus' },
-  { src: '/images/renders/amphitheatre.jpg', label: 'Sunken Amphitheatre — Outdoor Events', category: 'Outdoor' },
-  { src: '/images/renders/evening-courtyard.jpg', label: 'Evening Courtyard — Fairy Lights & Water Feature', category: 'Outdoor' },
-  { src: '/images/renders/condos.jpg', label: 'Residential Units — Modern Condo Design', category: 'Phase 2' },
-  { src: '/images/renders/skyline-sunset.jpg', label: 'Toronto Skyline — Sunset View', category: 'Vision' },
-  { src: '/images/renders/walkway-lights.jpg', label: 'Pedestrian Walkway — Evening Ambiance', category: 'Outdoor' },
-  { src: '/images/renders/promenade.jpg', label: 'Tree-Lined Promenade — Daytime', category: 'Outdoor' },
+  { src: '/images/renders/tower-flagship.jpg', label: 'Flagship Tower — Vertical Build Vision', category: 'Phase 2' },
+  { src: '/images/renders/aerial-district.jpg', label: 'Aerial View — Full WAVMVMT District', category: 'Campus' },
+  { src: '/images/renders/twin-towers.jpg', label: 'Twin Towers — Residential & Commercial', category: 'Phase 2' },
+  { src: '/images/renders/towers-dusk.jpg', label: 'Towers at Dusk — Toronto Skyline', category: 'Vision' },
+  { src: '/images/renders/public-plaza.jpg', label: 'Public Plaza & Community Space', category: 'Outdoor' },
+  { src: '/images/renders/residential-midrise.jpg', label: 'Residential Midrise — Condo Living', category: 'Phase 2' },
+  { src: '/images/renders/retail-promenade.jpg', label: 'Tree-Lined Retail Promenade', category: 'Outdoor' },
+  { src: '/images/renders/retail-square.jpg', label: 'Retail Square — Shopping & Dining', category: 'Outdoor' },
+  { src: '/images/renders/street-retail.jpg', label: 'Street-Level Retail & Cafés', category: 'Outdoor' },
+  { src: '/images/renders/night-district.jpg', label: 'Night District — Evening Atmosphere', category: 'Vision' },
+  { src: '/images/renders/pedestrian-paths.jpg', label: 'Pedestrian Pathways — Green Corridors', category: 'Outdoor' },
+  { src: '/images/renders/amphitheater.jpg', label: 'Outdoor Amphitheatre — Events & Performance', category: 'Outdoor' },
+
+  // Interior Rooms
+  { src: '/images/renders/front-desk.png', label: 'WAVMVMT Reception & Lobby', category: 'Interior' },
+  { src: '/images/renders/parkour-gym.png', label: 'Parkour Gym — Movement & Aerial Arts', category: 'Interior' },
+  { src: '/images/renders/parkour-springboard.png', label: 'Parkour — Vault Boxes & Foam Pit', category: 'Interior' },
+  { src: '/images/renders/weight-training.png', label: 'Weight Training — WAVMVMT Gym Floor', category: 'Interior' },
+  { src: '/images/renders/sound-bath.png', label: 'Sound Bath — Crystal Bowls & Meditation', category: 'Interior' },
+  { src: '/images/renders/yoga-meditation.png', label: 'Yoga & Meditation Studio', category: 'Interior' },
+  { src: '/images/renders/ice-bath-sauna.png', label: 'Ice Baths, Sauna & Salt Room', category: 'Interior' },
+  { src: '/images/renders/cafe-lounge.png', label: 'Café & Lounge — Espresso Bar', category: 'Interior' },
+  { src: '/images/renders/creative-spaces.png', label: 'Creative Studios — Music, Photo & Video', category: 'Interior' },
+  { src: '/images/renders/amphitheatre-interior.png', label: 'Amphitheatre — Stage & Performance', category: 'Interior' },
+  { src: '/images/renders/extras.png', label: 'Additional Amenities — Barbershop, Fashion & More', category: 'Interior' },
+  { src: '/images/renders/blueprint.png', label: 'Blueprint — Rough Floor Plan Concept', category: 'Planning' },
 ]
 
 const panelStyle = {
