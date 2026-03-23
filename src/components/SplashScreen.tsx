@@ -108,8 +108,8 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
           style={{ opacity: phase === 'intro' ? 0 : 1 }}
         >
           {[
-            ['42K', 'sq ft'],
-            ['12', 'rooms'],
+            ['$40M', 'vision'],
+            ['13+', 'rooms'],
             ['100', 'quests'],
           ].map(([val, label]) => (
             <div key={label} className="text-center">
@@ -120,14 +120,28 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         </div>
 
         <p
-          className="text-[0.6rem] tracking-[0.2em] mb-10 transition-all duration-[2s] delay-700"
+          className="text-[0.6rem] tracking-[0.2em] mb-4 transition-all duration-[2s] delay-700"
           style={{
             color: 'rgba(255,200,150,0.2)',
             opacity: phase === 'intro' ? 0 : 1,
           }}
         >
-          Toronto, ON · First Location
+          Toronto, ON · Wellness · Fitness · Music · Tech · Education
         </p>
+
+        {/* Contest teaser */}
+        <div
+          className="mb-8 px-4 py-1.5 rounded-full inline-block transition-all duration-[2s] delay-800"
+          style={{
+            background: 'linear-gradient(135deg, rgba(240,198,116,0.05), rgba(128,212,168,0.05))',
+            border: '1px solid rgba(240,198,116,0.1)',
+            opacity: phase === 'intro' ? 0 : 1,
+          }}
+        >
+          <span className="text-[0.5rem] tracking-[0.12em]" style={{ color: 'rgba(240,198,116,0.4)' }}>
+            Explore + Share = Enter to win cash prizes
+          </span>
+        </div>
 
         {/* Enter button */}
         <button

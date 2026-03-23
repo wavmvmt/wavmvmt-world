@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ROOMS, COLORS } from '@/lib/roomConfig'
+import { ROOMS, OUTDOOR_ZONES, COLORS } from '@/lib/roomConfig'
 
 function colorToCSS(n: number): string {
   return '#' + n.toString(16).padStart(6, '0')
@@ -19,8 +19,8 @@ export function Minimap() {
     if (!ctx) return
 
     // World bounds
-    const worldMinX = -260, worldMaxX = 260
-    const worldMinZ = -240, worldMaxZ = 170
+    const worldMinX = -280, worldMaxX = 280
+    const worldMinZ = -400, worldMaxZ = 250
     const worldW = worldMaxX - worldMinX
     const worldH = worldMaxZ - worldMinZ
 
@@ -76,6 +76,29 @@ export function Minimap() {
         ctx.textAlign = 'center'
         const shortName = room.name.length > 10 ? room.name.slice(0, 8) + '..' : room.name
         ctx.fillText(shortName, rx + rw / 2, ry + rh / 2 + 2)
+      }
+
+      // Outdoor zones (Phase 3 — faded outlines)
+      for (const zone of OUTDOOR_ZONES) {
+        const [zx, zy] = worldToMap(zone.x - zone.w / 2, zone.z - zone.d / 2)
+        const [zx2, zy2] = worldToMap(zone.x + zone.w / 2, zone.z + zone.d / 2)
+        const zw = zx2 - zx
+        const zh = zy2 - zy
+        const zcolor = colorToCSS(zone.color)
+
+        // Dashed outline
+        ctx.setLineDash([2, 2])
+        ctx.strokeStyle = `${zcolor}30`
+        ctx.lineWidth = 0.5
+        ctx.strokeRect(zx, zy, zw, zh)
+        ctx.setLineDash([])
+
+        // Label
+        ctx.fillStyle = `${zcolor}40`
+        ctx.font = '4px DM Sans, sans-serif'
+        ctx.textAlign = 'center'
+        const shortName = zone.name.length > 10 ? zone.name.slice(0, 8) + '..' : zone.name
+        ctx.fillText(shortName, zx + zw / 2, zy + zh / 2 + 1.5)
       }
 
       // Player dot
@@ -158,7 +181,7 @@ export function Minimap() {
       <canvas
         ref={canvasRef}
         width={180}
-        height={140}
+        height={200}
         className="block"
       />
     </div>
