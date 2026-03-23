@@ -49,6 +49,7 @@ import { DemoScreens } from './DemoScreens'
 import { QuestPath } from './QuestPath'
 import { OutdoorZone } from './OutdoorZone'
 import { ExteriorDetails } from './ExteriorDetails'
+import { GuideDog } from './GuideDog'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -78,6 +79,7 @@ export function SceneContent() {
       <NPCCoaches />
       <DemoScreens />
       <QuestPath />
+      <GuideDog />
 
       {/* Audio — no visual cost */}
       <AmbientAudio />

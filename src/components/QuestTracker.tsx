@@ -224,13 +224,29 @@ export function QuestTracker() {
   const quest = QUESTS[currentIdx]
   const pct = Math.round((completed.size / QUESTS.length) * 100)
 
-  if (minimized) {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
+  // Mobile: always show minimized compact pill, tap to expand briefly
+  if (minimized || (isMobile && !showList)) {
     return (
-      <button onClick={() => setMinimized(false)}
-        className="fixed top-14 left-1/2 -translate-x-1/2 md:top-[70px] md:left-auto md:right-5 md:translate-x-0 pointer-events-auto z-15 px-3 py-1.5 rounded-xl text-[0.55rem] tracking-wider cursor-pointer"
-        style={{ ...panelStyle, color: 'rgba(255,220,180,0.4)' }}>
-        Quest {completed.size}/100 ({pct}%)
-      </button>
+      <>
+        {toast && (
+          <div className="fixed top-28 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-xl pointer-events-none"
+            style={{ ...panelStyle, border: '1px solid rgba(128,212,168,0.3)' }}>
+            <span className="text-[0.6rem]" style={{ color: '#80d4a8' }}>Quest complete: {toast}</span>
+          </div>
+        )}
+        <button onClick={() => { if (isMobile) setShowList(true); else setMinimized(false) }}
+          className={`fixed pointer-events-auto z-15 px-3 py-1.5 rounded-xl text-[0.55rem] tracking-wider cursor-pointer ${
+            isMobile ? 'top-14 left-3' : 'top-[70px] right-5'
+          }`}
+          style={{ ...panelStyle, color: 'rgba(255,220,180,0.4)' }}>
+          {isMobile
+            ? `🐕 ${quest?.title || 'Quest'} · ${pct}%`
+            : `Quest ${completed.size}/100 (${pct}%)`
+          }
+        </button>
+      </>
     )
   }
 
