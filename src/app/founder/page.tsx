@@ -68,8 +68,13 @@ export default function FounderPage() {
               <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(128,212,168,0.4)' }}>Foundation</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
                 Parkour became the first language of freedom — movement as expression,
-                control, discipline, and flow. Identity built through physical mastery
-                and exploration. Learning to create paths where none exist.
+                control, discipline, and flow. Helped build a major parkour facility
+                from the ground up, learning what it takes to create physical spaces
+                where people transform. Was in nursing school studying to heal people
+                through medicine — but realized the impact could be bigger. Dropped out
+                to go all in on a vision: heal through lifestyle, creativity, movement,
+                and community. Not just physical health — emotional, financial, and
+                spiritual empowerment, all in the same scope.
               </p>
             </div>
 
