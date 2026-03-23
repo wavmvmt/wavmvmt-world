@@ -133,11 +133,151 @@ function SkateparkOutline({ x, z }: { x: number; z: number }) {
   )
 }
 
+/** Soccer field markings — center circle, penalty boxes, goal posts */
+function SoccerMarkings({ x, z, w, d }: { x: number; z: number; w: number; d: number }) {
+  const lineColor = COLORS.cream
+  const lineOpacity = 0.08
+  const mat = <meshBasicMaterial color={lineColor} transparent opacity={lineOpacity} side={THREE.DoubleSide} />
+
+  return (
+    <group position={[x, 0.06, z]}>
+      {/* Center circle */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[14, 14.3, 32]} />
+        {mat}
+      </mesh>
+      {/* Center spot */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.5, 8]} />
+        {mat}
+      </mesh>
+      {/* Halfway line */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.3, d]} />
+        {mat}
+      </mesh>
+
+      {/* Penalty boxes — both ends */}
+      {[-1, 1].map((side, i) => (
+        <group key={i}>
+          {/* Penalty area (large box) */}
+          <lineSegments position={[side * (w / 2 - 16), 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <edgesGeometry args={[new THREE.PlaneGeometry(32, 55)]} />
+            <lineBasicMaterial color={lineColor} transparent opacity={lineOpacity} />
+          </lineSegments>
+          {/* Goal area (small box) */}
+          <lineSegments position={[side * (w / 2 - 6), 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <edgesGeometry args={[new THREE.PlaneGeometry(12, 22)]} />
+            <lineBasicMaterial color={lineColor} transparent opacity={lineOpacity} />
+          </lineSegments>
+          {/* Penalty spot */}
+          <mesh position={[side * (w / 2 - 18), 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.4, 6]} />
+            {mat}
+          </mesh>
+          {/* Goal posts */}
+          <group position={[side * w / 2, 0, 0]}>
+            {/* Crossbar */}
+            <mesh position={[0, 3.5, 0]}>
+              <cylinderGeometry args={[0.12, 0.12, 11, 6]} />
+              <meshStandardMaterial color={0xffffff} metalness={0.5} roughness={0.4} transparent opacity={0.25} />
+            </mesh>
+            {/* Posts */}
+            {[-5.5, 5.5].map((pz, j) => (
+              <mesh key={j} position={[0, 1.75, pz]}>
+                <cylinderGeometry args={[0.1, 0.1, 3.5, 6]} />
+                <meshStandardMaterial color={0xffffff} metalness={0.5} roughness={0.4} transparent opacity={0.25} />
+              </mesh>
+            ))}
+            {/* Net (wireframe plane behind goal) */}
+            <mesh position={[side * -2, 1.75, 0]}>
+              <boxGeometry args={[3, 3.5, 11]} />
+              <meshBasicMaterial color={0xffffff} transparent opacity={0.02} wireframe />
+            </mesh>
+          </group>
+        </group>
+      ))}
+    </group>
+  )
+}
+
+/** Retractable tent/roof structure over the sports field */
+function RetractableRoof({ x, z, w, d }: { x: number; z: number; w: number; d: number }) {
+  const archCount = 6
+  const roofH = 25
+
+  return (
+    <group position={[x, 0, z]}>
+      {/* Arched steel trusses */}
+      {Array.from({ length: archCount }, (_, i) => {
+        const zPos = -d / 2 + (i / (archCount - 1)) * d
+        return (
+          <group key={i}>
+            {/* Arch — approximated with 8 segments */}
+            {Array.from({ length: 9 }, (_, j) => {
+              const t0 = (j / 8) * Math.PI
+              const t1 = ((j + 1) / 8) * Math.PI
+              const x0 = Math.cos(t0) * w / 2
+              const y0 = Math.sin(t0) * roofH
+              const x1 = Math.cos(t1) * w / 2
+              const y1 = Math.sin(t1) * roofH
+              const midX = (x0 + x1) / 2
+              const midY = (y0 + y1) / 2
+              const len = Math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
+              const angle = Math.atan2(y1 - y0, x1 - x0)
+
+              return (
+                <mesh key={j} position={[midX, midY, zPos]} rotation={[0, 0, angle]}>
+                  <cylinderGeometry args={[0.15, 0.15, len, 4]} />
+                  <meshBasicMaterial color={COLORS.steel} transparent opacity={0.08} />
+                </mesh>
+              )
+            })}
+          </group>
+        )
+      })}
+
+      {/* Fabric panels between arches (the retractable part) */}
+      {Array.from({ length: archCount - 1 }, (_, i) => {
+        const zPos = -d / 2 + ((i + 0.5) / (archCount - 1)) * d
+        return (
+          <mesh key={`fabric-${i}`} position={[0, roofH * 0.85, zPos]}>
+            <planeGeometry args={[w * 0.9, d / archCount * 0.8]} />
+            <meshBasicMaterial color={COLORS.cream} transparent opacity={0.03} side={THREE.DoubleSide} />
+          </mesh>
+        )
+      })}
+
+      {/* Label */}
+      <Html position={[0, roofH + 3, 0]} center distanceFactor={100}>
+        <div style={{
+          color: 'rgba(255,220,180,0.3)',
+          fontSize: '9px',
+          fontFamily: "'DM Sans', sans-serif",
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}>
+          RETRACTABLE ROOF · YEAR-ROUND PLAY
+        </div>
+      </Html>
+    </group>
+  )
+}
+
 export function OutdoorZone() {
   return (
     <group>
       {/* Sports field */}
       <FieldOutline x={0} z={-320} w={160} d={100} name="Sports Field" color={COLORS.sage} />
+
+      {/* Soccer markings on the field */}
+      <SoccerMarkings x={0} z={-320} w={140} d={80} />
+
+      {/* Retractable roof over the field */}
+      <RetractableRoof x={0} z={-320} w={160} d={100} />
 
       {/* Skatepark */}
       <SkateparkOutline x={-140} z={-320} />
