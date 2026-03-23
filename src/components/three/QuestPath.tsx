@@ -3,7 +3,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Html } from '@react-three/drei'
 import { ROOMS } from '@/lib/roomConfig'
 import { QUESTS } from '@/lib/quests'
 
@@ -132,9 +131,10 @@ export function QuestPath() {
     const sizeAttr = trailRef.current.geometry.attributes.size as THREE.BufferAttribute
     sizeAttr.needsUpdate = true
 
-    // Brightness pulses — closer = brighter
+    // Brightness — much more visible now that dog leads the way
     const proximity = Math.max(0, 1 - dist / 200)
-    mat.opacity = 0.25 + proximity * 0.3 + Math.sin(t * 2) * 0.05
+    mat.opacity = 0.45 + proximity * 0.3 + Math.sin(t * 2) * 0.08
+    mat.size = 0.8
 
     // Update arrow indicators (3 chevrons pointing toward target)
     if (arrowGroupRef.current) {
@@ -167,54 +167,20 @@ export function QuestPath() {
         />
       </points>
 
-      {/* Directional chevrons — 3 arrows pointing toward target */}
+      {/* Directional chevrons — 5 arrows pointing toward target, brighter */}
       <group ref={arrowGroupRef}>
-        {[0, 2, 4].map((offset, i) => (
-          <mesh key={i} position={[0, 0, -offset]} rotation={[-Math.PI / 2, 0, 0]}>
-            <coneGeometry args={[0.6 - i * 0.1, 1.2, 3]} />
+        {[0, 1.8, 3.6, 5.4, 7.2].map((offset, i) => (
+          <mesh key={i} position={[0, 0.05, -offset]} rotation={[-Math.PI / 2, 0, 0]}>
+            <coneGeometry args={[0.8 - i * 0.08, 1.5, 3]} />
             <meshBasicMaterial
               color={0xf0c674}
               transparent
-              opacity={0.4 - i * 0.1}
+              opacity={0.6 - i * 0.1}
               depthWrite={false}
               blending={THREE.AdditiveBlending}
             />
           </mesh>
         ))}
-
-        {/* Quest label floating above the arrows */}
-        <Html position={[0, 2.5, 0]} center distanceFactor={60}>
-          <div style={{
-            background: 'rgba(26,21,32,0.8)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(240,198,116,0.2)',
-            borderRadius: '8px',
-            padding: '4px 10px',
-            whiteSpace: 'nowrap',
-            pointerEvents: 'none',
-          }}>
-            <div style={{
-              fontSize: '9px',
-              color: 'rgba(240,198,116,0.4)',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              textAlign: 'center',
-            }}>
-              QUEST
-            </div>
-            <div style={{
-              fontSize: '11px',
-              color: '#f0c674',
-              fontWeight: 600,
-              textAlign: 'center',
-              maxWidth: '150px',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}>
-              {questTitle}
-            </div>
-          </div>
-        </Html>
       </group>
     </group>
   )
