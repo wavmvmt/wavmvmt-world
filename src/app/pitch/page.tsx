@@ -75,21 +75,43 @@ export default function PitchPage() {
           </div>
         </section>
 
-        {/* Phase 2 — Upper Floors */}
+        {/* Phase 2 — Vertical Build */}
         <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
-          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Phase 2 · Upper Floors</h2>
+          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Phase 2 · Vertical Build</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: 'rgba(255,220,180,0.5)' }}>
-            Soundproofed upper floors housing wellness practitioners — creating a
-            full-spectrum health ecosystem under one roof.
+            Soundproofed upper floors with premium residential units and wellness
+            practitioner offices — creating a full live-work-wellness ecosystem.
+            Subject to zoning approval.
           </p>
-          <div className="grid grid-cols-2 gap-2">
-            {['Massage Therapy', 'Chiropractic', 'Acupuncture', 'Psychology / Counselling',
-              'Physiotherapy', 'Naturopathy', 'Nutrition', 'Peer Support'].map((item) => (
-              <div key={item} className="text-[0.55rem] px-2 py-1 rounded"
-                style={{ color: 'rgba(255,220,180,0.3)', background: 'rgba(128,212,168,0.04)' }}>
-                {item}
-              </div>
-            ))}
+
+          <div className="mb-3">
+            <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1.5" style={{ color: 'rgba(240,198,116,0.35)' }}>
+              Residential Units
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {['Premium Condos', 'Presale Opportunities', 'Acoustically Treated', 'Vibration-Dampened Floors',
+                'Rooftop Access', 'Wellness Amenities Included'].map((item) => (
+                <div key={item} className="text-[0.55rem] px-2 py-1 rounded"
+                  style={{ color: 'rgba(255,220,180,0.3)', background: 'rgba(240,198,116,0.04)' }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1.5" style={{ color: 'rgba(128,212,168,0.35)' }}>
+              Practitioner Offices
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {['Massage Therapy', 'Chiropractic', 'Acupuncture', 'Psychology / Counselling',
+                'Physiotherapy', 'Naturopathy', 'Nutrition', 'Peer Support'].map((item) => (
+                <div key={item} className="text-[0.55rem] px-2 py-1 rounded"
+                  style={{ color: 'rgba(255,220,180,0.3)', background: 'rgba(128,212,168,0.04)' }}>
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
