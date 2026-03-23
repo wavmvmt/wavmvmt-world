@@ -269,6 +269,177 @@ function EducationWingInterior({ buildPct }: { buildPct: number }) {
   )
 }
 
+function RecoverySuiteInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Finnish sauna — wooden room */}
+      <group position={[-20, 0, -15]}>
+        <mesh position={[0, 3, 0]}>
+          <boxGeometry args={[12, 6, 10]} />
+          <meshStandardMaterial color={COLORS.woodDk} transparent opacity={opacity * 0.15} roughness={0.9} side={THREE.DoubleSide} />
+        </mesh>
+        {/* Sauna benches — 2 tiers */}
+        {[1.5, 3.5].map((h, i) => (
+          <mesh key={i} position={[0, h, -2]}>
+            <boxGeometry args={[8, 0.3, 3]} />
+            <meshStandardMaterial color={COLORS.woodLt} transparent opacity={opacity * 0.4} roughness={0.85} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Cold plunge pools — 3 tubs */}
+      {[0, 8, 16].map((x, i) => (
+        <group key={i} position={[x, 0, 10]}>
+          <mesh position={[0, 0.8, 0]}>
+            <cylinderGeometry args={[3, 3, 1.6, 12, 1, true]} />
+            <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.4} transparent opacity={opacity * 0.4} side={THREE.DoubleSide} />
+          </mesh>
+          {/* Water surface */}
+          <mesh position={[0, 1.4, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[2.8, 12]} />
+            <meshStandardMaterial color={COLORS.sky} transparent opacity={opacity * 0.2} roughness={0.1} metalness={0.3} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Steam room */}
+      <mesh position={[25, 3, -15]}>
+        <boxGeometry args={[10, 6, 10]} />
+        <meshStandardMaterial color={COLORS.steel} transparent opacity={opacity * 0.08} roughness={0.95} side={THREE.DoubleSide} />
+      </mesh>
+    </group>
+  )
+}
+
+function SpaWellnessInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Massage tables — 4 stations */}
+      {[-12, -4, 4, 12].map((x, i) => (
+        <group key={i} position={[x, 0, 0]}>
+          <mesh position={[0, 1.2, 0]}>
+            <boxGeometry args={[3, 0.3, 6]} />
+            <meshStandardMaterial color={COLORS.cream} transparent opacity={opacity * 0.4} roughness={0.9} />
+          </mesh>
+          {/* Legs */}
+          {[[-1, -2], [1, -2], [-1, 2], [1, 2]].map(([dx, dz], j) => (
+            <mesh key={j} position={[dx, 0.55, dz]}>
+              <cylinderGeometry args={[0.06, 0.06, 1.1, 6]} />
+              <meshStandardMaterial color={COLORS.steel} transparent opacity={opacity * 0.3} />
+            </mesh>
+          ))}
+          {/* Head rest */}
+          <mesh position={[0, 1.4, -3.2]}>
+            <cylinderGeometry args={[0.5, 0.5, 0.15, 8]} />
+            <meshStandardMaterial color={COLORS.cream} transparent opacity={opacity * 0.3} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Cryotherapy chamber */}
+      {buildPct > 3 && (
+        <mesh position={[0, 2.5, -15]}>
+          <cylinderGeometry args={[2, 2, 5, 12]} />
+          <meshStandardMaterial color={COLORS.sky} transparent opacity={opacity * 0.15} metalness={0.6} roughness={0.3} />
+        </mesh>
+      )}
+    </group>
+  )
+}
+
+function CafeLoungeInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Espresso bar counter */}
+      <mesh position={[0, 1.4, -20]}>
+        <boxGeometry args={[20, 2.8, 2]} />
+        <meshStandardMaterial color={COLORS.woodDk} transparent opacity={opacity * 0.4} roughness={0.8} />
+      </mesh>
+      {/* Counter top */}
+      <mesh position={[0, 2.85, -20]}>
+        <boxGeometry args={[20.5, 0.15, 2.2]} />
+        <meshStandardMaterial color={COLORS.copper} metalness={0.4} roughness={0.5} transparent opacity={opacity * 0.4} />
+      </mesh>
+
+      {/* Seating area — 6 round tables */}
+      {[[-15, 5], [-5, 10], [5, 5], [15, 10], [-8, -5], [8, -5]].map(([x, z], i) => (
+        <group key={i} position={[x, 0, z]}>
+          {/* Table */}
+          <mesh position={[0, 1.5, 0]}>
+            <cylinderGeometry args={[2, 2, 0.12, 10]} />
+            <meshStandardMaterial color={COLORS.woodLt} transparent opacity={opacity * 0.3} />
+          </mesh>
+          <mesh position={[0, 0.75, 0]}>
+            <cylinderGeometry args={[0.1, 0.1, 1.5, 6]} />
+            <meshStandardMaterial color={COLORS.steel} transparent opacity={opacity * 0.3} />
+          </mesh>
+          {/* 3 chairs around */}
+          {[0, 2.1, 4.2].map((angle, j) => (
+            <mesh key={j} position={[Math.cos(angle) * 2.8, 0.8, Math.sin(angle) * 2.8]}>
+              <boxGeometry args={[1, 0.1, 1]} />
+              <meshStandardMaterial color={COLORS.sage} transparent opacity={opacity * 0.2} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* Menu board */}
+      <mesh position={[0, 5, -21.5]}>
+        <boxGeometry args={[8, 4, 0.2]} />
+        <meshStandardMaterial color={0x1a1520} emissive={COLORS.gold} emissiveIntensity={0.04} transparent opacity={opacity * 0.4} />
+      </mesh>
+    </group>
+  )
+}
+
+function YogaRoomInterior({ buildPct }: { buildPct: number }) {
+  if (buildPct < 1) return null
+  const opacity = Math.min(1, buildPct / 100)
+
+  return (
+    <group>
+      {/* Yoga mats — 5x3 grid */}
+      {Array.from({ length: 15 }, (_, i) => {
+        const row = Math.floor(i / 5)
+        const col = i % 5
+        return (
+          <mesh key={i} position={[-12 + col * 6, 0.05, -8 + row * 8]}>
+            <boxGeometry args={[2.5, 0.08, 5.5]} />
+            <meshStandardMaterial
+              color={[COLORS.sage, COLORS.lavender, COLORS.rose, COLORS.sky, COLORS.gold][col]}
+              transparent opacity={opacity * 0.25}
+              roughness={0.95}
+            />
+          </mesh>
+        )
+      })}
+
+      {/* Mirror wall */}
+      <mesh position={[-15, 4, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[20, 8]} />
+        <meshStandardMaterial color={0xffffff} metalness={0.9} roughness={0.05} transparent opacity={opacity * 0.15} />
+      </mesh>
+
+      {/* Aerial silk rigging points */}
+      {buildPct > 5 && [-5, 5].map((x, i) => (
+        <mesh key={i} position={[x, 5, 0]}>
+          <cylinderGeometry args={[0.04, 0.04, 10, 4]} />
+          <meshStandardMaterial color={COLORS.rose} transparent opacity={opacity * 0.3} />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
 export function RoomInteriors() {
   return (
     <group>
@@ -281,6 +452,10 @@ export function RoomInteriors() {
           'Weight Training': WeightTrainingInterior,
           'Amphitheatre': AmphitheatreInterior,
           'Education Wing': EducationWingInterior,
+          'Recovery Suite': RecoverySuiteInterior,
+          'Spa & Wellness': SpaWellnessInterior,
+          'Cafe & Lounge': CafeLoungeInterior,
+          'Yoga Room': YogaRoomInterior,
         }[room.name]
 
         if (!Interior) return null
