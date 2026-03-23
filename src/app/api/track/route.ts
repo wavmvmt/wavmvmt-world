@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) return null
+  return createClient(url, key)
+}
 
 /**
  * POST /api/track — log a visitor event
@@ -16,7 +18,7 @@ export async function POST(req: NextRequest) {
     const { event, data, sessionId } = body
 
     if (event === 'quest_complete') {
-      await supabase.from('visitor_log').update({
+      await getSupabase()?.from('visitor_log').update({
         quests_completed: data.count,
       }).eq('session_id', sessionId)
     }
@@ -32,15 +34,18 @@ export async function POST(req: NextRequest) {
  */
 export async function GET() {
   try {
-    const { count } = await supabase
+    const sb = getSupabase()
+    if (!sb) return NextResponse.json({ visitors: 0, suggestions: 0, roulette: 0 })
+
+    const { count } = await sb
       .from('visitor_log')
       .select('*', { count: 'exact', head: true })
 
-    const { count: suggestionCount } = await supabase
+    const { count: suggestionCount } = await sb
       .from('suggestions')
       .select('*', { count: 'exact', head: true })
 
-    const { count: rouletteCount } = await supabase
+    const { count: rouletteCount } = await sb
       .from('roulette_entries')
       .select('*', { count: 'exact', head: true })
 
