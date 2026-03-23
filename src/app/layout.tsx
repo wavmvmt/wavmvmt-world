@@ -12,20 +12,23 @@ const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["lati
 const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
-  title: "WAVMVMT World — Under Construction",
-  description: "Walk through the WAVMVMT campus construction site. 13 rooms, outdoor sports field, skatepark, rooftop terrace. $40M build. Music, wellness, fitness, tech, education — all under one roof. Toronto, ON.",
-  keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto", "education", "skatepark", "fitness"],
+  title: "WAVMVMT — A New Renaissance",
+  description: "Walk through the WAVMVMT construction site in 3D. A $40M wellness, fitness, music, tech & education campus being built in Toronto. 13+ rooms, outdoor sports field, skatepark, rooftop terrace. Experience the future being built.",
+  keywords: ["WAVMVMT", "wellness center", "music studio", "parkour gym", "3D world", "construction", "Toronto", "education", "skatepark", "fitness", "synesthesia", "shim.wav"],
   openGraph: {
-    title: "WAVMVMT World · Walk the $40M Construction Site",
-    description: "13 rooms + outdoor campus. Parkour gym, music studio, sound bath, education wing, skatepark, rooftop terrace. Watch it being built in real-time 3D.",
+    title: "WAVMVMT — A New Renaissance",
+    description: "Walk through a $40M wellness campus being built in real-time 3D. Parkour gym, music studio, sound bath, education wing, skatepark, rooftop terrace. Toronto, ON.",
     siteName: "WAVMVMT World",
     type: "website",
     locale: "en_US",
+    url: "https://wavmvmt-world.vercel.app",
   },
   twitter: {
     card: "summary_large_image",
-    title: "WAVMVMT World · Walk the Construction Site",
-    description: "42,500 sq ft flagship wellness center. Watch anime construction workers build it in real-time 3D.",
+    title: "WAVMVMT — A New Renaissance",
+    description: "Walk through a $40M wellness & tech campus being built in real-time 3D. 13+ rooms, outdoor campus, 100 quests. Toronto.",
+    creator: "@shim_wav",
+    site: "@wavmvmt",
   },
   robots: { index: true, follow: true },
   manifest: '/manifest.json',
