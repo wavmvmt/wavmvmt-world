@@ -26,7 +26,7 @@ export default function FounderPage() {
             Saadiq Khan
           </p>
           <p className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,200,150,0.25)' }}>
-            Artist · Ecosystem Builder · Frequency-Based Creator
+            Artist · Ecosystem Builder · Systems Architect
           </p>
           <p className="text-[0.65rem] italic max-w-lg mx-auto" style={{ color: 'rgba(255,200,150,0.3)', fontFamily: "'Playfair Display', serif" }}>
             &ldquo;Everything is energy. Everything is movement.&rdquo;
@@ -178,12 +178,11 @@ export default function FounderPage() {
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
               <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>SET Ventures / Enterprises</div>
               <p className="text-[0.6rem] mb-1.5" style={{ color: 'rgba(255,220,180,0.4)' }}>
-                Co-founded with{' '}
+                VP of Origination (SET Ventures) and SDR/BDR (SET Marketing). Working with{' '}
                 <a href="https://www.linkedin.com/in/thechrismarchese/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Chris Marchese</a>
                 {' '}and{' '}
                 <a href="https://www.linkedin.com/in/tylerjamesferguson/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Tyler Ferguson</a>
-                . Deal origination, capital markets,
-                marketing (SET Marketing), and enterprise solutions (SET Enterprises).
+                . Deal origination, capital markets, marketing, and enterprise solutions.
               </p>
               <div className="flex gap-2">
                 <a href="https://www.instagram.com/thechrismarchese/" target="_blank" rel="noopener noreferrer"
