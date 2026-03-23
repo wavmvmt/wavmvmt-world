@@ -269,6 +269,14 @@ export default function VisualizerPage() {
         </div>
       )}
 
+      {/* Copyright notice */}
+      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 z-10 text-center">
+        <p className="text-[0.4rem]" style={{ color: 'rgba(255,220,180,0.08)' }}>
+          © 2026 WAVMVMT / Arc.wav. All rights reserved. Patent pending.
+          Synesthesia frequency-to-somatic visualization technology by Shim.
+        </p>
+      </div>
+
       {/* Tap anywhere hint */}
       {!isPlaying && (
         <div className="fixed inset-0 z-5 flex items-center justify-center pointer-events-none">

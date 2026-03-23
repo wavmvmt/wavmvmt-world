@@ -175,6 +175,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         >
           {[
             { label: 'Synesthesia', href: '/visualizer', icon: '🎨' },
+            { label: 'The Founder', href: '/founder', icon: '~' },
             { label: 'Business Overview', href: '/pitch', icon: '📋' },
             { label: 'Music & Links', href: 'https://linktr.ee/shim.wav', icon: '🎵', external: true },
             { label: 'Instagram', href: 'https://instagram.com/shim.wav', icon: '📸', external: true },
