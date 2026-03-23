@@ -47,6 +47,7 @@ import { FloorMarkings } from './FloorMarkings'
 import { NPCCoaches } from './NPCCoaches'
 import { DemoScreens } from './DemoScreens'
 import { QuestPath } from './QuestPath'
+import { OutdoorZone } from './OutdoorZone'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -111,6 +112,7 @@ export function SceneContent() {
       {perf.enableCeilingFans && <CeilingFans />}
       <Fireflies />
       <RainEffect />
+      <OutdoorZone />
     </>
   )
 }
