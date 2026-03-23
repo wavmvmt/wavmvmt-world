@@ -4,22 +4,22 @@
 export type PhaseStatus = 'completed' | 'active' | 'pending'
 
 export const FUNDRAISING = {
-  goal: 40_000_000,       // $40M full WAVMVMT campus — center + upper floors + outdoor
+  goal: 35_000_000,       // $35M Phase 1 — wellness center buildout
   raised: 0,              // Current amount raised — update as deals close
   currency: 'USD',
   location: 'Toronto, ON',
   milestones: [
-    { amount: 1_000_000,  label: 'Seed round closed',              reached: false },
-    { amount: 3_000_000,  label: 'Site secured',                   reached: false },
-    { amount: 5_000_000,  label: 'Architectural plans final',      reached: false },
-    { amount: 8_000_000,  label: 'Phase 1 construction begins',    reached: false },
-    { amount: 12_000_000, label: 'Structure complete',             reached: false },
-    { amount: 16_000_000, label: 'Interior buildout',              reached: false },
-    { amount: 20_000_000, label: 'Phase 1 doors open',             reached: false },
-    { amount: 25_000_000, label: 'Upper floors construction',      reached: false },
-    { amount: 32_000_000, label: 'Upper floors + practitioners',   reached: false },
-    { amount: 36_000_000, label: 'Outdoor campus begins',          reached: false },
-    { amount: 40_000_000, label: 'Full campus complete',           reached: false },
+    { amount: 500_000,    label: 'Seed round closed',              reached: false },
+    { amount: 1_500_000,  label: 'Site secured',                   reached: false },
+    { amount: 3_000_000,  label: 'Architectural plans final',      reached: false },
+    { amount: 5_000_000,  label: 'Construction begins',            reached: false },
+    { amount: 8_000_000,  label: 'Structure complete',             reached: false },
+    { amount: 12_000_000, label: 'Interior buildout',              reached: false },
+    { amount: 16_000_000, label: 'Equipment & tech installed',     reached: false },
+    { amount: 20_000_000, label: 'Doors open',                     reached: false },
+    { amount: 25_000_000, label: 'Phase 1 fully operational',      reached: false },
+    { amount: 30_000_000, label: 'Expansion planning',             reached: false },
+    { amount: 35_000_000, label: 'Phase 1 complete + reserves',    reached: false },
   ],
   // Real-world construction phases
   phases: [
@@ -37,9 +37,9 @@ export const FUNDRAISING = {
 // Phase 2: Vertical expansion — practitioner offices above the center
 // Separate funding round, requires rezoning approval
 export const PHASE_2 = {
-  name: 'Vertical Expansion — Upper Floors',
-  additionalCost: 12_000_000,  // $12M for 2 upper floors
-  additionalSqft: 20_000,      // ~20K sq ft across 2 floors
+  name: 'Vertical Build — Condos + Practitioner Offices',
+  additionalCost: 46_000_000,  // $46M for residential + commercial upper floors
+  additionalSqft: 80_000,      // ~80K sq ft (condos + offices + common areas)
   status: 'vision' as const,   // vision | planning | approved | funded | building
   description: 'Soundproofed upper floors housing wellness practitioners, creating a full-spectrum health ecosystem under one roof.',
   requirements: [
@@ -76,7 +76,7 @@ export const PHASE_2 = {
 // Phase 3: Outdoor Campus
 export const PHASE_3 = {
   name: 'Outdoor Campus',
-  additionalCost: 8_000_000,
+  additionalCost: 21_000_000,  // $21M — retractable roof is expensive
   status: 'vision' as const,
   description: 'Retractable-roof sports field, skatepark, outdoor training, and parking garage with rooftop terrace.',
   components: [
