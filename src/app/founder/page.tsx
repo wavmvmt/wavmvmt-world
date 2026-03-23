@@ -92,11 +92,12 @@ export default function FounderPage() {
             </div>
 
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
-              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(225,48,108,0.4)' }}>Industry Reality</div>
+              <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1" style={{ color: 'rgba(225,48,108,0.4)' }}>Hardships & Growth</div>
               <p className={bodyText} style={{ color: 'rgba(255,220,180,0.5)' }}>
-                Broken systems. Missing royalties. Millions of streams, pennies in return.
-                This phase broke trust in existing structures — but forced a level-up
-                into ownership, control, and building from scratch.
+                Every builder faces resistance. The challenges along the way — navigating
+                industries not designed for creators, learning hard lessons about ownership
+                and control — became fuel. Each obstacle forced a level-up. Each setback
+                reinforced the conviction: build it yourself, build it better, build it for everyone.
               </p>
             </div>
 
