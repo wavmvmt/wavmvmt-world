@@ -446,7 +446,8 @@ function MobileControls() {
       const dx = t.clientX - lastTouch.x
       const dy = t.clientY - lastTouch.y
       lastTouch = { x: t.clientX, y: t.clientY }
-      window.dispatchEvent(new MouseEvent('mousemove', { movementX: dx, movementY: dy }))
+      // Use custom event — MouseEvent.movementX is read-only in many browsers
+      window.dispatchEvent(new CustomEvent('touchLook', { detail: { dx, dy } }))
     }
     const onLookEnd = () => { lookActive = false }
 

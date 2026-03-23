@@ -63,13 +63,19 @@ export function Player() {
     state.current.keys.delete(e.key.toLowerCase())
   }, [])
 
-  const isMobile = typeof window !== 'undefined' && 'ontouchstart' in window
+  const isMobile = typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    // On mobile, accept mouse events from touch controls (no pointer lock needed)
+    // On desktop: need pointer lock. On mobile: accept touch-dispatched events
     if (!state.current.locked && !isMobile) return
-    state.current.yaw -= e.movementX * 0.002
-    state.current.pitch -= e.movementY * 0.002
+
+    // Mobile touch events have movementX/Y but they can be 0 — use larger sensitivity
+    const sensitivity = isMobile ? 0.004 : 0.002
+    const mx = e.movementX || 0
+    const my = e.movementY || 0
+
+    state.current.yaw -= mx * sensitivity
+    state.current.pitch -= my * sensitivity
     state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
   }, [isMobile])
 
@@ -82,9 +88,18 @@ export function Player() {
   }, [])
 
   useEffect(() => {
+    // Touch look handler — custom event from mobile controls
+    const handleTouchLook = (e: Event) => {
+      const { dx, dy } = (e as CustomEvent).detail
+      state.current.yaw -= dx * 0.004
+      state.current.pitch -= dy * 0.004
+      state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
+    }
+
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
     window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('touchLook', handleTouchLook)
     window.addEventListener('click', handleClick)
     document.addEventListener('pointerlockchange', handleLockChange)
 
@@ -108,6 +123,7 @@ export function Player() {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('touchLook', handleTouchLook)
       window.removeEventListener('click', handleClick)
       document.removeEventListener('pointerlockchange', handleLockChange)
     }
@@ -212,9 +228,9 @@ export function Player() {
     // Decay camera shake
     if (s.cameraShake > 0) s.cameraShake *= 0.85
 
-    // Bounds — massive warehouse with recovery wing
-    pos.x = Math.max(-240, Math.min(240, pos.x))
-    pos.z = Math.max(-220, Math.min(160, pos.z))
+    // Bounds — warehouse + outdoor campus
+    pos.x = Math.max(-270, Math.min(270, pos.x))
+    pos.z = Math.max(-400, Math.min(240, pos.z))
 
     // Rotate player to face movement direction
     if (moveDir.length() > 0) {
@@ -231,15 +247,19 @@ export function Player() {
     // Dispatch position for minimap
     window.dispatchEvent(new CustomEvent('playerMove', { detail: { x: pos.x, z: pos.z } }))
 
-    // Camera follows player (third person — pulled back for scale)
+    // Camera follows player — responsive third-person
     const shake = s.cameraShake
+    const camDist = 8 // closer = more immersive
+    const camHeight = 4 + Math.sin(s.pitch) * 3
     const camOffset = new THREE.Vector3(
-      Math.sin(s.yaw) * 10 + (shake > 0.001 ? (Math.random() - 0.5) * shake * 2 : 0),
-      5 + Math.sin(s.pitch) * 3 + (shake > 0.001 ? (Math.random() - 0.5) * shake : 0),
-      Math.cos(s.yaw) * 10
+      Math.sin(s.yaw) * camDist + (shake > 0.001 ? (Math.random() - 0.5) * shake * 2 : 0),
+      camHeight + (shake > 0.001 ? (Math.random() - 0.5) * shake : 0),
+      Math.cos(s.yaw) * camDist
     )
-    camera.position.lerp(pos.clone().add(camOffset), 0.07)
-    camera.lookAt(pos.x, pos.y + 2, pos.z)
+    // Much snappier lerp — 0.15 instead of 0.07
+    camera.position.lerp(pos.clone().add(camOffset), 0.15)
+    // Look slightly above the character's head
+    camera.lookAt(pos.x, pos.y + 2.2, pos.z)
   })
 
   const outlineMat = <meshBasicMaterial color={COLORS.outline} side={THREE.BackSide} />
