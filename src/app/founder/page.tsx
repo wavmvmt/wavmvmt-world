@@ -160,6 +160,59 @@ export default function FounderPage() {
           </div>
         </section>
 
+        {/* Business Ventures */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>Active Ventures</h2>
+          <div className="space-y-4">
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Varunex Capital Advisory</div>
+              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Working with Nick Patterson on capital advisory. Actively working with developers
+                in the 8-12 figure deal range with projects currently in motion at that level.
+              </p>
+            </div>
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>SET Ventures / Enterprises</div>
+              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Co-founded with Chris Marchese and Tyler Ferguson. Deal origination, capital markets,
+                marketing (SET Marketing), and enterprise solutions (SET Enterprises).
+              </p>
+            </div>
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Contraband Beauty</div>
+              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Creative Director alongside Kim Allegra. Brand direction, visual identity, and creative strategy.
+              </p>
+            </div>
+            <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>
+              <div className="text-xs font-bold mb-1" style={{ color: '#f0c674' }}>Sarah R Adams</div>
+              <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                Creative Director &amp; Executive Assistant. Strategic support and creative operations.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Team */}
+        <section className="mb-8 p-5 md:p-8" style={panelStyle}>
+          <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>WAVMVMT Team</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { name: 'Shim', role: 'Founder / Visionary' },
+              { name: 'Cody Haze', role: 'Photographer & Creative Director' },
+              { name: 'Nathan', role: 'Team' },
+              { name: 'Marvin', role: 'Team' },
+              { name: 'Gra', role: 'Team' },
+            ].map((member) => (
+              <div key={member.name} className="p-3 rounded-xl text-center"
+                style={{ background: 'rgba(240,198,116,0.03)', border: '1px solid rgba(240,198,116,0.08)' }}>
+                <div className="text-xs font-bold mb-0.5" style={{ color: 'rgba(255,220,180,0.6)' }}>{member.name}</div>
+                <div className="text-[0.45rem] tracking-wider uppercase" style={{ color: 'rgba(255,220,180,0.25)' }}>{member.role}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* The Ecosystem */}
         <section className="mb-8 p-5 md:p-8" style={panelStyle}>
           <h2 className={sectionTitle} style={{ color: 'rgba(240,198,116,0.5)' }}>The Ecosystem</h2>
