@@ -196,7 +196,9 @@ export default function FounderPage() {
                 <a href="https://contrabandbeautycbd.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#f0c674', textDecoration: 'none' }}>Contraband Beauty</a>
               </div>
               <p className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
-                Creative Director alongside Kim Allegra. Brand direction, visual identity, and creative strategy.
+                Creative Director alongside Kim Allegra. Brand direction, visual identity, creative strategy,
+                and built the{' '}
+                <a href="https://contrabandbeautycbd.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#80d4a8', textDecoration: 'none' }}>website</a>.
               </p>
             </div>
             <div className="border-l-2 pl-4" style={{ borderColor: 'rgba(240,198,116,0.15)' }}>

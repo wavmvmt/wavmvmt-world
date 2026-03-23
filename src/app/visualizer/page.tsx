@@ -7,13 +7,9 @@ import Link from 'next/link'
 
 type AudioSource = 'file' | 'mic' | 'spotify'
 
-const BEAT_TRACKS = [
-  { name: 'june 12th beat 5', file: '/audio/beats/june-12th-beat-5.wav' },
-  { name: 'june 22nd beat 1', file: '/audio/beats/june-22nd-beat-1.wav' },
-  { name: 'june 21st beat 3', file: '/audio/beats/june-21st-beat-3.wav' },
-  { name: 'june 19th beat 2', file: '/audio/beats/june-19th-beat-2.wav' },
-  { name: 'clear 140', file: '/audio/beats/clear-140.wav' },
-]
+// Beat tracks will be added when compressed audio files are available
+// For now, use file upload, microphone, or demo mode
+const BEAT_TRACKS: { name: string; file: string }[] = []
 
 const SPOTIFY_ARTIST_ID = '4HHt60CmwO8nAS9RFBBO9u'
 
@@ -97,10 +93,11 @@ export default function VisualizerPage() {
       if (audioRef.current) audioRef.current.pause()
       await analyzerRef.current.connectMicrophone()
       setIsPlaying(true)
-      setTrackName('Microphone Input')
+      setTrackName('Microphone Input — speak, play music, or make sounds')
       setSource('mic')
     } catch (err) {
       console.error('Mic access denied:', err)
+      alert('Microphone access was denied. Please allow microphone access in your browser settings.')
     }
   }, [])
 
@@ -117,7 +114,17 @@ export default function VisualizerPage() {
   }, [])
 
   return (
-    <div className="fixed inset-0 overflow-hidden" style={{ background: '#0a0810' }}>
+    <div className="fixed inset-0 overflow-hidden" style={{ background: '#0a0810' }}
+      onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+      onDrop={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const file = e.dataTransfer.files[0]
+        if (file && file.type.startsWith('audio/')) {
+          const url = URL.createObjectURL(file)
+          playFile(url, file.name.replace(/\.[^/.]+$/, ''))
+        }
+      }}>
       {/* Canvas */}
       <SynesthesiaCanvas analyzer={analyzerRef.current} isPlaying={isPlaying} />
 
@@ -277,13 +284,39 @@ export default function VisualizerPage() {
         </p>
       </div>
 
-      {/* Tap anywhere hint */}
+      {/* Welcome state — show when no audio playing */}
       {!isPlaying && (
-        <div className="fixed inset-0 z-5 flex items-center justify-center pointer-events-none">
-          <div className="text-center">
-            <div className="text-6xl mb-4" style={{ color: 'rgba(240,198,116,0.08)' }}>~</div>
-            <div className="text-xs tracking-[0.3em] uppercase" style={{ color: 'rgba(255,220,180,0.15)' }}>
-              Upload audio or enable microphone to begin
+        <div className="fixed inset-0 z-5 flex items-center justify-center">
+          <div className="text-center max-w-md mx-4">
+            <div className="text-6xl mb-4" style={{ color: 'rgba(240,198,116,0.15)' }}>~</div>
+            <h2 className="text-xl mb-2" style={{ color: 'rgba(255,220,180,0.4)', fontFamily: "'Playfair Display', serif" }}>
+              See Your Sound
+            </h2>
+            <p className="text-[0.6rem] mb-6" style={{ color: 'rgba(255,220,180,0.2)' }}>
+              Every frequency has a color. Every amplitude has a brightness.
+              Upload audio or enable your microphone to begin.
+            </p>
+            <div className="flex flex-col gap-3 items-center">
+              <button onClick={() => fileInputRef.current?.click()}
+                className="px-8 py-3 rounded-full text-sm font-bold tracking-wider uppercase cursor-pointer pointer-events-auto"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(240,198,116,0.12), rgba(128,212,168,0.12))',
+                  border: '1px solid rgba(240,198,116,0.3)',
+                  color: '#f0c674',
+                }}>
+                🎵 Upload Audio File
+              </button>
+              <button onClick={handleMic}
+                className="px-6 py-2 rounded-full text-xs tracking-wider uppercase cursor-pointer pointer-events-auto"
+                style={{
+                  border: '1px solid rgba(255,220,180,0.15)',
+                  color: 'rgba(255,220,180,0.4)',
+                }}>
+                🎤 Use Microphone
+              </button>
+              <p className="text-[0.45rem] mt-2" style={{ color: 'rgba(255,220,180,0.1)' }}>
+                Drag & drop audio files also supported
+              </p>
             </div>
           </div>
         </div>
