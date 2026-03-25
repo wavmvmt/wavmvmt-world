@@ -21,14 +21,19 @@ function Wall({ width, height, position, rotationY = 0 }: {
           envMapIntensity={0.35}
         />
       </mesh>
+      {/* Wall stain layer — subtle darker patches on lower wall */}
+      <mesh position={[position[0], height * 0.2, position[2] + (rotationY ? 0 : 0.02)]} rotation={[0, rotationY, 0]}>
+        <planeGeometry args={[width, height * 0.4]} />
+        <meshBasicMaterial color={0x0a0510} transparent opacity={0.04} side={THREE.DoubleSide} depthWrite={false} />
+      </mesh>
       {/* Wall base trim */}
       <mesh position={[
         position[0] + (rotationY ? 0 : 0),
         0.15,
         position[2]
       ]} rotation={[0, rotationY, 0]}>
-        <boxGeometry args={[width, 0.3, 0.15]} />
-        <meshStandardMaterial color={COLORS.copper} roughness={0.5} metalness={0.4} />
+        <boxGeometry args={[width, 0.4, 0.2]} />
+        <meshStandardMaterial color={COLORS.copper} roughness={0.45} metalness={0.45} />
       </mesh>
     </group>
   )
@@ -343,8 +348,8 @@ export function Warehouse() {
         const z = -160 + i * 16
         return (
           <mesh key={`cb-${i}`} position={[0, 43, z]} castShadow>
-            <boxGeometry args={[500, 1, 1.2]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
+            <boxGeometry args={[500, 1.1, 1.3]} />
+            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0.2} />
           </mesh>
         )
       })}
@@ -352,8 +357,8 @@ export function Warehouse() {
         const x = -225 + i * 16
         return (
           <mesh key={`cb2-${i}`} position={[x, 42, 0]}>
-            <boxGeometry args={[1, 0.8, 350]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.85} />
+            <boxGeometry args={[1.1, 0.9, 350]} />
+            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0.2} />
           </mesh>
         )
       })}

@@ -78,6 +78,7 @@ import { GroundDetails } from './GroundDetails'
 import { WallDetail } from './WallDetail'
 import { RoomWallSections } from './RoomWallSections'
 import { ConstructionBanner } from './ConstructionBanner'
+import { ProceduralFloor } from './ProceduralFloor'
 import { SafetySigns } from './SafetySigns'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
@@ -113,6 +114,7 @@ export function SceneContent() {
       <GuideDog />
 
       {/* Room floor glow + floor markings — lightweight, always render */}
+      <ProceduralFloor />
       <RoomFloorGlow />
       <FloorDetail />
       <EntranceArch />
