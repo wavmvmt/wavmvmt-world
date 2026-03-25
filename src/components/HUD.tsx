@@ -186,7 +186,7 @@ export function HUD() {
 
       {/* Right panel — Build progress (hidden in mobile explore mode) */}
       {showPanels && (
-        <Panel title="Digital Construction" icon="◧" defaultOpen={!isMobile} position="right">
+        <Panel title="Digital Construction" icon="◧" defaultOpen={false} position="right">
           {ROOMS.map((room) => (
             <div key={room.name} className="flex items-center gap-2 my-1 md:my-1.5 lg:my-2">
               <span className="text-[0.55rem] md:text-[0.62rem] lg:text-[0.7rem] min-w-[65px] md:min-w-[75px] lg:min-w-[90px]" style={{ color: 'rgba(255,220,180,0.45)' }}>
@@ -208,7 +208,7 @@ export function HUD() {
 
       {/* Left panel — Real-world fundraising + construction (hidden in mobile explore mode) */}
       {showPanels && (
-        <Panel title="Real-World Build" icon="◨" defaultOpen={!isMobile} position="left">
+        <Panel title="Real-World Build" icon="◨" defaultOpen={false} position="left">
         {/* Capital raised */}
         <div className="mb-3">
           <div className="flex justify-between items-baseline mb-1">

@@ -16,7 +16,7 @@ export function ContestWelcome() {
     const timer = setTimeout(() => {
       setShow(true)
       sessionStorage.setItem('wavmvmt_contest_seen', 'true')
-    }, 6000) // 6s after world loads
+    }, 15000) // 15s after world loads — gives time to explore first
 
     return () => clearTimeout(timer)
   }, [])
