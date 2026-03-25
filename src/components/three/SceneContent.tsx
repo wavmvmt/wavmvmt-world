@@ -70,6 +70,7 @@ import { RoomFloorGlow } from './RoomFloorGlow'
 import { FloorDetail } from './FloorDetail'
 import { RoomInteriorLights } from './RoomInteriorLights'
 import { StringLights } from './StringLights'
+import { CeilingDetail } from './CeilingDetail'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -139,6 +140,7 @@ export function SceneContent() {
       {perf.enableDecorations && <ConstructionProps />}
       {perf.enableDecorations && <MultiplayerPresence />}
       {perf.enableDecorations && <WarehouseEntrance />}
+      {perf.enableDecorations && <CeilingDetail />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
