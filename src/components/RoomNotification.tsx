@@ -11,13 +11,26 @@ const panelStyle = {
   boxShadow: '0 4px 30px rgba(0,0,0,0.3)',
 }
 
-/**
- * Shows a brief info card when the player enters a room's proximity.
- * Slides in from the bottom, auto-dismisses after 4 seconds.
- */
+const ROOM_INTERACTION_RESULTS: Record<string, string> = {
+  'Parkour Gym': '🏃 Obstacle courses: Wall runs, vault boxes, foam pit, bouldering wall',
+  'Sound Bath': '🔔 The crystal bowl hums softly... frequencies wash over you',
+  'Music Studio': '🎵 Beat pads light up — tap to create your rhythm',
+  'Cafe & Lounge': '☕ Today\'s special: Matcha Latte + Protein Bowl — $14',
+  'Amphitheatre': '🎭 The stage lights flicker on — 200 seats await your performance',
+  'Weight Training': '🏋️ 8 power racks, Olympic platforms, dumbbells 5-150 lb',
+  'Yoga Room': '🧘 Breathe in... 4 seconds. Hold... 4 seconds. Out... 4 seconds.',
+  'Photo Studio': '📸 Flash! Your photo has been captured',
+  'Video Studio': '🎬 Recording started — 3... 2... 1... Action!',
+  'Recovery Suite': '❄️ Cold plunge: 39°F / 4°C — Are you brave enough?',
+  'Spa & Wellness': '💆 Next available slot: massage, cryo, or salt room',
+  'Education Wing': '📚 Courses: Business Basics, Creative Tech, Community Leadership',
+  'Front Desk': '✅ Welcome to WAVMVMT — You\'ve been checked in',
+}
+
 export function RoomNotification() {
   const [currentRoom, setCurrentRoom] = useState<typeof ROOMS[0] | null>(null)
   const [visible, setVisible] = useState(false)
+  const [interactionMsg, setInteractionMsg] = useState<string | null>(null)
   const lastRoom = useRef('')
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -31,6 +44,7 @@ export function RoomNotification() {
           lastRoom.current = room.name
           setCurrentRoom(room)
           setVisible(true)
+          setInteractionMsg(null)
 
           if (timeoutRef.current) clearTimeout(timeoutRef.current)
           timeoutRef.current = setTimeout(() => setVisible(false), 4000)
@@ -39,9 +53,27 @@ export function RoomNotification() {
       }
     }
 
+    const onInteract = (e: Event) => {
+      const { room } = (e as CustomEvent).detail
+      const msg = ROOM_INTERACTION_RESULTS[room]
+      if (msg) {
+        const roomDef = ROOMS.find(r => r.name === room)
+        if (roomDef) setCurrentRoom(roomDef)
+        setInteractionMsg(msg)
+        setVisible(true)
+        if (timeoutRef.current) clearTimeout(timeoutRef.current)
+        timeoutRef.current = setTimeout(() => {
+          setVisible(false)
+          setInteractionMsg(null)
+        }, 5000)
+      }
+    }
+
     window.addEventListener('playerMove', onMove as EventListener)
+    window.addEventListener('roomInteract', onInteract as EventListener)
     return () => {
       window.removeEventListener('playerMove', onMove as EventListener)
+      window.removeEventListener('roomInteract', onInteract as EventListener)
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
   }, [])
@@ -66,12 +98,20 @@ export function RoomNotification() {
           <div className="text-[0.7rem] font-bold" style={{ color: hexColor }}>
             {currentRoom.name}
           </div>
-          <div className="text-[0.5rem] font-mono" style={{ color: 'rgba(255,220,180,0.4)' }}>
-            {currentRoom.sqft.toLocaleString()} sq ft · {formatCurrency(currentRoom.buildCost)} · {currentRoom.buildPct}% built
-          </div>
-          <div className="text-[0.48rem] italic mt-0.5" style={{ color: 'rgba(255,220,180,0.25)' }}>
-            {currentRoom.vision}
-          </div>
+          {interactionMsg ? (
+            <div className="text-[0.55rem] mt-0.5" style={{ color: 'rgba(255,220,180,0.6)' }}>
+              {interactionMsg}
+            </div>
+          ) : (
+            <>
+              <div className="text-[0.5rem] font-mono" style={{ color: 'rgba(255,220,180,0.4)' }}>
+                {currentRoom.sqft.toLocaleString()} sq ft · {formatCurrency(currentRoom.buildCost)} · {currentRoom.buildPct}% built
+              </div>
+              <div className="text-[0.48rem] italic mt-0.5" style={{ color: 'rgba(255,220,180,0.25)' }}>
+                {currentRoom.vision}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
