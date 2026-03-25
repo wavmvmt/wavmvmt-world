@@ -71,6 +71,7 @@ import { FloorDetail } from './FloorDetail'
 import { RoomInteriorLights } from './RoomInteriorLights'
 import { StringLights } from './StringLights'
 import { CeilingDetail } from './CeilingDetail'
+import { EntranceArch } from './EntranceArch'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -111,6 +112,7 @@ export function SceneContent() {
       <FloorDetail />
       <RoomInteriorLights />
       <StringLights />
+      <EntranceArch />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />
