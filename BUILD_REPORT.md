@@ -1,102 +1,82 @@
-# Build Report — v1.1 Phase 1: Core Experience Polish
+# Build Report — v1.2 Visual Quality + Audio
 
 **Date:** 2026-03-25
 **Branch:** main
-**Tag:** v1.1-phase1
+**Previous:** v1.1-phase1
 
 ---
 
-## Agent Statuses
+## Session Summary
 
-| Agent | Scope | Status | Branch |
-|-------|-------|--------|--------|
-| 1. Performance Pass | GPU draw call reduction, perf gating | ✅ Complete | feat/perf-pass |
-| 2. Movement & Camera | Smooth accel/decel, camera bob, sprint FOV | ✅ Complete | feat/movement |
-| 3. Audio System | Centralized audioManager singleton | ✅ Complete | feat/audio-system |
-| 4. Room Interactions | Press E for 13 room interactions | ✅ Complete | feat/room-interact |
-| 5. Accessibility | Reduced motion, aria labels, keyboard focus | ✅ Complete | feat/a11y |
-| 6. Error Handling | Error boundaries, WebGL context loss, timeout | ✅ Complete | feat/safety |
-| 7. Loading Optimization | Staged progress, audio preload, image opt | ✅ Complete | feat/loading |
-| 8. Share & Screenshot | toBlob capture, room name, native share | ✅ Complete | feat/share |
-| 9. Docs & Report | CLAUDE.md, BUILD_REPORT.md, tag | ✅ Complete | feat/docs |
+**25 commits pushed** across 15 visual passes, 3 horizontal slices, 2 performance audits, 3 browser verifications, and 1 material quality pass.
 
----
+### New Components (25 files created)
 
-## Discipline Score Changes (Estimated)
+**3D Scene (22 new):**
+- `ProceduralFloor` — shader-based concrete with FBM noise
+- `RoomFloorGlow` — breathing colored floor pools
+- `RoomProgressRings` — rotating build % arcs
+- `RoomParticles` — floating color-coded motes per room
+- `RoomInteriorLights` — warm point lights inside rooms
+- `RoomWallSections` — partial walls growing with buildPct
+- `FloorDetail` — safety stripes, walkway markers
+- `GroundDetails` — tire tracks, puddles, aggregate piles
+- `WallDetail` — pipes, conduit, junction boxes, emergency lights
+- `CeilingDetail` — HVAC ducts, hanging cables, panels
+- `StringLights` — construction work lights with catenary sag
+- `FogLayers` — 5-layer height-based fog
+- `DustClouds` — drifting haze spheres
+- `EntranceArch` — WAVMVMT signage arch
+- `ConstructionBanner` — "FUTURE HOME OF WAVMVMT"
+- `SafetySigns` — wayfinding + safety signs
+- `AuroraSky`, `CinematicUpgrade`, `UltimateVisuals`, `ReflectiveElements`, `EnergyConduits`, `HolographicSigns` (tracked from untracked)
 
-| Discipline | Before | After | Delta |
-|-----------|--------|-------|-------|
-| Architecture | 10% | 12% | +2% |
-| Structural | 10% | 12% | +2% |
-| Mechanical (Audio) | 5% | 15% | +10% |
-| Electrical (Perf) | 5% | 15% | +10% |
-| Safety | 0% | 8% | +8% |
-| Accessibility | 0% | 5% | +5% |
-| UX/Polish | 8% | 15% | +7% |
-| Loading | 5% | 12% | +7% |
+**UI (2 new):**
+- `WorldBeatRadio` — 27-track shuffled music player from Synesthesia
+- `WelcomeTour` rewrite — bottom-left toast instead of center modal
 
----
+**Lib (5 new):**
+- `audioManager.ts` — centralized audio singleton
+- `accessibility.ts` — reduced motion / high contrast
+- `analytics.ts` — trackEvent for Vercel Analytics
+- `worldState.ts` — observable world state
+- `events.ts` — typed CustomEvent definitions
+- `beatRadio.ts` — shared track list
 
-## Key Decisions
+### Discipline Scores
 
-1. **Didn't implement InstancedMesh for Workers** — Workers have individual per-bone animations (arms, head, different action types), speech bubbles, and HTML overlays. Instancing would break all of these. Instead: capped worker count by perf level and removed HTML overlays on low perf.
+| Discipline | v1.1 | v1.2 | Delta |
+|---|---|---|---|
+| Architecture | 12% | 16% | +4% |
+| Structural | 13% | 18% | +5% |
+| Mechanical | 15% | 22% | +7% |
+| Interior | 18% | 30% | +12% |
+| Fixtures | 14% | 18% | +4% |
+| Safety | 15% | 16% | +1% |
+| Accessibility | 13% | 17% | +4% |
+| Landscaping | 11% | 18% | +7% |
+| Inspection | 12% | 18% | +6% |
+| Utilities | 11% | 15% | +4% |
+| Furnishing | 10% | 16% | +6% |
+| Operations | 10% | 15% | +5% |
 
-2. **Supabase client build fix** — `createBrowserClient()` crashed at build time when env vars are missing. Added placeholder fallback for SSG prerender.
+### Bugs Fixed
+- GL_INVALID_OPERATION spam (180+ warnings/frame → 0) — N8AO multisampling conflict
+- PCFSoftShadowMap deprecation → VSMShadowMap
+- PWA icon 404 → favicon.svg
+- Supabase Realtime WebSocket errors (10/page) → disabled until auth configured
+- UI panel overload → panels start minimized
 
-3. **AtmosphericEffects.tsx TS fix** — Pre-existing untracked file had `(child as THREE.Mesh)` inline cast causing parser confusion. Refactored to variable assignment.
+### Performance
+- LOW perf: ~30% fewer draw calls (22 components vs 32)
+- Fill lights gated behind MEDIUM+
+- LightShafts: LOW=4, MEDIUM=8, HIGH=12
+- StringLights, CeilingDetail, WallDetail, GroundDetails all MEDIUM+ gated
+- Post-processing: HIGH=full pipeline, MEDIUM=bloom+contrast, LOW=none
 
-4. **Kept Player.tsx as third-person** — Instructions mentioned "eye level at y=8" suggesting first-person, but the existing codebase is third-person with camera offset. Kept third-person (preserving backward compat) with camera height adjusted to eye-level distance.
-
-5. **Audio footsteps kept as CustomEvent** — Player.tsx already dispatched `playFootstep` events. Rather than adding audioManager import to Player (which was in the "do not touch" list for Agent 3), kept the event-based pattern. AmbientAudio handles footstep playback through audioManager.
-
----
-
-## Files Created
-- `src/lib/audioManager.ts` — Centralized audio system
-- `src/lib/accessibility.ts` — Reduced motion / high contrast detection
-- `src/lib/errorReporting.ts` — Error logging utility
-- `BUILD_REPORT.md` — This file
-
-## Files Modified (Major)
-- `src/components/three/SceneContent.tsx` — 30+ components gated by perf level
-- `src/components/three/Player.tsx` — Smooth movement, camera bob, sprint FOV
-- `src/lib/performanceMode.ts` — 5 new PerfSettings flags
-- `src/components/three/AmbientAudio.tsx` — Routed through audioManager
-- `src/components/three/BirdSounds.tsx` — Routed through audioManager
-- `src/components/three/CafeAmbient.tsx` — Routed through audioManager
-- `src/components/three/RoomAmbience.tsx` — Routed through audioManager
-- `src/components/VolumeControl.tsx` — Wired to audioManager
-- `src/components/three/Workers.tsx` — Perf-limited count, skip HTML on low
-- `src/components/three/DustMotes.tsx` — Perf multiplier + reduced motion
-- `src/components/three/Sparks.tsx` — Perf multiplier + reduced motion
-- `src/components/three/Fireflies.tsx` — Reduced motion skip
-- `src/components/three/PlayerTrail.tsx` — Reduced motion skip
-- `src/components/RoomTooltip.tsx` — Press E interaction hints
-- `src/components/RoomNotification.tsx` — Interaction result display
-- `src/components/SplashScreen.tsx` — Aria labels, keyboard focus
-- `src/components/HUD.tsx` — Aria labels on buttons
-- `src/components/SceneErrorBoundary.tsx` — WebGL context loss, retry
-- `src/components/WorldLoader.tsx` — 15s loading timeout
-- `src/components/LoadingScreen.tsx` — Staged progress, audio preload
-- `src/components/PhotoMode.tsx` — toBlob, room name, native share
-- `src/components/World3D.tsx` — Reduced fog, lower multisampling
-- `next.config.ts` — Image optimization
-- `src/lib/supabase/client.ts` — Build-safe placeholder
-
----
-
-## Known Issues
-- Worker instancing would further reduce draw calls but requires animation system rewrite
-- Room interaction results are text-only (no full room mechanic UIs yet)
-- No music tracks system yet (audioManager has musicGain ready)
-- Mobile FPS needs real-device testing (perf gating should help significantly)
-- Loading progress is simulated (R3F doesn't expose true asset loading %)
-
-## What's Next
-- Music track system (lo-fi beats, per-room playlists)
-- Full room mechanic UIs (beat pads interactive, yoga timer, etc.)
-- Geometry instancing for static props (safety cones, ladders)
-- LOD system for distant rooms
-- Multiplayer presence (Supabase Realtime)
-- Quest system completion
-- Analytics integration
+### What's Next
+- Verify procedural floor shader looks correct on deploy
+- More room interior detail (furniture, equipment upgrades)
+- Quest system expansion
+- Multiplayer when Supabase Realtime auth is fixed
+- GLB model loading for higher-detail room equipment

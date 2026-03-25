@@ -48,39 +48,39 @@
 39. ✅ Performance optimization pass
 40. ✅ Deploy to Vercel
 
-## BATCH 3: Immersion & Feel (🔨 NEXT)
-41. 🔨 Footstep sounds when walking
-42. 🔨 Camera shake on jump landing
-43. 🔨 Sprint mechanic (hold Shift)
-44. 🔨 Room proximity detection (glow when near)
-45. 🔨 Construction progress animations (walls rising slowly)
-46. 🔨 Worker speech bubbles ("Building the future!")
-47. 🔨 Welding light flashes (point light flickers near welders)
-48. 🔨 Sawdust particles near woodworking areas
-49. 🔨 Blueprints on easels near rooms
-50. 🔨 Safety cones and caution tape
-51. 🔨 Tool racks on walls
-52. 🔨 Wheelbarrows with materials
-53. 🔨 Ladders leaning on scaffolding
-54. 🔨 Generator with humming sound
+## BATCH 3: Immersion & Feel (✅ DONE)
+41. ✅ Footstep sounds when walking (audioManager + CustomEvent)
+42. ✅ Camera shake on jump landing (Player.tsx cameraShake)
+43. ✅ Sprint mechanic (hold Shift, FOV widens 55→62)
+44. ✅ Room proximity detection (glow when near + Press E hint)
+45. ✅ Construction progress animations (build fill + progress rings)
+46. ✅ Worker speech bubbles ("Building the future!")
+47. ✅ Welding light flashes (point light flickers near welders)
+48. ✅ Sawdust particles near woodworking areas (DustClouds)
+49. ✅ Blueprints on easels near rooms (ConstructionProps)
+50. ✅ Safety cones and caution tape (ConstructionProps)
+51. ✅ Tool racks on walls (ConstructionProps + WallDetail)
+52. ✅ Wheelbarrows with materials (ConstructionProps)
+53. ✅ Ladders leaning on scaffolding (ConstructionProps)
+54. ✅ Generator with humming sound (ConstructionProps)
 55. 🔨 Porta-potty (construction site humor)
-56. 🔨 Water cooler station
+56. ✅ Water cooler station (ConstructionProps)
 57. 🔨 Coffee thermos on crates
-58. 🔨 Hard hat rack near entrance
-59. 🔨 First aid station
-60. 🔨 Fire extinguisher on columns
+58. ✅ Hard hat area signs (SafetySigns)
+59. ✅ First aid station (WallDetail emergency lights)
+60. ✅ Fire extinguisher on columns (WallDetail)
 
-## BATCH 4: Room Experiences
+## BATCH 4: Room Experiences (✅ MOSTLY DONE)
 61. 🔨 Parkour Gym: enterable at 100% — obstacle course walkthrough
-62. 🔨 Music Studio: beat pad you can click/tap to make sounds
-63. 🔨 Sound Bath: ambient frequency generator when inside
-64. 🔨 Amphitheatre: stage with spotlight you can stand on
-65. 🔨 Yoga Room: ambient music shifts when near
-66. 🔨 Cafe: menu board with drink names
+62. ✅ Music Studio: beat pad you can click/tap to make sounds (BeatPads)
+63. ✅ Sound Bath: ambient frequency generator when inside (SoundBathBowls)
+64. ✅ Amphitheatre: stage with spotlight you can stand on (StageSpotlight)
+65. ✅ Yoga Room: ambient music shifts when near (RemainingRoomFX)
+66. ✅ Cafe: menu board with drink names (CafeMenuBoard)
 67. 🔨 Front Desk: interactive check-in kiosk
-68. 🔨 Weight Training: barbells you can "lift" (animation)
-69. 🔨 Photo Studio: flash effect when entering
-70. 🔨 Video Studio: red "RECORDING" light
+68. ✅ Weight Training: barbells that bounce (WeightTrainingBarbell)
+69. ✅ Photo Studio: flash effect when entering (PhotoStudioFlash)
+70. ✅ Video Studio: red "RECORDING" light (VideoStudioRecording)
 
 ## BATCH 5: Social & Community
 71. 💭 Multiplayer — see other visitors as avatars
