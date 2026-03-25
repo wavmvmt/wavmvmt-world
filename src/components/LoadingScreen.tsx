@@ -2,40 +2,55 @@
 
 import { useState, useEffect } from 'react'
 
-/** Loading screen with animated progress while 3D scene loads */
+const STAGES = [
+  { label: 'Pouring the foundation...', weight: 15 },
+  { label: 'Building the warehouse shell...', weight: 20 },
+  { label: 'Placing rooms & workers...', weight: 20 },
+  { label: 'Tuning the singing bowls...', weight: 15 },
+  { label: 'Setting up lighting & effects...', weight: 15 },
+  { label: 'Connecting the frequencies...', weight: 15 },
+]
+
+/** Loading screen with staged progress while 3D scene loads */
 export function LoadingScreen({ onLoaded }: { onLoaded: () => void }) {
   const [progress, setProgress] = useState(0)
-  const [tip, setTip] = useState('')
-
-  const tips = [
-    'Pouring the foundation...',
-    'Tuning the singing bowls...',
-    'Calibrating the beat pads...',
-    'Warming up the sauna...',
-    'Setting up the squat racks...',
-    'Rolling out the yoga mats...',
-    'Brewing the first espresso...',
-    'Apollo is inspecting the site...',
-    'Hanging the WAVMVMT banner...',
-    'Connecting the frequencies...',
-    'Aligning the chakras of the building...',
-    'Loading 40 million dollars worth of vision...',
-  ]
+  const [stageIdx, setStageIdx] = useState(0)
 
   useEffect(() => {
-    setTip(tips[Math.floor(Math.random() * tips.length)])
-
-    // Simulated progress (real asset loading is hard to track with R3F)
     let p = 0
+    let stage = 0
+    let accumulated = 0
+
     const interval = setInterval(() => {
-      p += 2 + Math.random() * 5
+      const stageEnd = STAGES.slice(0, stage + 1).reduce((s, st) => s + st.weight, 0)
+      const increment = 1.5 + Math.random() * 3
+
+      p = Math.min(p + increment, 100)
+
+      // Advance stage when progress crosses threshold
+      if (p >= stageEnd && stage < STAGES.length - 1) {
+        stage++
+        setStageIdx(stage)
+      }
+
       if (p >= 100) {
         p = 100
         clearInterval(interval)
-        setTimeout(onLoaded, 500)
+        setTimeout(onLoaded, 400)
       }
-      setProgress(Math.min(100, p))
-    }, 100)
+
+      setProgress(p)
+    }, 80)
+
+    // Preload critical audio during loading
+    const preloads = [
+      '/audio/construction_loop.ogg',
+      '/audio/footstep_01.ogg',
+      '/audio/footstep_02.ogg',
+    ]
+    preloads.forEach(url => {
+      fetch(url).catch(() => { /* non-critical */ })
+    })
 
     return () => clearInterval(interval)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,9 +83,9 @@ export function LoadingScreen({ onLoaded }: { onLoaded: () => void }) {
         {Math.floor(progress)}%
       </div>
 
-      {/* Loading tip */}
-      <div className="text-[0.6rem] tracking-[0.15em]" style={{ color: 'rgba(255,200,150,0.3)' }}>
-        {tip}
+      {/* Loading stage */}
+      <div className="text-[0.6rem] tracking-[0.15em] transition-opacity duration-300" style={{ color: 'rgba(255,200,150,0.3)' }}>
+        {STAGES[stageIdx]?.label}
       </div>
 
       <style jsx>{`
