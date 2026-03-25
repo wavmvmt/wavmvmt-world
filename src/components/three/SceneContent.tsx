@@ -77,6 +77,8 @@ import { DustClouds } from './DustClouds'
 import { GroundDetails } from './GroundDetails'
 import { WallDetail } from './WallDetail'
 import { RoomWallSections } from './RoomWallSections'
+import { ConstructionBanner } from './ConstructionBanner'
+import { SafetySigns } from './SafetySigns'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -115,6 +117,7 @@ export function SceneContent() {
       <FloorDetail />
       <EntranceArch />
       <FogLayers />
+      <ConstructionBanner />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />
@@ -153,6 +156,7 @@ export function SceneContent() {
       {perf.enableDecorations && <GroundDetails />}
       {perf.enableDecorations && <WallDetail />}
       {perf.enableDecorations && <RoomWallSections />}
+      {perf.enableDecorations && <SafetySigns />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
