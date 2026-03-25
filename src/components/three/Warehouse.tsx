@@ -15,10 +15,10 @@ function Wall({ width, height, position, rotationY = 0 }: {
         <planeGeometry args={[width, height, Math.floor(width / 4), Math.floor(height / 4)]} />
         <meshStandardMaterial
           color={COLORS.concrete}
-          roughness={0.85}
-          metalness={0.05}
+          roughness={0.75}
+          metalness={0.08}
           side={THREE.DoubleSide}
-          envMapIntensity={0.2}
+          envMapIntensity={0.35}
         />
       </mesh>
       {/* Wall base trim */}
@@ -362,9 +362,14 @@ export function Warehouse() {
       {[-200, -100, 0, 100, 200].flatMap(x =>
         [-120, -30, 60, 120].map(z => (
           <group key={`col-${x}-${z}`}>
-            <mesh position={[x, 22, z]}>
-              <cylinderGeometry args={[0.7, 0.85, 44, 6]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.6} />
+            <mesh position={[x, 22, z]} castShadow>
+              <cylinderGeometry args={[0.7, 0.85, 44, 8]} />
+              <meshStandardMaterial color={COLORS.steel} metalness={0.55} roughness={0.45} envMapIntensity={0.4} />
+            </mesh>
+            {/* Column base plate */}
+            <mesh position={[x, 0.05, z]}>
+              <cylinderGeometry args={[1.2, 1.2, 0.1, 8]} />
+              <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
             </mesh>
           </group>
         ))
