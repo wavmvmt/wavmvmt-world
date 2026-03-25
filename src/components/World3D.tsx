@@ -27,7 +27,7 @@ export default function World3D() {
   const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768
 
   return (
-    <div className="w-screen h-screen relative">
+    <div id="world-canvas" role="main" aria-label="WAVMVMT World 3D construction site" className="w-screen h-screen relative">
       <Canvas
         shadows={perf.enableShadows}
         camera={{ fov: 55, near: 0.5, far: 600, position: [0, 8, 80] }}

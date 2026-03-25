@@ -80,6 +80,7 @@ import { RoomWallSections } from './RoomWallSections'
 import { ConstructionBanner } from './ConstructionBanner'
 import { ProceduralFloor } from './ProceduralFloor'
 import { SafetySigns } from './SafetySigns'
+import { RoomStatusCards } from './RoomStatusCards'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -159,6 +160,7 @@ export function SceneContent() {
       {perf.enableDecorations && <WallDetail />}
       {perf.enableDecorations && <RoomWallSections />}
       {perf.enableDecorations && <SafetySigns />}
+      {perf.enableDecorations && <RoomStatusCards />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
