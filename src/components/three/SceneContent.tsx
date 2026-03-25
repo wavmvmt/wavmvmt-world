@@ -68,6 +68,8 @@ import { EnergyConduits } from './EnergyConduits'
 import { InspirationalQuotes } from './InspirationalQuotes'
 import { RoomFloorGlow } from './RoomFloorGlow'
 import { FloorDetail } from './FloorDetail'
+import { RoomInteriorLights } from './RoomInteriorLights'
+import { StringLights } from './StringLights'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -106,6 +108,8 @@ export function SceneContent() {
       {/* Room floor glow — breathing colored pools under each room */}
       <RoomFloorGlow />
       <FloorDetail />
+      <RoomInteriorLights />
+      <StringLights />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />

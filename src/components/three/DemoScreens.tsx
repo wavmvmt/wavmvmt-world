@@ -23,13 +23,19 @@ const SCREENS: DemoScreen[] = [
 
 function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
   const glowRef = useRef<THREE.PointLight>(null)
+  const scanRef = useRef<THREE.Mesh>(null)
   const room = ROOMS.find(r => r.name === screen.roomName)
   const color = room?.color || COLORS.gold
   const hexColor = `#${color.toString(16).padStart(6, '0')}`
 
   useFrame((state) => {
     if (glowRef.current) {
-      glowRef.current.intensity = 0.2 + Math.sin(state.clock.elapsedTime * 0.5) * 0.05
+      glowRef.current.intensity = 0.25 + Math.sin(state.clock.elapsedTime * 0.5) * 0.08
+    }
+    // Animated scan line
+    if (scanRef.current) {
+      const y = ((state.clock.elapsedTime * 0.4) % 1) * 4.5 - 2.25
+      scanRef.current.position.y = y
     }
   })
 
@@ -50,8 +56,13 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
           roughness={0.3}
         />
       </mesh>
+      {/* Animated scan line */}
+      <mesh ref={scanRef} position={[0, 0, 0.12]}>
+        <planeGeometry args={[7.5, 0.06]} />
+        <meshBasicMaterial color={color} transparent opacity={0.3} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
       {/* Screen glow */}
-      <pointLight ref={glowRef} position={[0, 0, 1]} color={color} intensity={0.2} distance={8} decay={2} />
+      <pointLight ref={glowRef} position={[0, 0, 1.5]} color={color} intensity={0.25} distance={12} decay={2} />
 
       {/* Content */}
       <Html position={[0, 0, 0.15]} center distanceFactor={15}>
