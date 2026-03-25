@@ -9,17 +9,47 @@ import { useFrame } from '@react-three/fiber'
  */
 export function BirdSounds() {
   const ctxRef = useRef<AudioContext | null>(null)
+  const masterGainRef = useRef<GainNode | null>(null)
   const nextChirpRef = useRef(5)
+  const mutedRef = useRef(false)
 
   useEffect(() => {
     const init = () => {
-      if (!ctxRef.current) ctxRef.current = new AudioContext()
+      if (!ctxRef.current) {
+        ctxRef.current = new AudioContext()
+        const gain = ctxRef.current.createGain()
+        gain.gain.value = 0.02
+        gain.connect(ctxRef.current.destination)
+        masterGainRef.current = gain
+      }
     }
     window.addEventListener('startAudio', init)
     window.addEventListener('click', init)
+
+    // Respect global mute
+    const onToggle = () => {
+      mutedRef.current = !mutedRef.current
+      if (masterGainRef.current) {
+        masterGainRef.current.gain.value = mutedRef.current ? 0 : 0.02
+      }
+    }
+    window.addEventListener('toggleAudio', onToggle)
+
+    // Respect global volume
+    const onVolume = (e: Event) => {
+      if (masterGainRef.current) {
+        const vol = (e as CustomEvent).detail.volume
+        masterGainRef.current.gain.value = vol * 0.04
+        mutedRef.current = vol === 0
+      }
+    }
+    window.addEventListener('setVolume', onVolume)
+
     return () => {
       window.removeEventListener('startAudio', init)
       window.removeEventListener('click', init)
+      window.removeEventListener('toggleAudio', onToggle)
+      window.removeEventListener('setVolume', onVolume)
       if (ctxRef.current) ctxRef.current.close()
     }
   }, [])
@@ -58,7 +88,7 @@ export function BirdSounds() {
       gain.gain.linearRampToValueAtTime(0, startTime + 0.1)
 
       osc.connect(gain)
-      gain.connect(ctx.destination)
+      gain.connect(masterGainRef.current || ctx.destination)
       osc.start(startTime)
       osc.stop(startTime + 0.12)
     }

@@ -38,6 +38,37 @@ export default function World3D() {
           if (!isMobile && gl.shadowMap) {
             gl.shadowMap.type = THREE.PCFSoftShadowMap
           }
+
+          // Dev mode: emit renderer stats on request
+          const emitStats = () => {
+            const info = gl.info
+            window.dispatchEvent(new CustomEvent('rendererStats', {
+              detail: {
+                drawCalls: info.render?.calls || 0,
+                triangles: info.render?.triangles || 0,
+                points: info.render?.points || 0,
+                lines: info.render?.lines || 0,
+                geometries: info.memory?.geometries || 0,
+                textures: info.memory?.textures || 0,
+              }
+            }))
+          }
+          window.addEventListener('requestRendererStats', emitStats)
+
+          // Screenshot support
+          const takeScreenshot = () => {
+            gl.domElement.toBlob((blob) => {
+              if (blob) {
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `wavmvmt-world-${Date.now()}.png`
+                a.click()
+                URL.revokeObjectURL(url)
+              }
+            })
+          }
+          window.addEventListener('takeScreenshot', takeScreenshot)
         }}
       >
         <color attach="background" args={[COLORS.bg]} />

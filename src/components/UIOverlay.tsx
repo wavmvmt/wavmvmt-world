@@ -88,12 +88,12 @@ export function UIOverlay() {
       <RoomGalleryPopup />
       <MobileActionMenu />
       <LiveActivityFeed />
+      <FPSCounter />
 
       {/* === DESKTOP: show everything === */}
       {!isMobile && (
         <>
           <Minimap />
-          <FPSCounter />
           <SettingsPanel />
           <FullscreenToggle />
           <TimelapseMode />

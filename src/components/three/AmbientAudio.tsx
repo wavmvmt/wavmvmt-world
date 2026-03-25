@@ -164,6 +164,15 @@ export function AmbientAudio() {
     }
     window.addEventListener('toggleAudio', onToggleMute)
 
+    // Listen for volume slider changes
+    const onSetVolume = (e: Event) => {
+      if (masterRef.current) {
+        const vol = (e as CustomEvent).detail.volume
+        masterRef.current.gain.value = vol * 0.5 // scale 0-1 to 0-0.5 range
+      }
+    }
+    window.addEventListener('setVolume', onSetVolume)
+
     // Listen for footstep events from Player
     const onFootstep = () => {
       const url = FOOTSTEPS[Math.floor(Math.random() * FOOTSTEPS.length)]
@@ -175,6 +184,7 @@ export function AmbientAudio() {
       cleanup()
       window.removeEventListener('playFootstep', onFootstep)
       window.removeEventListener('toggleAudio', onToggleMute)
+      window.removeEventListener('setVolume', onSetVolume)
       if (ctxRef.current) ctxRef.current.close()
     }
   }, [initAudio, playSFX])

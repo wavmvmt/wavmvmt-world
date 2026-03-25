@@ -380,7 +380,40 @@ export function HUD() {
           <p className="text-[0.68rem]" style={{ color: 'rgba(255,220,180,0.4)' }}>
             Click to look around · Move with WASD · Jump with Space
           </p>
+          {/* ESC / Exit button */}
+          <button
+            onClick={() => {
+              document.exitPointerLock?.()
+              window.location.href = '/'
+            }}
+            className="mt-2 px-4 py-1.5 rounded-lg text-[0.6rem] tracking-[0.12em] uppercase cursor-pointer transition-all hover:border-[rgba(232,160,191,0.4)]"
+            style={{
+              background: 'rgba(232,160,191,0.06)',
+              border: '1px solid rgba(232,160,191,0.15)',
+              color: 'rgba(232,160,191,0.5)',
+            }}
+          >
+            ESC · Exit World
+          </button>
         </div>
+      )}
+
+      {/* Mobile ESC/Exit button */}
+      {isMobile && (
+        <button
+          onClick={() => {
+            document.exitPointerLock?.()
+            window.location.href = '/'
+          }}
+          className="fixed top-2 left-3 pointer-events-auto z-20 px-2.5 py-1 rounded-lg text-[0.5rem] tracking-wider uppercase cursor-pointer"
+          style={{
+            background: 'rgba(232,160,191,0.06)',
+            border: '1px solid rgba(232,160,191,0.15)',
+            color: 'rgba(232,160,191,0.4)',
+          }}
+        >
+          ← Exit
+        </button>
       )}
 
       {/* First-time hint overlay — fades after 8s */}
