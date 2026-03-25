@@ -2,14 +2,13 @@
 
 import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { audioManager } from '@/lib/audioManager'
 
 /**
  * Cafe lo-fi ambient — plays a gentle synth pad when player is in the cafe.
- * Cafe at x:-105, z:55
- * Uses Web Audio API to generate a warm chord.
+ * Uses audioManager instead of own AudioContext.
  */
 export function CafeAmbient() {
-  const ctxRef = useRef<AudioContext | null>(null)
   const gainRef = useRef<GainNode | null>(null)
   const activeRef = useRef(false)
   const oscsRef = useRef<OscillatorNode[]>([])
@@ -23,25 +22,24 @@ export function CafeAmbient() {
     window.addEventListener('playerMove', onMove as EventListener)
     return () => {
       window.removeEventListener('playerMove', onMove as EventListener)
-      oscsRef.current.forEach(o => { try { o.stop() } catch {} })
-      if (ctxRef.current) ctxRef.current.close()
+      oscsRef.current.forEach(o => { try { o.stop() } catch { /* already stopped */ } })
     }
   }, [])
 
   useFrame(() => {
     if (playerNear.current && !activeRef.current) {
       activeRef.current = true
-      if (!ctxRef.current) ctxRef.current = new AudioContext()
-      const ctx = ctxRef.current
+      const ctx = audioManager.getContext()
+      const ambientGain = audioManager.getCategoryGain('ambient')
+      if (!ctx || !ambientGain) return
 
       const gain = ctx.createGain()
       gain.gain.value = 0
       gain.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 3)
-      gain.connect(ctx.destination)
+      gain.connect(ambientGain)
       gainRef.current = gain
 
-      // Warm lo-fi chord: Cmaj7 (C E G B)
-      const notes = [130.81, 164.81, 196.00, 246.94] // C3 E3 G3 B3
+      const notes = [130.81, 164.81, 196.00, 246.94]
       const oscs: OscillatorNode[] = []
 
       notes.forEach(freq => {
@@ -51,7 +49,6 @@ export function CafeAmbient() {
         const oscGain = ctx.createGain()
         oscGain.gain.value = 0.3
 
-        // Add slight detune for warmth
         const osc2 = ctx.createOscillator()
         osc2.type = 'sine'
         osc2.frequency.value = freq * 1.002
@@ -72,11 +69,12 @@ export function CafeAmbient() {
 
     if (!playerNear.current && activeRef.current) {
       activeRef.current = false
-      if (gainRef.current && ctxRef.current) {
-        gainRef.current.gain.linearRampToValueAtTime(0, ctxRef.current.currentTime + 2)
+      const ctx = audioManager.getContext()
+      if (gainRef.current && ctx) {
+        gainRef.current.gain.linearRampToValueAtTime(0, ctx.currentTime + 2)
         const oscs = oscsRef.current
         setTimeout(() => {
-          oscs.forEach(o => { try { o.stop() } catch {} })
+          oscs.forEach(o => { try { o.stop() } catch { /* already stopped */ } })
         }, 2500)
         oscsRef.current = []
       }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { ROOMS } from '@/lib/roomConfig'
+import { audioManager } from '@/lib/audioManager'
 
 interface RoomSound {
   roomName: string
@@ -19,16 +20,9 @@ const ROOM_SOUNDS: RoomSound[] = [
   { roomName: 'Amphitheatre', file: '/audio/ambient_01.ogg', maxVolume: 0.08, falloffDistance: 60 },
 ]
 
-/**
- * Room proximity audio — each room has its own ambient loop that
- * fades in as the player approaches and fades out as they leave.
- * Creates a spatial soundscape across the warehouse.
- */
 export function RoomAmbience() {
-  const audioCtxRef = useRef<AudioContext | null>(null)
   const sourcesRef = useRef<Map<string, { source: AudioBufferSourceNode; gain: GainNode }>>(new Map())
   const playerPos = useRef({ x: 0, z: 0 })
-  const mutedRef = useRef(false)
   const startedRef = useRef(false)
 
   useEffect(() => {
@@ -43,89 +37,67 @@ export function RoomAmbience() {
       initAudio()
     }
 
-    const onToggle = () => {
-      mutedRef.current = !mutedRef.current
-    }
-
-    const onMuteState = (e: Event) => {
-      mutedRef.current = (e as CustomEvent).detail.muted
-    }
-
     window.addEventListener('playerMove', onMove as EventListener)
     window.addEventListener('startAudio', onStart)
-    window.addEventListener('toggleAudio', onToggle)
-    window.addEventListener('audioState', onMuteState as EventListener)
-
-    // Also start on first click (browser autoplay policy)
     document.addEventListener('click', onStart, { once: true })
 
     return () => {
       window.removeEventListener('playerMove', onMove as EventListener)
       window.removeEventListener('startAudio', onStart)
-      window.removeEventListener('toggleAudio', onToggle)
-      window.removeEventListener('audioState', onMuteState as EventListener)
     }
   }, [])
 
   async function initAudio() {
-    try {
-      const ctx = new AudioContext()
-      audioCtxRef.current = ctx
+    if (!audioManager.init()) return
+    const ctx = audioManager.getContext()
+    const ambientGain = audioManager.getCategoryGain('ambient')
+    if (!ctx || !ambientGain) return
+
+    for (const rs of ROOM_SOUNDS) {
+      try {
+        const buffer = await audioManager.loadBuffer(rs.file)
+        if (!buffer) continue
+
+        const source = ctx.createBufferSource()
+        source.buffer = buffer
+        source.loop = true
+
+        const gain = ctx.createGain()
+        gain.gain.value = 0
+        source.connect(gain)
+        gain.connect(ambientGain)
+        source.start()
+
+        sourcesRef.current.set(rs.roomName, { source, gain })
+      } catch {
+        // Skip sounds that fail to load
+      }
+    }
+
+    function updateVolumes() {
+      const px = playerPos.current.x
+      const pz = playerPos.current.z
 
       for (const rs of ROOM_SOUNDS) {
-        try {
-          const response = await fetch(rs.file)
-          const arrayBuffer = await response.arrayBuffer()
-          const audioBuffer = await ctx.decodeAudioData(arrayBuffer)
+        const entry = sourcesRef.current.get(rs.roomName)
+        if (!entry) continue
 
-          const source = ctx.createBufferSource()
-          source.buffer = audioBuffer
-          source.loop = true
+        const room = ROOMS.find(r => r.name === rs.roomName)
+        if (!room) continue
 
-          const gain = ctx.createGain()
-          gain.gain.value = 0 // Start silent
+        const dist = Math.sqrt((px - room.x) ** 2 + (pz - room.z) ** 2)
+        const normalizedDist = Math.max(0, 1 - dist / rs.falloffDistance)
+        const targetVolume = audioManager.getMuted() ? 0 : normalizedDist * rs.maxVolume
 
-          source.connect(gain)
-          gain.connect(ctx.destination)
-          source.start()
-
-          sourcesRef.current.set(rs.roomName, { source, gain })
-        } catch {
-          // Skip sounds that fail to load
-        }
+        const current = entry.gain.gain.value
+        entry.gain.gain.value = current + (targetVolume - current) * 0.05
       }
 
-      // Update volumes based on proximity
-      function updateVolumes() {
-        if (!audioCtxRef.current) return
-
-        const px = playerPos.current.x
-        const pz = playerPos.current.z
-
-        for (const rs of ROOM_SOUNDS) {
-          const entry = sourcesRef.current.get(rs.roomName)
-          if (!entry) continue
-
-          const room = ROOMS.find(r => r.name === rs.roomName)
-          if (!room) continue
-
-          const dist = Math.sqrt((px - room.x) ** 2 + (pz - room.z) ** 2)
-          const normalizedDist = Math.max(0, 1 - dist / rs.falloffDistance)
-          const targetVolume = mutedRef.current ? 0 : normalizedDist * rs.maxVolume
-
-          // Smooth transition
-          const current = entry.gain.gain.value
-          entry.gain.gain.value = current + (targetVolume - current) * 0.05
-        }
-
-        requestAnimationFrame(updateVolumes)
-      }
-
-      updateVolumes()
-    } catch {
-      // Web Audio not available
+      requestAnimationFrame(updateVolumes)
     }
+
+    updateVolumes()
   }
 
-  return null // No visual output
+  return null
 }
