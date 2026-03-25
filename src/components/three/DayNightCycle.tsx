@@ -130,8 +130,10 @@ export function DayNightCycle() {
         shadow-camera-bottom={-80}
         shadow-bias={-0.001}
       />
-      <ambientLight ref={ambientRef} intensity={0.5} color={0x3a2850} />
-      <hemisphereLight ref={hemiRef} args={[0xf0d8b0, 0x2a2040, 0.6]} />
+      <ambientLight ref={ambientRef} intensity={0.55} color={0x3a2850} />
+      <hemisphereLight ref={hemiRef} args={[0xf0d8b0, 0x2a2040, 0.65]} />
+      {/* Ground bounce — warm fill from below */}
+      <directionalLight position={[0, -10, 0]} intensity={0.08} color={0xffe0a0} />
     </>
   )
 }

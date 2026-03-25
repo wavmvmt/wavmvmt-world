@@ -72,6 +72,8 @@ import { RoomInteriorLights } from './RoomInteriorLights'
 import { StringLights } from './StringLights'
 import { CeilingDetail } from './CeilingDetail'
 import { EntranceArch } from './EntranceArch'
+import { FogLayers } from './FogLayers'
+import { DustClouds } from './DustClouds'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -113,6 +115,8 @@ export function SceneContent() {
       <RoomInteriorLights />
       <StringLights />
       <EntranceArch />
+      <FogLayers />
+      <DustClouds />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />
