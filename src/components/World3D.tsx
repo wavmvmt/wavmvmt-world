@@ -44,7 +44,7 @@ export default function World3D() {
             isMobile ? (level === 'low' ? 0.75 : 1) : (level === 'low' ? 1 : 2)
           ))
           if (!isMobile && gl.shadowMap) {
-            gl.shadowMap.type = THREE.PCFSoftShadowMap
+            gl.shadowMap.type = THREE.VSMShadowMap
           }
 
           const emitStats = () => {
@@ -101,7 +101,7 @@ export default function World3D() {
         </Suspense>
 
         {perf.enablePostProcessing && level === 'high' && (
-          <EffectComposer multisampling={isDesktop ? 4 : 0}>
+          <EffectComposer multisampling={0}>
             <N8AO aoRadius={2} intensity={1.5} distanceFalloff={0.5} quality="medium" />
             <Bloom intensity={0.4} luminanceThreshold={0.5} luminanceSmoothing={0.9} mipmapBlur />
             <BrightnessContrast brightness={0.02} contrast={0.08} />
