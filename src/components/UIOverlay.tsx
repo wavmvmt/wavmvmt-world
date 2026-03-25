@@ -36,6 +36,7 @@ import { WhatsNew } from './WhatsNew'
 import { RoomGalleryPopup } from './RoomGalleryPopup'
 import { MobileActionMenu } from './MobileActionMenu'
 import { LiveActivityFeed } from './LiveActivityFeed'
+import { WorldBeatRadio } from './WorldBeatRadio'
 
 const menuStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -97,6 +98,7 @@ export function UIOverlay() {
       <RoomGalleryPopup />
       <MobileActionMenu />
       <LiveActivityFeed />
+      <WorldBeatRadio />
       <FPSCounter />
 
       {/* === DESKTOP: show everything === */}
