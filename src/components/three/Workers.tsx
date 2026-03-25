@@ -325,16 +325,17 @@ function Worker({ position, index }: { position: [number, number]; index: number
 
       {/* Name tag — skip on low perf to reduce HTML overlays */}
       {_perfLevel !== 'low' && (
-        <Html position={[0, 2.2, 0]} center distanceFactor={10}>
+        <Html position={[0, 2.3, 0]} center distanceFactor={8}>
           <div style={{
             color: `#${info.hat.toString(16).padStart(6, '0')}`,
-            fontSize: '7px',
+            fontSize: '9px',
             fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 600,
-            letterSpacing: '0.1em',
+            fontWeight: 700,
+            letterSpacing: '0.12em',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
-            opacity: 0.5,
+            opacity: 0.75,
+            textShadow: '0 1px 4px rgba(0,0,0,0.6)',
           }}>
             {info.name}
           </div>
@@ -343,17 +344,18 @@ function Worker({ position, index }: { position: [number, number]; index: number
 
       {/* Speech bubble — skip on low perf */}
       {_perfLevel !== 'low' && speech && (
-        <Html position={[0, 2.7, 0]} center distanceFactor={12}>
+        <Html position={[0, 2.8, 0]} center distanceFactor={10}>
           <div style={{
-            background: 'rgba(26,21,32,0.85)',
-            border: '1px solid rgba(240,198,116,0.2)',
-            borderRadius: '12px',
-            padding: '4px 10px',
-            color: 'rgba(255,220,180,0.7)',
-            fontSize: '9px',
+            background: 'rgba(26,21,32,0.92)',
+            border: '1px solid rgba(240,198,116,0.25)',
+            borderRadius: '14px',
+            padding: '5px 12px',
+            color: 'rgba(255,220,180,0.85)',
+            fontSize: '10px',
             fontFamily: "'DM Sans', sans-serif",
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
           }}>
             {speech}
           </div>

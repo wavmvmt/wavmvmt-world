@@ -68,6 +68,7 @@ import { EnergyConduits } from './EnergyConduits'
 import { InspirationalQuotes } from './InspirationalQuotes'
 import { RoomFloorGlow } from './RoomFloorGlow'
 import { RoomProgressRings } from './RoomProgressRings'
+import { RoomParticles } from './RoomParticles'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -120,6 +121,7 @@ export function SceneContent() {
       {perf.enableDecorations && <RoomProgressRings />}
       {perf.enableTrail && <PlayerTrail />}
       {perf.enableParticles && <Sparks />}
+      {perf.enableParticles && <RoomParticles />}
       {perf.enableDecorations && <PhaseProps />}
       {perf.enableDecorations && <Decorations />}
       {perf.enableDecorations && <BulletinBoard />}
