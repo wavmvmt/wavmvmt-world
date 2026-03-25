@@ -66,6 +66,8 @@ import { UltimateVisuals } from './UltimateVisuals'
 import { ReflectiveElements } from './ReflectiveElements'
 import { EnergyConduits } from './EnergyConduits'
 import { InspirationalQuotes } from './InspirationalQuotes'
+import { RoomFloorGlow } from './RoomFloorGlow'
+import { RoomProgressRings } from './RoomProgressRings'
 
 export function SceneContent() {
   const perf = useMemo(() => {
@@ -99,6 +101,9 @@ export function SceneContent() {
       <QuestPath />
       <GuideDog />
 
+      {/* Room floor glow — breathing colored pools under each room */}
+      <RoomFloorGlow />
+
       {/* Audio — no visual cost */}
       <CafeAmbient />
       <BirdSounds />
@@ -112,6 +117,7 @@ export function SceneContent() {
 
       {/* === MEDIUM + HIGH (enableDecorations / enableParticles) === */}
       {perf.enableRoomIcons && <RoomIcons />}
+      {perf.enableDecorations && <RoomProgressRings />}
       {perf.enableTrail && <PlayerTrail />}
       {perf.enableParticles && <Sparks />}
       {perf.enableDecorations && <PhaseProps />}
