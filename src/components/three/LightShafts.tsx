@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
 
 function LightShaft({ position, width = 6, depth = 6, opacity = 0.02 }: {
   position: [number, number, number]; width?: number; depth?: number; opacity?: number
@@ -55,8 +56,9 @@ function SkylightOpening({ position, width = 6, depth = 6 }: {
 }
 
 export function LightShafts() {
+  const level = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
   // Spread across the massive warehouse
-  const positions: [number, number, number][] = [
+  const allPositions: [number, number, number][] = [
     [-75, 20, -50],
     [25, 20, -85],
     [125, 20, 12],
@@ -70,6 +72,9 @@ export function LightShafts() {
     [-100, 20, 80],
     [100, 20, -120],
   ]
+  // LOW: 4 shafts, MEDIUM: 8, HIGH: all 12
+  const maxShafts = level === 'low' ? 4 : level === 'medium' ? 8 : 12
+  const positions = allPositions.slice(0, maxShafts)
 
   return (
     <group>

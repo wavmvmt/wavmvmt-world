@@ -76,6 +76,7 @@ import { FogLayers } from './FogLayers'
 import { DustClouds } from './DustClouds'
 import { GroundDetails } from './GroundDetails'
 import { WallDetail } from './WallDetail'
+import { RoomWallSections } from './RoomWallSections'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -105,20 +106,15 @@ export function SceneContent() {
       <RoomInteractions />
       <StageSpotlight />
 
-      {/* NPCs, screens, quest navigation */}
-      <NPCCoaches />
-      <DemoScreens />
+      {/* Quest navigation — lightweight */}
       <QuestPath />
       <GuideDog />
 
-      {/* Room floor glow — breathing colored pools under each room */}
+      {/* Room floor glow + floor markings — lightweight, always render */}
       <RoomFloorGlow />
       <FloorDetail />
-      <RoomInteriorLights />
-      <StringLights />
       <EntranceArch />
       <FogLayers />
-      <DustClouds />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />
@@ -133,6 +129,8 @@ export function SceneContent() {
 
       {/* === MEDIUM + HIGH (enableDecorations / enableParticles) === */}
       {perf.enableRoomIcons && <RoomIcons />}
+      {perf.enableDecorations && <NPCCoaches />}
+      {perf.enableDecorations && <DemoScreens />}
       {perf.enableDecorations && <RoomProgressRings />}
       {perf.enableTrail && <PlayerTrail />}
       {perf.enableParticles && <Sparks />}
@@ -148,9 +146,13 @@ export function SceneContent() {
       {perf.enableDecorations && <ConstructionProps />}
       {perf.enableDecorations && <MultiplayerPresence />}
       {perf.enableDecorations && <WarehouseEntrance />}
+      {perf.enableDecorations && <RoomInteriorLights />}
+      {perf.enableDecorations && <StringLights />}
+      {perf.enableDecorations && <DustClouds />}
       {perf.enableDecorations && <CeilingDetail />}
       {perf.enableDecorations && <GroundDetails />}
       {perf.enableDecorations && <WallDetail />}
+      {perf.enableDecorations && <RoomWallSections />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}

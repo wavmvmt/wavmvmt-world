@@ -88,13 +88,17 @@ export default function World3D() {
         <pointLight position={[120, 18, 40]} intensity={0.5} color={COLORS.sage} distance={180} decay={2} />
         <pointLight position={[0, 18, -80]} intensity={0.5} color={COLORS.rose} distance={150} decay={2} />
 
-        {/* Additional fill lights for room visibility */}
-        <pointLight position={[-100, 12, -80]} intensity={0.3} color={COLORS.lavender} distance={100} decay={2} />
-        <pointLight position={[110, 12, -90]} intensity={0.3} color={COLORS.gold} distance={100} decay={2} />
-        <pointLight position={[-105, 12, 55]} intensity={0.3} color={COLORS.sky} distance={100} decay={2} />
-        <pointLight position={[190, 12, -35]} intensity={0.3} color={COLORS.sage} distance={100} decay={2} />
-        <pointLight position={[0, 12, -105]} intensity={0.3} color={COLORS.rose} distance={100} decay={2} />
-        <pointLight position={[0, 10, 130]} intensity={0.25} color={COLORS.sage} distance={80} decay={2} />
+        {/* Additional fill lights for room visibility — MEDIUM+ only */}
+        {level !== 'low' && (
+          <>
+            <pointLight position={[-100, 12, -80]} intensity={0.3} color={COLORS.lavender} distance={100} decay={2} />
+            <pointLight position={[110, 12, -90]} intensity={0.3} color={COLORS.gold} distance={100} decay={2} />
+            <pointLight position={[-105, 12, 55]} intensity={0.3} color={COLORS.sky} distance={100} decay={2} />
+            <pointLight position={[190, 12, -35]} intensity={0.3} color={COLORS.sage} distance={100} decay={2} />
+            <pointLight position={[0, 12, -105]} intensity={0.3} color={COLORS.rose} distance={100} decay={2} />
+            <pointLight position={[0, 10, 130]} intensity={0.25} color={COLORS.sage} distance={80} decay={2} />
+          </>
+        )}
 
         <Suspense fallback={null}>
           <SceneContent />
