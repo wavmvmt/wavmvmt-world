@@ -3,6 +3,7 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { prefersReducedMotion } from '@/lib/accessibility'
 
 const COUNT = 30
 
@@ -11,6 +12,7 @@ const COUNT = 30
  * Small yellow-green glowing dots that drift lazily.
  */
 export function Fireflies() {
+  if (prefersReducedMotion()) return null
   const pointsRef = useRef<THREE.Points>(null)
 
   const { positions, data } = useMemo(() => {

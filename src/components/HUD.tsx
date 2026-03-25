@@ -53,6 +53,7 @@ function Panel({ title, icon, children, defaultOpen, position }: {
     return (
       <button
         onClick={() => setOpen(true)}
+        aria-label={`Open ${title} panel`}
         className={`absolute pointer-events-auto flex items-center gap-1.5 rounded-xl cursor-pointer transition-all hover:border-[rgba(240,198,116,0.3)] ${
           isMobile
             ? `top-2 ${position === 'left' ? 'left-3' : 'right-16'} px-2 py-1 text-[0.5rem] tracking-wider uppercase`
@@ -87,6 +88,7 @@ function Panel({ title, icon, children, defaultOpen, position }: {
         </div>
         <button
           onClick={() => setOpen(false)}
+          aria-label={`Minimize ${title} panel`}
           className="w-5 h-5 flex items-center justify-center rounded-md cursor-pointer transition-all"
           style={{
             background: 'rgba(240,198,116,0.06)',

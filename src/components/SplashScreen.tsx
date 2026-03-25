@@ -28,6 +28,8 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
 
   return (
     <div
+      role="dialog"
+      aria-label="WAVMVMT World splash screen"
       className="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-[1200ms]"
       style={{
         opacity: phase === 'fading' ? 0 : 1,
@@ -186,7 +188,9 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
         {/* Enter button */}
         <button
           onClick={handleEnter}
-          className="px-12 py-4 rounded-full text-sm font-semibold tracking-[0.35em] uppercase transition-all duration-500 cursor-pointer"
+          autoFocus
+          aria-label="Enter the WAVMVMT World 3D experience"
+          className="px-12 py-4 rounded-full text-sm font-semibold tracking-[0.35em] uppercase transition-all duration-500 cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-[#f0c674]"
           style={{
             border: '1px solid rgba(240,198,116,0.3)',
             color: '#f0c674',

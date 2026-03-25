@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
+import { prefersReducedMotion } from '@/lib/accessibility'
 
 const TRAIL_LENGTH = 20
 
@@ -12,6 +13,7 @@ const TRAIL_LENGTH = 20
  * Small dots that fade out over time — like fairy dust.
  */
 export function PlayerTrail() {
+  if (prefersReducedMotion()) return null
   const pointsRef = useRef<THREE.Points>(null)
   const positions = useRef(new Float32Array(TRAIL_LENGTH * 3))
   const ages = useRef(new Float32Array(TRAIL_LENGTH).fill(1))

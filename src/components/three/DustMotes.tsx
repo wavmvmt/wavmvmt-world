@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
+import { prefersReducedMotion } from '@/lib/accessibility'
 
 const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
 const DUST_COUNT = Math.round(350 * _perf.particleMultiplier)
@@ -12,6 +13,7 @@ const EMBER_COUNT = Math.round(40 * _perf.particleMultiplier)
 
 /** Floating dust motes — Ghibli signature atmospheric particles */
 export function DustMotes() {
+  if (prefersReducedMotion()) return null
   const dustRef = useRef<THREE.Points>(null)
   const emberRef = useRef<THREE.Points>(null)
 

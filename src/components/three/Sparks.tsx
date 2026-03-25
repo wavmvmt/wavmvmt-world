@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
+import { prefersReducedMotion } from '@/lib/accessibility'
 
 const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
 const SPARK_COUNT = Math.round(30 * _perf.particleMultiplier)
@@ -98,6 +99,7 @@ function WeldFlash({ position }: { position: [number, number, number] }) {
 }
 
 export function Sparks() {
+  if (prefersReducedMotion()) return null
   return (
     <group>
       {/* Near Parkour Gym */}
