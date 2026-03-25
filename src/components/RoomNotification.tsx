@@ -48,6 +48,10 @@ export function RoomNotification() {
           setInteractionMsg(null)
           trackEvent('room_visit', { room: room.name })
 
+          // Announce to screen readers
+          const announcer = document.getElementById('room-announcer')
+          if (announcer) announcer.textContent = `Now entering ${room.name}. ${room.vision}`
+
           if (timeoutRef.current) clearTimeout(timeoutRef.current)
           timeoutRef.current = setTimeout(() => setVisible(false), 4000)
           break

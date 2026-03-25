@@ -39,7 +39,7 @@ function SkylightOpening({ position, width = 6, depth = 6 }: {
     <group>
       <mesh position={[position[0], 43, position[2]]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, depth]} />
-        <meshBasicMaterial color={0xfff8e8} transparent opacity={0.12} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={0xfff8e8} transparent opacity={0.2} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
       {[
         [position[0] - width / 2, 43, position[2]],
@@ -79,7 +79,7 @@ export function LightShafts() {
             position={pos}
             width={5 + (i % 3) * 2}
             depth={5 + (i % 2) * 2}
-            opacity={0.012 + (i % 3) * 0.004}
+            opacity={0.025 + (i % 3) * 0.008}
           />
           <SkylightOpening
             position={pos}

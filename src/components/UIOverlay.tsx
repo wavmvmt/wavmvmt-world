@@ -62,6 +62,15 @@ export function UIOverlay() {
 
   return (
     <>
+      {/* Screen reader: live region for room announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only" id="room-announcer" />
+
+      {/* Skip to main content for keyboard users */}
+      <a href="#world-canvas" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
+        style={{ background: '#f0c674', color: '#1a1520' }}>
+        Skip to 3D World
+      </a>
+
       {/* === ALWAYS VISIBLE === */}
       <HUD />
       <QuestTracker />
@@ -109,6 +118,7 @@ export function UIOverlay() {
       {isMobile && !menuOpen && (
         <button
           onClick={() => setMenuOpen(true)}
+          aria-label="Open tools menu"
           className="fixed top-14 right-3 pointer-events-auto z-20 px-3 py-1.5 rounded-xl text-[0.55rem] tracking-wider uppercase cursor-pointer"
           style={{ ...menuStyle, color: 'rgba(255,220,180,0.5)' }}
         >
@@ -125,7 +135,7 @@ export function UIOverlay() {
               <span className="text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,220,180,0.4)' }}>
                 Tools
               </span>
-              <button onClick={() => setMenuOpen(false)} className="text-sm cursor-pointer" style={{ color: 'rgba(255,220,180,0.3)' }}>×</button>
+              <button onClick={() => setMenuOpen(false)} aria-label="Close tools menu" className="text-sm cursor-pointer" style={{ color: 'rgba(255,220,180,0.3)' }}>×</button>
             </div>
 
             <div className="grid grid-cols-3 gap-2">
