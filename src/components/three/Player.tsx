@@ -10,29 +10,14 @@ const SPRINT_SPEED = 22
 const JUMP_FORCE = 7.5
 const GRAVITY = -20
 const GROUND_Y = 0
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function playFootstep(s: any, impact = false) {
-  if (!s.audioCtx) {
-    try { s.audioCtx = new AudioContext() } catch { return }
-  }
-  const ctx = s.audioCtx as AudioContext
-  const now = ctx.currentTime
-  const osc = ctx.createOscillator()
-  osc.type = 'sine'
-  osc.frequency.value = impact ? 50 + Math.random() * 30 : 100 + Math.random() * 60
-  const gain = ctx.createGain()
-  gain.gain.setValueAtTime(impact ? 0.04 : 0.015, now)
-  gain.gain.exponentialRampToValueAtTime(0.001, now + (impact ? 0.15 : 0.08))
-  const filter = ctx.createBiquadFilter()
-  filter.type = 'lowpass'
-  filter.frequency.value = impact ? 200 : 400
-  osc.connect(filter)
-  filter.connect(gain)
-  gain.connect(ctx.destination)
-  osc.start(now)
-  osc.stop(now + (impact ? 0.2 : 0.1))
-}
+const EYE_LEVEL = 8
+const BASE_FOV = 55
+const SPRINT_FOV = 62
+const MOUSE_SENSITIVITY = 0.002
+const ACCEL_FACTOR = 8
+const CAM_LERP = 0.18
+const BOB_AMPLITUDE = 0.08
+const BOB_FREQUENCY = 6
 
 export function Player() {
   const groupRef = useRef<THREE.Group>(null)
@@ -43,6 +28,7 @@ export function Player() {
 
   const state = useRef({
     velocity: new THREE.Vector3(),
+    smoothVel: new THREE.Vector3(),
     onGround: true,
     yaw: 0,
     pitch: 0,
@@ -51,9 +37,12 @@ export function Player() {
     walkPhase: 0,
     cameraShake: 0,
     lastFootstep: 0,
-    audioCtx: null as AudioContext | null,
-    speedOverride: 0, // 0 means no override
+    speedOverride: 0,
+    currentFov: BASE_FOV,
+    currentRoom: '',
   })
+
+  const isMobile = typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     state.current.keys.add(e.key.toLowerCase())
@@ -63,24 +52,22 @@ export function Player() {
     state.current.keys.delete(e.key.toLowerCase())
   }, [])
 
-  const isMobile = typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)
-
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    // On desktop: need pointer lock. On mobile: accept touch-dispatched events
     if (!state.current.locked && !isMobile) return
-
-    // Desktop: standard FPS sensitivity. Mobile: handled by touchLook event separately
-    const sensitivity = isMobile ? 0.005 : 0.003
+    const sensitivity = isMobile ? 0.005 : MOUSE_SENSITIVITY
     const mx = e.movementX || 0
     const my = e.movementY || 0
-
     state.current.yaw -= mx * sensitivity
     state.current.pitch -= my * sensitivity
     state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
   }, [isMobile])
 
   const handleClick = useCallback(() => {
-    document.body.requestPointerLock()
+    try {
+      document.body.requestPointerLock()
+    } catch {
+      // Pointer lock not supported or denied
+    }
   }, [])
 
   const handleLockChange = useCallback(() => {
@@ -88,7 +75,6 @@ export function Player() {
   }, [])
 
   useEffect(() => {
-    // Touch look handler — custom event from mobile controls
     const handleTouchLook = (e: Event) => {
       const { dx, dy } = (e as CustomEvent).detail
       state.current.yaw -= dx * 0.006
@@ -103,13 +89,11 @@ export function Player() {
     window.addEventListener('click', handleClick)
     document.addEventListener('pointerlockchange', handleLockChange)
 
-    // Vehicle speed override
     const handleSpeedOverride = (e: Event) => {
       state.current.speedOverride = (e as CustomEvent).detail.speed
     }
     window.addEventListener('speedOverride', handleSpeedOverride as EventListener)
 
-    // Trampoline boost jump
     const handleBoost = (e: Event) => {
       const { force } = (e as CustomEvent).detail
       state.current.velocity.y = force
@@ -129,10 +113,11 @@ export function Player() {
     }
   }, [handleKeyDown, handleKeyUp, handleMouseMove, handleClick, handleLockChange])
 
-  useFrame((_, delta) => {
+  useFrame((threeState, delta) => {
     if (!groupRef.current) return
     const s = state.current
     const pos = groupRef.current.position
+    const clampedDelta = Math.min(delta, 0.05) // prevent huge jumps on tab-switch
 
     // Movement direction
     const forward = new THREE.Vector3(-Math.sin(s.yaw), 0, -Math.cos(s.yaw))
@@ -146,58 +131,66 @@ export function Player() {
 
     const sprinting = s.keys.has('shift')
     const speed = s.speedOverride > 0 ? s.speedOverride : (sprinting ? SPRINT_SPEED : WALK_SPEED)
+    const isMoving = moveDir.length() > 0
 
-    if (moveDir.length() > 0) {
+    // Smooth acceleration / deceleration via lerp
+    const targetVel = new THREE.Vector3()
+    if (isMoving) {
       moveDir.normalize()
-      const newX = pos.x + moveDir.x * speed * delta
-      const newZ = pos.z + moveDir.z * speed * delta
+      targetVel.copy(moveDir).multiplyScalar(speed)
+    }
+    s.smoothVel.lerp(targetVel, clampedDelta * ACCEL_FACTOR)
 
-      // Wall collision — slide along room walls instead of passing through
-      let blockedX = false
-      let blockedZ = false
-      const PLAYER_R = 1.5
+    // Apply smoothed velocity
+    const newX = pos.x + s.smoothVel.x * clampedDelta
+    const newZ = pos.z + s.smoothVel.z * clampedDelta
 
-      for (const room of ROOMS) {
-        const left = room.x - room.w / 2 - PLAYER_R
-        const right = room.x + room.w / 2 + PLAYER_R
-        const front = room.z - room.d / 2 - PLAYER_R
-        const back = room.z + room.d / 2 + PLAYER_R
+    // Wall collision — slide along room walls
+    let blockedX = false
+    let blockedZ = false
+    const PLAYER_R = 1.5
 
-        // Check if new position is inside room wall band (2 units thick)
-        const inXBand = newX > left && newX < right
-        const inZBand = newZ > front && newZ < back
-        const wasInXBand = pos.x > left && pos.x < right
-        const wasInZBand = pos.z > front && pos.z < back
+    for (const room of ROOMS) {
+      const left = room.x - room.w / 2 - PLAYER_R
+      const rRight = room.x + room.w / 2 + PLAYER_R
+      const front = room.z - room.d / 2 - PLAYER_R
+      const back = room.z + room.d / 2 + PLAYER_R
 
-        if (inXBand && inZBand) {
-          // Inside room bounds — only block if near a wall edge (not deep inside)
-          const distToLeft = Math.abs(newX - left)
-          const distToRight = Math.abs(newX - right)
-          const distToFront = Math.abs(newZ - front)
-          const distToBack = Math.abs(newZ - back)
-          const minDist = Math.min(distToLeft, distToRight, distToFront, distToBack)
+      const inXBand = newX > left && newX < rRight
+      const inZBand = newZ > front && newZ < back
+      const wasInXBand = pos.x > left && pos.x < rRight
+      const wasInZBand = pos.z > front && pos.z < back
 
-          if (minDist < 3) {
-            // Near a wall — block the axis that crossed
-            if (!wasInXBand && inXBand) blockedX = true
-            if (!wasInZBand && inZBand) blockedZ = true
-            if (wasInXBand && wasInZBand) {
-              // Already inside, let them out
-            } else if (!blockedX && !blockedZ) {
-              // Block whichever axis has smaller penetration
-              if (distToLeft < distToRight && distToLeft < distToFront && distToLeft < distToBack) blockedX = true
-              else if (distToRight < distToFront && distToRight < distToBack) blockedX = true
-              else blockedZ = true
-            }
+      if (inXBand && inZBand) {
+        const distToLeft = Math.abs(newX - left)
+        const distToRight = Math.abs(newX - rRight)
+        const distToFront = Math.abs(newZ - front)
+        const distToBack = Math.abs(newZ - back)
+        const minDist = Math.min(distToLeft, distToRight, distToFront, distToBack)
+
+        if (minDist < 3) {
+          if (!wasInXBand && inXBand) blockedX = true
+          if (!wasInZBand && inZBand) blockedZ = true
+          if (wasInXBand && wasInZBand) {
+            // Already inside, let them out
+          } else if (!blockedX && !blockedZ) {
+            if (distToLeft < distToRight && distToLeft < distToFront && distToLeft < distToBack) blockedX = true
+            else if (distToRight < distToFront && distToRight < distToBack) blockedX = true
+            else blockedZ = true
           }
         }
       }
+    }
 
-      if (!blockedX) pos.x = newX
-      if (!blockedZ) pos.z = newZ
-      s.walkPhase += delta * (sprinting ? 12 : 8)
+    if (!blockedX) pos.x = newX
+    if (!blockedZ) pos.z = newZ
 
-      // Footstep sounds — dispatch to AmbientAudio system
+    // Walk phase for animations
+    const currentSpeed = s.smoothVel.length()
+    if (currentSpeed > 0.5) {
+      s.walkPhase += clampedDelta * (sprinting ? 12 : 8)
+
+      // Footstep sounds
       if (s.onGround && s.walkPhase - s.lastFootstep > (sprinting ? 1.5 : 2.2)) {
         s.lastFootstep = s.walkPhase
         window.dispatchEvent(new CustomEvent('playFootstep'))
@@ -211,14 +204,13 @@ export function Player() {
     }
 
     // Gravity
-    s.velocity.y += GRAVITY * delta
-    pos.y += s.velocity.y * delta
+    s.velocity.y += GRAVITY * clampedDelta
+    pos.y += s.velocity.y * clampedDelta
 
     if (pos.y <= GROUND_Y) {
-      // Camera shake on hard landing
       if (!s.onGround && s.velocity.y < -5) {
         s.cameraShake = Math.min(0.15, Math.abs(s.velocity.y) * 0.015)
-        window.dispatchEvent(new CustomEvent('playFootstep')) // impact sound
+        window.dispatchEvent(new CustomEvent('playFootstep'))
       }
       pos.y = GROUND_Y
       s.velocity.y = 0
@@ -228,38 +220,66 @@ export function Player() {
     // Decay camera shake
     if (s.cameraShake > 0) s.cameraShake *= 0.85
 
-    // Bounds — warehouse + outdoor campus
+    // Bounds
     pos.x = Math.max(-270, Math.min(270, pos.x))
     pos.z = Math.max(-400, Math.min(240, pos.z))
 
-    // Rotate player to face movement direction
-    if (moveDir.length() > 0) {
+    // Rotate player model
+    if (isMoving) {
       groupRef.current.rotation.y = Math.atan2(moveDir.x, moveDir.z)
     }
 
     // Leg animation
     if (leftLegRef.current && rightLegRef.current) {
-      const legSwing = moveDir.length() > 0 ? Math.sin(s.walkPhase) * 0.4 : 0
+      const legSwing = currentSpeed > 0.5 ? Math.sin(s.walkPhase) * 0.4 : 0
       leftLegRef.current.rotation.x = legSwing
       rightLegRef.current.rotation.x = -legSwing
     }
 
-    // Dispatch position for minimap
-    window.dispatchEvent(new CustomEvent('playerMove', { detail: { x: pos.x, z: pos.z } }))
+    // Detect current room for events
+    let nearestRoom = ''
+    for (const room of ROOMS) {
+      const dx = pos.x - room.x
+      const dz = pos.z - room.z
+      if (Math.abs(dx) < room.w / 2 + 15 && Math.abs(dz) < room.d / 2 + 15) {
+        nearestRoom = room.name
+        break
+      }
+    }
+    if (nearestRoom !== s.currentRoom) {
+      s.currentRoom = nearestRoom
+    }
 
-    // Camera follows player — responsive third-person
+    // Dispatch position + room for minimap and UI
+    window.dispatchEvent(new CustomEvent('playerMove', {
+      detail: { x: pos.x, z: pos.z, room: s.currentRoom },
+    }))
+
+    // Camera bob while walking
+    const bobOffset = currentSpeed > 1
+      ? Math.sin(s.walkPhase * BOB_FREQUENCY) * BOB_AMPLITUDE * Math.min(currentSpeed / WALK_SPEED, 1)
+      : 0
+
+    // Sprint FOV — smooth lerp
+    const targetFov = sprinting && currentSpeed > 5 ? SPRINT_FOV : BASE_FOV
+    s.currentFov += (targetFov - s.currentFov) * clampedDelta * 6
+    const cam = threeState.camera as THREE.PerspectiveCamera
+    if (cam.fov !== undefined) {
+      cam.fov = s.currentFov
+      cam.updateProjectionMatrix()
+    }
+
+    // Camera follows player
     const shake = s.cameraShake
-    const camDist = 8 // closer = more immersive
-    const camHeight = 4 + Math.sin(s.pitch) * 3
+    const camDist = 8
+    const camHeight = EYE_LEVEL - 4 + Math.sin(s.pitch) * 3
     const camOffset = new THREE.Vector3(
       Math.sin(s.yaw) * camDist + (shake > 0.001 ? (Math.random() - 0.5) * shake * 2 : 0),
-      camHeight + (shake > 0.001 ? (Math.random() - 0.5) * shake : 0),
-      Math.cos(s.yaw) * camDist
+      camHeight + bobOffset + (shake > 0.001 ? (Math.random() - 0.5) * shake : 0),
+      Math.cos(s.yaw) * camDist,
     )
-    // Much snappier lerp — 0.15 instead of 0.07
-    camera.position.lerp(pos.clone().add(camOffset), 0.15)
-    // Look slightly above the character's head
-    camera.lookAt(pos.x, pos.y + 2.2, pos.z)
+    camera.position.lerp(pos.clone().add(camOffset), CAM_LERP)
+    camera.lookAt(pos.x, pos.y + 2.2 + bobOffset * 0.3, pos.z)
   })
 
   const outlineMat = <meshBasicMaterial color={COLORS.outline} side={THREE.BackSide} />
@@ -312,12 +332,11 @@ export function Player() {
         </group>
       ))}
 
-      {/* Scarf / bandana — flowing teal accent */}
+      {/* Scarf / bandana */}
       <mesh position={[0, 1.55, 0]}>
         <torusGeometry args={[0.2, 0.035, 6, 12]} />
         <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
       </mesh>
-      {/* Scarf tail */}
       <mesh position={[0.15, 1.45, -0.12]} rotation={[0.3, 0.2, -0.5]}>
         <boxGeometry args={[0.06, 0.2, 0.03]} />
         <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
