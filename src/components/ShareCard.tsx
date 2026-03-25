@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { sanitizeText, isValidEmail, rateLimit } from '@/lib/sanitize'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.95)',
@@ -103,12 +104,16 @@ Built by @shim_wav with @AnthropicAI Claude
 
   async function handleRegister() {
     if (!form.name || !form.email) return
+    if (!isValidEmail(form.email)) return
+    if (!rateLimit('register', 30000)) return // 30s cooldown
     setSubmitting(true)
+    const cleanName = sanitizeText(form.name, 100)
+    const cleanEmail = form.email.trim().toLowerCase()
     try {
       const supabase = createClient()
       await supabase.from('contestants').insert({
-        name: form.name,
-        email: form.email,
+        name: cleanName,
+        email: cleanEmail,
         quests_completed: questCount,
         shares_count: shareCount,
         registered_at: new Date().toISOString(),

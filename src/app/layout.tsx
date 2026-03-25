@@ -56,6 +56,8 @@ export default function RootLayout({
     >
       <head>
         <link rel="preload" href="/audio/construction_loop.ogg" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/audio/footstep_01.ogg" as="fetch" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://znhilrrgmxwedlqs.private.blob.vercel-storage.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         {/* JSON-LD structured data for rich Google results */}
         <script

@@ -91,10 +91,30 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
 
       {/* Corner pillars — gives rooms physical presence */}
       {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
-        <mesh key={i} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
+        <mesh key={`pillar-${i}`} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
           <boxGeometry args={[0.3, h, 0.3]} />
           <meshStandardMaterial color={color} transparent opacity={0.35} roughness={0.7} emissive={color} emissiveIntensity={0.05} />
         </mesh>
+      ))}
+
+      {/* Horizontal structural beams at 1/3 and 2/3 height */}
+      {[h * 0.33, h * 0.66].map((y, yi) => (
+        <group key={`hbeam-${yi}`}>
+          {/* Front and back beams */}
+          {[-d / 2, d / 2].map((zz, zi) => (
+            <mesh key={`fb-${yi}-${zi}`} position={[0, y, zz]}>
+              <boxGeometry args={[w, 0.15, 0.15]} />
+              <lineBasicMaterial color={color} transparent opacity={0.12} />
+            </mesh>
+          ))}
+          {/* Side beams */}
+          {[-w / 2, w / 2].map((xx, xi) => (
+            <mesh key={`sb-${yi}-${xi}`} position={[xx, y, 0]}>
+              <boxGeometry args={[0.15, 0.15, d]} />
+              <lineBasicMaterial color={color} transparent opacity={0.12} />
+            </mesh>
+          ))}
+        </group>
       ))}
 
       {/* Build fill (rising from floor) — more visible */}

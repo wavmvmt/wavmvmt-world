@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { sanitizeText, rateLimit } from '@/lib/sanitize'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -24,14 +25,17 @@ export function SuggestionBox() {
 
   async function handleSubmit() {
     if (!text.trim()) return
+    if (!rateLimit('suggestion', 10000)) return // 10s cooldown
     setSending(true)
+
+    const cleanText = sanitizeText(text, 500)
+    const cleanName = sanitizeText(name, 50) || 'Anonymous'
 
     try {
       const supabase = createClient()
-      // Try to insert — table may not exist yet, that's ok
       await supabase.from('suggestions').insert({
-        text: text.trim(),
-        name: name.trim() || 'Anonymous',
+        text: cleanText,
+        name: cleanName,
         created_at: new Date().toISOString(),
       })
     } catch {
