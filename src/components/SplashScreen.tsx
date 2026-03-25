@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { trackEvent } from '@/lib/analytics'
 
 export function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [phase, setPhase] = useState<'intro' | 'ready' | 'fading'>('intro')
@@ -21,6 +22,7 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
 
   function handleEnter() {
     setPhase('fading')
+    trackEvent('world_enter')
     // Trigger audio start — browser requires user gesture
     window.dispatchEvent(new CustomEvent('startAudio'))
     setTimeout(onEnter, 1200)

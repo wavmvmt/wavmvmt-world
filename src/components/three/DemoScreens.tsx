@@ -46,7 +46,7 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
         <meshStandardMaterial
           color={0x0a0510}
           emissive={color}
-          emissiveIntensity={0.03}
+          emissiveIntensity={0.15}
           roughness={0.3}
         />
       </mesh>
@@ -99,15 +99,47 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
               </div>
             </div>
           )}
-          {/* Coming soon */}
-          <div style={{
-            color: 'rgba(255,220,180,0.15)',
-            fontSize: '7px',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-          }}>
-            Video Preview Coming Soon
-          </div>
+          {/* Feature list */}
+          {room && (
+            <div style={{ textAlign: 'left', paddingLeft: '20px', marginBottom: '6px' }}>
+              {room.features.slice(0, 3).map((f, i) => (
+                <div key={i} style={{
+                  color: 'rgba(255,220,180,0.35)',
+                  fontSize: '7px',
+                  marginBottom: '2px',
+                }}>
+                  <span style={{ color: hexColor, marginRight: '4px' }}>›</span> {f}
+                </div>
+              ))}
+            </div>
+          )}
+          {/* Build progress bar */}
+          {room && (
+            <div style={{ padding: '0 20px' }}>
+              <div style={{
+                height: '2px',
+                borderRadius: '1px',
+                background: 'rgba(255,220,180,0.08)',
+                overflow: 'hidden',
+              }}>
+                <div style={{
+                  height: '100%',
+                  width: `${room.buildPct}%`,
+                  background: `linear-gradient(90deg, ${hexColor}, ${hexColor}80)`,
+                  borderRadius: '1px',
+                }} />
+              </div>
+              <div style={{
+                color: 'rgba(255,220,180,0.2)',
+                fontSize: '6px',
+                letterSpacing: '0.15em',
+                marginTop: '2px',
+                textAlign: 'center',
+              }}>
+                {room.buildPct}% COMPLETE
+              </div>
+            </div>
+          )}
         </div>
       </Html>
     </group>

@@ -4,6 +4,7 @@ import { useRef, useEffect, useCallback } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
+import { audioManager } from '@/lib/audioManager'
 
 /**
  * Yoga Room — ambient music shifts to calming tone when player enters.
@@ -14,8 +15,6 @@ function YogaRoomAmbience() {
   const activeRef = useRef(false)
   const oscRef = useRef<OscillatorNode | null>(null)
   const gainRef = useRef<GainNode | null>(null)
-  const ctxRef = useRef<AudioContext | null>(null)
-
   useEffect(() => {
     const onMove = (e: Event) => {
       const { x, z } = (e as CustomEvent).detail
@@ -24,16 +23,17 @@ function YogaRoomAmbience() {
     window.addEventListener('playerMove', onMove as EventListener)
     return () => {
       window.removeEventListener('playerMove', onMove as EventListener)
-      if (oscRef.current) { try { oscRef.current.stop() } catch {} }
-      if (ctxRef.current) ctxRef.current.close()
+      if (oscRef.current) { try { oscRef.current.stop() } catch { /* stopped */ } }
     }
   }, [])
 
   useFrame(() => {
     if (playerNear.current && !activeRef.current) {
       activeRef.current = true
-      if (!ctxRef.current) ctxRef.current = new AudioContext()
-      const ctx = ctxRef.current
+      audioManager.init()
+      const ctx = audioManager.getContext()
+      const ambientGain = audioManager.getCategoryGain('ambient')
+      if (!ctx || !ambientGain) return
       const osc = ctx.createOscillator()
       osc.type = 'sine'
       osc.frequency.value = 174 // Solfeggio healing frequency
@@ -41,17 +41,18 @@ function YogaRoomAmbience() {
       gain.gain.value = 0
       gain.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 2)
       osc.connect(gain)
-      gain.connect(ctx.destination)
+      gain.connect(ambientGain)
       osc.start()
       oscRef.current = osc
       gainRef.current = gain
     }
     if (!playerNear.current && activeRef.current) {
       activeRef.current = false
-      if (gainRef.current && ctxRef.current) {
-        gainRef.current.gain.linearRampToValueAtTime(0, ctxRef.current.currentTime + 1)
+      const ctx = audioManager.getContext()
+      if (gainRef.current && ctx) {
+        gainRef.current.gain.linearRampToValueAtTime(0, ctx.currentTime + 1)
         const osc = oscRef.current
-        setTimeout(() => { try { osc?.stop() } catch {} }, 1200)
+        setTimeout(() => { try { osc?.stop() } catch { /* stopped */ } }, 1200)
       }
     }
   })

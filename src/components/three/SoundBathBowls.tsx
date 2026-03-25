@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
+import { audioManager } from '@/lib/audioManager'
 
 const BOWL_NOTES = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88] // C D E F G A B
 const BOWL_COLORS = [COLORS.gold, COLORS.amber, COLORS.rose, COLORS.lavender, COLORS.sage, COLORS.sky, COLORS.gold]
@@ -14,11 +15,11 @@ function SingingBowl({ position, note, color, index }: {
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef(0)
-  const audioCtxRef = useRef<AudioContext | null>(null)
-
   const playBowl = useCallback(() => {
-    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext()
-    const ctx = audioCtxRef.current
+    audioManager.init()
+    const ctx = audioManager.getContext()
+    const sfxGain = audioManager.getCategoryGain('sfx')
+    if (!ctx || !sfxGain) return
     const now = ctx.currentTime
 
     // Singing bowl — long resonant sine with harmonics
@@ -28,7 +29,7 @@ function SingingBowl({ position, note, color, index }: {
 
     const harmonic2 = ctx.createOscillator()
     harmonic2.type = 'sine'
-    harmonic2.frequency.value = note * 2.01 // slight detune for richness
+    harmonic2.frequency.value = note * 2.01
 
     const harmonic3 = ctx.createOscillator()
     harmonic3.type = 'sine'
@@ -46,8 +47,8 @@ function SingingBowl({ position, note, color, index }: {
     fundamental.connect(env)
     harmonic2.connect(env2)
     harmonic3.connect(env2)
-    env.connect(ctx.destination)
-    env2.connect(ctx.destination)
+    env.connect(sfxGain)
+    env2.connect(sfxGain)
 
     fundamental.start(now)
     harmonic2.start(now)

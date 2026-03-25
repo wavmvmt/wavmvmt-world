@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { ROOMS } from '@/lib/roomConfig'
 import { formatCurrency } from '@/lib/fundraisingConfig'
+import { trackEvent } from '@/lib/analytics'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.88)',
@@ -45,6 +46,7 @@ export function RoomNotification() {
           setCurrentRoom(room)
           setVisible(true)
           setInteractionMsg(null)
+          trackEvent('room_visit', { room: room.name })
 
           if (timeoutRef.current) clearTimeout(timeoutRef.current)
           timeoutRef.current = setTimeout(() => setVisible(false), 4000)
@@ -57,6 +59,7 @@ export function RoomNotification() {
       const { room } = (e as CustomEvent).detail
       const msg = ROOM_INTERACTION_RESULTS[room]
       if (msg) {
+        trackEvent('room_interact', { room })
         const roomDef = ROOMS.find(r => r.name === room)
         if (roomDef) setCurrentRoom(roomDef)
         setInteractionMsg(msg)

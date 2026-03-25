@@ -57,6 +57,33 @@ export default function RootLayout({
       <head>
         <link rel="preload" href="/audio/construction_loop.ogg" as="fetch" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        {/* JSON-LD structured data for rich Google results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'WAVMVMT',
+              url: 'https://wavmvmt-world.vercel.app',
+              logo: 'https://wavmvmt-world.vercel.app/favicon.svg',
+              description: 'A $100M+ wellness, fitness, music, technology and education campus being built in Toronto.',
+              foundingDate: '2024',
+              foundingLocation: { '@type': 'Place', name: 'Toronto, ON, Canada' },
+              founder: { '@type': 'Person', name: 'Saadiq Khan', alternateName: 'Shim' },
+              sameAs: [
+                'https://instagram.com/shim.wav',
+                'https://x.com/shimwav',
+                'https://open.spotify.com/artist/4HHt60CmwO8nAS9RFBBO9u',
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                email: 'wavmvmt@gmail.com',
+                contactType: 'General Inquiry',
+              },
+            }),
+          }}
+        />
       </head>
       <body className="min-h-screen bg-[#1a1520] text-white antialiased" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
         {children}

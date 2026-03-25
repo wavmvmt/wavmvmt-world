@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { trackEvent } from '@/lib/analytics'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.9)',
@@ -34,6 +35,7 @@ export function PhotoMode() {
 
     setFlash(true)
     setTimeout(() => setFlash(false), 200)
+    trackEvent('screenshot_taken', { room: currentRoom.current || 'unknown' })
 
     // Use toBlob for better quality, fallback to toDataURL
     canvas.toBlob((blob) => {

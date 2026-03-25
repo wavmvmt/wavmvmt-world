@@ -252,6 +252,27 @@ export default function PitchPage() {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section className="mb-8 p-5 md:p-8 rounded-2xl" style={panelStyle}>
+          <h2 className="text-xs tracking-[0.25em] uppercase mb-4" style={{ color: 'rgba(240,198,116,0.5)' }}>Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'Where will it be built?', a: 'Toronto, ON. Site selection is currently underway. The location will be chosen for accessibility, community density, and zoning compatibility with the full vision including vertical build.' },
+              { q: 'When will it open?', a: 'Target opening depends on capital raise timeline and site acquisition. Estimated 24-36 months from funding close to doors open for Phase 1. The 3D world tracks real progress in real time.' },
+              { q: 'How can I invest?', a: 'Reach out directly via wavmvmt@gmail.com or book a virtual tour. We offer various investment structures depending on your interest level and capital. Detailed financials available under NDA.' },
+              { q: 'Can I become a founding member?', a: 'Yes — visit the Membership page to register interest. Founding members get locked-in pricing that won\'t increase after launch. Early registrants get priority access.' },
+              { q: 'What makes this different from a gym?', a: 'WAVMVMT isn\'t a gym. It\'s an integrated ecosystem — wellness, fitness, music, technology, education, and community all under one roof. No other facility combines parkour, sound healing, music production, recovery suites, and business education in a single space.' },
+              { q: 'What about the condos?', a: 'Phase 2 includes premium residential units above the wellness center (subject to zoning). Soundproofed and acoustically treated, with built-in access to all facilities. Presale opportunities will be announced to early registrants first.' },
+              { q: 'Is the 3D world the actual design?', a: 'The 3D world is a conceptual representation — it shows the rooms, layout, and vision but isn\'t an architectural blueprint. Real architectural designs will be developed once the site is secured. The gallery page shows more refined concept renders.' },
+            ].map((faq) => (
+              <div key={faq.q}>
+                <div className="text-xs font-bold mb-1" style={{ color: 'rgba(255,220,180,0.6)' }}>{faq.q}</div>
+                <p className="text-[0.6rem] leading-relaxed" style={{ color: 'rgba(255,220,180,0.35)' }}>{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Contact / CTA */}
         <section className="mb-8 p-5 md:p-8 rounded-2xl text-center" style={panelStyle}>
           <h2 className="text-xs tracking-[0.25em] uppercase mb-3" style={{ color: 'rgba(240,198,116,0.5)' }}>Interested?</h2>

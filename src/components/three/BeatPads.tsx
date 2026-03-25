@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 import { COLORS } from '@/lib/roomConfig'
+import { audioManager } from '@/lib/audioManager'
 
 const PAD_COLORS = [COLORS.rose, COLORS.lavender, COLORS.gold, COLORS.sage]
 const PAD_NOTES = [261.63, 329.63, 392.00, 523.25] // C4, E4, G4, C5
@@ -17,33 +18,37 @@ const DRUM_FREQS = [
   { freq: 400, type: 'sawtooth' as OscillatorType, decay: 0.15 }, // Clap-ish
 ]
 
-function playPadSound(index: number, audioCtx: AudioContext) {
+function playPadSound(index: number) {
+  const ctx = audioManager.getContext()
+  const sfxGain = audioManager.getCategoryGain('sfx')
+  if (!ctx || !sfxGain) return
+
   const drum = DRUM_FREQS[index]
   const note = PAD_NOTES[index]
-  const now = audioCtx.currentTime
+  const now = ctx.currentTime
 
   // Drum hit
-  const drumOsc = audioCtx.createOscillator()
+  const drumOsc = ctx.createOscillator()
   drumOsc.type = drum.type
   drumOsc.frequency.setValueAtTime(drum.freq, now)
   drumOsc.frequency.exponentialRampToValueAtTime(drum.freq * 0.5, now + drum.decay)
-  const drumGain = audioCtx.createGain()
-  drumGain.gain.setValueAtTime(0.15, now)
-  drumGain.gain.exponentialRampToValueAtTime(0.001, now + drum.decay)
-  drumOsc.connect(drumGain)
-  drumGain.connect(audioCtx.destination)
+  const drumGainNode = ctx.createGain()
+  drumGainNode.gain.setValueAtTime(0.15, now)
+  drumGainNode.gain.exponentialRampToValueAtTime(0.001, now + drum.decay)
+  drumOsc.connect(drumGainNode)
+  drumGainNode.connect(sfxGain)
   drumOsc.start(now)
   drumOsc.stop(now + drum.decay + 0.05)
 
   // Melodic tone
-  const toneOsc = audioCtx.createOscillator()
+  const toneOsc = ctx.createOscillator()
   toneOsc.type = 'sine'
   toneOsc.frequency.value = note
-  const toneGain = audioCtx.createGain()
-  toneGain.gain.setValueAtTime(0.08, now)
-  toneGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4)
-  toneOsc.connect(toneGain)
-  toneGain.connect(audioCtx.destination)
+  const toneGainNode = ctx.createGain()
+  toneGainNode.gain.setValueAtTime(0.08, now)
+  toneGainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4)
+  toneOsc.connect(toneGainNode)
+  toneGainNode.connect(sfxGain)
   toneOsc.start(now)
   toneOsc.stop(now + 0.5)
 }
@@ -95,14 +100,11 @@ function BeatPad({ position, color, index, onHit }: {
  * Positioned at the Music Studio's location.
  */
 export function BeatPads() {
-  const audioCtxRef = useRef<AudioContext | null>(null)
   const [lastHit, setLastHit] = useState<number | null>(null)
 
   const handleHit = useCallback((index: number) => {
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new AudioContext()
-    }
-    playPadSound(index, audioCtxRef.current)
+    audioManager.init()
+    playPadSound(index)
     setLastHit(index)
     setTimeout(() => setLastHit(null), 300)
   }, [])
