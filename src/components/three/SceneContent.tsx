@@ -67,6 +67,7 @@ import { ReflectiveElements } from './ReflectiveElements'
 import { EnergyConduits } from './EnergyConduits'
 import { InspirationalQuotes } from './InspirationalQuotes'
 import { RoomFloorGlow } from './RoomFloorGlow'
+import { FloorDetail } from './FloorDetail'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -104,6 +105,7 @@ export function SceneContent() {
 
       {/* Room floor glow — breathing colored pools under each room */}
       <RoomFloorGlow />
+      <FloorDetail />
 
       {/* Audio — no visual cost */}
       <CafeAmbient />
