@@ -75,6 +75,7 @@ import { EntranceArch } from './EntranceArch'
 import { FogLayers } from './FogLayers'
 import { DustClouds } from './DustClouds'
 import { GroundDetails } from './GroundDetails'
+import { WallDetail } from './WallDetail'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
@@ -149,6 +150,7 @@ export function SceneContent() {
       {perf.enableDecorations && <WarehouseEntrance />}
       {perf.enableDecorations && <CeilingDetail />}
       {perf.enableDecorations && <GroundDetails />}
+      {perf.enableDecorations && <WallDetail />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
