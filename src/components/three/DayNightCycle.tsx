@@ -120,8 +120,8 @@ export function DayNightCycle() {
         intensity={1.0}
         color={0xffe0a0}
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
         shadow-camera-near={10}
         shadow-camera-far={300}
         shadow-camera-left={-100}

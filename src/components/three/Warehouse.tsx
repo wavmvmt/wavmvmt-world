@@ -66,55 +66,50 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
 
   return (
     <group position={[x, 0, z]}>
-      {/* Proximity glow light */}
-      <pointLight ref={glowRef} position={[0, h / 2, 0]} color={color} intensity={0} distance={Math.max(w, d)} decay={2} />
+      {/* Proximity glow light — stronger */}
+      <pointLight ref={glowRef} position={[0, h / 2, 0]} color={color} intensity={0} distance={Math.max(w, d) * 1.2} decay={2} />
+
+      {/* Ambient room light — always on, gives rooms presence */}
+      <pointLight position={[0, h * 0.6, 0]} color={color} intensity={0.15 + (buildPct / 100) * 0.3} distance={Math.max(w, d) * 0.7} decay={2} />
 
       {/* Main wireframe outline — glowing */}
       <lineSegments ref={outlineRef} position={[0, h / 2, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(w, h, d)]} />
-        <lineBasicMaterial color={color} transparent opacity={0.7} />
+        <lineBasicMaterial color={color} transparent opacity={0.8} />
       </lineSegments>
 
       {/* Inner structure lines for depth */}
       <lineSegments position={[0, h / 2, 0]}>
         <edgesGeometry args={[new THREE.BoxGeometry(w - 1, h - 0.5, d - 1)]} />
-        <lineBasicMaterial color={color} transparent opacity={0.15} />
+        <lineBasicMaterial color={color} transparent opacity={0.2} />
       </lineSegments>
 
       {/* Corner pillars — gives rooms physical presence */}
       {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
         <mesh key={i} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
           <boxGeometry args={[0.3, h, 0.3]} />
-          <meshStandardMaterial color={color} transparent opacity={0.2} roughness={0.8} />
+          <meshStandardMaterial color={color} transparent opacity={0.35} roughness={0.7} emissive={color} emissiveIntensity={0.05} />
         </mesh>
       ))}
 
-      {/* Build fill (rising from floor) */}
+      {/* Build fill (rising from floor) — more visible */}
       {buildPct > 0 && (
         <>
           <mesh position={[0, (h * buildPct / 100) / 2, 0]}>
             <boxGeometry args={[w - 0.5, h * buildPct / 100, d - 0.5]} />
             <meshStandardMaterial
               color={color} transparent
-              opacity={0.03 + (buildPct / 100) * 0.08}
-              roughness={0.9}
+              opacity={0.06 + (buildPct / 100) * 0.12}
+              roughness={0.85}
               emissive={color}
-              emissiveIntensity={0.02 + (buildPct / 100) * 0.03}
+              emissiveIntensity={0.04 + (buildPct / 100) * 0.06}
             />
           </mesh>
-          {/* Top cap glow */}
+          {/* Top cap glow — brighter */}
           <mesh position={[0, h * buildPct / 100, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[w - 1, d - 1]} />
-            <meshBasicMaterial color={color} transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
+            <meshBasicMaterial color={color} transparent opacity={0.18} side={THREE.DoubleSide} depthWrite={false} blending={THREE.AdditiveBlending} />
           </mesh>
-          {/* Interior glow light */}
-          <pointLight
-            position={[0, h * buildPct / 100 * 0.5, 0]}
-            intensity={buildPct / 100 * 0.3}
-            color={color}
-            distance={Math.max(w, d) * 0.8}
-            decay={2}
-          />
         </>
       )}
 
@@ -247,15 +242,20 @@ function Scaffolding({ x, z, levels }: { x: number; z: number; levels: number })
 function PracticalLight({ position }: { position: [number, number, number] }) {
   return (
     <group>
-      <pointLight position={position} intensity={0.8} color={0xffe0b0} distance={60} decay={2} />
+      <pointLight position={position} intensity={1.0} color={0xffe0b0} distance={80} decay={2} />
       <mesh position={position}>
-        <sphereGeometry args={[0.2, 8, 8]} />
+        <sphereGeometry args={[0.25, 8, 8]} />
         <meshBasicMaterial color={0xffeebb} />
       </mesh>
-      {/* Volumetric cone */}
-      <mesh position={[position[0], position[1] - 8, position[2]]}>
-        <cylinderGeometry args={[0.15, 5, 16, 12, 1, true]} />
-        <meshBasicMaterial color={0xffe8c0} transparent opacity={0.012} side={THREE.DoubleSide} depthWrite={false} />
+      {/* Outer glow halo */}
+      <mesh position={position}>
+        <sphereGeometry args={[0.6, 8, 8]} />
+        <meshBasicMaterial color={0xffe8c0} transparent opacity={0.06} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+      {/* Volumetric cone — more visible */}
+      <mesh position={[position[0], position[1] - 10, position[2]]}>
+        <cylinderGeometry args={[0.2, 7, 20, 12, 1, true]} />
+        <meshBasicMaterial color={0xffe8c0} transparent opacity={0.02} side={THREE.DoubleSide} depthWrite={false} blending={THREE.AdditiveBlending} />
       </mesh>
     </group>
   )
@@ -292,14 +292,25 @@ function MaterialPile({ position, type }: { position: [number, number, number]; 
 export function Warehouse() {
   return (
     <group>
-      {/* Floor — polished concrete warehouse */}
+      {/* Floor — polished concrete warehouse with reflective sheen */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[500, 450, 50, 45]} />
         <meshStandardMaterial
           color={COLORS.floor}
-          roughness={0.75}
-          metalness={0.08}
-          envMapIntensity={0.3}
+          roughness={0.6}
+          metalness={0.15}
+          envMapIntensity={0.5}
+        />
+      </mesh>
+      {/* Floor subtle reflection layer */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
+        <planeGeometry args={[500, 450]} />
+        <meshBasicMaterial
+          color={0x2a2040}
+          transparent
+          opacity={0.03}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
         />
       </mesh>
 
@@ -308,17 +319,17 @@ export function Warehouse() {
         <meshBasicMaterial transparent opacity={0.1} />
       </gridHelper>
 
-      {/* Floor detail lines — construction zone tape markers */}
+      {/* Floor detail lines — construction zone tape markers (more visible) */}
       {[-100, -50, 0, 50, 100].map(x => (
         <mesh key={`fl-${x}`} position={[x, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[0.2, 300]} />
-          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.06} />
+          <planeGeometry args={[0.3, 300]} />
+          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.1} />
         </mesh>
       ))}
       {[-75, 0, 75].map(z => (
         <mesh key={`fl2-${z}`} position={[0, 0.03, z]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
-          <planeGeometry args={[0.2, 450]} />
-          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.04} />
+          <planeGeometry args={[0.3, 450]} />
+          <meshBasicMaterial color={COLORS.amber} transparent opacity={0.07} />
         </mesh>
       ))}
 
