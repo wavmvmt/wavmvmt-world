@@ -5,6 +5,10 @@ import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COLORS, SKIN_TONES, WORKER_DATA, WORKER_POSITIONS } from '@/lib/roomConfig'
+import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
+
+const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
+const _perfLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 const SPEECH_LINES = [
   'Building the future!',
@@ -319,24 +323,26 @@ function Worker({ position, index }: { position: [number, number]; index: number
         <meshBasicMaterial color={0x1a1010} />
       </mesh>
 
-      {/* Name tag — always visible */}
-      <Html position={[0, 2.2, 0]} center distanceFactor={10}>
-        <div style={{
-          color: `#${info.hat.toString(16).padStart(6, '0')}`,
-          fontSize: '7px',
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 600,
-          letterSpacing: '0.1em',
-          whiteSpace: 'nowrap',
-          pointerEvents: 'none',
-          opacity: 0.5,
-        }}>
-          {info.name}
-        </div>
-      </Html>
+      {/* Name tag — skip on low perf to reduce HTML overlays */}
+      {_perfLevel !== 'low' && (
+        <Html position={[0, 2.2, 0]} center distanceFactor={10}>
+          <div style={{
+            color: `#${info.hat.toString(16).padStart(6, '0')}`,
+            fontSize: '7px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 600,
+            letterSpacing: '0.1em',
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+            opacity: 0.5,
+          }}>
+            {info.name}
+          </div>
+        </Html>
+      )}
 
-      {/* Speech bubble */}
-      {speech && (
+      {/* Speech bubble — skip on low perf */}
+      {_perfLevel !== 'low' && speech && (
         <Html position={[0, 2.7, 0]} center distanceFactor={12}>
           <div style={{
             background: 'rgba(26,21,32,0.85)',
@@ -358,9 +364,10 @@ function Worker({ position, index }: { position: [number, number]; index: number
 }
 
 export function Workers() {
+  const positions = WORKER_POSITIONS.slice(0, _perf.maxWorkers)
   return (
     <group>
-      {WORKER_POSITIONS.map((pos, i) => (
+      {positions.map((pos, i) => (
         <Worker key={i} position={pos} index={i} />
       ))}
     </group>

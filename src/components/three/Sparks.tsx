@@ -4,8 +4,10 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
+import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 
-const SPARK_COUNT = 30
+const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
+const SPARK_COUNT = Math.round(30 * _perf.particleMultiplier)
 
 function SparkEmitter({ origin }: { origin: [number, number, number] }) {
   const pointsRef = useRef<THREE.Points>(null)

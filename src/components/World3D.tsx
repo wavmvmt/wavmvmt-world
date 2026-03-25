@@ -72,7 +72,7 @@ export default function World3D() {
         }}
       >
         <color attach="background" args={[COLORS.bg]} />
-        <fogExp2 attach="fog" args={[0x1e1828, 0.003]} />
+        <fogExp2 attach="fog" args={[0x1e1828, 0.0025]} />
 
         <DayNightCycle />
         <directionalLight position={[-60, 30, -30]} intensity={0.2} color={0xb0c8e8} />
@@ -85,9 +85,9 @@ export default function World3D() {
         </Suspense>
 
         {perf.enablePostProcessing && (
-          <EffectComposer multisampling={typeof window !== 'undefined' && window.innerWidth >= 768 ? 8 : 4}>
-            <Bloom intensity={0.35} luminanceThreshold={0.65} luminanceSmoothing={0.9} mipmapBlur />
-            <Vignette offset={0.25} darkness={0.55} blendFunction={BlendFunction.NORMAL} />
+          <EffectComposer multisampling={typeof window !== 'undefined' && window.innerWidth >= 768 ? 4 : 0}>
+            <Bloom intensity={0.3} luminanceThreshold={0.7} luminanceSmoothing={0.9} mipmapBlur />
+            <Vignette offset={0.25} darkness={0.5} blendFunction={BlendFunction.NORMAL} />
           </EffectComposer>
         )}
       </Canvas>

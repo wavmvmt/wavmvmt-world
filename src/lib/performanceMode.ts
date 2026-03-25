@@ -11,6 +11,11 @@ export interface PerfSettings {
   enableTrail: boolean
   enableCeilingFans: boolean
   enableRoomIcons: boolean
+  enableParticles: boolean
+  enableDecorations: boolean
+  enableOutdoor: boolean
+  enableWeather: boolean
+  maxLights: number
   maxWorkers: number
 }
 
@@ -37,6 +42,11 @@ export function getPerfSettings(level: 'low' | 'medium' | 'high'): PerfSettings 
         enableTrail: false,
         enableCeilingFans: false,
         enableRoomIcons: false,
+        enableParticles: false,
+        enableDecorations: false,
+        enableOutdoor: false,
+        enableWeather: false,
+        maxLights: 2,
         maxWorkers: 10,
       }
     case 'medium':
@@ -48,6 +58,11 @@ export function getPerfSettings(level: 'low' | 'medium' | 'high'): PerfSettings 
         enableTrail: true,
         enableCeilingFans: false,
         enableRoomIcons: true,
+        enableParticles: true,
+        enableDecorations: true,
+        enableOutdoor: false,
+        enableWeather: false,
+        maxLights: 4,
         maxWorkers: 18,
       }
     case 'high':
@@ -59,6 +74,11 @@ export function getPerfSettings(level: 'low' | 'medium' | 'high'): PerfSettings 
         enableTrail: true,
         enableCeilingFans: true,
         enableRoomIcons: true,
+        enableParticles: true,
+        enableDecorations: true,
+        enableOutdoor: true,
+        enableWeather: true,
+        maxLights: 8,
         maxWorkers: 29,
       }
   }

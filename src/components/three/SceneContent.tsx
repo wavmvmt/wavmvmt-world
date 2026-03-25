@@ -58,6 +58,13 @@ import { LiveWeather } from './LiveWeather'
 import { FootprintHeatmap } from './FootprintHeatmap'
 import { ConstructionCrane } from './ConstructionCrane'
 import { MembershipBillboard } from './MembershipBillboard'
+import { CinematicUpgrade } from './CinematicUpgrade'
+import { AuroraSky } from './AuroraSky'
+import { HolographicSigns } from './HolographicSigns'
+import { AtmosphericEffects } from './AtmosphericEffects'
+import { UltimateVisuals } from './UltimateVisuals'
+import { ReflectiveElements } from './ReflectiveElements'
+import { EnergyConduits } from './EnergyConduits'
 import { InspirationalQuotes } from './InspirationalQuotes'
 
 export function SceneContent() {
@@ -72,17 +79,19 @@ export function SceneContent() {
       <Warehouse />
       <Player />
       <RoomInteriors />
+      <Workers />
+      <AmbientAudio />
       <DustMotes />
       <AnimatedDoors />
+      <LightShafts />
+      <Signage />
+      <NightSky />
 
       {/* Room interactions — lightweight, essential */}
       <BeatPads />
       <SoundBathBowls />
       <RoomInteractions />
       <StageSpotlight />
-
-      {/* Workers — count controlled by perf */}
-      <Workers />
 
       {/* NPCs, screens, quest navigation */}
       <NPCCoaches />
@@ -91,7 +100,6 @@ export function SceneContent() {
       <GuideDog />
 
       {/* Audio — no visual cost */}
-      <AmbientAudio />
       <CafeAmbient />
       <BirdSounds />
       <RoomAmbience />
@@ -102,41 +110,47 @@ export function SceneContent() {
       <DroneCamera />
       <IntroFlyover />
 
-      {/* === MEDIUM + HIGH === */}
+      {/* === MEDIUM + HIGH (enableDecorations / enableParticles) === */}
       {perf.enableRoomIcons && <RoomIcons />}
       {perf.enableTrail && <PlayerTrail />}
-
-      <Signage />
-      <LightShafts />
-      <NightSky />
-      <ConstructionEquipment />
-      <ConstructionProps />
-      <PhaseProps />
-      <Sparks />
-      <ParkourTrampolines />
-      <Skateboards />
-      <MultiplayerPresence />
-      <RemainingRoomFX />
-      <Decorations />
-      <BulletinBoard />
-      <SiteClock />
-      <FloorMarkings />
+      {perf.enableParticles && <Sparks />}
+      {perf.enableDecorations && <PhaseProps />}
+      {perf.enableDecorations && <Decorations />}
+      {perf.enableDecorations && <BulletinBoard />}
+      {perf.enableDecorations && <SiteClock />}
+      {perf.enableDecorations && <Skateboards />}
+      {perf.enableDecorations && <ParkourTrampolines />}
+      {perf.enableDecorations && <RemainingRoomFX />}
+      {perf.enableDecorations && <ConstructionEquipment />}
+      {perf.enableDecorations && <ConstructionProps />}
+      {perf.enableDecorations && <MultiplayerPresence />}
+      {perf.enableDecorations && <WarehouseEntrance />}
 
       {/* === HIGH ONLY === */}
       {perf.enableCeilingFans && <CeilingFans />}
-      <Fireflies />
-      <RainEffect />
-      <OutdoorZone />
-      <ExteriorDetails />
-      <GlobalExpansionGlobe />
-      <WarehouseEntrance />
-      <LiveWeather />
-      <FootprintHeatmap />
-      {/* Tower cranes — visible from anywhere, iconic construction feel */}
-      <InspirationalQuotes />
-      <MembershipBillboard />
-      <ConstructionCrane position={[-110, 0, -80]} />
-      <ConstructionCrane position={[120, 0, -200]} />
+      {perf.enableOutdoor && <Fireflies />}
+      {perf.enableOutdoor && <RainEffect />}
+      {perf.enableOutdoor && <OutdoorZone />}
+      {perf.enableOutdoor && <ExteriorDetails />}
+      {perf.enableOutdoor && <GlobalExpansionGlobe />}
+      {perf.enableWeather && <LiveWeather />}
+      {perf.enableOutdoor && <FootprintHeatmap />}
+      {perf.enableOutdoor && <InspirationalQuotes />}
+      {perf.enableOutdoor && <MembershipBillboard />}
+      {perf.enableOutdoor && <FloorMarkings />}
+      {perf.enableOutdoor && <CinematicUpgrade />}
+      {perf.enableOutdoor && <AuroraSky />}
+      {perf.enableOutdoor && <HolographicSigns />}
+      {perf.enableOutdoor && <AtmosphericEffects />}
+      {perf.enableOutdoor && <UltimateVisuals />}
+      {perf.enableOutdoor && <ReflectiveElements />}
+      {perf.enableOutdoor && <EnergyConduits />}
+      {perf.enableOutdoor && (
+        <>
+          <ConstructionCrane position={[-110, 0, -80]} />
+          <ConstructionCrane position={[120, 0, -200]} />
+        </>
+      )}
     </>
   )
 }

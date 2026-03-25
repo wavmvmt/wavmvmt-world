@@ -4,10 +4,11 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
+import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 
-const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth < 768
-const DUST_COUNT = IS_MOBILE ? 120 : 350
-const EMBER_COUNT = IS_MOBILE ? 15 : 40
+const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
+const DUST_COUNT = Math.round(350 * _perf.particleMultiplier)
+const EMBER_COUNT = Math.round(40 * _perf.particleMultiplier)
 
 /** Floating dust motes — Ghibli signature atmospheric particles */
 export function DustMotes() {
