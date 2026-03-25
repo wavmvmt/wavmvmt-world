@@ -27,8 +27,10 @@ export function MultiplayerPresence() {
   const myColor = useRef(SKIN_TONES[Math.floor(Math.random() * SKIN_TONES.length)])
 
   useEffect(() => {
-    // Skip if Supabase env vars aren't configured (prevents WebSocket errors)
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === '') return
+    // Multiplayer presence disabled until Supabase Realtime is properly configured.
+    // The anon key has auth issues causing WebSocket error spam.
+    // To re-enable: remove this return and fix Supabase Realtime auth.
+    return
 
     const supabase = createClient()
     const channel = supabase.channel('world-presence', {
