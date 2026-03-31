@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _fogLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -11,6 +13,8 @@ import * as THREE from 'three'
  */
 let _fs_FogLayer = 0
 export function FogLayers() {
+  if (_fogLevel === 'low') return null  // skip on low
+
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {

@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _signLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -101,6 +103,8 @@ function WallSign({ position, rotation = [0, 0, 0] }: {
 }
 
 export function Signage() {
+  if (_signLevel === 'low') return null  // skip on low
+
   return (
     <group>
       {/* Hanging banners — spread across massive warehouse */}

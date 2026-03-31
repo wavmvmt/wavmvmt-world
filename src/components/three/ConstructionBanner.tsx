@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _cbLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -13,6 +15,8 @@ import { COLORS } from '@/lib/roomConfig'
  */
 let _fs_Construc = 0
 export function ConstructionBanner() {
+  if (_cbLevel === 'low') return null  // skip on low
+
   const bannerRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {

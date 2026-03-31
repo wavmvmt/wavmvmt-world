@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _rpgLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -11,6 +13,8 @@ import { ROOMS } from '@/lib/roomConfig'
  * colored by the nearest room's theme color.
  */
 export function RoomProximityGlow() {
+  if (_rpgLevel === 'low') return null  // skip on low
+
   const glowRef = useRef<THREE.PointLight>(null)
   const ringRef = useRef<THREE.Mesh>(null)
   const playerPos = useRef({ x: 0, z: 0 })

@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _rfgLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -11,6 +13,8 @@ import { ROOMS } from '@/lib/roomConfig'
  * even from a distance.
  */
 export function RoomFloorGlow() {
+  if (_rfgLevel === 'low') return null  // skip on low
+
   const meshRefs = useRef<(THREE.Mesh | null)[]>([])
 
   const _fsFg = useRef(0)

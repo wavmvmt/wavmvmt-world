@@ -145,11 +145,13 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
         </>
       )}
 
-      {/* Floor grid — finer detail */}
-      <mesh position={[0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[w - 0.5, d - 0.5, Math.floor(w / 2), Math.floor(d / 2)]} />
-        <meshBasicMaterial color={color} wireframe transparent opacity={0.08} />
-      </mesh>
+      {/* Floor grid — high only (subdivided geometry expensive) */}
+      {_warehouseLevel === 'high' && (
+        <mesh position={[0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[w - 0.5, d - 0.5, 4, 4]} />
+          <meshBasicMaterial color={color} wireframe transparent opacity={0.06} />
+        </mesh>
+      )}
 
       {/* Floor fill — subtle colored ground */}
       <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -403,15 +405,16 @@ export function Warehouse() {
           </group>
         ))
       )}
-      {/* Practical lights — reduced to 9 for performance */}
-      {([
-        [-120, 38, -60], [0, 38, 0], [120, 38, -60],
-        [-120, 38, 60], [120, 38, 60], [0, 38, -120],
-        [0, 38, 80], [-180, 38, 0], [180, 38, 0],
+      {/* Practical lights — medium=3 lights, high=9 lights */}
+      {_warehouseLevel !== 'low' && ([
+        [0, 38, 0], [-120, 38, -60], [120, 38, 60],
+        ...(_warehouseLevel === 'high' ? [
+          [-120, 38, 60], [120, 38, -60], [0, 38, -120],
+          [0, 38, 80], [-180, 38, 0], [180, 38, 0],
+        ] : [])
       ] as [number, number, number][]).map((p, i) => (
         <PracticalLight key={i} position={p} />
       ))}
-
       {/* Wireframe rooms */}
       {ROOMS.map((room) => (
         <WireframeRoom key={room.name} {...room} />

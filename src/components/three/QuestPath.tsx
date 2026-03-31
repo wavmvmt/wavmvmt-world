@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _qpLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -42,6 +44,8 @@ const ARROW_SPACING = 4
  */
 let _fsQuestP = 0
 export function QuestPath() {
+  if (_qpLevel === 'low') return null  // skip on low
+
   const trailRef = useRef<THREE.Points>(null)
   const arrowGroupRef = useRef<THREE.Group>(null)
   const positions = useRef(new Float32Array(TRAIL_COUNT * 3))
