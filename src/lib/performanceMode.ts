@@ -29,13 +29,13 @@ function scoreDevice(): number {
 
   // Mobile devices START at low — must prove they're capable to go medium
   const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent)
-  if (isMobile) score -= 2
+  if (isMobile) score -= 1  // mobile starts medium, PerformanceMonitor drops if needed
 
   // CPU cores
   const cores = navigator.hardwareConcurrency ?? 4
-  if (cores <= 2) score -= 3
-  else if (cores <= 4) score -= 1
-  else if (cores >= 8) score += 2
+  if (cores <= 2) score -= 3   // ancient hardware
+  else if (cores <= 4) score -= 0  // 4 cores = fine for medium, no penalty
+  else if (cores >= 8) score += 2  // gaming/pro machine
 
   // Device memory (GB) - Chrome/Edge only
   const mem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory
@@ -71,6 +71,14 @@ let _cachedLevel: PerfLevel | null = null
 
 export function detectPerformanceLevel(): PerfLevel {
   if (typeof window !== 'undefined') {
+    // Version guard — clear stale quality override from broken sessions
+    // If the stored version doesn't match current, reset it
+    const QUALITY_VERSION = 'v3'
+    const storedVersion = localStorage.getItem('wavmvmt_perf_version')
+    if (storedVersion !== QUALITY_VERSION) {
+      localStorage.removeItem('wavmvmt_perf_level')
+      localStorage.setItem('wavmvmt_perf_version', QUALITY_VERSION)
+    }
     const manual = localStorage.getItem('wavmvmt_perf_level') as PerfLevel | null
     if (manual === 'low' || manual === 'medium' || manual === 'high') return manual
   }
@@ -79,11 +87,10 @@ export function detectPerformanceLevel(): PerfLevel {
 
   const score = scoreDevice()
   let level: PerfLevel
-  // Very conservative — Roblox strategy: start LOW, let user upgrade
-  // PerformanceMonitor auto-upgrades if device proves it can handle more
-  if (score <= 5) level = 'low'       // phones, old laptops, tablets
-  else if (score <= 8) level = 'medium'  // modern mid-range
-  else level = 'high'                   // gaming laptops, powerful desktops only
+  // Thresholds: low=only truly weak, medium=most devices, high=gaming rigs
+  if (score <= 2) level = 'low'        // old phones, very old hardware only
+  else if (score <= 7) level = 'medium' // 4-8 core laptops, tablets, most devices
+  else level = 'high'                   // 8+ core, 8GB+ memory
 
   _cachedLevel = level
   return level

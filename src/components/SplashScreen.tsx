@@ -14,11 +14,17 @@ export function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [visitors, setVisitors] = useState(0)
   const [videoMuted, setVideoMuted] = useState(true)
   const [beatPlaying, setBeatPlaying] = useState(false)
+  const [installPrompt, setInstallPrompt] = useState<Event | null>(null)
+  const [installed, setInstalled] = useState(false)
   const [beatTrackIdx, setBeatTrackIdx] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
   const beatRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
+    // Capture PWA install prompt
+    const onInstallPrompt = (e: Event) => { e.preventDefault(); setInstallPrompt(e) }
+    window.addEventListener('beforeinstallprompt', onInstallPrompt)
+    window.addEventListener('appinstalled', () => setInstalled(true))
     const timer = setTimeout(() => setPhase('ready'), 1500)
     const supabase = createClient()
     supabase.from('world_visits').select('id', { count: 'exact', head: true }).then(({ count }) => {

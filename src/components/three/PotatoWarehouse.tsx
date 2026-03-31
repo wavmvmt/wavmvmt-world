@@ -12,19 +12,19 @@ import { ROOMS, COLORS } from '@/lib/roomConfig'
 
 // Pre-built shared materials — all flat, zero lighting cost
 const _mat = {
-  floor:    new THREE.MeshBasicMaterial({ color: 0x150e20 }),
-  floorGrid: new THREE.MeshBasicMaterial({ color: 0x2a1f3a, wireframe: true, transparent: true, opacity: 0.25 }),
-  wall:     new THREE.MeshBasicMaterial({ color: 0x1e1530, transparent: true, opacity: 0.85 }),
-  ceiling:  new THREE.MeshBasicMaterial({ color: 0x140e1e, side: THREE.BackSide }),
+  floor:    new THREE.MeshBasicMaterial({ color: 0x1e1530 }),
+  floorGrid: new THREE.MeshBasicMaterial({ color: 0x4a3a6a, wireframe: true, transparent: true, opacity: 0.35 }),
+  wall:     new THREE.MeshBasicMaterial({ color: 0x3a2a50, transparent: true, opacity: 0.9 }),
+  ceiling:  new THREE.MeshBasicMaterial({ color: 0x201830, side: THREE.BackSide }),
 }
 
 // Pre-built room materials at module level
 const _roomFillMats = ROOMS.map(r => new THREE.MeshBasicMaterial({
-  color: r.color, transparent: true, opacity: 0.06,
+  color: r.color, transparent: true, opacity: 0.12,
   side: THREE.BackSide, depthWrite: false,
 }))
 const _roomEdgeMats = ROOMS.map(r => new THREE.MeshBasicMaterial({
-  color: r.color, transparent: true, opacity: 0.5, wireframe: true,
+  color: r.color, transparent: true, opacity: 0.8, wireframe: true,
 }))
 const _roomGeos = ROOMS.map(r => new THREE.BoxGeometry(r.w, r.h, r.d))
 
@@ -96,8 +96,8 @@ function PotatoRooms() {
 function PotatoLight() {
   return (
     <>
-      <ambientLight intensity={0.9} color={0xffe0d0} />
-      <directionalLight position={[50, 80, 30]} intensity={0.35} color={0xfff5e8} />
+      <ambientLight intensity={1.4} color={0xfff0e8} />
+      <directionalLight position={[50, 80, 30]} intensity={0.8} color={0xfff5e8} />
     </>
   )
 }

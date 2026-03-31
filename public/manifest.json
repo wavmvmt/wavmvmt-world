@@ -1,14 +1,40 @@
 {
   "name": "WAVMVMT World",
   "short_name": "WAVMVMT",
-  "description": "Walk through the 42,500 sq ft WAVMVMT Center construction site in 3D",
+  "description": "Walk through a $100M+ wellness campus being built in 3D. Parkour gym, music studio, sound bath, education wing.",
   "start_url": "/world",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#1a1520",
   "theme_color": "#f0c674",
-  "orientation": "any",
-  "categories": ["entertainment", "lifestyle", "fitness"],
+  "orientation": "landscape-primary",
+  "categories": [
+    "entertainment",
+    "lifestyle",
+    "fitness"
+  ],
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Enter World",
+      "url": "/world",
+      "description": "Jump into the 3D experience"
+    },
+    {
+      "name": "Roblox Mode",
+      "url": "/world?q=low",
+      "description": "Smooth mode for any device"
+    },
+    {
+      "name": "Founder",
+      "url": "/founder",
+      "description": "About Shim"
+    }
   ]
 }
