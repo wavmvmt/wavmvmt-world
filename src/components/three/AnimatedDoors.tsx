@@ -1,4 +1,6 @@
 'use client'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _doorLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'

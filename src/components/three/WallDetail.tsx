@@ -86,7 +86,7 @@ function EmergencyLight({ position, rotation = 0 }: {
   )
 }
 
-export function WallDetail() {
+function WallDetailInner() {
   return (
     <group>
       {/* === BACK WALL (z = -230) === */}
@@ -131,4 +131,21 @@ export function WallDetail() {
       ))}
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function WallDetail() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -230 && x < 230 && z > -230 && z < 230
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <WallDetailInner /> : null
 }

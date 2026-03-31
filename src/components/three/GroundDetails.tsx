@@ -82,7 +82,7 @@ function FloorStain({ position, size, color = 0x1a1015 }: {
   )
 }
 
-export function GroundDetails() {
+function GroundDetailsInner() {
   return (
     <group>
       {/* Tire tracks — forklift routes */}
@@ -113,4 +113,21 @@ export function GroundDetails() {
       <FloorStain position={[-60, 0.021, 60]} size={3.5} />
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function GroundDetails() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -230 && x < 230 && z > -230 && z < 230
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <GroundDetailsInner /> : null
 }

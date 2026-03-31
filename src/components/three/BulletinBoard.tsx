@@ -8,7 +8,7 @@ import { COLORS } from '@/lib/roomConfig'
  * Construction site bulletin board — near Front Desk.
  * Shows project info, safety reminders, and fun notes.
  */
-export function BulletinBoard() {
+function BulletinBoardInner() {
   const notes = [
     { text: 'SAFETY FIRST', color: '#ff6600', size: '11px', rotate: '-2deg' },
     { text: 'Hard hats required\nbeyond this point', color: 'rgba(255,220,180,0.5)', size: '7px', rotate: '1deg' },
@@ -87,4 +87,21 @@ export function BulletinBoard() {
       ))}
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function BulletinBoard() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -210 && x < 210 && z > -210 && z < 210
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <BulletinBoardInner /> : null
 }

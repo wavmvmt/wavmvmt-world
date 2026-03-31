@@ -11,7 +11,7 @@ import { COLORS } from '@/lib/roomConfig'
  * Synced to the day/night cycle (5-min = 24 hours).
  */
 let _fs_SiteCloc = 0
-export function SiteClock() {
+function SiteClockInner() {
   const hourRef = useRef<THREE.Mesh>(null)
   const minuteRef = useRef<THREE.Mesh>(null)
   const timeRef = useRef('12:00')
@@ -84,4 +84,21 @@ export function SiteClock() {
       </Html>
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function SiteClock() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -210 && x < 210 && z > -210 && z < 210
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <SiteClockInner /> : null
 }

@@ -197,7 +197,7 @@ function ConcreteMixer({ position }: { position: [number, number, number] }) {
   )
 }
 
-export function ConstructionEquipment() {
+function ConstructionEquipmentInner() {
   return (
     <group>
       {/* Tower cranes — visible from everywhere */}
@@ -213,4 +213,21 @@ export function ConstructionEquipment() {
       <ConcreteMixer position={[-50, 0, -40]} />
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function ConstructionEquipment() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -270 && x < 270 && z > -270 && z < 270
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <ConstructionEquipmentInner /> : null
 }

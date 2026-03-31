@@ -23,7 +23,6 @@ import { RoomInteractions } from './RoomInteractions'
 import { QuestPath } from './QuestPath'
 import { Confetti } from './Confetti'
 import { IntroFlyover } from './IntroFlyover'
-import { AnimatedDoors } from './AnimatedDoors'
 
 /**
  * SceneContentLow is a fully stripped scene:
@@ -48,8 +47,6 @@ export function SceneContentLow() {
       {/* Player — always needed */}
       <Player />
 
-      {/* Doors — critical for navigation */}
-      <AnimatedDoors />
 
       {/* Audio — zero visual cost */}
       <AmbientAudio />

@@ -106,7 +106,7 @@ function StringLightSegment({ string, index }: { string: LightString; index: num
   )
 }
 
-export function StringLights() {
+function StringLightsInner() {
   return (
     <group>
       {STRINGS.map((s, i) => (
@@ -114,4 +114,21 @@ export function StringLights() {
       ))}
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function StringLights() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -250 && x < 250 && z > -250 && z < 250
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <StringLightsInner /> : null
 }

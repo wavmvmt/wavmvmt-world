@@ -225,7 +225,7 @@ function ToolRack({ position, rotation = 0 }: { position: [number, number, numbe
   )
 }
 
-export function ConstructionProps() {
+function ConstructionPropsInner() {
   return (
     <group>
       {/* Safety cones — near active construction */}
@@ -276,4 +276,21 @@ export function ConstructionProps() {
       <ToolRack position={[0, 5, -180]} />
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function ConstructionProps() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -250 && x < 250 && z > -250 && z < 250
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <ConstructionPropsInner /> : null
 }

@@ -115,7 +115,7 @@ function SafetySign({ sign }: { sign: SignDef }) {
   )
 }
 
-export function SafetySigns() {
+function SafetySignsInner() {
   return (
     <group>
       {SIGNS.map((sign, i) => (
@@ -123,4 +123,21 @@ export function SafetySigns() {
       ))}
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function SafetySigns() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -230 && x < 230 && z > -230 && z < 230
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <SafetySignsInner /> : null
 }

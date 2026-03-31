@@ -108,7 +108,7 @@ function StringLights({ start, end, count = 8 }: {
   )
 }
 
-export function Decorations() {
+function DecorationsInner() {
   return (
     <group>
       {/* Potted plants — scattered around for warmth */}
@@ -130,4 +130,21 @@ export function Decorations() {
       <StringLights start={[-130, 12, 70]} end={[-80, 12, 40]} count={8} />
     </group>
   )
+}
+
+import * as _React from 'react'
+// Distance-culled export
+export function Decorations() {
+  const [visible, setVisible] = _React.useState(false)
+  _React.useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 800)
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const inRange = x > -250 && x < 250 && z > -250 && z < 250
+      setVisible(inRange)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => { clearTimeout(t); window.removeEventListener('playerMove', onMove as EventListener) }
+  }, [])
+  return visible ? <DecorationsInner /> : null
 }
