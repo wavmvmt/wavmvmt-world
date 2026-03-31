@@ -153,7 +153,7 @@ export default function ClearwaterV8() {
       <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:100,padding:'1rem 2rem',display:'flex',justifyContent:'space-between',alignItems:'center',background:navSolid?'rgba(7,16,10,0.94)':'transparent',backdropFilter:navSolid?'blur(16px)':'none',borderBottom:navSolid?'1px solid rgba(240,235,224,0.06)':'none',transition:'all 0.4s'}}>
         <span className="serif" style={{fontSize:'0.95rem',letterSpacing:'0.15em',color:'#f0ebe0'}}>WAV<span style={{color:'var(--gold)'}}>MVMT</span></span>
         <div className="nav-links" style={{display:'flex',gap:'0.25rem',flexWrap:'wrap'}}>
-          {[['vision','Vision'],['healing','Healing'],['proof','The Journey'],['spaces','Spaces'],['scot','Capital Unlock'],['numbers','Numbers'],['arrangement','The Arrangement'],['note','Personal Note']].map(([id,label])=>(
+          {[['vision','Vision'],['healing','Healing'],['proof','The Journey'],['field','Field Research'],['spaces','Spaces'],['scot','Capital Unlock'],['numbers','Numbers'],['arrangement','The Arrangement'],['note','Personal Note']].map(([id,label])=>(
             <button key={id} onClick={()=>go(id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.62rem',letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(240,235,224,0.38)',fontFamily:'inherit',padding:'0.3rem 0.5rem',transition:'color 0.2s'}}
               onMouseEnter={e=>(e.currentTarget.style.color='var(--gold)')} onMouseLeave={e=>(e.currentTarget.style.color='rgba(240,235,224,0.38)')}>
               {label}
@@ -347,6 +347,69 @@ export default function ClearwaterV8() {
               <div style={{padding:'1.25rem',border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,background:'rgba(200,151,58,0.04)'}}>
                 <div className="tag" style={{marginBottom:'0.5rem'}}>Also: free marketing</div>
                 <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.6)',lineHeight:1.7}}>Every sound bath, open mic, and community event generates organic social content that markets Clearwater to exactly the right audience — at zero cost to the development.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FIELD RESEARCH — what the world told me */}
+      <section id="field" className="pad-section" style={{background:'#152a17',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.04)'}}>
+        <div className="wrap">
+          <span className="tag">The Field Research — Lived, Not Read</span>
+          <h2 className="h2" style={{marginBottom:'1rem'}}>I spent years talking to<br/><span className="em">the exact people.</span></h2>
+          <p className="body" style={{maxWidth:680,marginBottom:'3rem'}}>This is not a market analysis. This is what I heard — directly, in person, across five countries — from expats, digital nomads, families, healers, elderly people, young entrepreneurs, artists, and wellness seekers. The same gaps came up everywhere. The same hunger. The same thing missing.</p>
+
+          {/* Countries / locations */}
+          <div className="grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'rgba(240,235,224,0.05)',border:'1px solid rgba(240,235,224,0.05)',borderRadius:4,overflow:'hidden',marginBottom:'3rem'}}>
+            {[
+              {place:'Guatemala',detail:'San Marcos La Laguna · Lake Atitlán · expat healing communities, wellness retreats, artists building new lives, families educating children on the road. The most common ask: a space that holds all of it without fragmenting.'},
+              {place:'Tulum, Mexico',detail:'The most concentrated digital nomad and wellness hub in the world. Creators, healers, investors, founders — all living parallel lives without a common space that truly integrates them. Incredible energy, no unified home.'},
+              {place:'Colombia',detail:'Medellín and beyond. Growing expat creative scene, young entrepreneurs, a culture of reinvention. People building new lives and new businesses who need community infrastructure to do it sustainably.'},
+              {place:'Guyana',detail:'A different lens entirely — grounded community needs, the importance of local culture, how people thrive when creative and educational infrastructure is present. The gap is universal, not just a wealthy expat problem.'},
+              {place:'Across the US',detail:'Urban and rural. Creative communities, healing circles, maker spaces, co-working hubs — everywhere people are trying to build the same thing separately. The WAVMVMT model is what they\'re reaching for.'},
+              {place:'The pattern everywhere',detail:'In every place, across every demographic — expat or local, young or elderly, healer or founder — the same gap: no space that serves the whole person across all their needs simultaneously.'},
+            ].map(s=>(
+              <div key={s.place} style={{background:'#152a17',padding:'2.5rem 2rem',transition:'background 0.3s'}} onMouseEnter={e=>(e.currentTarget.style.background='#1e3d22')} onMouseLeave={e=>(e.currentTarget.style.background='#152a17')}>
+                <div className="serif" style={{fontSize:'1.1rem',fontWeight:700,color:'#f0ebe0',marginBottom:'0.5rem'}}>{s.place}</div>
+                <div style={{fontSize:'0.73rem',color:'rgba(240,235,224,0.45)',lineHeight:1.7}}>{s.detail}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* What they told me */}
+          <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'2rem',marginBottom:'2rem'}}>
+            <div style={{border:'1px solid rgba(200,151,58,0.2)',borderRadius:4,padding:'2rem',background:'rgba(200,151,58,0.03)'}}>
+              <div className="tag" style={{marginBottom:'1rem'}}>What every demographic said they needed</div>
+              {[
+                ['Expats + digital nomads','A home base. Professional infrastructure. Community with people building real things. Not just a co-working desk — a whole ecosystem they can anchor to.'],
+                ['Families on the road','Quality education that travels with them. Creative and movement programming for their children. A sense of belonging that doesn\'t require stopping.'],
+                ['Healers + wellness practitioners','A space to practice and teach that isn\'t fragmentary. Community with other practitioners. An audience of people who are genuinely ready.'],
+                ['The elderly','Dignity and activity. Creative engagement. Community that values their wisdom and keeps them learning. Movement that doesn\'t feel like medicine.'],
+                ['Young entrepreneurs + founders','Inspiration from cross-pollination. People from different fields working in proximity. Programming that feeds both the work and the person.'],
+                ['Artists + musicians','Infrastructure to create professionally, not just casually. Community that takes the work seriously. Access to audiences and collaborators.'],
+              ].map(([t,b])=>(
+                <div key={t} style={{display:'flex',gap:'0.75rem',marginBottom:'1rem',alignItems:'flex-start'}}>
+                  <div style={{width:5,height:5,borderRadius:'50%',background:'var(--gold)',flexShrink:0,marginTop:5}}/>
+                  <div>
+                    <div style={{fontSize:'0.78rem',fontWeight:500,color:'#f0ebe0',marginBottom:'0.2rem'}}>{t}</div>
+                    <div style={{fontSize:'0.7rem',color:'rgba(240,235,224,0.45)',lineHeight:1.6}}>{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{display:'flex',flexDirection:'column',gap:'1.5rem'}}>
+              <div style={{border:'1px solid rgba(42,176,156,0.2)',borderRadius:4,padding:'2rem',background:'rgba(42,176,156,0.03)'}}>
+                <div className="tag" style={{marginBottom:'0.75rem',color:'var(--teal-l)'}}>The insight that kept recurring</div>
+                <p className="serif" style={{fontSize:'clamp(1rem,1.8vw,1.25rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.75}}>&quot;When there is a hub with programming — when the space holds music AND movement AND healing AND education AND community AND creative work — people don&apos;t just use it. They build their whole life around it. They stay longer. They bring others. They come back.&quot;</p>
+              </div>
+              <div style={{border:'1px solid rgba(240,235,224,0.08)',borderRadius:4,padding:'2rem'}}>
+                <div className="tag" style={{marginBottom:'0.75rem'}}>What this means for Clearwater</div>
+                <p style={{fontSize:'0.82rem',color:'rgba(240,235,224,0.6)',lineHeight:1.78}}>The global nomad + expat community is not niche anymore — it is 43 million people earning an average of $124,720 per year, actively searching for communities that can hold their whole life. Tulum is proof of concept at scale: the most in-demand locations are the ones with the richest programming ecosystems. <strong style={{color:'#f0ebe0',fontWeight:500}}>Clearwater with WAVMVMT Center is that for the mountain world — the first of its kind at this scale.</strong></p>
+              </div>
+              <div style={{border:'1px solid rgba(200,151,58,0.15)',borderRadius:4,padding:'2rem',background:'rgba(200,151,58,0.03)'}}>
+                <div className="tag" style={{marginBottom:'0.5rem'}}>Why the research is the qualification</div>
+                <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.55)',lineHeight:1.75}}>Saadiq did not read about what people need. He sat with them — in living rooms, on mountain paths, at markets, in healing circles, at music events — across five countries over several years. That direct knowledge of what the global community actually wants is what makes the programming design for WAVMVMT Center so specific and so right.</p>
               </div>
             </div>
           </div>
