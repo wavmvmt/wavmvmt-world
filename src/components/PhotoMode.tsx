@@ -54,7 +54,7 @@ export function PhotoMode() {
     if (!screenshot) return
     const a = document.createElement('a')
     a.href = screenshot
-    a.download = `wavmvmt-world${currentRoom.current ? '-' + currentRoom.current.toLowerCase().replace(/\s+/g, '-') : ''}.png`
+    a.download = `wavmvmt-world${currentRoom.current ? '-' + currentRoom.current.toLowerCase().replace(/\s+/g, '-') : ''}.webp`
     a.click()
   }, [screenshot])
 
@@ -64,7 +64,7 @@ export function PhotoMode() {
 
     if (navigator.share && blobRef.current) {
       try {
-        const file = new File([blobRef.current], 'wavmvmt-world.png', { type: 'image/png' })
+        const file = new File([blobRef.current], 'wavmvmt-world.webp', { type: 'image/png' })
         await navigator.share({
           title: 'WAVMVMT World',
           text,

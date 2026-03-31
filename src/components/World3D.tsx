@@ -99,7 +99,7 @@ export default function World3D() {
                 const url = URL.createObjectURL(blob)
                 const a = document.createElement('a')
                 a.href = url
-                a.download = `wavmvmt-world-${Date.now()}.png`
+                a.download = `wavmvmt-world-${Date.now()}.webp`
                 a.click()
                 URL.revokeObjectURL(url)
               }

@@ -14,18 +14,18 @@ const PROFORMA = {
 }
 
 const P = {
-  studio:       '/shim-studio.jpg',
-  parkour:      '/shim-parkour.jpg',
-  nature:       '/shim-nature.jpg',
-  thinking:     '/shim-thinking.jpg',
+  studio:       '/shim-studio.webp',
+  parkour:      '/shim-parkour.webp',
+  nature:       '/shim-nature.webp',
+  thinking:     '/shim-thinking.webp',
   gongbath:     '/shim-community-gongbath.jpg',
-  parkourTrain: '/shim-parkour-training.jpg',
-  portrait:     '/shim-artist-portrait.jpg',
-  performing:   '/shim-performing.jpg',
-  apolloCar:    '/shim-apollo-car.jpg',
-  movement:     '/shim-movement-workshop.jpg',
-  aerialSilks:  '/shim-aerial-silks.jpg',
-  apollo:       '/apollo.jpg',
+  parkourTrain: '/shim-parkour-training.webp',
+  portrait:     '/shim-artist-portrait.webp',
+  performing:   '/shim-performing.webp',
+  apolloCar:    '/shim-apollo-car.webp',
+  movement:     '/shim-movement-workshop.webp',
+  aerialSilks:  '/shim-aerial-silks.webp',
+  apollo:       '/apollo.webp',
 }
 
 const REVENUE_STREAMS = [
@@ -192,11 +192,11 @@ export default function ClearwaterV8() {
             </div>
             <div className="sticky-col" style={{position:'sticky',top:'7rem'}}>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'3/4',marginBottom:'1rem'}}>
-                <img src={P.portrait} alt="Saadiq Khan" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
+                <img src={P.portrait} alt="Saadiq Khan" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} loading="lazy"  decoding="async"/>
               </div>
               <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.75rem'}}>
                 <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'1/1'}}>
-                  <img src={P.nature} alt="Saadiq outdoors" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
+                  <img src={P.nature} alt="Saadiq outdoors" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} loading="lazy"  decoding="async"/>
                 </div>
                 <div style={{display:'grid',gap:'0.75rem'}}>
                   {[['8 yrs','Music + engineering'],['$20B+','Active pipeline'],['60+','Released tracks']].map(([n,l])=>(
@@ -230,13 +230,13 @@ export default function ClearwaterV8() {
               <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                 <div>
                   <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}}>
-                    <img src={P.studio} alt="In the studio" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+                    <img src={P.studio} alt="In the studio" style={{width:'100%',height:'100%',objectFit:'cover'}} loading="lazy"  decoding="async"/>
                   </div>
                   <p className="caption">Sound as medicine</p>
                 </div>
                 <div>
                   <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}}>
-                    <img src={P.parkourTrain} alt="Parkour training" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
+                    <img src={P.parkourTrain} alt="Parkour training" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} loading="lazy"  decoding="async"/>
                   </div>
                   <p className="caption">Movement as liberation</p>
                 </div>
@@ -271,7 +271,7 @@ export default function ClearwaterV8() {
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3'}}>
-                <img src={P.apolloCar} alt="Shim and Apollo" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 30%'}}/>
+                <img src={P.apolloCar} alt="Shim and Apollo" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 30%'}} loading="lazy"  decoding="async"/>
               </div>
               <p className="caption">WAVMVMT is a life being built — not just a proposal being written</p>
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
@@ -299,7 +299,7 @@ export default function ClearwaterV8() {
 
           {/* Gong bath photo — corrected caption */}
           <div style={{position:'relative',borderRadius:4,overflow:'hidden',marginBottom:'1.5rem'}}>
-            <img src={P.gongbath} alt="Sound healing community gathering" style={{width:'100%',height:'480px',objectFit:'cover',objectPosition:'center 40%'}}/>
+            <img src={P.gongbath} alt="Sound healing community gathering" style={{width:'100%',height:'480px',objectFit:'cover',objectPosition:'center 40%'}} loading="lazy"  decoding="async"/>
             <div style={{position:'absolute',inset:0,background:'linear-gradient(0deg,rgba(7,16,10,0.88) 0%,rgba(7,16,10,0.05) 50%)'}}/>
             <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'2.5rem 3rem'}}>
               <span className="tag" style={{marginBottom:'0.5rem'}}>Community — sound healing gathering</span>
@@ -323,7 +323,7 @@ export default function ClearwaterV8() {
             {/* Performing + pipeline table */}
             <div>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3',marginBottom:'1rem'}}>
-                <img src={P.performing} alt="Shim performing live" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
+                <img src={P.performing} alt="Shim performing live" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} loading="lazy"  decoding="async"/>
               </div>
               <p className="caption" style={{color:'rgba(240,235,224,0.28)',marginBottom:'1rem'}}>Performing live — the same person proposing to run WAVMVMT Center</p>
               {/* Pipeline — vague */}
@@ -567,7 +567,7 @@ export default function ClearwaterV8() {
           <div style={{display:'grid',gridTemplateColumns:`repeat(${PHASES[activePhase].spaces.length<=6?3:4},1fr)`,gap:'1.25rem'}}>
             {PHASES[activePhase].spaces.map((s,i)=>(
               <div key={s.name} style={{position:'relative',borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}} onMouseEnter={()=>setActiveSpace(i)} onMouseLeave={()=>setActiveSpace(null)}>
-                <img src={s.img} alt={s.name} loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',transition:'transform 0.7s,filter 0.4s',transform:activeSpace===i?'scale(1.05)':'scale(1)',filter:activeSpace===i?'brightness(0.9) saturate(1)':'brightness(0.7) saturate(0.75)'}}/>
+                <img src={s.img} alt={s.name} loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',transition:'transform 0.7s,filter 0.4s',transform:activeSpace===i?'scale(1.05)':'scale(1)',filter:activeSpace===i?'brightness(0.9) saturate(1)':'brightness(0.7) saturate(0.75)'}} decoding="async"/>
                 <div style={{position:'absolute',inset:0,background:'linear-gradient(0deg,rgba(7,16,10,0.95) 0%,rgba(7,16,10,0.05) 55%)',display:'flex',flexDirection:'column',justifyContent:'flex-end',padding:'1.25rem'}}>
                   <span style={{fontSize:'0.56rem',letterSpacing:'0.2em',textTransform:'uppercase',color:PHASES[activePhase].color,marginBottom:'0.3rem'}}>{s.cat}</span>
                   <div className="serif" style={{fontSize:'1rem',color:'#f0ebe0',marginBottom:'0.25rem'}}>{s.name}</div>
@@ -773,7 +773,7 @@ export default function ClearwaterV8() {
               </div>
             </div>
             <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3'}}>
-              <img src={P.movement} alt="Community movement workshop" style={{width:'100%',height:'100%',objectFit:'cover',filter:'brightness(0.85) saturate(0.9)'}}/>
+              <img src={P.movement} alt="Community movement workshop" style={{width:'100%',height:'100%',objectFit:'cover',filter:'brightness(0.85) saturate(0.9)'}} loading="lazy"  decoding="async"/>
             </div>
           </div>
         </div>
@@ -833,10 +833,10 @@ export default function ClearwaterV8() {
           <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 2fr',gap:'5rem',alignItems:'start'}}>
             <div className="sticky-col" style={{position:'sticky',top:'7rem',display:'flex',flexDirection:'column',gap:'1rem'}}>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}}>
-                <img src={P.thinking} alt="Saadiq Khan" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center'}}/>
+                <img src={P.thinking} alt="Saadiq Khan" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center'}} loading="lazy"  decoding="async"/>
               </div>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3',position:'relative'}}>
-                <img src={P.apollo} alt="Apollo" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
+                <img src={P.apollo} alt="Apollo" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} loading="lazy"  decoding="async"/>
                 <div style={{position:'absolute',inset:0,background:'linear-gradient(0deg,rgba(7,16,10,0.7) 0%,transparent 50%)'}}/>
                 <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'1rem'}}>
                   <span className="serif" style={{fontStyle:'italic',fontSize:'0.9rem',color:'rgba(240,235,224,0.75)'}}>Apollo — the one I&apos;m building a yard for.</span>

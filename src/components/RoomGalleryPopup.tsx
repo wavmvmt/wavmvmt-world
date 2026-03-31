@@ -10,32 +10,32 @@ import { useState, useEffect } from 'react'
 
 const ROOM_RENDERS: Record<string, { src: string; label: string }[]> = {
   'Parkour Gym': [
-    { src: '/images/renders/parkour-gym.png', label: 'Parkour Gym — Aerial Arts & Movement' },
-    { src: '/images/renders/parkour-springboard.png', label: 'Parkour — Vault Boxes & Foam Pit' },
+    { src: '/images/renders/parkour-gym.webp', label: 'Parkour Gym — Aerial Arts & Movement' },
+    { src: '/images/renders/parkour-springboard.webp', label: 'Parkour — Vault Boxes & Foam Pit' },
   ],
   'Sound Bath': [
-    { src: '/images/renders/sound-bath.png', label: 'Sound Bath — Crystal Bowls & Gong' },
+    { src: '/images/renders/sound-bath.webp', label: 'Sound Bath — Crystal Bowls & Gong' },
   ],
   'Music Studio': [
-    { src: '/images/renders/creative-spaces.png', label: 'Music Studios A, B & C' },
+    { src: '/images/renders/creative-spaces.webp', label: 'Music Studios A, B & C' },
   ],
   'Weight Training': [
-    { src: '/images/renders/weight-training.png', label: 'WAVMVMT Gym Floor' },
+    { src: '/images/renders/weight-training.webp', label: 'WAVMVMT Gym Floor' },
   ],
   'Front Desk': [
-    { src: '/images/renders/front-desk.png', label: 'WAVMVMT Reception & Lobby' },
+    { src: '/images/renders/front-desk.webp', label: 'WAVMVMT Reception & Lobby' },
   ],
   'Amphitheatre': [
-    { src: '/images/renders/amphitheatre-interior.png', label: 'Amphitheatre — Stage & Performance' },
+    { src: '/images/renders/amphitheatre-interior.webp', label: 'Amphitheatre — Stage & Performance' },
   ],
   'Recovery Suite': [
-    { src: '/images/renders/ice-bath-sauna.png', label: 'Ice Baths, Sauna & Salt Room' },
+    { src: '/images/renders/ice-bath-sauna.webp', label: 'Ice Baths, Sauna & Salt Room' },
   ],
   'Yoga Room': [
-    { src: '/images/renders/yoga-meditation.png', label: 'Yoga & Meditation Studio' },
+    { src: '/images/renders/yoga-meditation.webp', label: 'Yoga & Meditation Studio' },
   ],
   'Cafe & Lounge': [
-    { src: '/images/renders/cafe-lounge.png', label: 'Café & Lounge — Espresso Bar' },
+    { src: '/images/renders/cafe-lounge.webp', label: 'Café & Lounge — Espresso Bar' },
   ],
 }
 

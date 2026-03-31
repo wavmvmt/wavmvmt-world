@@ -105,20 +105,42 @@ export function SettingsPanel() {
 
       {/* Controls reference */}
       <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,200,120,0.08)' }}>
-        <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1.5" style={{ color: 'rgba(255,220,180,0.25)' }}>Controls</div>
-        {[
-          ['WASD', 'Move'],
-          ['Shift', 'Sprint'],
-          ['Space', 'Jump'],
-          ['E', 'Interact'],
-          ['F', 'FPS counter'],
-          ['Mouse', 'Look around'],
-        ].map(([key, action]) => (
-          <div key={key} className="flex justify-between my-0.5">
-            <span className="text-[0.5rem] font-mono" style={{ color: 'rgba(240,198,116,0.4)' }}>{key}</span>
-            <span className="text-[0.5rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>{action}</span>
+        {/* Share URL with quality lock */}
+        <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,200,120,0.08)' }}>
+          <div className="text-[0.48rem] mb-1.5" style={{ color: 'rgba(255,220,180,0.2)' }}>
+            Share with quality locked:
           </div>
-        ))}
+          <button
+            onClick={() => {
+              const url = `${window.location.origin}/world?q=${quality}`
+              navigator.clipboard?.writeText(url).catch(() => {})
+              const el = document.createElement('textarea')
+              el.value = url; document.body.appendChild(el); el.select()
+              document.execCommand('copy'); document.body.removeChild(el)
+            }}
+            className="text-[0.48rem] cursor-pointer w-full text-left px-2 py-1 rounded"
+            style={{ background: 'rgba(240,198,116,0.06)', color: 'rgba(240,198,116,0.4)', border: '1px solid rgba(240,198,116,0.1)' }}
+          >
+            /world?q={quality} — tap to copy
+          </button>
+        </div>
+
+        <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,200,120,0.08)' }}>
+          <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-1.5" style={{ color: 'rgba(255,220,180,0.25)' }}>Controls</div>
+          {[
+            ['WASD', 'Move'],
+            ['Shift', 'Sprint'],
+            ['Space', 'Jump'],
+            ['E', 'Interact'],
+            ['F', 'FPS counter'],
+            ['Mouse', 'Look around'],
+          ].map(([key, action]) => (
+            <div key={key} className="flex justify-between my-0.5">
+              <span className="text-[0.5rem] font-mono" style={{ color: 'rgba(240,198,116,0.4)' }}>{key}</span>
+              <span className="text-[0.5rem]" style={{ color: 'rgba(255,220,180,0.3)' }}>{action}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

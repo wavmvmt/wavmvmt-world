@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { setPerformanceLevel, type PerfLevel } from '@/lib/performanceMode'
 import dynamic from 'next/dynamic'
 import { SplashScreen } from './SplashScreen'
 import { LoadingScreen } from './LoadingScreen'
@@ -10,6 +11,17 @@ const World3D = dynamic(() => import('@/components/World3D'), { ssr: false })
 
 export default function WorldLoader() {
   const [phase, setPhase] = useState<'splash' | 'loading' | 'world' | 'timeout'>('splash')
+
+  // URL quality param: ?q=low|medium|high — lets anyone force quality mode
+  // Share wavmvmt-world.vercel.app/world?q=low to test potato mode on any device
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const q = params.get('q') as PerfLevel | null
+    if (q === 'low' || q === 'medium' || q === 'high') {
+      setPerformanceLevel(q)
+      console.info(`[WAVMVMT] Quality forced to '${q}' via URL param`)
+    }
+  }, [])
 
   // 15s loading timeout fallback
   useEffect(() => {

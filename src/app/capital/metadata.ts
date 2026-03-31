@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     siteName: 'WAVMVMT',
     images: [
       {
-        url: 'https://wavmvmt-world.vercel.app/shim-artist-portrait.jpg',
+        url: 'https://wavmvmt-world.vercel.app/shim-artist-portrait.webp',
         width: 1200,
         height: 630,
         alt: 'WAVMVMT Center — Capital + Investment Case',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'WAVMVMT Center — The Investment Case',
     description: 'How WAVMVMT Center unlocks the $20.86B Clearwater, Idaho QOZ capital stack. Market data, mechanism, competitive positioning.',
-    images: ['https://wavmvmt-world.vercel.app/shim-artist-portrait.jpg'],
+    images: ['https://wavmvmt-world.vercel.app/shim-artist-portrait.webp'],
     creator: '@shim_wav',
   },
   robots: { index: false, follow: false },
