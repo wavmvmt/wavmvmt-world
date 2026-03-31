@@ -37,6 +37,7 @@ const REVENUE_STREAMS = [
   { stream: 'Pottery classes', detail: '$65/session · 60–100 sessions/month', low: 3900, high: 6500 },
   { stream: 'Digital nomad monthly packages', detail: '$2,800–$3,500/mo · 4–8 nomads', low: 11200, high: 28000 },
   { stream: 'Café daily revenue', detail: 'Est. $250–$450/day average', low: 7500, high: 13500 },
+  { stream: 'Education day programs', detail: 'Per-student or family enrollment packages', low: 3000, high: 9000 },
   { stream: 'Practitioner desk rentals', detail: 'Healers, therapists, coaches · $600–$900/mo', low: 1800, high: 4500 },
 ]
 
@@ -51,6 +52,7 @@ const PHASES = [
       { cat: 'Creative', name: 'Music Production Studio', desc: 'Professional grade. Acoustic treatment, monitoring, gear. Guests record, produce, release. Youth programs. Artists in residence.', img: P.studio },
       { cat: 'Media', name: 'Podcast Room', desc: 'Soundproofed, broadcast-ready. Investors, creators, entrepreneurs, kids — everyone has a story worth recording.', img: 'https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Creative', name: 'Pottery Studio', desc: 'Wheels, kilns, glazing stations. Structured classes and open sessions. A grandmother and her grandchild at the same wheel.', img: 'https://images.pexels.com/photos/3094218/pexels-photo-3094218.jpeg?auto=compress&cs=tinysrgb&w=800' },
+      { cat: 'Education', name: 'Learning + Education Wing', desc: 'Forward-thinking day programs for families, travelers, and nomads. Visiting educators, workshops, integrated curriculum. If demand grows — a full private school model that travels with members from location to location.', img: 'https://images.pexels.com/photos/3769138/pexels-photo-3769138.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Knowledge', name: 'Co-Working + AI Hub', desc: 'High-speed, professional. Private booths, open floor, conference rooms. AI workshops, talks, keynotes.', img: 'https://images.pexels.com/photos/4974920/pexels-photo-4974920.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Community', name: 'Café + Dog Park', desc: 'Year-round. Enclosed and heated in winter. First and last stop every day. Where the community forms — over coffee, every morning.', img: 'https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=800' },
     ]
@@ -63,7 +65,7 @@ const PHASES = [
       { cat: 'Creative', name: 'Glass Blowing Studio', desc: 'One of the most viscerally exciting creative experiences available. Proper furnaces, annealing ovens. Pure magic to watch.', img: 'https://images.pexels.com/photos/3030802/pexels-photo-3030802.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Creative', name: 'Textile + Fashion Studio', desc: 'Industrial sewing machines, looms, embroidery, screen printing. Fashion, upholstery, craft. Youth and adult workshops.', img: 'https://images.pexels.com/photos/3756766/pexels-photo-3756766.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Community', name: 'Screening Room', desc: '40-seat, professionally equipped. Film nights, documentary series, community screenings, private rentals.', img: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800' },
-      { cat: 'Community', name: 'Outdoor Amphitheatre + Aerial Arts', desc: 'Concerts, open mics, aerial silk performances, community events. The mountain as the backdrop. Artists from around the world, first-timers on stage.', img: P.aerialSilks },
+      { cat: 'Community', name: 'Outdoor Amphitheatre + Aerial Arts', desc: 'Concerts, open mics, aerial silk performances, community events. The mountain as the backdrop.', img: P.aerialSilks },
     ]
   },
   {
@@ -72,34 +74,24 @@ const PHASES = [
       { cat: 'Maker', name: 'Maker Space', desc: 'CNC machines, laser cutters, 3D printers, woodworking, welding. A full fabrication lab. $2.5B market growing at 15%/year.', img: 'https://images.pexels.com/photos/3913025/pexels-photo-3913025.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Tech', name: 'Electronics + Tech Lab', desc: 'Soldering, robotics, microcontrollers, PCB design, 3D modeling. For builders, tinkerers, engineers, and curious kids.', img: 'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=800' },
       { cat: 'Community', name: 'Teaching Kitchen', desc: 'Professional kitchen for cooking classes, fermentation, nutrition workshops, community dinners.', img: 'https://images.pexels.com/photos/2284166/pexels-photo-2284166.jpeg?auto=compress&cs=tinysrgb&w=800' },
-      { cat: 'Education', name: 'Youth Wing', desc: 'Dedicated development space for children and teens. After-school, workshops, performance programs, STEM + arts integration.', img: 'https://images.pexels.com/photos/3769138/pexels-photo-3769138.jpeg?auto=compress&cs=tinysrgb&w=800' },
     ]
   }
 ]
 
 const SCOT_STEPS = [
-  { month: 'Now', title: 'NDA signed + deck delivered', body: 'Scot\'s NDA/NCNDA is resent — original landed in spam. Confirmed ready to sign. Upon signature, the updated deck is delivered. This conversation begins.', status: 'active' },
+  { month: 'Now', title: 'NDA signed + deck delivered', body: 'NDA/NCNDA is resent and confirmed ready to sign. Upon signature, the updated deck is delivered and this conversation begins.', status: 'active' },
   { month: 'Week 2–3', title: 'WAVMVMT Center PPA letter of intent', body: 'A Power Purchase Agreement letter of intent is drafted between WAVMVMT Center and the Clearwater microgrid. This converts WAVMVMT from a "brand idea" into a contracted energy customer in writing — the document that makes it bankable. The pro forma shows $20M in geothermal + $20M in biomass revenues. WAVMVMT is the anchor demand customer that makes those projections creditworthy to lenders.', status: 'pending' },
-  { month: 'Month 1–2', title: "Scot's T3 fund term sheet for QOZB equity", body: 'WAVMVMT Center — active QOZB with contracted energy demand, youth programming, wellness, and education — satisfies Scot\'s humanitarian reinvestment mandate. His fund offers a term sheet for 5–20% QOZB equity. Investors receive capital gains deferral and 10-year elimination (IRC §1400Z-2). Reportable to Climate Bonds Initiative and his NASA advisory engagements. This mandate alignment does not exist anywhere else in the $20.86B pro forma.', status: 'pending' },
-  { month: 'Month 2–3', title: 'QOZ Fund legal engagement — 60-day build', body: 'David Sillaman builds the dual-purpose QOZ fund — convertible debt, investor capital as pledged security, converting to equity at commercial operation. He has structured approximately one-sixth of all OZ funds in America. Full PPM, Operating Agreement, Subscription Agreements, Form D filing, and QOZB certification.', status: 'pending' },
-  { month: 'Month 3–4', title: 'SBLC issued against escrowed QOZ capital', body: 'Scot\'s capital in QOZ fund escrow backs a Tier 1 SBLC covering ~30% of total capex. Passive security — not drawn, not spent — held against fraud and abandonment. Appian Way is primary source. Phil Taylor\'s BeMotion Solutions is the independent backup, creating institutional-grade risk separation.', status: 'pending' },
-  { month: 'Month 4–5', title: 'Family office LOI — conditional commitment', body: 'Security condition satisfied. Family office issues a Letter of Intent: conditional commitment to deploy 100% of project capex as JV equity, pari passu. Proof of funds: $5–6B+. This LOI is what Vince takes to Appian Way to accelerate Idaho\'s position in queue ahead of Tahoe and Dana Point.', status: 'pending' },
-  { month: 'Month 5–6', title: 'Land under contract', body: 'Vince puts the Wilkes\' land under contract. Stealthy aggregation across multiple properties in a small county. NDA/NCNCA maintained. Existing revenue — timber $12–14M/year, mining $500K+/year, Shore Lodge, White Tail Resort — services costs from day one.', status: 'pending' },
+  { month: 'Month 1–2', title: "Capital partner's fund term sheet for QOZB equity", body: 'WAVMVMT Center — active QOZB with contracted energy demand, youth programming, education, wellness, and community — satisfies the humanitarian reinvestment mandate. Fund issues a term sheet for 5–20% QOZB equity. Investors receive capital gains deferral and 10-year elimination (IRC §1400Z-2). Reportable to Climate Bonds Initiative. This mandate alignment does not exist anywhere else in the $20.86B pro forma.', status: 'pending' },
+  { month: 'Month 2–3', title: 'QOZ Fund legal engagement — 60-day build', body: 'The QOZ fund architect builds the dual-purpose fund — convertible debt structure, investor capital as pledged security during development, converting to equity at commercial operation. Full PPM, Operating Agreement, Subscription Agreements, Form D filing, and QOZB certification.', status: 'pending' },
+  { month: 'Month 3–4', title: 'SBLC issued against escrowed QOZ capital', body: 'Capital in QOZ fund escrow backs a Tier 1 SBLC covering ~30% of total capex. Passive security — not drawn, not spent — held through commercial operation. Two independent SBLC sources creates institutional-grade risk separation.', status: 'pending' },
+  { month: 'Month 4–5', title: 'Family office LOI — conditional commitment', body: 'Security condition satisfied. Family office issues a Letter of Intent: conditional commitment to deploy 100% of project capex as JV equity, pari passu. Proof of funds: $5–6B+. This LOI is what Vince takes to Appian Way to accelerate Idaho\'s position in queue.', status: 'pending' },
+  { month: 'Month 5–6', title: 'Land under contract', body: 'Vince puts the Wilkes\' land under contract. Stealthy aggregation across multiple properties in a small county. NDA/NCNCA maintained throughout. Existing revenue-producing businesses service costs from day one.', status: 'pending' },
   { month: 'Month 6–8', title: 'Full capital stack closes', body: `QOZ Fund (security) + SBLC (guarantee) + family office (100% capex JV equity) + Appian Way (remainder). Total pro forma scope of ${fmt(PROFORMA.totalExistingRev + PROFORMA.totalSalesRev)} fully funded and structured.`, status: 'pending' },
-  { month: 'Month 6+', title: 'WAVMVMT Center Phase 1 construction begins', body: '9 core spaces. ~25 permanent local jobs created — sound practitioners, movement coaches, café staff, youth program coordinators, studio engineers, pottery instructors, co-working support. QOZ active business test satisfied. 12–18 months to completion.', status: 'pending' },
-  { month: 'Month 18–24', title: 'WAVMVMT Center Phase 1 opens', body: 'First WAVMVMT Center in a major US resort development. Revenue live. Energy PPA active. Programming running. The flywheel begins.', status: 'future' },
+  { month: 'Month 6+', title: 'WAVMVMT Center Phase 1 construction begins', body: '10 core spaces — 12–18 months to completion. ~25 permanent local jobs created. QOZ active business test satisfied. Revenue generating from day one.', status: 'pending' },
+  { month: 'Month 18–24', title: 'WAVMVMT Center Phase 1 opens', body: 'First WAVMVMT Center in a major US resort development. Revenue live. Energy PPA active. Programming running. Education wing open. The flywheel begins.', status: 'future' },
 ]
 
-const PIPELINE = [
-  { deal: 'Clearwater Idaho — $20B QOZ', origin: 'Music community → Nick Patterson → Vince Scott', role: 'Deal origination, capital introductions, investor materials' },
-  { deal: '10 tonne/week gold deal', origin: 'Music relationships → cross-network introduction', role: 'Originator — connected parties with no prior relationship' },
-  { deal: 'Scot Bryson / Impactful Capital', origin: 'Network of trust built through music + community', role: 'Capital introduction co-introduced to Clearwater' },
-  { deal: 'Scott Kidd pension fund ($1B+)', origin: 'Capital markets network via Varunex', role: 'Capital introduction via Varunex advisory' },
-  { deal: 'blawk.ai', origin: 'Music industry relationships — AI sector crossover', role: 'Deal origination through entertainment contacts' },
-  { deal: "Reaper (film)", origin: 'Entertainment + music industry relationships', role: 'Capital raise facilitation → producer credit' },
-]
-
-export default function ClearwaterV7() {
+export default function ClearwaterV8() {
   const [openProforma, setOpenProforma] = useState(false)
   const [openRevenue, setOpenRevenue] = useState(false)
   const [activePhase, setActivePhase] = useState(0)
@@ -150,7 +142,6 @@ export default function ClearwaterV7() {
           .grid-3{grid-template-columns:1fr 1fr!important}
           .grid-4{grid-template-columns:1fr 1fr!important}
           .sticky-col{position:static!important}
-          .hide-mobile{display:none!important}
           .pad-section{padding:5rem 1.25rem!important}
           .nav-links{display:none!important}
         }
@@ -162,7 +153,7 @@ export default function ClearwaterV7() {
       <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:100,padding:'1rem 2rem',display:'flex',justifyContent:'space-between',alignItems:'center',background:navSolid?'rgba(7,16,10,0.94)':'transparent',backdropFilter:navSolid?'blur(16px)':'none',borderBottom:navSolid?'1px solid rgba(240,235,224,0.06)':'none',transition:'all 0.4s'}}>
         <span className="serif" style={{fontSize:'0.95rem',letterSpacing:'0.15em',color:'#f0ebe0'}}>WAV<span style={{color:'var(--gold)'}}>MVMT</span></span>
         <div className="nav-links" style={{display:'flex',gap:'0.25rem',flexWrap:'wrap'}}>
-          {[['vision','Vision'],['healing','Healing'],['proof','Proof'],['spaces','Spaces'],['scot','Capital Unlock'],['numbers','Numbers'],['arrangement','The Arrangement'],['note','Personal Note']].map(([id,label])=>(
+          {[['vision','Vision'],['healing','Healing'],['proof','The Journey'],['spaces','Spaces'],['scot','Capital Unlock'],['numbers','Numbers'],['arrangement','The Arrangement'],['note','Personal Note']].map(([id,label])=>(
             <button key={id} onClick={()=>go(id)} style={{background:'none',border:'none',cursor:'pointer',fontSize:'0.62rem',letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(240,235,224,0.38)',fontFamily:'inherit',padding:'0.3rem 0.5rem',transition:'color 0.2s'}}
               onMouseEnter={e=>(e.currentTarget.style.color='var(--gold)')} onMouseLeave={e=>(e.currentTarget.style.color='rgba(240,235,224,0.38)')}>
               {label}
@@ -196,7 +187,7 @@ export default function ClearwaterV7() {
               <div style={{borderLeft:'2px solid var(--gold)',padding:'1.5rem 2rem',background:'rgba(200,151,58,0.04)',borderRadius:'0 4px 4px 0',marginBottom:'2.5rem'}}>
                 <p className="serif" style={{fontSize:'clamp(1rem,2vw,1.3rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;I want to lock in long-term. Every development, every site, every community we build together — WAVMVMT Center is there. This is not a one-deal proposal. It is the thing I have been building toward my whole life, finally meeting its perfect home.&quot;</p>
               </div>
-              <p className="body" style={{marginBottom:'1.5rem'}}>I am living proof that a kid who struggled — who found his way through parkour, music, community, and healing — can end up in rooms working on a $20+ billion development. Every deal in the pipeline was originated through relationships built through art and human connection.</p>
+              <p className="body" style={{marginBottom:'1.5rem'}}>I am living proof that a kid who struggled — who found his way through parkour, music, community, and healing — can end up in rooms working on a $20+ billion development. This vision is shared with Sarah, Nick, and everyone who has been part of building the relationships that made this pipeline real.</p>
               <p className="body">That is not coincidence. That is proof of concept. WAVMVMT Centers work because I am the result of exactly what they build.</p>
             </div>
             <div className="sticky-col" style={{position:'sticky',top:'7rem'}}>
@@ -229,7 +220,7 @@ export default function ClearwaterV7() {
               <span className="tag">Why This Matters — Personally</span>
               <h2 className="h2" style={{marginBottom:'1.5rem'}}>The modalities that<br/><span className="em">changed everything.</span></h2>
               <p className="body" style={{marginBottom:'1.5rem'}}>I did not arrive at this vision from research. I arrived here from experience — lived, somatic, real. The healing modalities, the movement practices, the sound, the stillness — these things did not just improve my life. They fundamentally restructured how I relate to myself, to other people, and to the world.</p>
-              <p className="body" style={{marginBottom:'1.5rem'}}>Parkour showed me what my body was capable of. Music production taught me to feel sound as a physical force and work with it as medicine. Meditation opened a layer of awareness I did not know existed. Sound healing was like a reset button for my entire nervous system.</p>
+              <p className="body" style={{marginBottom:'1.5rem'}}>Parkour showed me what my body was capable of. Music production taught me to feel sound as a physical force and work with it as medicine. Meditation opened a layer of awareness I did not know existed. Sound healing — experienced in community with gifted practitioners — was like a reset button for my entire nervous system.</p>
               <p className="body" style={{marginBottom:'2rem'}}>Every single modality was only available to me because I found the right people and spaces. That access is not random. It is the result of community. WAVMVMT Center is about making that access universal — for the grandmother, the teenager, the burned-out founder, the kid who can&apos;t sit still.</p>
               <div style={{borderLeft:'2px solid var(--teal)',padding:'1.5rem 2rem',background:'rgba(42,176,156,0.04)',borderRadius:'0 4px 4px 0'}}>
                 <p className="serif" style={{fontSize:'clamp(1rem,1.8vw,1.2rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;The psychological, emotional, and spiritual dimensions of health are not supplementary to physical wellness. They are the foundation.&quot;</p>
@@ -264,7 +255,7 @@ export default function ClearwaterV7() {
         </div>
       </section>
 
-      {/* ESPIRAL — Two Centers Being Born */}
+      {/* ESPIRAL — Two Centers */}
       <section className="pad-section" style={{background:'#152a17',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.04)'}}>
         <div className="wrap">
           <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5rem',alignItems:'center'}}>
@@ -273,12 +264,11 @@ export default function ClearwaterV7() {
               <h2 className="h2" style={{marginBottom:'1.5rem'}}>It&apos;s already<br/><span className="em">being built.</span></h2>
               <p className="body" style={{marginBottom:'1.5rem'}}>Right now, as this proposal is being written, my partner Madizon is building a pottery studio and free art school for children in San Marcos La Laguna, Guatemala. It is called Espiral.</p>
               <p className="body" style={{marginBottom:'1.5rem'}}>Espiral is the exact same philosophy as WAVMVMT Center — applied to a lakeside village in the highlands of Guatemala. Art as healing. Community as infrastructure. Creative space as the center of a town&apos;s cultural life. A place where a child can make something for the first time and understand that they are capable of anything.</p>
-              <p className="body" style={{marginBottom:'2rem'}}>We are not waiting for a deal to close to start building this vision. We are building it simultaneously — one in the mountains of Guatemala, one in the mountains of Idaho. These two Centers will inform each other. They will be sister locations. Madizon&apos;s work in Guatemala is the proof that this model takes root anywhere there is a community that needs it.</p>
+              <p className="body" style={{marginBottom:'2rem'}}>We are not waiting for a deal to close to start building this vision. We are building it simultaneously — one in the mountains of Guatemala, one in the mountains of Idaho. These two Centers will inform each other. They will be sister locations.</p>
               <div style={{borderLeft:'2px solid var(--gold)',padding:'1.5rem 2rem',background:'rgba(200,151,58,0.04)',borderRadius:'0 4px 4px 0'}}>
                 <p className="serif" style={{fontSize:'clamp(1rem,1.8vw,1.2rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;Two people. Two communities. One vision. The model is not hypothetical. It is happening right now on two different continents.&quot;</p>
               </div>
             </div>
-            {/* Apollo car photo — used here as "the life being built" */}
             <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
               <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3'}}>
                 <img src={P.apolloCar} alt="Shim and Apollo" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 30%'}}/>
@@ -289,7 +279,7 @@ export default function ClearwaterV7() {
                   {loc:'San Marcos La Laguna, Guatemala',name:'Espiral',status:'Building now',color:'var(--teal-l)'},
                   {loc:'Clearwater, Idaho, USA',name:'WAVMVMT Center',status:'This proposal',color:'var(--gold)'},
                 ].map(c=>(
-                  <div key={c.loc} style={{border:`1px solid ${c.color === 'var(--gold)' ? 'rgba(200,151,58,0.25)' : 'rgba(42,176,156,0.25)'}`,borderRadius:4,padding:'1.25rem',background:c.color === 'var(--gold)' ? 'rgba(200,151,58,0.04)' : 'rgba(42,176,156,0.04)'}}>
+                  <div key={c.loc} style={{border:`1px solid ${c.color==='var(--gold)'?'rgba(200,151,58,0.25)':'rgba(42,176,156,0.25)'}`,borderRadius:4,padding:'1.25rem',background:c.color==='var(--gold)'?'rgba(200,151,58,0.04)':'rgba(42,176,156,0.04)'}}>
                     <div style={{fontSize:'0.56rem',letterSpacing:'0.2em',textTransform:'uppercase',color:c.color,marginBottom:'0.5rem'}}>{c.status}</div>
                     <div className="serif" style={{fontSize:'1rem',color:'#f0ebe0',marginBottom:'0.25rem'}}>{c.name}</div>
                     <div style={{fontSize:'0.68rem',color:'rgba(240,235,224,0.4)'}}>{c.loc}</div>
@@ -301,71 +291,86 @@ export default function ClearwaterV7() {
         </div>
       </section>
 
-      {/* PROOF OF CONCEPT */}
+      {/* PROOF — The Journey (rewritten with real origin story) */}
       <section id="proof" className="pad-section" style={{background:'#0d1a0f',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.04)'}}>
         <div className="wrap">
-          <span className="tag">Proof of Concept — Already Happening</span>
-          <h2 className="h2" style={{marginBottom:'3rem'}}>The WAVMVMT community<br/><span className="em">exists. Right now.</span></h2>
+          <span className="tag">The Journey — How This All Began</span>
+          <h2 className="h2" style={{marginBottom:'3rem'}}>Follow the passion.<br/><span className="em">Watch what happens.</span></h2>
+
+          {/* Gong bath photo — corrected caption */}
           <div style={{position:'relative',borderRadius:4,overflow:'hidden',marginBottom:'1.5rem'}}>
-            <img src={P.gongbath} alt="WAVMVMT outdoor sound healing event" style={{width:'100%',height:'480px',objectFit:'cover',objectPosition:'center 40%'}}/>
+            <img src={P.gongbath} alt="Sound healing community gathering" style={{width:'100%',height:'480px',objectFit:'cover',objectPosition:'center 40%'}}/>
             <div style={{position:'absolute',inset:0,background:'linear-gradient(0deg,rgba(7,16,10,0.88) 0%,rgba(7,16,10,0.05) 50%)'}}/>
             <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'2.5rem 3rem'}}>
-              <span className="tag" style={{marginBottom:'0.5rem'}}>Real event — already ran</span>
-              <p className="serif" style={{fontSize:'clamp(1.1rem,2.5vw,1.8rem)',fontStyle:'italic',color:'#f0ebe0',maxWidth:700,lineHeight:1.5}}>An outdoor sound healing session — dozens of people, gongs, community, a dog. WAVMVMT already runs this. At Clearwater, this happens every week.</p>
+              <span className="tag" style={{marginBottom:'0.5rem'}}>Community — sound healing gathering</span>
+              <p className="serif" style={{fontSize:'clamp(1.1rem,2.5vw,1.8rem)',fontStyle:'italic',color:'#f0ebe0',maxWidth:700,lineHeight:1.5}}>The healing community Saadiq has built deep relationships with — sound healers, practitioners, teachers. The energy of what WAVMVMT Center becomes, already alive.</p>
             </div>
           </div>
-          <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'2rem'}}>
+
+          <div className="grid-2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'2rem',marginBottom:'2rem'}}>
+            {/* Origin story */}
             <div>
-              <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}}>
+              <div style={{border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,padding:'2rem',background:'rgba(200,151,58,0.03)',marginBottom:'1rem'}}>
+                <div className="tag" style={{marginBottom:'1rem'}}>The origin story — how this pipeline was born</div>
+                <p className="body" style={{marginBottom:'1rem'}}>It started with a decision to follow the feeling. Saadiq packed a car in Toronto and drove to California — training parkour along the way, connecting with artists and creatives, running on music and movement and the belief that showing up fully leads somewhere worth going.</p>
+                <p className="body" style={{marginBottom:'1rem'}}>He had met his travel companion through Twist&apos;s community activation event back home — a connection made over art and music and shared vision. In California, at a house in Beverly Hills, he met <strong style={{color:'#f0ebe0',fontWeight:600}}>Sarah R. Adams</strong>. They drove to Joshua Tree. They talked about what was possible. That conversation changed the trajectory of everything.</p>
+                <p className="body" style={{marginBottom:'1rem'}}>Back in Toronto, Saadiq started helping Sarah with the business side — building systems, a website, learning the capital markets world from the inside out. Sarah introduced him to <strong style={{color:'#f0ebe0',fontWeight:600}}>Nick Patterson</strong>. Nick and Sarah introduced him to <strong style={{color:'#f0ebe0',fontWeight:600}}>Vince Scott</strong>.</p>
+                <p className="body" style={{marginBottom:'1rem'}}>Separately, his friend <strong style={{color:'#f0ebe0',fontWeight:600}}>Darren</strong> — connected through music, events, life, and culture (they even made songs together) — introduced him to <strong style={{color:'#f0ebe0',fontWeight:600}}>Boardy AI</strong>, which became a key tool for building capital relationships across the pipeline. Darren had been teaching him how the capital-raising world works through his work on artist showcases, DJ events, fashion shows, and brand activations.</p>
+                <p className="body">This is the WAVMVMT model in action: <em style={{color:'var(--gold-l)'}}>community creates capital. Culture creates opportunity. Following your passion with full commitment opens doors that no strategy alone can find.</em></p>
+              </div>
+            </div>
+
+            {/* Performing + pipeline table */}
+            <div>
+              <div style={{borderRadius:4,overflow:'hidden',aspectRatio:'4/3',marginBottom:'1rem'}}>
                 <img src={P.performing} alt="Shim performing live" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}}/>
               </div>
-              <p className="caption" style={{color:'rgba(240,235,224,0.28)'}}>Performing live — the same person proposing to run WAVMVMT Center</p>
-            </div>
-            <div>
-              <p className="body" style={{marginBottom:'1.5rem'}}>The WAVMVMT model — community creates capital access — is already operating. Every major deal in the current pipeline was originated through relationships built through music, creative community, and genuine human connection.</p>
+              <p className="caption" style={{color:'rgba(240,235,224,0.28)',marginBottom:'1rem'}}>Performing live — the same person proposing to run WAVMVMT Center</p>
+              {/* Pipeline — vague */}
               <div style={{border:'1px solid rgba(240,235,224,0.07)',borderRadius:4,overflow:'hidden',marginBottom:'1rem'}}>
                 <div style={{padding:'0.65rem 1.25rem',borderBottom:'1px solid rgba(240,235,224,0.06)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',fontSize:'0.52rem',letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(240,235,224,0.22)',background:'rgba(240,235,224,0.02)'}}>
-                  <span>Active Deal</span><span>How It Originated</span>
+                  <span>Active Pipeline</span><span>How It Originated</span>
                 </div>
-                {PIPELINE.map((row,i)=>(
+                {[
+                  {deal:'Clearwater, Idaho — large-scale QOZ development',origin:'Music community → Sarah → Nick → Vince'},
+                  {deal:'Capital markets — commodities sector (active)',origin:'Music relationships → business crossover'},
+                  {deal:'Capital partner introductions (multiple)',origin:'Darren + Boardy AI → capital network'},
+                  {deal:'Tech / AI company investment',origin:'Music industry relationships — sector crossover'},
+                  {deal:'Film production project',origin:'Entertainment + music industry relationships'},
+                ].map((row,i)=>(
                   <div key={i} style={{padding:'0.85rem 1.25rem',borderBottom:'1px solid rgba(240,235,224,0.04)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',background:i%2===0?'transparent':'rgba(240,235,224,0.015)'}}>
-                    <div>
-                      <div style={{fontSize:'0.75rem',fontWeight:500,color:'#f0ebe0',marginBottom:'0.15rem'}}>{row.deal}</div>
-                      <div style={{fontSize:'0.62rem',color:'rgba(240,235,224,0.28)',lineHeight:1.4}}>{row.role}</div>
-                    </div>
+                    <div style={{fontSize:'0.75rem',fontWeight:500,color:'#f0ebe0'}}>{row.deal}</div>
                     <div style={{fontSize:'0.68rem',color:'var(--teal-l)',lineHeight:1.55}}>{row.origin}</div>
                   </div>
                 ))}
               </div>
-              {/* Live events as free marketing */}
               <div style={{padding:'1.25rem',border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,background:'rgba(200,151,58,0.04)'}}>
-                <div className="tag" style={{marginBottom:'0.5rem'}}>Bonus: free marketing</div>
-                <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.6)',lineHeight:1.7}}>Every sound bath, open mic, and community event generates organic social content that markets Clearwater to exactly the audience of buyers and long-stay guests — at zero cost to the development. The gong bath photo above reached thousands of people without a single dollar of ad spend.</p>
+                <div className="tag" style={{marginBottom:'0.5rem'}}>Also: free marketing</div>
+                <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.6)',lineHeight:1.7}}>Every sound bath, open mic, and community event generates organic social content that markets Clearwater to exactly the right audience — at zero cost to the development.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* GAP — with winter loss quantified */}
+      {/* GAP */}
       <section className="pad-section" style={{background:'#07100a',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.04)'}}>
         <div className="wrap">
           <span className="tag">What&apos;s Missing — With a Dollar Figure</span>
           <h2 className="h2" style={{marginBottom:'1rem'}}>The plan is extraordinary.<br/><span className="em">One gap costs millions.</span></h2>
-          <p className="body" style={{maxWidth:620,marginBottom:'3rem'}}>Idaho winters close outdoor amenity for roughly 6 months. Here is what that silence costs the pro forma — and why WAVMVMT Center is the specific structural answer.</p>
-          {/* Winter loss calculation */}
+          <p className="body" style={{maxWidth:620,marginBottom:'3rem'}}>Idaho winters close outdoor amenity for roughly 6 months. Here is what that costs the pro forma — and why WAVMVMT Center is the structural answer.</p>
           <div style={{border:'1px solid rgba(200,151,58,0.25)',borderRadius:4,padding:'2rem',background:'rgba(200,151,58,0.04)',marginBottom:'2rem'}}>
             <div style={{fontSize:'0.58rem',letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--gold)',marginBottom:'1rem'}}>The winter gap — calculated from pro forma</div>
             <div className="grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1.5rem'}}>
               {[
-                {n:'$219M/yr',l:'Hotel ADR revenue at full run rate','sub':'2,000 units × $500 × 60% occ × 365 days'},
-                {n:'~$87M/yr',l:'Unrealized revenue from 6-month off-season','sub':'40% revenue drop during indoor-only months (est.)'},
-                {n:'$0',l:'Current infrastructure addressing this gap','sub':'No year-round indoor programming exists in the plan'},
+                {n:'$219M/yr',l:'Hotel ADR revenue at full run rate',s:'2,000 units × $500 × 60% occ × 365 days'},
+                {n:'~$87M/yr',l:'Unrealized revenue from 6-month off-season',s:'40% revenue drop during indoor-only months (est.)'},
+                {n:'$0',l:'Current infrastructure addressing this gap',s:'No year-round indoor programming exists in the plan'},
               ].map(s=>(
                 <div key={s.n}>
                   <span className="serif" style={{fontSize:'clamp(1.6rem,3vw,2.4rem)',fontWeight:700,color:'var(--gold-l)',display:'block',marginBottom:'0.3rem'}}>{s.n}</span>
                   <div style={{fontSize:'0.75rem',color:'#f0ebe0',marginBottom:'0.25rem'}}>{s.l}</div>
-                  <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.38)'}}>{s.sub}</div>
+                  <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.38)'}}>{s.s}</div>
                 </div>
               ))}
             </div>
@@ -377,9 +382,9 @@ export default function ClearwaterV7() {
             {[
               ['No healing infrastructure','No sound bath, no somatic practices. The fastest-growing wellness segment — completely absent.'],
               ['No creative expression','No music studio, no art space. Guests are passive consumers. Nobody makes anything, nobody leaves changed.'],
-              ['Nothing real for teenagers','The most underserved group in luxury resort design. Families don\'t extend stays.'],
+              ['No education programming','Families who travel long-term need quality education. Currently zero integrated learning infrastructure.'],
               ['Dead in winter','6 months of reduced outdoor revenue. No year-round indoor answer currently exists.'],
-              ['No digital nomad pull','43 million high-earning nomads want co-working + community + outdoor access.'],
+              ['No digital nomad pull','43 million high-earning nomads want co-working, community, and outdoor access.'],
               ['No cultural identity','The pro forma builds the body. WAVMVMT Center gives it a heartbeat.'],
             ].map(([t,b])=>(
               <div key={t} style={{background:'#07100a',padding:'2.5rem 2rem',transition:'background 0.3s'}} onMouseEnter={e=>(e.currentTarget.style.background='#152a17')} onMouseLeave={e=>(e.currentTarget.style.background='#07100a')}>
@@ -397,12 +402,12 @@ export default function ClearwaterV7() {
         <div className="wrap">
           <span className="tag">Comparable Resorts</span>
           <h2 className="h2" style={{marginBottom:'1rem'}}>The best in the world<br/><span className="em">still don&apos;t have this.</span></h2>
-          <p className="body" style={{maxWidth:620,marginBottom:'3rem'}}>Each of these commands premiums specifically because of cultural identity and wellness positioning. None have the WAVMVMT full stack. Clearwater would be the first mountain resort community on earth with all of it.</p>
+          <p className="body" style={{maxWidth:620,marginBottom:'3rem'}}>Each commands premiums specifically because of cultural identity and wellness positioning. None have the WAVMVMT full stack. Clearwater would be the first mountain resort on earth with all of it.</p>
           <div className="grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1.5rem',marginBottom:'2rem'}}>
             {[
-              {name:'Soho House',type:'Private members club',stat:'~$3B valuation',detail:'Cultural programming, community identity, creative members. No outdoor. No sound healing. No maker space.',color:'var(--gold)'},
-              {name:'1 Hotel',type:'Wellness + sustainability',stat:'20–40% room rate premium',detail:'Nature-integrated, wellness-forward. No music studio. No creative arts. No dedicated teen programming.',color:'var(--teal-l)'},
-              {name:'Equinox Hotels',type:'Fitness + performance',stat:'$1,500+/night',detail:'Fitness-led luxury. No sound healing. No music studio. No maker space. No youth programs.',color:'var(--gold-l)'},
+              {name:'Soho House',type:'Private members club',stat:'~$3B valuation',detail:'Cultural programming, community identity, creative members. No outdoor. No sound healing. No education wing. No maker space.',color:'var(--gold)'},
+              {name:'1 Hotel',type:'Wellness + sustainability',stat:'20–40% room rate premium',detail:'Nature-integrated, wellness-forward. No music studio. No creative arts. No dedicated teen or family education programming.',color:'var(--teal-l)'},
+              {name:'Equinox Hotels',type:'Fitness + performance',stat:'$1,500+/night',detail:'Fitness-led luxury. No sound healing. No music studio. No maker space. No education. No youth programs.',color:'var(--gold-l)'},
             ].map(c=>(
               <div key={c.name} style={{border:'1px solid rgba(240,235,224,0.07)',borderRadius:4,padding:'2.5rem 2rem',transition:'border-color 0.3s'}} onMouseEnter={e=>(e.currentTarget.style.borderColor='rgba(200,151,58,0.25)')} onMouseLeave={e=>(e.currentTarget.style.borderColor='rgba(240,235,224,0.07)')}>
                 <div style={{fontSize:'0.58rem',letterSpacing:'0.18em',textTransform:'uppercase',color:c.color,marginBottom:'0.5rem'}}>{c.type}</div>
@@ -412,16 +417,15 @@ export default function ClearwaterV7() {
               </div>
             ))}
           </div>
-          {/* Corporate retreats */}
           <div style={{padding:'2rem',border:'1px solid rgba(42,176,156,0.2)',borderRadius:4,background:'rgba(42,176,156,0.04)'}}>
             <div style={{display:'flex',gap:'3rem',alignItems:'flex-start',flexWrap:'wrap'}}>
               <div style={{flex:1,minWidth:280}}>
                 <div className="tag" style={{marginBottom:'0.5rem',color:'var(--teal-l)'}}>Unlocked: Corporate Retreats</div>
-                <p style={{fontSize:'0.8rem',color:'rgba(240,235,224,0.6)',lineHeight:1.75}}>Co-working + sound bath + movement gym + catered spaces = a perfect corporate wellness retreat venue. This demographic is high-spending, books in groups of 10–30, fills full ADR for every room, and comes in exactly the shoulder seasons the resort needs filled most. Clearwater + WAVMVMT Center is the most compelling corporate retreat destination in the Rocky Mountain region. No competitor within 300 miles can offer this combination.</p>
+                <p style={{fontSize:'0.8rem',color:'rgba(240,235,224,0.6)',lineHeight:1.75}}>Co-working + sound bath + movement gym + catered spaces = a perfect corporate wellness retreat venue. High-spending groups of 10–30, full ADR for every room, in exactly the shoulder seasons the resort needs most. No competitor within 300 miles can offer this combination.</p>
               </div>
               <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',minWidth:200}}>
-                <div style={{fontSize:'0.58rem',letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--teal-l)',marginBottom:'0.25rem'}}>The corporate retreat market</div>
-                {[['$68B','Corporate retreat + team offsite market (2024)'],['Q1+Q4','The shoulder seasons WAVMVMT fills for the resort'],['$8K–$25K','Typical group booking value per 2-day retreat']].map(([n,l])=>(
+                <div style={{fontSize:'0.58rem',letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--teal-l)',marginBottom:'0.25rem'}}>Corporate retreat market</div>
+                {[['$68B','Corporate retreat + team offsite market (2024)'],['Q1+Q4','The shoulder seasons WAVMVMT fills'],['$8K–$25K','Typical 2-day group booking value']].map(([n,l])=>(
                   <div key={n} style={{display:'flex',gap:'1rem',alignItems:'center'}}>
                     <span className="serif" style={{fontSize:'1.2rem',fontWeight:700,color:'var(--teal-l)',minWidth:'4rem',flexShrink:0}}>{n}</span>
                     <span style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.4)',lineHeight:1.4}}>{l}</span>
@@ -433,14 +437,34 @@ export default function ClearwaterV7() {
         </div>
       </section>
 
-      {/* SPACES */}
+      {/* SPACES — with education added */}
       <section id="spaces" className="pad-section" style={{background:'#152a17',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.04)'}}>
         <div style={{maxWidth:1300,margin:'0 auto'}}>
-          <div style={{textAlign:'center',maxWidth:700,margin:'0 auto 2.5rem'}}>
+          <div style={{textAlign:'center',maxWidth:800,margin:'0 auto 2.5rem'}}>
             <span className="tag">All the Spaces — Three Phases</span>
             <h2 className="h2" style={{marginBottom:'0.75rem'}}>Everything.<br/><span className="em">Built in stages.</span></h2>
-            <p className="body">Phase 1 opens 12–18 months before the rest of the resort. Each phase funded by revenue from the last.</p>
+            <p className="body">Phase 1 opens 12–18 months before the rest of the resort. Each phase funded by revenue from the last. Education is built in from day one — not added on.</p>
           </div>
+
+          {/* Education callout before phase selector */}
+          <div style={{padding:'1.5rem 2rem',border:'1px solid rgba(200,151,58,0.2)',borderRadius:4,background:'rgba(200,151,58,0.04)',marginBottom:'2rem',display:'flex',gap:'2rem',alignItems:'flex-start',flexWrap:'wrap'}}>
+            <div style={{flex:1,minWidth:280}}>
+              <div className="tag" style={{marginBottom:'0.5rem'}}>The Education Layer — Built Into Every Phase</div>
+              <p style={{fontSize:'0.82rem',color:'rgba(240,235,224,0.65)',lineHeight:1.78}}>Families and nomads who travel to Clearwater don&apos;t want to pause their children&apos;s education. WAVMVMT Center offers forward-thinking day programs — integrated learning, visiting educators, workshops, cultural immersion — that complement any schooling model. If demand grows, this becomes a full private school offering. <strong style={{color:'#f0ebe0',fontWeight:600}}>Members who hold multi-location access always find the same quality programming at every WAVMVMT Center they visit.</strong> The education follows the family, not the other way around.</p>
+            </div>
+            <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',minWidth:200}}>
+              {[['Day programs','Integrated learning for traveling families'],['Visiting educators','Specialists, artists, scientists, makers'],['Location-to-location','Same programming across all WAVMVMT Centers'],['Scale model','High demand → full private school curriculum']].map(([t,d])=>(
+                <div key={t} style={{display:'flex',gap:'0.75rem',alignItems:'flex-start'}}>
+                  <div style={{width:5,height:5,borderRadius:'50%',background:'var(--gold)',flexShrink:0,marginTop:5}}/>
+                  <div>
+                    <div style={{fontSize:'0.72rem',fontWeight:500,color:'#f0ebe0'}}>{t}</div>
+                    <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.4)'}}>{d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div style={{display:'flex',gap:'0.75rem',justifyContent:'center',marginBottom:'2.5rem',flexWrap:'wrap'}}>
             {PHASES.map((p,i)=>(
               <button key={i} className="phase-btn" onClick={()=>{setActivePhase(i);setActiveSpace(null)}} style={activePhase===i?{borderColor:p.color,color:p.color,background:`${p.color}15`}:{}}>
@@ -448,7 +472,7 @@ export default function ClearwaterV7() {
               </button>
             ))}
           </div>
-          <div className="grid-3" style={{display:'grid',gridTemplateColumns:`repeat(${PHASES[activePhase].spaces.length <= 6 ? 3 : 4},1fr)`,gap:'1.25rem'}}>
+          <div style={{display:'grid',gridTemplateColumns:`repeat(${PHASES[activePhase].spaces.length<=6?3:4},1fr)`,gap:'1.25rem'}}>
             {PHASES[activePhase].spaces.map((s,i)=>(
               <div key={s.name} style={{position:'relative',borderRadius:4,overflow:'hidden',aspectRatio:'3/4'}} onMouseEnter={()=>setActiveSpace(i)} onMouseLeave={()=>setActiveSpace(null)}>
                 <img src={s.img} alt={s.name} loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',transition:'transform 0.7s,filter 0.4s',transform:activeSpace===i?'scale(1.05)':'scale(1)',filter:activeSpace===i?'brightness(0.9) saturate(1)':'brightness(0.7) saturate(0.75)'}}/>
@@ -467,10 +491,10 @@ export default function ClearwaterV7() {
       <section id="scot" className="pad-section" style={{background:'#07100a',padding:'8rem 2rem',borderTop:'1px solid rgba(200,151,58,0.1)'}}>
         <div className="wrap">
           <span className="tag">The Capital Unlock — Full Mechanics</span>
-          <h2 className="h2" style={{marginBottom:'0.75rem'}}>How WAVMVMT Center unlocks<br/><span className="em">Scot Bryson&apos;s capital.</span></h2>
-          <p className="body" style={{maxWidth:680,marginBottom:'1rem'}}>WAVMVMT Center is the specific instrument that gives Scot&apos;s T3 fund a mandate-aligned, QOZB-qualified entry point — accelerating deployment of the entire {fmt(PROFORMA.totalExistingRev + PROFORMA.totalSalesRev)} pro forma.</p>
+          <h2 className="h2" style={{marginBottom:'0.75rem'}}>How WAVMVMT Center unlocks<br/><span className="em">the capital stack.</span></h2>
+          <p className="body" style={{maxWidth:680,marginBottom:'1rem'}}>WAVMVMT Center is the specific instrument that gives the capital fund a mandate-aligned, QOZB-qualified entry point — accelerating deployment of the entire {fmt(PROFORMA.totalExistingRev + PROFORMA.totalSalesRev)} pro forma.</p>
           <div style={{padding:'1.25rem 2rem',border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,background:'rgba(200,151,58,0.04)',marginBottom:'2.5rem'}}>
-            <p style={{fontSize:'0.82rem',color:'rgba(240,235,224,0.7)',lineHeight:1.75}}><strong style={{color:'#f0ebe0'}}>The core insight:</strong> Without WAVMVMT Center, this deal depends entirely on Appian Way&apos;s timeline — and they have two projects ahead of Idaho. With it, a second institutional path exists through Scot&apos;s fund. <em style={{color:'var(--gold-l)'}}>The Center structurally de-risks the capital stack.</em></p>
+            <p style={{fontSize:'0.82rem',color:'rgba(240,235,224,0.7)',lineHeight:1.75}}><strong style={{color:'#f0ebe0'}}>The core insight:</strong> Without WAVMVMT Center, this deal depends entirely on Appian Way&apos;s timeline — and they have two projects ahead of Idaho. With it, a second institutional path exists. <em style={{color:'var(--gold-l)'}}>The Center structurally de-risks the capital stack.</em></p>
           </div>
           {SCOT_STEPS.map((s,i)=>(
             <div key={i} className={`scot-step${s.status==='active'?' active-step':s.status==='future'?' future-step':''}${openScot===i?' open':''}`} onClick={()=>setOpenScot(openScot===i?null:i)}>
@@ -488,7 +512,6 @@ export default function ClearwaterV7() {
               {openScot===i&&<p style={{fontSize:'0.8rem',color:'rgba(240,235,224,0.58)',lineHeight:1.8,marginTop:'1.25rem',paddingTop:'1.25rem',borderTop:'1px solid rgba(240,235,224,0.07)'}}>{s.body}</p>}
             </div>
           ))}
-          {/* Jobs created callout */}
           <div style={{marginTop:'2rem',padding:'1.75rem 2rem',border:'1px solid rgba(42,176,156,0.18)',borderRadius:4,background:'rgba(42,176,156,0.04)',display:'flex',gap:'3rem',flexWrap:'wrap',alignItems:'center'}}>
             <div>
               <span className="serif" style={{fontSize:'2.5rem',fontWeight:700,color:'var(--teal-l)',display:'block'}}>~25</span>
@@ -496,13 +519,13 @@ export default function ClearwaterV7() {
             </div>
             <div style={{flex:1,minWidth:280}}>
               <div className="tag" style={{marginBottom:'0.5rem',color:'var(--teal-l)'}}>QOZ active business test satisfied</div>
-              <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.55)',lineHeight:1.7}}>Sound practitioners, movement coaches, café staff, youth program coordinators, studio engineers, pottery instructors, co-working support — all local, all permanent. This satisfies the QOZ &quot;active business&quot; requirement and strengthens Scot&apos;s humanitarian mandate case. It also makes WAVMVMT Center a civic asset, not just a resort amenity.</p>
+              <p style={{fontSize:'0.78rem',color:'rgba(240,235,224,0.55)',lineHeight:1.7}}>Sound practitioners, movement coaches, café staff, education program coordinators, studio engineers, pottery instructors, co-working support — all local, all permanent. WAVMVMT Center is a civic asset, not just a resort amenity.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* NUMBERS — with revenue breakdown */}
+      {/* NUMBERS */}
       <section id="numbers" className="pad-section" style={{background:'#0d1a0f',padding:'7rem 2rem',borderTop:'1px solid rgba(240,235,224,0.05)'}}>
         <div className="wrap">
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',flexWrap:'wrap',gap:'1rem',marginBottom:'2.5rem'}}>
@@ -511,12 +534,8 @@ export default function ClearwaterV7() {
               <h2 className="h2">The numbers are<br/><span className="em">already there.</span></h2>
             </div>
             <div style={{display:'flex',gap:'0.75rem'}}>
-              <button className="expand-btn" onClick={()=>setOpenRevenue(!openRevenue)}>
-                {openRevenue?'− Hide revenue math':'+ Show revenue breakdown'}
-              </button>
-              <button className="expand-btn" onClick={()=>setOpenProforma(!openProforma)}>
-                {openProforma?'− Hide':'+ Pro forma'}
-              </button>
+              <button className="expand-btn" onClick={()=>setOpenRevenue(!openRevenue)}>{openRevenue?'− Hide revenue math':'+ Show revenue breakdown'}</button>
+              <button className="expand-btn" onClick={()=>setOpenProforma(!openProforma)}>{openProforma?'− Hide':'+ Pro forma'}</button>
             </div>
           </div>
           <div className="grid-4" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',background:'rgba(240,235,224,0.05)',border:'1px solid rgba(240,235,224,0.05)',borderRadius:4,overflow:'hidden',marginBottom:'2rem'}}>
@@ -534,7 +553,6 @@ export default function ClearwaterV7() {
             ))}
           </div>
 
-          {/* Revenue breakdown — expandable */}
           {openRevenue&&(
             <div style={{border:'1px solid rgba(200,151,58,0.22)',borderRadius:4,overflow:'hidden',marginBottom:'2rem',background:'rgba(200,151,58,0.02)'}}>
               <div style={{padding:'1.25rem 1.5rem',borderBottom:'1px solid rgba(200,151,58,0.12)',display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:'1rem',fontSize:'0.55rem',letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(240,235,224,0.25)',background:'rgba(200,151,58,0.04)'}}>
@@ -549,13 +567,13 @@ export default function ClearwaterV7() {
                 </div>
               ))}
               <div style={{padding:'1.25rem 1.5rem',background:'rgba(200,151,58,0.08)',display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:'1rem',borderTop:'1px solid rgba(200,151,58,0.18)'}}>
-                <span className="serif" style={{fontStyle:'italic',color:'#f0ebe0',fontSize:'0.88rem',alignSelf:'center'}}>Phase 1 monthly total</span>
+                <span className="serif" style={{fontStyle:'italic',color:'#f0ebe0',fontSize:'0.88rem',alignSelf:'center'}}>Phase 1 monthly total (10 streams)</span>
                 <span/>
                 <span className="serif" style={{fontSize:'1.1rem',fontWeight:700,color:'rgba(240,235,224,0.65)',textAlign:'right'}}>${revenueTotal('low').toLocaleString()}</span>
                 <span className="serif" style={{fontSize:'1.1rem',fontWeight:700,color:'var(--gold)',textAlign:'right'}}>${revenueTotal('high').toLocaleString()}</span>
               </div>
               <div style={{padding:'0.75rem 1.5rem',background:'rgba(200,151,58,0.04)',textAlign:'center'}}>
-                <p style={{fontSize:'0.68rem',color:'rgba(240,235,224,0.35)',fontStyle:'italic'}}>Conservative range at 60–80% occupancy. Excludes event ticket revenue, corporate retreat packages, and artist-in-residence program fees.</p>
+                <p style={{fontSize:'0.68rem',color:'rgba(240,235,224,0.35)',fontStyle:'italic'}}>Conservative range at 60–80% occupancy. Excludes event ticket revenue, corporate retreat packages, and artist-in-residence fees.</p>
               </div>
             </div>
           )}
@@ -570,7 +588,7 @@ export default function ClearwaterV7() {
                 {l:'Residential Custom Homes',u:'3,000',r:'$7.2B sales',i:'+$720M–$1.8B (GWI premium)',h:true},
                 {l:'Accessory Recreation / Wellness',u:'2',r:'$36M sales',i:'Replaced + expanded by Center',h:true},
                 {l:'Membership (3,000)',u:'3,000',r:'$2.1M/yr',i:'Higher retention year-round',h:false},
-                {l:'Shore Lodge / Whitetail',u:'1',r:'$75M existing',i:'Extended stays, nomad revenue',h:false},
+                {l:'Shore Lodge / Whitetail',u:'1',r:'$75M existing',i:'Extended stays, nomad + education revenue',h:false},
                 {l:'Geothermal + Biomass',u:'3 plants',r:'$40M existing',i:'WAVMVMT as anchor PPA customer',h:false},
               ].map((row,i)=>(
                 <div key={i} style={{padding:'0.85rem 1.5rem',borderBottom:'1px solid rgba(240,235,224,0.04)',display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:'1rem',alignItems:'center',background:row.h?'rgba(200,151,58,0.04)':'transparent'}}>
@@ -588,7 +606,6 @@ export default function ClearwaterV7() {
             </div>
           )}
 
-          {/* Build timeline */}
           <div style={{display:'grid',gridTemplateColumns:'2fr 1fr',gap:'1.5rem'}}>
             <div style={{background:'#152a17',border:'1px solid rgba(240,235,224,0.06)',borderRadius:4,padding:'2.5rem'}}>
               <div style={{fontSize:'0.58rem',letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--gold)',marginBottom:'1.5rem'}}>Center opens first</div>
@@ -608,12 +625,12 @@ export default function ClearwaterV7() {
               <div style={{border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,padding:'2rem',flex:1,textAlign:'center'}}>
                 <div className="serif" style={{fontSize:'0.82rem',color:'var(--gold-l)',marginBottom:'0.5rem'}}>Phase 1 monthly</div>
                 <div className="serif" style={{fontSize:'1.8rem',fontWeight:700,color:'#f0ebe0'}}>$84K–$175K</div>
-                <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.3)',marginTop:'0.4rem'}}>9 streams, from day one</div>
+                <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.3)',marginTop:'0.4rem'}}>10 streams, from day one</div>
               </div>
               <div style={{border:'1px solid rgba(42,176,156,0.18)',borderRadius:4,padding:'2rem',flex:1,textAlign:'center'}}>
                 <div className="serif" style={{fontSize:'0.82rem',color:'var(--teal-l)',marginBottom:'0.5rem'}}>Full build annual</div>
                 <div className="serif" style={{fontSize:'1.8rem',fontWeight:700,color:'#f0ebe0'}}>$4.3M</div>
-                <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.3)',marginTop:'0.4rem'}}>from 8+ streams</div>
+                <div style={{fontSize:'0.65rem',color:'rgba(240,235,224,0.3)',marginTop:'0.4rem'}}>from 10+ streams</div>
               </div>
             </div>
           </div>
@@ -631,7 +648,7 @@ export default function ClearwaterV7() {
               {n:'$159B',g:'+12.4%/yr',l:'Mental wellness',s:'Meditation growing at 18.9% annually',src:'GWI 2025'},
               {n:'$940B',g:'43M users',l:'Digital nomads',s:'$124,720 avg income · co-working + community',src:'MBO Partners 2025'},
               {n:'$68B',g:'Growing',l:'Corporate retreat market',s:'High-spend groups in shoulder seasons',src:'Market estimate 2024'},
-              {n:'$2.5B',g:'+15%/yr',l:'Makerspace services',s:'Projected $8B by 2033 — CNC, 3D printing',src:'Datainsightsmarket 2025'},
+              {n:'$2.5B',g:'+15%/yr',l:'Makerspace services',s:'Projected $8B by 2033',src:'Datainsightsmarket 2025'},
               {n:'10–25%',g:'Documented',l:'Residential wellness premium',s:'On $7.2B: +$720M to +$1.8B',src:'GWI + MIT 2025'},
             ].map(s=>(
               <div key={s.n} style={{background:'#152a17',padding:'2.5rem 2rem',transition:'background 0.3s'}} onMouseEnter={e=>(e.currentTarget.style.background='#1e3d22')} onMouseLeave={e=>(e.currentTarget.style.background='#152a17')}>
@@ -679,11 +696,11 @@ export default function ClearwaterV7() {
             <div style={{border:'1px solid rgba(42,176,156,0.25)',borderRadius:4,padding:'2rem',background:'rgba(42,176,156,0.04)'}}>
               <div className="tag" style={{marginBottom:'1rem',color:'var(--teal-l)'}}>What I bring</div>
               {[
-                ['Full-time operations','I run WAVMVMT Center day-to-day. Programming, scheduling, community management, staff coordination.'],
-                ['Deal origination + capital','Every deal in the pipeline was originated through my network. That continues indefinitely.'],
-                ['Marketing + documentation','Events, content, film documentation of the entire build. WAVMVMT Center markets itself through community.'],
-                ['Creative direction','Music, sound, movement, healing — I bring an 8-year professional practice to every space, every program.'],
-                ['No salary from the development','Revenue share negotiable. I do not require a salary from Vince or the development. I run on the Center\'s revenue.'],
+                ['Full-time operations','I run WAVMVMT Center day-to-day. Programming, scheduling, community, staff coordination.'],
+                ['Deal origination + capital flow','Every deal in the pipeline was originated through my network. That continues indefinitely.'],
+                ['Marketing + documentation','Events, content, film documentation of the entire build.'],
+                ['Creative direction','Music, sound, movement, healing, education — 8 years of professional practice.'],
+                ['No salary from the development','Revenue share negotiable. I run on the Center\'s own revenue.'],
               ].map(([t,b])=>(
                 <div key={t} style={{display:'flex',gap:'0.75rem',marginBottom:'1rem',alignItems:'flex-start'}}>
                   <div style={{width:6,height:6,borderRadius:'50%',background:'var(--teal-l)',flexShrink:0,marginTop:5}}/>
@@ -698,9 +715,9 @@ export default function ClearwaterV7() {
               <div className="tag" style={{marginBottom:'1rem'}}>What I need</div>
               {[
                 ['A home with outdoor space','A place to live and create from. With a yard for Apollo. That\'s it.'],
-                ['Operational freedom','To run WAVMVMT Center the way it needs to be run — community-first, program-led, authentic.'],
+                ['Operational freedom','To run WAVMVMT Center community-first, program-led, authentically.'],
                 ['Partnership, not employment','I am not applying for a job. I am proposing a long-term creative and business partnership.'],
-                ['Trust','Every deal in the pipeline exists because of trust built through music and relationships. Same model applies here.'],
+                ['Trust','Everything in this pipeline exists because of trust. Same model applies here.'],
               ].map(([t,b])=>(
                 <div key={t} style={{display:'flex',gap:'0.75rem',marginBottom:'1rem',alignItems:'flex-start'}}>
                   <div style={{width:6,height:6,borderRadius:'50%',background:'var(--gold)',flexShrink:0,marginTop:5}}/>
@@ -738,11 +755,12 @@ export default function ClearwaterV7() {
             <div>
               <span className="tag">A Personal Note</span>
               <div style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:'clamp(1rem,2vw,1.5rem)',fontWeight:400,lineHeight:1.85,color:'rgba(240,235,224,0.88)'}}>
-                <p style={{marginBottom:'2rem'}}>I&apos;ve been working toward this for almost a decade. Not toward a specific deal or building — toward an understanding of how to bring people together in spaces that actually change them.</p>
-                <p style={{marginBottom:'2rem'}}>Parkour showed me what my body was capable of. Music production taught me to work with sound as medicine. Meditation opened a layer of awareness I didn&apos;t know existed. Sound healing reset my nervous system. Community gave me the mirror to understand who I was becoming. <span style={{fontStyle:'italic',color:'var(--gold-l)'}}>These modalities did not improve my life. They restructured it.</span></p>
-                <p style={{marginBottom:'2rem'}}>And I am now — because of all of that — in rooms working on a <strong style={{fontWeight:700,color:'#f0ebe0'}}>$20+ billion development</strong> in Idaho. Every deal in the pipeline was originated through relationships built through music and community. That is proof of concept.</p>
-                <p style={{marginBottom:'2rem'}}>Right now, Madizon is building Espiral in Guatemala — the same model, a different mountain. <span style={{fontStyle:'italic',color:'var(--gold-l)'}}>Two WAVMVMT Centers being born at the same moment.</span> This is not a future vision. It is already happening.</p>
-                <p style={{marginBottom:'2rem'}}>I want to contribute everything I have to what Vince is building. <strong style={{fontWeight:700,color:'#f0ebe0'}}>Not just one center. All of it. Every development. Every site. Long-term.</strong></p>
+                <p style={{marginBottom:'2rem'}}>I packed a car in Toronto and drove to California. I didn&apos;t have a plan. I had music, movement, and the belief that showing up fully — following the feeling — leads somewhere real.</p>
+                <p style={{marginBottom:'2rem'}}>I was training parkour the whole way. Making music. Connecting with people. Running on conviction. At a house in Beverly Hills, I met Sarah. We drove to Joshua Tree. We talked about what was possible. That conversation changed everything.</p>
+                <p style={{marginBottom:'2rem'}}>Sarah introduced me to Nick. Nick and Sarah introduced me to Vince. My friend Darren — who I met through music, events, and life — introduced me to tools and relationships that accelerated the capital side of this journey. <span style={{fontStyle:'italic',color:'var(--gold-l)'}}>Every single connection traced back to art, community, and the willingness to follow the dream without waiting for permission.</span></p>
+                <p style={{marginBottom:'2rem'}}>And I am now — because of all of that — in rooms working on a <strong style={{fontWeight:700,color:'#f0ebe0'}}>$20+ billion development</strong>. Right now, Madizon is simultaneously building Espiral in Guatemala. Two WAVMVMT Centers being born at the same moment.</p>
+                <p style={{marginBottom:'2rem'}}>This space will teach others to do the same. Coming together to bring a vision to life — following passion in all directions — is what makes extraordinary things happen. WAVMVMT Center is the proof, and the invitation.</p>
+                <p style={{marginBottom:'2rem'}}>I want to contribute everything I have to what Vince, Sarah, and Nick are building. <strong style={{fontWeight:700,color:'#f0ebe0'}}>Not just one center. All of it. Every development. Every site. Long-term.</strong></p>
                 <p><span style={{fontStyle:'italic',color:'var(--gold-l)'}}>All I need is a space to create and live from, with a yard for my dog. Everything else I bring because I believe in it completely.</span></p>
               </div>
               <div style={{marginTop:'3rem',paddingTop:'2rem',borderTop:'1px solid rgba(240,235,224,0.07)',textAlign:'right'}}>
@@ -762,6 +780,7 @@ export default function ClearwaterV7() {
             <a href="mailto:wavmvmt@gmail.com" style={{display:'inline-block',padding:'0.9rem 2.25rem',borderRadius:100,background:'var(--gold)',color:'#07100a',fontSize:'0.72rem',letterSpacing:'0.1em',textTransform:'uppercase',textDecoration:'none',fontWeight:500}}>wavmvmt@gmail.com</a>
             <a href="https://wavmvmt-world.vercel.app/world" target="_blank" rel="noopener noreferrer" style={{display:'inline-block',padding:'0.9rem 2.25rem',borderRadius:100,border:'1px solid rgba(240,235,224,0.15)',color:'rgba(240,235,224,0.5)',fontSize:'0.72rem',letterSpacing:'0.1em',textTransform:'uppercase',textDecoration:'none'}}>3D World →</a>
             <a href="/capital" style={{display:'inline-block',padding:'0.9rem 2.25rem',borderRadius:100,border:'1px solid rgba(240,235,224,0.15)',color:'rgba(240,235,224,0.5)',fontSize:'0.72rem',letterSpacing:'0.1em',textTransform:'uppercase',textDecoration:'none'}}>Capital version →</a>
+            <a href="/summary" style={{display:'inline-block',padding:'0.9rem 2.25rem',borderRadius:100,border:'1px solid rgba(240,235,224,0.15)',color:'rgba(240,235,224,0.5)',fontSize:'0.72rem',letterSpacing:'0.1em',textTransform:'uppercase',textDecoration:'none'}}>Summary →</a>
           </div>
         </div>
         <div style={{maxWidth:1100,margin:'0 auto',paddingTop:'2rem',borderTop:'1px solid rgba(240,235,224,0.05)',display:'flex',justifyContent:'space-between',fontSize:'0.62rem',letterSpacing:'0.07em',color:'rgba(240,235,224,0.18)',flexWrap:'wrap',gap:'0.5rem'}}>
