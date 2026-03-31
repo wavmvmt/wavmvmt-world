@@ -1,9 +1,32 @@
-import { detectPerformanceLevel } from '@/lib/performanceMode'
-const _riLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
+import { useRef, useEffect, useState, memo } from 'react'
 import * as THREE from 'three'
 import { ROOMS, COLORS } from '@/lib/roomConfig'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+// ── Shared geometry pool (module-level singletons — created once, GPU-resident) ──
+const _geoPool: Map<string, THREE.BufferGeometry> = new Map()
+function box(w: number, h: number, d: number): THREE.BufferGeometry {
+  const k = `b${w},${h},${d}`
+  if (!_geoPool.has(k)) _geoPool.set(k, new THREE.BoxGeometry(w, h, d))
+  return _geoPool.get(k)!
+}
+function cyl(rt: number, rb: number, h: number, segs = 8): THREE.BufferGeometry {
+  const k = `c${rt},${rb},${h},${segs}`
+  if (!_geoPool.has(k)) _geoPool.set(k, new THREE.CylinderGeometry(rt, rb, h, segs))
+  return _geoPool.get(k)!
+}
+function sph(r: number, ws = 8, hs = 6): THREE.BufferGeometry {
+  const k = `s${r},${ws},${hs}`
+  if (!_geoPool.has(k)) _geoPool.set(k, new THREE.SphereGeometry(r, ws, hs))
+  return _geoPool.get(k)!
+}
+
+const _riLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+
+// Interior cull distance — only render room interiors within this range
+// Reduces active draw calls from ~112 to ~15 when player is in one area
+const INTERIOR_CULL_DIST = _riLevel === 'low' ? 0 : _riLevel === 'medium' ? 80 : 130
 
 /** Equipment that appears inside rooms based on build % — scaled to match 2.5x rooms */
 
@@ -538,6 +561,25 @@ function YogaRoomInterior({ buildPct }: { buildPct: number }) {
       ))}
     </group>
   )
+}
+
+function RoomInteriorWrapper({ room, children }: { room: typeof ROOMS[0], children: React.ReactNode }) {
+  const [visible, setVisible] = useState(true)
+  const posRef = useRef({ x: 0, z: 0 })
+
+  useEffect(() => {
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      posRef.current = { x, z }
+      const dx = x - room.x, dz = z - room.z
+      setVisible(dx * dx + dz * dz < INTERIOR_CULL_DIST * INTERIOR_CULL_DIST)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => window.removeEventListener('playerMove', onMove as EventListener)
+  }, [room.x, room.z])
+
+  if (!visible || INTERIOR_CULL_DIST === 0) return null
+  return <group position={[room.x, 0, room.z]}>{children}</group>
 }
 
 export function RoomInteriors() {

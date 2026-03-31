@@ -16,7 +16,7 @@
  *   High:   18 workers × 26 meshes = 468 (was 696 at 24 workers — reduced count too)
  */
 
-import { useRef, useMemo, useState } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
@@ -287,25 +287,35 @@ function DetailedWorker({ position, index }: { position: [number, number]; index
 }
 
 // ─── WORKERS EXPORT ────────────────────────────────────────────────────────────
+// Cull workers beyond this distance entirely — unmounts component
+const WORKER_MOUNT_DIST = _perfLevel === 'medium' ? 120 : 200
+
+function WorkerSlot({ position, index }: { position: [number, number]; index: number }) {
+  const [mounted, setMounted] = useState(true)
+
+  useEffect(() => {
+    const onMove = (e: Event) => {
+      const { x, z } = (e as CustomEvent).detail
+      const dx = x - position[0], dz = z - position[1]
+      setMounted(dx * dx + dz * dz < WORKER_MOUNT_DIST * WORKER_MOUNT_DIST)
+    }
+    window.addEventListener('playerMove', onMove as EventListener)
+    return () => window.removeEventListener('playerMove', onMove as EventListener)
+  }, [position])
+
+  if (!mounted) return null
+
+  return _perfLevel === 'medium'
+    ? <SimpleWorker position={position} index={index} />
+    : <DetailedWorker position={position} index={index} />
+}
+
 export function Workers() {
-  const count = _perf.maxWorkers
-  const positions = WORKER_POSITIONS.slice(0, count)
-
-  if (_perfLevel === 'medium') {
-    return (
-      <group>
-        {positions.map((pos, i) => (
-          <SimpleWorker key={i} position={pos} index={i} />
-        ))}
-      </group>
-    )
-  }
-
-  // High — full detail
+  const positions = WORKER_POSITIONS.slice(0, _perf.maxWorkers)
   return (
     <group>
       {positions.map((pos, i) => (
-        <DetailedWorker key={i} position={pos} index={i} />
+        <WorkerSlot key={i} position={pos} index={i} />
       ))}
     </group>
   )
