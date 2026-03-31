@@ -3,6 +3,8 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _pLow = typeof window !== 'undefined' && detectPerformanceLevel() === 'low'
 import { COLORS, ROOMS } from '@/lib/roomConfig'
 
 const WALK_SPEED = 12
@@ -319,7 +321,7 @@ export function Player() {
       {/* Body */}
       <mesh position={[0, 1.1, 0]}>
         <cylinderGeometry args={[0.18, 0.24, 0.85, 10]} />
-        <meshStandardMaterial color={0x3a7a7a} roughness={0.85} />
+        <meshLambertMaterial color={0x3a7a7a} />
       </mesh>
       <mesh position={[0, 1.1, 0]} scale={[1.08, 1.08, 1.08]}>
         <cylinderGeometry args={[0.18, 0.24, 0.85, 10]} />
@@ -329,13 +331,13 @@ export function Player() {
       {/* Head */}
       <mesh position={[0, 1.82, 0]}>
         <sphereGeometry args={[0.2, 12, 12]} />
-        <meshStandardMaterial color={0xf0c898} roughness={0.8} />
+        <meshLambertMaterial color={0xf0c898} />
       </mesh>
 
       {/* Hair */}
       <mesh position={[0, 1.92, -0.02]} scale={[1, 0.65, 1.1]}>
         <sphereGeometry args={[0.22, 10, 8]} />
-        <meshStandardMaterial color={0x1a1015} roughness={0.9} />
+        <meshLambertMaterial color={0x1a1015} />
       </mesh>
 
       {/* Eyes */}
@@ -359,41 +361,41 @@ export function Player() {
       {/* Scarf / bandana */}
       <mesh position={[0, 1.55, 0]}>
         <torusGeometry args={[0.2, 0.035, 6, 12]} />
-        <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
+        <meshLambertMaterial color={0x3a7a7a} />
       </mesh>
       <mesh position={[0.15, 1.45, -0.12]} rotation={[0.3, 0.2, -0.5]}>
         <boxGeometry args={[0.06, 0.2, 0.03]} />
-        <meshStandardMaterial color={0x3a7a7a} roughness={0.7} />
+        <meshLambertMaterial color={0x3a7a7a} />
       </mesh>
 
       {/* Arms */}
       <mesh position={[-0.27, 1.15, 0]} rotation={[0, 0, 0.15]}>
         <cylinderGeometry args={[0.04, 0.045, 0.55, 6]} />
-        <meshStandardMaterial color={0x3a7a7a} roughness={0.85} />
+        <meshLambertMaterial color={0x3a7a7a} />
       </mesh>
       <mesh position={[0.27, 1.15, 0]} rotation={[0, 0, -0.15]}>
         <cylinderGeometry args={[0.04, 0.045, 0.55, 6]} />
-        <meshStandardMaterial color={0x3a7a7a} roughness={0.85} />
+        <meshLambertMaterial color={0x3a7a7a} />
       </mesh>
 
       {/* Legs */}
       <mesh ref={leftLegRef} position={[-0.09, 0.35, 0]}>
         <cylinderGeometry args={[0.06, 0.065, 0.55, 6]} />
-        <meshStandardMaterial color={0x2a2535} roughness={0.9} />
+        <meshLambertMaterial color={0x2a2535} />
       </mesh>
       <mesh ref={rightLegRef} position={[0.09, 0.35, 0]}>
         <cylinderGeometry args={[0.06, 0.065, 0.55, 6]} />
-        <meshStandardMaterial color={0x2a2535} roughness={0.9} />
+        <meshLambertMaterial color={0x2a2535} />
       </mesh>
 
       {/* Boots */}
       <mesh position={[-0.09, 0.06, 0.03]}>
         <boxGeometry args={[0.1, 0.1, 0.16]} />
-        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+        <meshLambertMaterial color={0x3a2a1a} />
       </mesh>
       <mesh position={[0.09, 0.06, 0.03]}>
         <boxGeometry args={[0.1, 0.1, 0.16]} />
-        <meshStandardMaterial color={0x3a2a1a} roughness={0.85} />
+        <meshLambertMaterial color={0x3a2a1a} />
       </mesh>
 
       {/* Outline shell */}

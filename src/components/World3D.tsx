@@ -134,15 +134,19 @@ export default function World3D() {
 
         <color attach="background" args={[COLORS.bg]} />
         {/* Denser fog = shorter draw distance = fewer objects rendered */}
-        <fogExp2 attach="fog" args={[0x1e1828, level === 'low' ? 0.006 : level === 'medium' ? 0.004 : 0.0028]} />
+        {level !== 'low' && <fogExp2 attach="fog" args={[0x1e1828, level === 'medium' ? 0.004 : 0.0028]} />}
 
         <DayNightCycle />
 
-        {/* Core lights — always present */}
-        <directionalLight position={[-60, 30, -30]} intensity={0.3} color={0xb0c8e8} />
-        <pointLight position={[-120, 18, -50]} intensity={0.6} color={COLORS.lavender} distance={160} decay={2} />
-        <pointLight position={[120, 18, 40]} intensity={0.5} color={COLORS.sage} distance={160} decay={2} />
-        <pointLight position={[0, 18, -80]} intensity={0.5} color={COLORS.rose} distance={140} decay={2} />
+        {/* Core lights — skipped on low (PotatoWarehouse has its own) */}
+        {level !== 'low' && (
+          <>
+            <directionalLight position={[-60, 30, -30]} intensity={0.3} color={0xb0c8e8} />
+            <pointLight position={[-120, 18, -50]} intensity={0.6} color={COLORS.lavender} distance={160} decay={2} />
+            <pointLight position={[120, 18, 40]} intensity={0.5} color={COLORS.sage} distance={160} decay={2} />
+            <pointLight position={[0, 18, -80]} intensity={0.5} color={COLORS.rose} distance={140} decay={2} />
+          </>
+        )}
 
         {/* Extra fill lights — medium+ only, reduced count */}
         {level !== 'low' && (

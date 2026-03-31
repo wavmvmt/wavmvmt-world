@@ -27,6 +27,10 @@ function scoreDevice(): number {
 
   let score = 5
 
+  // Mobile devices START at low — must prove they're capable to go medium
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent)
+  if (isMobile) score -= 2
+
   // CPU cores
   const cores = navigator.hardwareConcurrency ?? 4
   if (cores <= 2) score -= 3
@@ -75,11 +79,11 @@ export function detectPerformanceLevel(): PerfLevel {
 
   const score = scoreDevice()
   let level: PerfLevel
-  // Conservative thresholds — better to start lower and let PerformanceMonitor upgrade
-  // than start high and have it chug. Users can always manually set quality in Settings.
-  if (score <= 4) level = 'low'
-  else if (score <= 7) level = 'medium'
-  else level = 'high'
+  // Very conservative — Roblox strategy: start LOW, let user upgrade
+  // PerformanceMonitor auto-upgrades if device proves it can handle more
+  if (score <= 5) level = 'low'       // phones, old laptops, tablets
+  else if (score <= 8) level = 'medium'  // modern mid-range
+  else level = 'high'                   // gaming laptops, powerful desktops only
 
   _cachedLevel = level
   return level

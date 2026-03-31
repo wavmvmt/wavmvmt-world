@@ -90,10 +90,16 @@ import { RoomStatusCards } from './RoomStatusCards'
 import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
+import { SceneContentLow } from './SceneContentLow'
+
 export function SceneContent() {
   const level = useMemo(() => detectPerformanceLevel(), [])
   const perf = useMemo(() => getPerfSettings(level), [level])
   const isMediumOrHigh = level !== 'low'
+
+  // ROBLOX MODE: completely separate low-quality scene
+  // ~30 draw calls, flat shading only, no Html, no particles
+  if (level === 'low') return <SceneContentLow />
 
   return (
     <>
