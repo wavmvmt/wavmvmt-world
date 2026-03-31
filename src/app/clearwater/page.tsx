@@ -187,7 +187,7 @@ export default function ClearwaterV8() {
               <div style={{borderLeft:'2px solid var(--gold)',padding:'1.5rem 2rem',background:'rgba(200,151,58,0.04)',borderRadius:'0 4px 4px 0',marginBottom:'2.5rem'}}>
                 <p className="serif" style={{fontSize:'clamp(1rem,2vw,1.3rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;I want to lock in long-term. Every development, every site, every community we build together — WAVMVMT Center is there. This is not a one-deal proposal. It is the thing I have been building toward my whole life, finally meeting its perfect home.&quot;</p>
               </div>
-              <p className="body" style={{marginBottom:'1.5rem'}}>I am living proof that a kid who struggled — who found his way through parkour, music, community, and healing — can end up in rooms working on a $20+ billion development. This vision is shared with Sarah, Nick, and everyone who has been part of building the relationships that made this pipeline real.</p>
+              <p className="body" style={{marginBottom:'1.5rem'}}>I am living proof that a kid who struggled — who found his way through parkour, music, community, and healing — can end up in rooms working on a $20+ billion development. Through effort, showing up fully, and a deep commitment to bringing the right people together, I have been able to play a role in setting this up — alongside an incredible team including Sarah, Nick, and everyone who has been part of building what this pipeline has become.</p>
               <p className="body">That is not coincidence. That is proof of concept. WAVMVMT Centers work because I am the result of exactly what they build.</p>
             </div>
             <div className="sticky-col" style={{position:'sticky',top:'7rem'}}>
@@ -439,6 +439,35 @@ export default function ClearwaterV8() {
             </div>
             <div style={{marginTop:'1.5rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(200,151,58,0.15)'}}>
               <p className="serif" style={{fontStyle:'italic',color:'var(--gold-l)',fontSize:'0.95rem'}}>WAVMVMT Center operates identically in January and July. It is the only line in the entire pro forma that does not require snow.</p>
+            </div>
+          </div>
+
+          {/* Toronto winter expertise */}
+          <div style={{border:'1px solid rgba(42,176,156,0.2)',borderRadius:4,padding:'2rem',background:'rgba(42,176,156,0.03)',marginBottom:'2rem'}}>
+            <div style={{display:'flex',gap:'3rem',alignItems:'flex-start',flexWrap:'wrap'}}>
+              <div style={{flex:1,minWidth:300}}>
+                <div className="tag" style={{marginBottom:'0.75rem',color:'var(--teal-l)'}}>The answer — I grew up watching it work</div>
+                <p style={{fontSize:'0.85rem',color:'rgba(240,235,224,0.68)',lineHeight:1.85,marginBottom:'1rem'}}>Toronto gets brutally cold for five months of the year. And yet the city never stops. As someone who grew up there — as a creative, a fitness person, a wellness seeker, someone who lives on the more eccentric side of things — I watched Toronto solve this problem over and over, year after year. Arts events. Activations. Workshops. Indoor festivals. Community programming. Music showcases. Pop-up markets. Cultural gatherings that made winter feel intentional rather than something to survive.</p>
+                <p style={{fontSize:'0.85rem',color:'rgba(240,235,224,0.68)',lineHeight:1.85}}>That is not theory. That is twenty-plus years of observation, participation, and facilitation in one of the harshest-winter, most culturally vibrant cities in North America. <strong style={{color:'#f0ebe0',fontWeight:500}}>Toronto taught me that the indoor programming season is not the off-season. It is its own season — with its own energy, its own audience, its own economic force.</strong> That knowledge is exactly what WAVMVMT Center brings to Clearwater.</p>
+              </div>
+              <div style={{display:'flex',flexDirection:'column',gap:'0.75rem',minWidth:220}}>
+                <div style={{fontSize:'0.58rem',letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--teal-l)',marginBottom:'0.25rem'}}>What Toronto does in winter</div>
+                {[
+                  ['Arts + culture events','Galleries, showcases, performance nights — packed even in February'],
+                  ['Community activations','Pop-ups, markets, workshops — built around indoor gathering'],
+                  ['Music + DJ showcases','Live performance culture that thrives specifically in the cold months'],
+                  ['Wellness programming','Sound baths, yoga series, somatic workshops — winter demand is real'],
+                  ['Youth programming','Schools, after-school, creative workshops — year-round by design'],
+                ].map(([t,d])=>(
+                  <div key={t} style={{display:'flex',gap:'0.75rem',alignItems:'flex-start'}}>
+                    <div style={{width:5,height:5,borderRadius:'50%',background:'var(--teal-l)',flexShrink:0,marginTop:5}}/>
+                    <div>
+                      <div style={{fontSize:'0.72rem',fontWeight:500,color:'#f0ebe0'}}>{t}</div>
+                      <div style={{fontSize:'0.62rem',color:'rgba(240,235,224,0.38)',lineHeight:1.5}}>{d}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="grid-3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',background:'rgba(240,235,224,0.05)',border:'1px solid rgba(240,235,224,0.05)',borderRadius:4,overflow:'hidden'}}>
@@ -760,7 +789,7 @@ export default function ClearwaterV8() {
               <div className="tag" style={{marginBottom:'1rem',color:'var(--teal-l)'}}>What I bring</div>
               {[
                 ['Full-time operations','I run WAVMVMT Center day-to-day. Programming, scheduling, community, staff coordination.'],
-                ['Deal origination + capital flow','Every deal in the pipeline was originated through my network. That continues indefinitely.'],
+                ['Deal origination + relationship building','Through effort and genuine connection, I have been able to help bring people and opportunities together across this pipeline — alongside the team. That continues.'],
                 ['Marketing + documentation','Events, content, film documentation of the entire build.'],
                 ['Creative direction','Music, sound, movement, healing, education — 8 years of professional practice.'],
                 ['No salary from the development','Revenue share negotiable. I run on the Center\'s own revenue.'],
@@ -793,7 +822,7 @@ export default function ClearwaterV8() {
             </div>
           </div>
           <div style={{padding:'2rem',border:'1px solid rgba(200,151,58,0.18)',borderRadius:4,background:'rgba(200,151,58,0.04)',textAlign:'center'}}>
-            <p className="serif" style={{fontSize:'clamp(1rem,2vw,1.3rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;This is not a favor and it is not a gift. It is an exchange of value. I bring the operating force, the deal flow, and the cultural identity of Clearwater. In return: a place to build from. That is the whole arrangement.&quot;</p>
+            <p className="serif" style={{fontSize:'clamp(1rem,2vw,1.3rem)',fontStyle:'italic',color:'#f0ebe0',lineHeight:1.7}}>&quot;This is not a favor and it is not a gift. It is an exchange of value. I bring the operating force, the relationships, and the cultural identity of Clearwater. In return: a place to build from. That is the whole arrangement.&quot;</p>
           </div>
         </div>
       </section>
@@ -821,7 +850,7 @@ export default function ClearwaterV8() {
                 <p style={{marginBottom:'2rem'}}>I packed a car in Toronto and drove to California. I didn&apos;t have a plan. I had music, movement, and the belief that showing up fully — following the feeling — leads somewhere real.</p>
                 <p style={{marginBottom:'2rem'}}>I was training parkour the whole way. Making music. Connecting with people. Running on conviction. At a house in Beverly Hills, I met Sarah. We drove to Joshua Tree. We talked about what was possible. That conversation changed everything.</p>
                 <p style={{marginBottom:'2rem'}}>Sarah introduced me to Nick. Nick and Sarah introduced me to Vince. My friend Darren — who I met through music, events, and life — introduced me to tools and relationships that accelerated the capital side of this journey. <span style={{fontStyle:'italic',color:'var(--gold-l)'}}>Every single connection traced back to art, community, and the willingness to follow the dream without waiting for permission.</span></p>
-                <p style={{marginBottom:'2rem'}}>And I am now — because of all of that — in rooms working on a <strong style={{fontWeight:700,color:'#f0ebe0'}}>$20+ billion development</strong>. Right now, Madizon is simultaneously building Espiral in Guatemala. Two WAVMVMT Centers being born at the same moment.</p>
+                <p style={{marginBottom:'2rem'}}>And I am now — because of all of that — in rooms working on a <strong style={{fontWeight:700,color:'#f0ebe0'}}>$20+ billion development</strong>. Through effort, genuine connection, and a commitment to bringing the right people together, I have been able to play a meaningful role in helping set this up — alongside an incredible team. Right now, Madizon is simultaneously building Espiral in Guatemala. Two WAVMVMT Centers being born at the same moment.</p>
                 <p style={{marginBottom:'2rem'}}>This space will teach others to do the same. Coming together to bring a vision to life — following passion in all directions — is what makes extraordinary things happen. WAVMVMT Center is the proof, and the invitation.</p>
                 <p style={{marginBottom:'2rem'}}>I want to contribute everything I have to what Vince, Sarah, and Nick are building. <strong style={{fontWeight:700,color:'#f0ebe0'}}>Not just one center. All of it. Every development. Every site. Long-term.</strong></p>
                 <p><span style={{fontStyle:'italic',color:'var(--gold-l)'}}>All I need is a space to create and live from, with a yard for my dog. Everything else I bring because I believe in it completely.</span></p>
