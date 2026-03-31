@@ -34,7 +34,7 @@ function HangingBanner({ position, text, color, width = 5 }: {
       {/* Banner fabric */}
       <mesh>
         <planeGeometry args={[width, 2]} />
-        <meshStandardMaterial color={color} transparent opacity={0.85} side={THREE.DoubleSide} roughness={0.9} />
+        <meshLambertMaterial color={color} transparent opacity={0.85} side={THREE.DoubleSide} />
       </mesh>
       {/* Border */}
       <lineSegments position={[0, 0, 0.01]}>
@@ -76,7 +76,7 @@ function WallSign({ position, rotation = [0, 0, 0] }: {
     <group position={position} rotation={rotation}>
       <mesh>
         <boxGeometry args={[10, 2.5, 0.15]} />
-        <meshStandardMaterial color={0x2a2030} roughness={0.8} />
+        <meshLambertMaterial color={0x2a2030} />
       </mesh>
       <lineSegments position={[0, 0, 0.08]}>
         <edgesGeometry args={[new THREE.PlaneGeometry(10, 2.5)]} />

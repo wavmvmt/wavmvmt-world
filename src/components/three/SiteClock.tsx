@@ -39,12 +39,12 @@ export function SiteClock() {
       {/* Clock face */}
       <mesh>
         <circleGeometry args={[2, 24]} />
-        <meshStandardMaterial color={0xf0e8d8} roughness={0.9} side={THREE.DoubleSide} />
+        <meshLambertMaterial color={0xf0e8d8} side={THREE.DoubleSide} />
       </mesh>
       {/* Rim */}
       <mesh>
         <torusGeometry args={[2, 0.15, 8, 24]} />
-        <meshStandardMaterial color={COLORS.copper} metalness={0.6} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.copper} />
       </mesh>
       {/* Hour hand */}
       <mesh ref={hourRef} position={[0, 0, 0.05]}>

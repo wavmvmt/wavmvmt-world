@@ -89,8 +89,6 @@ function BeatPad({ position, color, index, onHit }: {
         color={color}
         emissive={color}
         emissiveIntensity={0}
-        roughness={0.6}
-        metalness={0.2}
       />
     </mesh>
   )

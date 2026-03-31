@@ -28,12 +28,12 @@ function Fan({ position, speed = 0.5 }: { position: [number, number, number]; sp
       {/* Mount rod */}
       <mesh position={[0, 1.5, 0]}>
         <cylinderGeometry args={[0.05, 0.05, 3, 4]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Motor housing */}
       <mesh>
         <cylinderGeometry args={[0.3, 0.3, 0.4, 8]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.5} metalness={0.4} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Blades */}
       <group ref={bladeRef}>
@@ -41,7 +41,7 @@ function Fan({ position, speed = 0.5 }: { position: [number, number, number]; sp
           <mesh key={i} position={[Math.cos(i * Math.PI / 2) * 1.2, 0, Math.sin(i * Math.PI / 2) * 1.2]}
             rotation={[0, i * Math.PI / 2, 0]}>
             <boxGeometry args={[2, 0.04, 0.4]} />
-            <meshStandardMaterial color={COLORS.woodLt} roughness={0.85} transparent opacity={0.7} />
+            <meshLambertMaterial color={COLORS.woodLt} transparent opacity={0.7} />
           </mesh>
         ))}
       </group>

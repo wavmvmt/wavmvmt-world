@@ -27,32 +27,32 @@ export function EntranceArch() {
       {/* Left pillar */}
       <mesh position={[-18, 12, 0]}>
         <boxGeometry args={[2, 24, 2]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Right pillar */}
       <mesh position={[18, 12, 0]}>
         <boxGeometry args={[2, 24, 2]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Top beam */}
       <mesh position={[0, 24, 0]}>
         <boxGeometry args={[40, 2, 2]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Cross brace — X pattern */}
       <mesh position={[-9, 12, 0]} rotation={[0, 0, 0.6]}>
         <boxGeometry args={[0.3, 28, 0.3]} />
-        <meshStandardMaterial color={COLORS.copper} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.copper} />
       </mesh>
       <mesh position={[9, 12, 0]} rotation={[0, 0, -0.6]}>
         <boxGeometry args={[0.3, 28, 0.3]} />
-        <meshStandardMaterial color={COLORS.copper} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.copper} />
       </mesh>
 
       {/* Signage backplate */}
       <mesh position={[0, 20, 0.5]}>
         <boxGeometry args={[28, 4, 0.3]} />
-        <meshStandardMaterial color={0x1a1520} roughness={0.8} />
+        <meshLambertMaterial color={0x1a1520} />
       </mesh>
 
       {/* WAVMVMT text */}

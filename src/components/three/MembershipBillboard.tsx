@@ -14,19 +14,19 @@ export function MembershipBillboard() {
       {/* Billboard frame */}
       <mesh position={[0, 5, 0]}>
         <boxGeometry args={[8, 5, 0.3]} />
-        <meshStandardMaterial color={COLORS.woodDk} roughness={0.8} />
+        <meshLambertMaterial color={COLORS.woodDk} />
       </mesh>
 
       {/* Screen */}
       <mesh position={[0, 5, 0.2]}>
         <boxGeometry args={[7.2, 4.2, 0.05]} />
-        <meshStandardMaterial color={0x1a1520} emissive={COLORS.gold} emissiveIntensity={0.03} />
+        <meshLambertMaterial color={0x1a1520} emissive={COLORS.gold} emissiveIntensity={0.03} />
       </mesh>
 
       {/* Post */}
       <mesh position={[0, 1.25, 0]}>
         <cylinderGeometry args={[0.15, 0.15, 2.5, 6]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
 
       {/* Content */}

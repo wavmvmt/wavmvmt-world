@@ -113,33 +113,40 @@ export function Player() {
     }
   }, [handleKeyDown, handleKeyUp, handleMouseMove, handleClick, handleLockChange])
 
+  // Pre-allocated vectors — reused every frame, zero GC pressure
+  const _forward = useRef(new THREE.Vector3()).current
+  const _right = useRef(new THREE.Vector3()).current
+  const _moveDir = useRef(new THREE.Vector3()).current
+  const _targetVel = useRef(new THREE.Vector3()).current
+
   useFrame((threeState, delta) => {
     if (!groupRef.current) return
     const s = state.current
     const pos = groupRef.current.position
     const clampedDelta = Math.min(delta, 0.05) // prevent huge jumps on tab-switch
 
-    // Movement direction
-    const forward = new THREE.Vector3(-Math.sin(s.yaw), 0, -Math.cos(s.yaw))
-    const right = new THREE.Vector3(Math.cos(s.yaw), 0, -Math.sin(s.yaw))
+    // Movement direction — reuse pre-allocated vectors (no GC)
+    _forward.set(-Math.sin(s.yaw), 0, -Math.cos(s.yaw))
+    _right.set(Math.cos(s.yaw), 0, -Math.sin(s.yaw))
+    _moveDir.set(0, 0, 0)
 
-    const moveDir = new THREE.Vector3()
-    if (s.keys.has('w')) moveDir.add(forward)
-    if (s.keys.has('s')) moveDir.sub(forward)
-    if (s.keys.has('a')) moveDir.sub(right)
-    if (s.keys.has('d')) moveDir.add(right)
+    const moveDir = _moveDir
+    if (s.keys.has('w')) moveDir.add(_forward)
+    if (s.keys.has('s')) moveDir.sub(_forward)
+    if (s.keys.has('a')) moveDir.sub(_right)
+    if (s.keys.has('d')) moveDir.add(_right)
 
     const sprinting = s.keys.has('shift')
     const speed = s.speedOverride > 0 ? s.speedOverride : (sprinting ? SPRINT_SPEED : WALK_SPEED)
     const isMoving = moveDir.length() > 0
 
     // Smooth acceleration / deceleration via lerp
-    const targetVel = new THREE.Vector3()
+    _targetVel.set(0, 0, 0)
     if (isMoving) {
       moveDir.normalize()
-      targetVel.copy(moveDir).multiplyScalar(speed)
+      _targetVel.copy(moveDir).multiplyScalar(speed)
     }
-    s.smoothVel.lerp(targetVel, clampedDelta * ACCEL_FACTOR)
+    s.smoothVel.lerp(_targetVel, clampedDelta * ACCEL_FACTOR)
 
     // Apply smoothed velocity
     const newX = pos.x + s.smoothVel.x * clampedDelta

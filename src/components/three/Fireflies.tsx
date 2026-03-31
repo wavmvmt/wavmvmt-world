@@ -36,7 +36,10 @@ export function Fireflies() {
     return { positions: pos, data: d }
   }, [])
 
+  const _fsFly = useRef(0)
   useFrame((state) => {
+    _fsFly.current = (_fsFly.current + 1) % 3
+    if (_fsFly.current !== 0) return
     if ((_fs_Fireflie = (_fs_Fireflie + 1) % 3) !== 0) return
     if (!pointsRef.current) return
     const t = state.clock.elapsedTime

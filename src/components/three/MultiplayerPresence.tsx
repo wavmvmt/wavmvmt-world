@@ -124,12 +124,12 @@ function OtherPlayer({ state }: { state: PresenceState }) {
       {/* Body */}
       <mesh position={[0, 1.05, 0]}>
         <capsuleGeometry args={[0.22, 0.5, 6, 8]} />
-        <meshStandardMaterial color={0x3a5080} roughness={0.8} />
+        <meshLambertMaterial color={0x3a5080} />
       </mesh>
       {/* Head */}
       <mesh position={[0, 1.72, 0]}>
         <sphereGeometry args={[0.25, 10, 10]} />
-        <meshStandardMaterial color={state.color || 0xf0c898} roughness={0.8} />
+        <meshLambertMaterial color={state.color || 0xf0c898} />
       </mesh>
       {/* Name tag */}
       <Html position={[0, 2.2, 0]} center distanceFactor={15}>

@@ -51,7 +51,7 @@ function SkylightOpening({ position, width = 6, depth = 6 }: {
       ].map((p, i) => (
         <mesh key={i} position={p as [number, number, number]}>
           <boxGeometry args={[0.3, 0.3, depth]} />
-          <meshStandardMaterial color={0x5a5060} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={0x5a5060} />
         </mesh>
       ))}
     </group>

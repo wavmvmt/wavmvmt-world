@@ -48,19 +48,19 @@ function PhotoStudioFlash() {
       {/* Camera on tripod */}
       <mesh position={[0, -1, 8]}>
         <boxGeometry args={[0.8, 0.6, 0.6]} />
-        <meshStandardMaterial color={0x2a2030} roughness={0.7} />
+        <meshLambertMaterial color={0x2a2030} />
       </mesh>
       {/* Tripod legs */}
       {[-0.4, 0, 0.4].map((x, i) => (
         <mesh key={i} position={[x, -2.5, 8]} rotation={[0, 0, [0.05, 0, -0.05][i]]}>
           <cylinderGeometry args={[0.03, 0.03, 3, 4]} />
-          <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
       {/* Lens */}
       <mesh position={[0, -1, 8.35]}>
         <cylinderGeometry args={[0.15, 0.12, 0.15, 8]} />
-        <meshStandardMaterial color={0x1a1520} roughness={0.4} metalness={0.5} />
+        <meshLambertMaterial color={0x1a1520} />
       </mesh>
     </group>
   )
@@ -98,20 +98,20 @@ function WeightTrainingBarbell() {
       {/* Bar */}
       <mesh rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.08, 0.08, 8, 8]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.7} roughness={0.3} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Plates left */}
       {[-3.2, -3.5].map((x, i) => (
         <mesh key={`l-${i}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 8]} />
-          <meshStandardMaterial color={0x2a2030} roughness={0.8} />
+          <meshLambertMaterial color={0x2a2030} />
         </mesh>
       ))}
       {/* Plates right */}
       {[3.2, 3.5].map((x, i) => (
         <mesh key={`r-${i}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 8]} />
-          <meshStandardMaterial color={0x2a2030} roughness={0.8} />
+          <meshLambertMaterial color={0x2a2030} />
         </mesh>
       ))}
     </group>
@@ -128,7 +128,7 @@ function CafeMenuBoard() {
       {/* Board */}
       <mesh>
         <boxGeometry args={[5, 3.5, 0.2]} />
-        <meshStandardMaterial color={0x1a1520} roughness={0.9} />
+        <meshLambertMaterial color={0x1a1520} />
       </mesh>
       {/* Frame */}
       <lineSegments position={[0, 0, 0.11]}>

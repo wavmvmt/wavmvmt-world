@@ -18,10 +18,7 @@ function Wall({ width, height, position, rotationY = 0 }: {
         <planeGeometry args={[width, height]} />
         <meshStandardMaterial
           color={COLORS.concrete}
-          roughness={0.75}
-          metalness={0.08}
           side={THREE.DoubleSide}
-          envMapIntensity={0}
         />
       </mesh>
       {/* Wall stain layer — subtle darker patches on lower wall */}
@@ -36,7 +33,7 @@ function Wall({ width, height, position, rotationY = 0 }: {
         position[2]
       ]} rotation={[0, rotationY, 0]}>
         <boxGeometry args={[width, 0.4, 0.2]} />
-        <meshStandardMaterial color={COLORS.copper} roughness={0.45} metalness={0.45} />
+        <meshLambertMaterial color={COLORS.copper} />
       </mesh>
     </group>
   )
@@ -102,7 +99,7 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
       {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
         <mesh key={`pillar-${i}`} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
           <boxGeometry args={[0.3, h, 0.3]} />
-          <meshStandardMaterial color={color} transparent opacity={0.35} roughness={0.7} emissive={color} emissiveIntensity={0.05} />
+          <meshLambertMaterial color={color} transparent opacity={0.35} emissive={color} emissiveIntensity={0.05} />
         </mesh>
       ))}
 
@@ -134,7 +131,6 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
             <meshStandardMaterial
               color={color} transparent
               opacity={0.06 + (buildPct / 100) * 0.12}
-              roughness={0.85}
               emissive={color}
               emissiveIntensity={0.04 + (buildPct / 100) * 0.06}
             />
@@ -255,7 +251,7 @@ function Scaffolding({ x, z, levels }: { x: number; z: number; levels: number })
         pipes.push(
           <mesh key={`p-${l}-${dx}-${dz}`} position={[dx * 1.5, y + 1.25, dz * 1.5]}>
             <cylinderGeometry args={[0.04, 0.04, 2.5, 6]} />
-            <meshStandardMaterial color={COLORS.copper} metalness={0.5} roughness={0.5} />
+            <meshLambertMaterial color={COLORS.copper} />
           </mesh>
         )
       }
@@ -264,7 +260,7 @@ function Scaffolding({ x, z, levels }: { x: number; z: number; levels: number })
       planks.push(
         <mesh key={`b-${l}`} position={[0, y, 0]}>
           <boxGeometry args={[3, 0.07, 1.5]} />
-          <meshStandardMaterial color={COLORS.woodLt} roughness={0.9} />
+          <meshLambertMaterial color={COLORS.woodLt} />
         </mesh>
       )
     }
@@ -302,7 +298,7 @@ function MaterialPile({ position, type }: { position: [number, number, number]; 
         {Array.from({ length: 5 }, (_, i) => (
           <mesh key={i} position={[Math.random() * 0.3, i * 0.15, Math.random() * 0.3]}>
             <boxGeometry args={[4, 0.14, 0.14]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.4} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
         ))}
       </group>
@@ -315,7 +311,7 @@ function MaterialPile({ position, type }: { position: [number, number, number]; 
         return (
           <mesh key={i} position={[i * 0.9 - 0.9, h / 2, Math.random() * 0.3]}>
             <boxGeometry args={[0.8 + Math.random() * 0.4, h, 0.8]} />
-            <meshStandardMaterial color={COLORS.woodLt} roughness={0.95} />
+            <meshLambertMaterial color={COLORS.woodLt} />
           </mesh>
         )
       })}
@@ -331,9 +327,6 @@ export function Warehouse() {
         <planeGeometry args={[500, 450, 50, 45]} />
         <meshStandardMaterial
           color={COLORS.floor}
-          roughness={0.6}
-          metalness={0.15}
-          envMapIntensity={0}
         />
       </mesh>
       {/* Floor subtle reflection layer */}
@@ -378,7 +371,7 @@ export function Warehouse() {
         return (
           <mesh key={`cb-${i}`} position={[0, 43, z]}>
             <boxGeometry args={[500, 1.1, 1.3]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0} />
+            <meshLambertMaterial color={COLORS.woodDk} />
           </mesh>
         )
       })}
@@ -387,7 +380,7 @@ export function Warehouse() {
         return (
           <mesh key={`cb2-${i}`} position={[x, 42, 0]}>
             <boxGeometry args={[1.1, 0.9, 350]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0} />
+            <meshLambertMaterial color={COLORS.woodDk} />
           </mesh>
         )
       })}
@@ -398,12 +391,12 @@ export function Warehouse() {
           <group key={`col-${x}-${z}`}>
             <mesh position={[x, 22, z]}>
               <cylinderGeometry args={[0.7, 0.85, 44, 8]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.55} roughness={0.45} envMapIntensity={0} />
+              <meshLambertMaterial color={COLORS.steel} />
             </mesh>
             {/* Column base plate */}
             <mesh position={[x, 0.05, z]}>
               <cylinderGeometry args={[1.2, 1.2, 0.1, 8]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+              <meshLambertMaterial color={COLORS.steel} />
             </mesh>
           </group>
         ))

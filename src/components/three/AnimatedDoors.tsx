@@ -45,7 +45,7 @@ function AnimatedDoor({ room }: { room: typeof ROOMS[0] }) {
       {/* Door frame */}
       <mesh position={[0, 2.5, 0]}>
         <boxGeometry args={[3, 5, 0.3]} />
-        <meshStandardMaterial color={COLORS.woodDk} roughness={0.8} />
+        <meshLambertMaterial color={COLORS.woodDk} />
       </mesh>
 
       {/* Door panel — pivots from left edge */}
@@ -56,13 +56,12 @@ function AnimatedDoor({ room }: { room: typeof ROOMS[0] }) {
             color={room.color}
             transparent
             opacity={0.7 + (room.buildPct / 100) * 0.3}
-            roughness={0.6}
           />
         </mesh>
         {/* Handle */}
         <mesh position={[2.1, 2.3, 0.35]}>
           <sphereGeometry args={[0.12, 8, 8]} />
-          <meshStandardMaterial color={COLORS.copper} metalness={0.7} roughness={0.3} />
+          <meshLambertMaterial color={COLORS.copper} />
         </mesh>
       </group>
 

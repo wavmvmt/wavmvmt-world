@@ -49,10 +49,7 @@ function ReflectingPools() {
               color={COLORS.sky}
               transparent
               opacity={0.12}
-              metalness={0.95}
-              roughness={0.05}
               side={THREE.DoubleSide}
-              envMapIntensity={0}
             />
           </mesh>
           {/* Pool edge — stone border */}

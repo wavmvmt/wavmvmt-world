@@ -76,11 +76,11 @@ export function GlobalExpansionGlobe() {
       {/* Pedestal */}
       <mesh position={[0, -2, 0]}>
         <cylinderGeometry args={[3, 4, 4, 8]} />
-        <meshStandardMaterial color={COLORS.concrete} roughness={0.9} />
+        <meshLambertMaterial color={COLORS.concrete} />
       </mesh>
       <mesh position={[0, 0, 0]}>
         <cylinderGeometry args={[2, 3, 1, 8]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
 
       {/* Globe group — rotates */}
@@ -94,7 +94,7 @@ export function GlobalExpansionGlobe() {
         {/* Solid inner sphere — dark */}
         <mesh>
           <sphereGeometry args={[GLOBE_RADIUS - 0.1, 24, 16]} />
-          <meshStandardMaterial color={0x1a1520} transparent opacity={0.6} roughness={0.95} />
+          <meshLambertMaterial color={0x1a1520} transparent opacity={0.6} />
         </mesh>
 
         {/* Latitude lines */}

@@ -27,7 +27,10 @@ export function RainEffect() {
     return { positions: pos, speeds: spd }
   }, [count])
 
+  const _fsRain = useRef(0)
   useFrame((state) => {
+    _fsRain.current = (_fsRain.current + 1) % 2
+    if (_fsRain.current !== 0) return
     if (!pointsRef.current) return
     const t = state.clock.elapsedTime
 
