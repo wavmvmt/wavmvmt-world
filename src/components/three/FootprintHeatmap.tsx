@@ -18,6 +18,7 @@ const MAX_HEAT = 50
  *
  * Toggle with H key.
  */
+let _fs_Footprin = 0
 export function FootprintHeatmap() {
   const meshRef = useRef<THREE.Mesh>(null)
   const heatData = useRef(new Float32Array(GRID_SIZE * GRID_SIZE).fill(0))
@@ -67,6 +68,7 @@ export function FootprintHeatmap() {
   }, [])
 
   useFrame(() => {
+    if ((_fs_Footprin = (_fs_Footprin + 1) % 4) !== 0) return
     if (!meshRef.current || !visible.current) return
     const colors = geometry.attributes.color as THREE.BufferAttribute
     const arr = colors.array as Float32Array

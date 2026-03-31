@@ -12,6 +12,7 @@ const CLOUD_COUNT = 12
  * Large, very transparent spheres that drift slowly.
  * Creates the hazy atmosphere of an active construction site.
  */
+let _fs_DustClou = 0
 export function DustClouds() {
   if (prefersReducedMotion()) return null
 
@@ -29,6 +30,7 @@ export function DustClouds() {
   }, [])
 
   useFrame((state) => {
+    if ((_fs_DustClou = (_fs_DustClou + 1) % 3) !== 0) return
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
     groupRef.current.children.forEach((child, i) => {

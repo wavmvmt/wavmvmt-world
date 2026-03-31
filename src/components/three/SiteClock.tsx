@@ -10,12 +10,14 @@ import { COLORS } from '@/lib/roomConfig'
  * Wall-mounted clock showing in-world time.
  * Synced to the day/night cycle (5-min = 24 hours).
  */
+let _fs_SiteCloc = 0
 export function SiteClock() {
   const hourRef = useRef<THREE.Mesh>(null)
   const minuteRef = useRef<THREE.Mesh>(null)
   const timeRef = useRef('12:00')
 
   useFrame((state) => {
+    if ((_fs_SiteCloc = (_fs_SiteCloc + 1) % 6) !== 0) return
     const t = state.clock.elapsedTime
     const cycle = (t % 300) / 300 // 0-1 over 5 minutes
     const hours24 = cycle * 24

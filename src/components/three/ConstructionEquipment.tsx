@@ -6,11 +6,13 @@ import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
 /** Tower crane — rotates slowly, cable swings */
+let _fs_Construc = 0
 function TowerCrane({ position }: { position: [number, number, number] }) {
   const boomRef = useRef<THREE.Group>(null)
   const cableRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
+    if ((_fs_Construc = (_fs_Construc + 1) % 3) !== 0) return
     const t = state.clock.elapsedTime
     if (boomRef.current) {
       boomRef.current.rotation.y = Math.sin(t * 0.08) * 0.6

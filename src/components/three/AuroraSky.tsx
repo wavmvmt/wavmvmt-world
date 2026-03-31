@@ -12,6 +12,7 @@ import { COLORS } from '@/lib/roomConfig'
  *
  * Like the Northern Lights are watching over the build.
  */
+let _fs_AuroraSk = 0
 export function AuroraSky() {
   const matRef = useRef<THREE.ShaderMaterial>(null)
 
@@ -23,6 +24,7 @@ export function AuroraSky() {
   })
 
   useFrame((state) => {
+    if ((_fs_AuroraSk = (_fs_AuroraSk + 1) % 4) !== 0) return
     if (matRef.current) {
       matRef.current.uniforms.uTime.value = state.clock.elapsedTime * 0.05
     }

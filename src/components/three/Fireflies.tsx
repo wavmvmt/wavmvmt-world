@@ -11,6 +11,7 @@ const COUNT = 30
  * Fireflies that appear during the night cycle.
  * Small yellow-green glowing dots that drift lazily.
  */
+let _fs_Fireflie = 0
 export function Fireflies() {
   if (prefersReducedMotion()) return null
   const pointsRef = useRef<THREE.Points>(null)
@@ -36,6 +37,7 @@ export function Fireflies() {
   }, [])
 
   useFrame((state) => {
+    if ((_fs_Fireflie = (_fs_Fireflie + 1) % 3) !== 0) return
     if (!pointsRef.current) return
     const t = state.clock.elapsedTime
 

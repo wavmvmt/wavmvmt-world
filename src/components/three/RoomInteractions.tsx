@@ -32,9 +32,12 @@ function PhotoStudioFlash() {
     }
   }, [])
 
+  const _fsFlash = useRef(0)
   useFrame(() => {
+    _fsFlash.current = (_fsFlash.current + 1) % 4
+    if (_fsFlash.current !== 0) return
     if (flashRef.current && flashRef.current.intensity > 0) {
-      flashRef.current.intensity *= 0.85
+      flashRef.current.intensity *= 0.6  // Faster decay to compensate for skip
       if (flashRef.current.intensity < 0.05) flashRef.current.intensity = 0
     }
   })
@@ -100,14 +103,14 @@ function WeightTrainingBarbell() {
       {/* Plates left */}
       {[-3.2, -3.5].map((x, i) => (
         <mesh key={`l-${i}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 12]} />
+          <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 8]} />
           <meshStandardMaterial color={0x2a2030} roughness={0.8} />
         </mesh>
       ))}
       {/* Plates right */}
       {[3.2, 3.5].map((x, i) => (
         <mesh key={`r-${i}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 12]} />
+          <cylinderGeometry args={[0.6 - i * 0.1, 0.6 - i * 0.1, 0.12, 8]} />
           <meshStandardMaterial color={0x2a2030} roughness={0.8} />
         </mesh>
       ))}

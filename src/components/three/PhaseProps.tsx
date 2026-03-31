@@ -86,10 +86,12 @@ function MapTable({ position, rotation = 0 }: { position: [number, number, numbe
 }
 
 /** Cement truck — for Foundation phase */
+let _fs_PhasePro = 0
 function CementTruck({ position, rotation = 0 }: { position: [number, number, number]; rotation?: number }) {
   const drumRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
+    if ((_fs_PhasePro = (_fs_PhasePro + 1) % 3) !== 0) return
     if (drumRef.current) {
       drumRef.current.rotation.z = state.clock.elapsedTime * 0.8
     }

@@ -35,10 +35,12 @@ const CONDUITS: Conduit[] = [
   { points: [[60, 12, 0], [60, 0.5, 0]], color: COLORS.sky },
 ]
 
+let _fs_EnergyCo = 0
 function ConduitTube({ points, color }: Conduit) {
   const pulseRef = useRef<THREE.Mesh[]>([])
 
   useFrame((state) => {
+    if ((_fs_EnergyCo = (_fs_EnergyCo + 1) % 4) !== 0) return
     const t = state.clock.elapsedTime
     pulseRef.current.forEach((mesh, i) => {
       if (!mesh) return

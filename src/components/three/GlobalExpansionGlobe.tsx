@@ -50,11 +50,13 @@ const STATUS_COLORS = {
  * global expansion plan. Toronto pulses as the active location.
  * Future cities shown as dim pins.
  */
+let _fs_GlobalEx = 0
 export function GlobalExpansionGlobe() {
   const globeRef = useRef<THREE.Group>(null)
   const torontoPinRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
+    if ((_fs_GlobalEx = (_fs_GlobalEx + 1) % 4) !== 0) return
     const t = state.clock.elapsedTime
     if (globeRef.current) {
       globeRef.current.rotation.y = t * 0.05 // slow rotation

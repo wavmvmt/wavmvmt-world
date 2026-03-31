@@ -9,6 +9,7 @@ import { COLORS } from '@/lib/roomConfig'
  * Amphitheatre stage spotlight — follows the player when they're on stage.
  * Amphitheatre is at x:0, z:-105. Stage is in the front half.
  */
+let _fs_StageSpo = 0
 export function StageSpotlight() {
   const spotRef = useRef<THREE.SpotLight>(null)
   const targetRef = useRef<THREE.Object3D>(null)
@@ -25,6 +26,7 @@ export function StageSpotlight() {
   }, [])
 
   useFrame(() => {
+    if ((_fs_StageSpo = (_fs_StageSpo + 1) % 3) !== 0) return
     const px = playerPos.current.x
     const pz = playerPos.current.z
 

@@ -46,6 +46,7 @@ const PERIOD_COLORS = {
   night: { ambient: 0x4060a0, intensity: 0.15, fog: 0x0a0810 },
 }
 
+let _fs_LiveWeat = 0
 export function LiveWeather() {
   const lightRef = useRef<THREE.DirectionalLight>(null)
   const [time, setTime] = useState(getTorontoTime())
@@ -57,6 +58,7 @@ export function LiveWeather() {
   }, [])
 
   useFrame(() => {
+    if ((_fs_LiveWeat = (_fs_LiveWeat + 1) % 6) !== 0) return
     if (!lightRef.current) return
 
     const colors = PERIOD_COLORS[time.period as keyof typeof PERIOD_COLORS]

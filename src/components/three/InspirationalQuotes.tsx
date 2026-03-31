@@ -22,10 +22,12 @@ const QUOTES = [
   { text: 'The room is about to get a lot bigger', x: 50, z: -90, y: 8 },
 ]
 
+let _fs_Inspirat = 0
 function FloatingQuote({ text, position }: { text: string; position: [number, number, number] }) {
   const ref = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Inspirat = (_fs_Inspirat + 1) % 6) !== 0) return
     if (!ref.current) return
     const t = state.clock.elapsedTime
     ref.current.position.y = position[1] + Math.sin(t * 0.3 + position[0] * 0.1) * 0.5

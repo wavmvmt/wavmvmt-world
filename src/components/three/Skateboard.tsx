@@ -14,6 +14,7 @@ const BOARD_POSITIONS: [number, number, number][] = [
   [-100, 0, 60],
 ]
 
+let _fs_Skateboa = 0
 function SkateboardEntity({ position, index }: {
   position: [number, number, number]; index: number
 }) {
@@ -51,6 +52,7 @@ function SkateboardEntity({ position, index }: {
   }, [nearby, riding])
 
   useFrame((state) => {
+    if ((_fs_Skateboa = (_fs_Skateboa + 1) % 3) !== 0) return
     if (!groupRef.current) return
     const px = playerPos.current.x
     const pz = playerPos.current.z

@@ -11,10 +11,12 @@ import { COLORS } from '@/lib/roomConfig'
  * Steel frame with WAVMVMT signage, warm lighting, and a welcoming glow.
  * Positioned at the south entrance (z=200+).
  */
+let _fs_Entrance = 0
 export function EntranceArch() {
   const glowRef = useRef<THREE.PointLight>(null)
 
   useFrame((state) => {
+    if ((_fs_Entrance = (_fs_Entrance + 1) % 4) !== 0) return
     if (glowRef.current) {
       glowRef.current.intensity = 0.8 + Math.sin(state.clock.elapsedTime * 0.3) * 0.1
     }

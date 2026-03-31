@@ -36,6 +36,7 @@ function getQuestTarget(questId: number): { pos: [number, number, number]; name:
  * toward the current quest target. Pauses and looks back if the player
  * falls behind. Sits down when at the destination.
  */
+let _fs_GuideDog = 0
 export function GuideDog() {
   const groupRef = useRef<THREE.Group>(null)
   const playerPos = useRef({ x: 0, z: 0 })
@@ -67,6 +68,7 @@ export function GuideDog() {
   }, [])
 
   useFrame((state, delta) => {
+    if ((_fs_GuideDog = (_fs_GuideDog + 1) % 2) !== 0) return
     if (!groupRef.current) return
     const target = getQuestTarget(currentQuest)
     if (!target) return

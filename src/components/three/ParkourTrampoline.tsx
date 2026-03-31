@@ -51,7 +51,7 @@ function Trampoline({ position }: { position: [number, number, number] }) {
     <group position={position}>
       {/* Trampoline surface */}
       <mesh ref={meshRef}>
-        <cylinderGeometry args={[2.5, 2.5, 0.3, 16]} />
+        <cylinderGeometry args={[2.5, 2.5, 0.3, 8]} />
         <meshStandardMaterial color={COLORS.lavender} transparent opacity={0.6} roughness={0.5} />
       </mesh>
       {/* Frame */}

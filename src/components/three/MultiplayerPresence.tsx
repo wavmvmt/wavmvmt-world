@@ -103,6 +103,7 @@ export function MultiplayerPresence() {
 }
 
 /** Simple avatar for other visitors */
+let _fs_Multipla = 0
 function OtherPlayer({ state }: { state: PresenceState }) {
   const groupRef = useRef<THREE.Group>(null)
   const targetPos = useRef(new THREE.Vector3(state.x, 0, state.z))
@@ -112,6 +113,7 @@ function OtherPlayer({ state }: { state: PresenceState }) {
   }, [state.x, state.z])
 
   useFrame(() => {
+    if ((_fs_Multipla = (_fs_Multipla + 1) % 4) !== 0) return
     if (!groupRef.current) return
     // Smooth interpolation to target position
     groupRef.current.position.lerp(targetPos.current, 0.1)

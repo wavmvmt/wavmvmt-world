@@ -11,10 +11,12 @@ import { Html } from '@react-three/drei'
  * nameplate that hovers above it, rotating slowly to face
  * the player. Sci-fi construction site aesthetic.
  */
+let _fs_Holograp = 0
 export function HolographicSigns() {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Holograp = (_fs_Holograp + 1) % 4) !== 0) return
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
     groupRef.current.children.forEach((child, i) => {

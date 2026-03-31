@@ -53,6 +53,7 @@ function playPadSound(index: number) {
   toneOsc.stop(now + 0.5)
 }
 
+let _fs_BeatPads = 0
 function BeatPad({ position, color, index, onHit }: {
   position: [number, number, number]
   color: number
@@ -63,6 +64,7 @@ function BeatPad({ position, color, index, onHit }: {
   const glowRef = useRef(0)
 
   useFrame(() => {
+    if ((_fs_BeatPads = (_fs_BeatPads + 1) % 2) !== 0) return
     if (meshRef.current && glowRef.current > 0) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial
       mat.emissiveIntensity = glowRef.current

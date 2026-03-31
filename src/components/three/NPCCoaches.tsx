@@ -143,7 +143,7 @@ function CoachNPC({ coach }: { coach: Coach }) {
       </mesh>
       {/* Head */}
       <mesh position={[0, 1.72, 0]}>
-        <sphereGeometry args={[0.28, 12, 12]} />
+        <sphereGeometry args={[0.28, 8, 6]} />
         <meshStandardMaterial color={coach.skinTone} roughness={0.8} />
       </mesh>
       {/* Eyes */}

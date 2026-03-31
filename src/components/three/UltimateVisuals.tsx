@@ -17,10 +17,12 @@ import { COLORS } from '@/lib/roomConfig'
  */
 
 /** Massive holographic WAVMVMT logo floating above everything */
+let _fs_Ultimate = 0
 function HoloLogo() {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Ultimate = (_fs_Ultimate + 1) % 4) !== 0) return
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
     groupRef.current.rotation.y = t * 0.03

@@ -10,11 +10,13 @@ import { COLORS } from '@/lib/roomConfig'
  * The most iconic construction site element — visible from anywhere
  * in the warehouse, immediately tells visitors "this is being built."
  */
+let _fs_Construc = 0
 export function ConstructionCrane({ position = [0, 0, 0] as [number, number, number] }) {
   const boomRef = useRef<THREE.Group>(null)
   const cableRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
+    if ((_fs_Construc = (_fs_Construc + 1) % 3) !== 0) return
     const t = state.clock.elapsedTime
     // Slow rotation
     if (boomRef.current) {

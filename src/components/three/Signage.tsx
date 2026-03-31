@@ -6,6 +6,7 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COLORS, TOTAL_SQFT } from '@/lib/roomConfig'
 
+let _fs_Signage_ = 0
 function HangingBanner({ position, text, color, width = 5 }: {
   position: [number, number, number]; text: string; color: number; width?: number
 }) {
@@ -13,6 +14,7 @@ function HangingBanner({ position, text, color, width = 5 }: {
   const phaseRef = useRef(Math.random() * Math.PI * 2)
 
   useFrame((_, delta) => {
+    if ((_fs_Signage_ = (_fs_Signage_ + 1) % 4) !== 0) return
     if (groupRef.current) {
       phaseRef.current += delta * 0.5
       groupRef.current.rotation.z = Math.sin(phaseRef.current) * 0.015

@@ -14,10 +14,12 @@ import { COLORS } from '@/lib/roomConfig'
  */
 
 /** Decorative reflecting pools — adds elegance and calm */
+let _fs_Reflecti = 0
 function ReflectingPools() {
   const ref = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Reflecti = (_fs_Reflecti + 1) % 4) !== 0) return
     if (!ref.current) return
     const t = state.clock.elapsedTime
     // Subtle water shimmer via material opacity

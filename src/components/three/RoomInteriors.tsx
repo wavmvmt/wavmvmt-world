@@ -59,11 +59,11 @@ function SoundBathInterior({ buildPct }: { buildPct: number }) {
         return (
           <group key={i} position={[Math.cos(angle) * r, 0, Math.sin(angle) * r]}>
             <mesh position={[0, 0.6, 0]}>
-              <cylinderGeometry args={[1.2, 0.7, 0.5, 16]} />
+              <cylinderGeometry args={[1.2, 0.7, 0.5, 8]} />
               <meshStandardMaterial color={COLORS.gold} metalness={0.7} roughness={0.3} transparent opacity={opacity * 0.85} />
             </mesh>
             <mesh position={[0, 0.15, 0]}>
-              <cylinderGeometry args={[1.5, 1.5, 0.3, 12]} />
+              <cylinderGeometry args={[1.5, 1.5, 0.3, 8]} />
               <meshStandardMaterial color={COLORS.rose} transparent opacity={opacity * 0.7} roughness={0.9} />
             </mesh>
           </group>
@@ -444,7 +444,7 @@ function SpaWellnessInterior({ buildPct }: { buildPct: number }) {
       {/* Cryotherapy chamber */}
       {buildPct > 3 && (
         <mesh position={[0, 2.5, -15]}>
-          <cylinderGeometry args={[2, 2, 5, 12]} />
+          <cylinderGeometry args={[2, 2, 5, 8]} />
           <meshStandardMaterial color={COLORS.sky} transparent opacity={opacity * 0.7} metalness={0.6} roughness={0.3} />
         </mesh>
       )}

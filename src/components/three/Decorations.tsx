@@ -6,10 +6,12 @@ import * as THREE from 'three'
 import { COLORS } from '@/lib/roomConfig'
 
 /** Stylized potted plant — Ghibli round shapes */
+let _fs_Decorati = 0
 function Plant({ position, scale = 1 }: { position: [number, number, number]; scale?: number }) {
   const leafRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Decorati = (_fs_Decorati + 1) % 3) !== 0) return
     if (leafRef.current) {
       // Gentle sway
       leafRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.03

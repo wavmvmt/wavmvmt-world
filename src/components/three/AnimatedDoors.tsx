@@ -27,7 +27,10 @@ function AnimatedDoor({ room }: { room: typeof ROOMS[0] }) {
     return () => window.removeEventListener('playerMove', onMove as EventListener)
   }, [room])
 
+  const _fsDoor = useRef(0)
   useFrame(() => {
+    _fsDoor.current = (_fsDoor.current + 1) % 2
+    if (_fsDoor.current !== 0) return
     if (!doorRef.current) return
     const target = playerNear.current ? 1 : 0
     openRef.current += (target - openRef.current) * 0.05

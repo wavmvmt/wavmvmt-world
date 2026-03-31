@@ -15,6 +15,7 @@ import { COLORS } from '@/lib/roomConfig'
  */
 
 /** Automatic sliding doors — open when player approaches */
+let _fs_Warehous = 0
 function SlidingDoor({ position, rotation = [0, 0, 0] }: {
   position: [number, number, number]
   rotation?: [number, number, number]
@@ -34,6 +35,7 @@ function SlidingDoor({ position, rotation = [0, 0, 0] }: {
   }, [])
 
   useFrame(() => {
+    if ((_fs_Warehous = (_fs_Warehous + 1) % 3) !== 0) return
     const dx = playerRef.current.x - position[0]
     const dz = playerRef.current.z - position[2]
     const dist = Math.sqrt(dx * dx + dz * dz)

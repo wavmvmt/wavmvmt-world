@@ -8,10 +8,12 @@ import { audioManager } from '@/lib/audioManager'
  * Occasional bird chirps heard near skylights during daytime.
  * Uses audioManager instead of own AudioContext.
  */
+let _fs_BirdSoun = 0
 export function BirdSounds() {
   const nextChirpRef = useRef(5)
 
   useFrame((state) => {
+    if ((_fs_BirdSoun = (_fs_BirdSoun + 1) % 6) !== 0) return
     const ctx = audioManager.getContext()
     if (!ctx) return
 

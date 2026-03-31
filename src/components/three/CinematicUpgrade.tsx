@@ -84,10 +84,12 @@ function GlowPaths() {
 }
 
 /** Light columns rising from each room — volumetric beams */
+let _fs_Cinemati = 0
 function RoomLightColumns() {
   const ref = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Cinemati = (_fs_Cinemati + 1) % 4) !== 0) return
     if (!ref.current) return
     const t = state.clock.elapsedTime
     ref.current.children.forEach((child, i) => {
@@ -155,13 +157,13 @@ function EnergyCoreComponent() {
     <group position={[0, 6, 30]}>
       {/* Core orb */}
       <mesh ref={coreRef}>
-        <sphereGeometry args={[1.5, 16, 16]} />
+        <sphereGeometry args={[1.5, 8, 6]} />
         <meshBasicMaterial color={COLORS.gold} transparent opacity={0.15} />
       </mesh>
 
       {/* Inner glow */}
       <mesh>
-        <sphereGeometry args={[2.5, 16, 16]} />
+        <sphereGeometry args={[2.5, 8, 6]} />
         <meshBasicMaterial
           color={COLORS.gold}
           transparent
@@ -172,7 +174,7 @@ function EnergyCoreComponent() {
 
       {/* Outer glow */}
       <mesh>
-        <sphereGeometry args={[5, 16, 16]} />
+        <sphereGeometry args={[5, 8, 6]} />
         <meshBasicMaterial
           color={COLORS.gold}
           transparent

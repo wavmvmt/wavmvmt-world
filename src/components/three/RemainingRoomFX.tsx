@@ -10,6 +10,7 @@ import { audioManager } from '@/lib/audioManager'
  * Yoga Room — ambient music shifts to calming tone when player enters.
  * Yoga Room at x:-190, z:-35
  */
+let _fs_Remainin = 0
 function YogaRoomAmbience() {
   const playerNear = useRef(false)
   const activeRef = useRef(false)
@@ -28,6 +29,7 @@ function YogaRoomAmbience() {
   }, [])
 
   useFrame(() => {
+    if ((_fs_Remainin = (_fs_Remainin + 1) % 3) !== 0) return
     if (playerNear.current && !activeRef.current) {
       activeRef.current = true
       audioManager.init()

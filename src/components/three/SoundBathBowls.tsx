@@ -10,6 +10,7 @@ import { audioManager } from '@/lib/audioManager'
 const BOWL_NOTES = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88] // C D E F G A B
 const BOWL_COLORS = [COLORS.gold, COLORS.amber, COLORS.rose, COLORS.lavender, COLORS.sage, COLORS.sky, COLORS.gold]
 
+let _fs_SoundBat = 0
 function SingingBowl({ position, note, color, index }: {
   position: [number, number, number]; note: number; color: number; index: number
 }) {
@@ -61,6 +62,7 @@ function SingingBowl({ position, note, color, index }: {
   }, [note])
 
   useFrame(() => {
+    if ((_fs_SoundBat = (_fs_SoundBat + 1) % 3) !== 0) return
     if (meshRef.current && glowRef.current > 0) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial
       mat.emissiveIntensity = glowRef.current * 0.3
@@ -77,7 +79,7 @@ function SingingBowl({ position, note, color, index }: {
         onPointerOver={() => { document.body.style.cursor = 'pointer' }}
         onPointerOut={() => { document.body.style.cursor = 'default' }}
       >
-        <cylinderGeometry args={[1.2, 0.8, 0.5, 16]} />
+        <cylinderGeometry args={[1.2, 0.8, 0.5, 8]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
@@ -88,7 +90,7 @@ function SingingBowl({ position, note, color, index }: {
       </mesh>
       {/* Cushion */}
       <mesh position={[0, -0.2, 0]}>
-        <cylinderGeometry args={[1.5, 1.5, 0.25, 12]} />
+        <cylinderGeometry args={[1.5, 1.5, 0.25, 8]} />
         <meshStandardMaterial color={COLORS.rose} transparent opacity={0.5} roughness={0.9} />
       </mesh>
       {/* Note label */}

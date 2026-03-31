@@ -11,10 +11,12 @@ import { COLORS } from '@/lib/roomConfig'
  * "FUTURE HOME OF WAVMVMT" — visible from the entrance,
  * sets the tone for the entire experience.
  */
+let _fs_Construc = 0
 export function ConstructionBanner() {
   const bannerRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Construc = (_fs_Construc + 1) % 3) !== 0) return
     if (!bannerRef.current) return
     // Gentle sway
     const t = state.clock.elapsedTime

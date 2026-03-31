@@ -15,10 +15,12 @@ import { COLORS } from '@/lib/roomConfig'
  */
 
 /** Layered fog planes at different heights — creates depth */
+let _fs_Atmosphe = 0
 function VolumetricFog() {
   const ref = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_Atmosphe = (_fs_Atmosphe + 1) % 4) !== 0) return
     if (!ref.current) return
     const t = state.clock.elapsedTime
     ref.current.children.forEach((child, i) => {

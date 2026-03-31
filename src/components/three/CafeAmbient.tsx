@@ -8,6 +8,7 @@ import { audioManager } from '@/lib/audioManager'
  * Cafe lo-fi ambient — plays a gentle synth pad when player is in the cafe.
  * Uses audioManager instead of own AudioContext.
  */
+let _fs_CafeAmbi = 0
 export function CafeAmbient() {
   const gainRef = useRef<GainNode | null>(null)
   const activeRef = useRef(false)
@@ -27,6 +28,7 @@ export function CafeAmbient() {
   }, [])
 
   useFrame(() => {
+    if ((_fs_CafeAmbi = (_fs_CafeAmbi + 1) % 6) !== 0) return
     if (playerNear.current && !activeRef.current) {
       activeRef.current = true
       const ctx = audioManager.getContext()

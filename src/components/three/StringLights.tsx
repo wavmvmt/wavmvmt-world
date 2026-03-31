@@ -29,10 +29,12 @@ const STRINGS: LightString[] = [
   { start: [-100, 25, 120], end: [100, 25, 120], bulbs: 8 },
 ]
 
+let _fs_StringLi = 0
 function StringLightSegment({ string, index }: { string: LightString; index: number }) {
   const bulbRefs = useRef<(THREE.Mesh | null)[]>([])
 
   useFrame((state) => {
+    if ((_fs_StringLi = (_fs_StringLi + 1) % 3) !== 0) return
     const t = state.clock.elapsedTime
     bulbRefs.current.forEach((bulb, i) => {
       if (!bulb) return

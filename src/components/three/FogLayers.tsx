@@ -9,10 +9,12 @@ import * as THREE from 'three'
  * Creates depth and atmosphere — thicker near the floor,
  * thinner higher up. Slowly drifts for a living feel.
  */
+let _fs_FogLayer = 0
 export function FogLayers() {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
+    if ((_fs_FogLayer = (_fs_FogLayer + 1) % 6) !== 0) return
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
     groupRef.current.children.forEach((child, i) => {
