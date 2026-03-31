@@ -1,5 +1,8 @@
 'use client'
 
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _level = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
@@ -13,6 +16,7 @@ import { COLORS } from '@/lib/roomConfig'
  */
 let _fs_Entrance = 0
 export function EntranceArch() {
+  if (_level === 'low') return null
   const glowRef = useRef<THREE.PointLight>(null)
 
   useFrame((state) => {

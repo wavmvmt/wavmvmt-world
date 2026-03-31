@@ -2,7 +2,7 @@
 import { detectPerformanceLevel } from '@/lib/performanceMode'
 const _doorLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
@@ -14,16 +14,20 @@ import { ROOMS, COLORS } from '@/lib/roomConfig'
  */
 function AnimatedDoor({ room }: { room: typeof ROOMS[0] }) {
   const doorRef = useRef<THREE.Group>(null)
-  const openRef = useRef(0) // 0 = closed, 1 = open
+  const openRef = useRef(0)
   const playerNear = useRef(false)
+  const [inRange, setInRange] = useState(false)
 
   useEffect(() => {
+    // Show door when player within 80 units — unmount geometry when far
+    const DOOR_RENDER_DIST = 80
     const onMove = (e: Event) => {
       const { x, z } = (e as CustomEvent).detail
       const doorX = room.x
       const doorZ = room.z + room.d / 2 + 2
       const dist = Math.sqrt((x - doorX) ** 2 + (z - doorZ) ** 2)
       playerNear.current = dist < 8
+      setInRange(dist < DOOR_RENDER_DIST)
     }
     window.addEventListener('playerMove', onMove as EventListener)
     return () => window.removeEventListener('playerMove', onMove as EventListener)
@@ -42,6 +46,7 @@ function AnimatedDoor({ room }: { room: typeof ROOMS[0] }) {
 
   const hexColor = `#${room.color.toString(16).padStart(6, '0')}`
 
+  if (!inRange) return null
   return (
     <group position={[room.x, 0, room.z + room.d / 2 + 0.1]}>
       {/* Door frame */}

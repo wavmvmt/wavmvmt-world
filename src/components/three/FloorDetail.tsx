@@ -1,5 +1,8 @@
 'use client'
 
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _level = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+
 import * as THREE from 'three'
 import { ROOMS, COLORS } from '@/lib/roomConfig'
 
@@ -9,6 +12,7 @@ import { ROOMS, COLORS } from '@/lib/roomConfig'
  * floor feel like a real active construction site.
  */
 export function FloorDetail() {
+  if (_level === 'low') return null
   return (
     <group>
       {/* Safety stripe borders around each room */}
