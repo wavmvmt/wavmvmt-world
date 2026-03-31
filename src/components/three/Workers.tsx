@@ -64,6 +64,78 @@ function getLimbGeo() { return _limbGeo ?? (_limbGeo = new THREE.BoxGeometry(0.1
 function getLegGeo() { return _legGeo ?? (_legGeo = new THREE.BoxGeometry(0.22, 0.65, 0.22)) }
 function getHatGeo() { return _hatGeo ?? (_hatGeo = new THREE.BoxGeometry(0.6, 0.2, 0.6)) }
 
+// ─── INSTANCED WORKERS (medium quality — 4 draw calls for ALL workers) ────────
+// THREE.InstancedMesh: 1 DC per geometry type regardless of worker count
+// 72 DC (8 workers × 9 meshes) → 4 DC total
+
+const _iDummy = new THREE.Object3D()
+const _iColor = new THREE.Color()
+
+function InstancedWorkers({ positions }: { positions: [number, number][] }) {
+  const n = positions.length
+  const headMRef = useRef<THREE.InstancedMesh>(null)
+  const hatMRef  = useRef<THREE.InstancedMesh>(null)
+  const torsoMRef= useRef<THREE.InstancedMesh>(null)
+  const legMRef  = useRef<THREE.InstancedMesh>(null)
+  const phases   = useRef(positions.map(() => Math.random() * Math.PI * 2))
+  const fskip    = useRef(0)
+
+  const torsoColors = [0x2a4a8a, 0x1a4a2a, 0x4a2a1a, 0x2a1a4a, 0x3a3a1a, 0x4a1a2a]
+  const pantsColors = [0x1a2a4a, 0x2a1a1a, 0x1a2a1a, 0x2a2a1a, 0x1a1a2a, 0x2a1a2a]
+
+  // Set initial matrices + per-instance colors
+  useEffect(() => {
+    const initMesh = (ref: React.RefObject<THREE.InstancedMesh | null>, colorFn: (i: number) => number, getY: (i: number) => number) => {
+      if (!ref.current) return
+      ref.current.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(n * 3), 3)
+      positions.forEach((pos, i) => {
+        _iDummy.position.set(pos[0], getY(i), pos[1])
+        _iDummy.updateMatrix()
+        ref.current!.setMatrixAt(i, _iDummy.matrix)
+        _iColor.setHex(colorFn(i))
+        ref.current!.setColorAt(i, _iColor)
+      })
+      ref.current.instanceMatrix.needsUpdate = true
+      ref.current.instanceColor!.needsUpdate = true
+    }
+
+    initMesh(headMRef,  i => SKIN_TONES[i % SKIN_TONES.length],                       _ => 2.15)
+    initMesh(hatMRef,   i => WORKER_DATA[i % WORKER_DATA.length].hat,                  _ => 2.55)
+    initMesh(torsoMRef, i => torsoColors[i % torsoColors.length],                      _ => 1.4)
+    initMesh(legMRef,   i => pantsColors[Math.floor(i/2) % pantsColors.length],        i => 0.55)
+  }, [n])
+
+  // Animate — update head + hat Y for idle bob (throttled)
+  useFrame((_, delta) => {
+    fskip.current = (fskip.current + 1) % 3
+    if (fskip.current !== 0) return
+    phases.current.forEach((_, i) => { phases.current[i] += delta * 2 })
+    
+    positions.forEach((pos, i) => {
+      const bob = Math.abs(Math.sin(phases.current[i] * 0.8)) * 0.006
+      _iDummy.position.set(pos[0], 2.15 + bob, pos[1])
+      _iDummy.updateMatrix()
+      headMRef.current?.setMatrixAt(i, _iDummy.matrix)
+      _iDummy.position.set(pos[0], 2.55 + bob, pos[1])
+      _iDummy.updateMatrix()
+      hatMRef.current?.setMatrixAt(i, _iDummy.matrix)
+    })
+    if (headMRef.current) headMRef.current.instanceMatrix.needsUpdate = true
+    if (hatMRef.current)  hatMRef.current.instanceMatrix.needsUpdate  = true
+  })
+
+  const sharedLambertMat = useMemo(() => new THREE.MeshLambertMaterial({ vertexColors: true }), [])
+
+  return (
+    <>
+      <instancedMesh ref={headMRef}  args={[getHeadGeo(),  sharedLambertMat, n]} />
+      <instancedMesh ref={hatMRef}   args={[getHatGeo(),   sharedLambertMat, n]} />
+      <instancedMesh ref={torsoMRef} args={[getTorsoGeo(), sharedLambertMat, n]} />
+      <instancedMesh ref={legMRef}   args={[getLegGeo(),   sharedLambertMat, n * 2]} />
+    </>
+  )
+}
+
 // ─── SIMPLE WORKER (medium quality — 6 meshes, shared geo/mat) ───────────────
 function SimpleWorker({ position, index }: { position: [number, number]; index: number }) {
   const groupRef = useRef<THREE.Group>(null)
@@ -313,6 +385,13 @@ function WorkerSlot({ position, index }: { position: [number, number]; index: nu
 
 export function Workers() {
   const positions = WORKER_POSITIONS.slice(0, _perf.maxWorkers)
+
+  // Medium: InstancedMesh = 4 draw calls for all workers (vs 72)
+  if (_perfLevel === 'medium') {
+    return <InstancedWorkers positions={positions} />
+  }
+
+  // High: full detailed workers with individuality
   return (
     <group>
       {positions.map((pos, i) => (

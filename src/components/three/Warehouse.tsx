@@ -97,11 +97,11 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
         <lineBasicMaterial color={color} transparent opacity={0.2} />
       </lineSegments>
 
-      {/* Corner pillars — gives rooms physical presence */}
-      {[[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
+      {/* Corner pillars — medium+ only (40 DC saved on low) */}
+      {_warehouseLevel !== 'low' && [[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([cx, cz], i) => (
         <mesh key={`pillar-${i}`} position={[cx * (w / 2 - 0.15), h / 2, cz * (d / 2 - 0.15)]}>
           <boxGeometry args={[0.3, h, 0.3]} />
-          <meshLambertMaterial color={color} transparent opacity={0.35} emissive={color} emissiveIntensity={0.05} />
+          <meshLambertMaterial color={color} transparent opacity={0.35} />
         </mesh>
       ))}
 
