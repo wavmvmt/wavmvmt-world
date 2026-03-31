@@ -59,38 +59,26 @@ function PotatoWalls() {
   )
 }
 
-/** Room outlines — color-coded wireframe boxes, 1 draw call per room */
+// Pre-built room materials — created once at module load, never GC'd
+const _roomFillMats = ROOMS.map(r => new THREE.MeshBasicMaterial({
+  color: r.color, transparent: true, opacity: 0.08,
+  side: THREE.BackSide, depthWrite: false,
+}))
+const _roomEdgeMats = ROOMS.map(r => new THREE.MeshBasicMaterial({
+  color: r.color, transparent: true, opacity: 0.4, wireframe: true,
+}))
+const _roomGeos = ROOMS.map(r => new THREE.BoxGeometry(r.w, r.h, r.d))
+
+/** Room outlines — color-coded wireframe boxes */
 function PotatoRooms() {
   return (
     <group>
-      {ROOMS.map((room) => {
-        const colorHex = room.color
-        const mat = new THREE.MeshBasicMaterial({
-          color: colorHex,
-          transparent: true,
-          opacity: 0.08,
-          side: THREE.BackSide,
-          depthWrite: false,
-        })
-        const edgeMat = new THREE.MeshBasicMaterial({
-          color: colorHex,
-          transparent: true,
-          opacity: 0.4,
-          wireframe: true,
-        })
-        return (
-          <group key={room.name} position={[room.x, room.h/2, room.z]}>
-            {/* Room fill */}
-            <mesh material={mat}>
-              <boxGeometry args={[room.w, room.h, room.d]} />
-            </mesh>
-            {/* Room wireframe edge */}
-            <mesh material={edgeMat}>
-              <boxGeometry args={[room.w, room.h, room.d]} />
-            </mesh>
-          </group>
-        )
-      })}
+      {ROOMS.map((room, i) => (
+        <group key={room.name} position={[room.x, room.h/2, room.z]}>
+          <mesh material={_roomFillMats[i]} geometry={_roomGeos[i]} />
+          <mesh material={_roomEdgeMats[i]} geometry={_roomGeos[i]} />
+        </group>
+      ))}
     </group>
   )
 }

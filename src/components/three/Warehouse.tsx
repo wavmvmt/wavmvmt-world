@@ -105,8 +105,8 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
         </mesh>
       ))}
 
-      {/* Horizontal structural beams at 1/3 and 2/3 height */}
-      {[h * 0.33, h * 0.66].map((y, yi) => (
+      {/* Horizontal structural beams — medium+ only (3 extra meshes per room = 30 draw calls saved on low) */}
+      {_warehouseLevel !== 'low' && [h * 0.33, h * 0.66].map((y, yi) => (
         <group key={`hbeam-${yi}`}>
           {/* Front and back beams */}
           {[-d / 2, d / 2].map((zz, zi) => (
@@ -403,7 +403,6 @@ export function Warehouse() {
           </group>
         ))
       )}
-
       {/* Practical lights — reduced to 9 for performance */}
       {([
         [-120, 38, -60], [0, 38, 0], [120, 38, -60],
