@@ -21,7 +21,7 @@ function Wall({ width, height, position, rotationY = 0 }: {
           roughness={0.75}
           metalness={0.08}
           side={THREE.DoubleSide}
-          envMapIntensity={0.35}
+          envMapIntensity={0}
         />
       </mesh>
       {/* Wall stain layer — subtle darker patches on lower wall */}
@@ -333,7 +333,7 @@ export function Warehouse() {
           color={COLORS.floor}
           roughness={0.6}
           metalness={0.15}
-          envMapIntensity={0.5}
+          envMapIntensity={0}
         />
       </mesh>
       {/* Floor subtle reflection layer */}
@@ -376,9 +376,9 @@ export function Warehouse() {
       {Array.from({ length: 22 }, (_, i) => {
         const z = -160 + i * 16
         return (
-          <mesh key={`cb-${i}`} position={[0, 43, z]} castShadow>
+          <mesh key={`cb-${i}`} position={[0, 43, z]}>
             <boxGeometry args={[500, 1.1, 1.3]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0.2} />
+            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0} />
           </mesh>
         )
       })}
@@ -387,7 +387,7 @@ export function Warehouse() {
         return (
           <mesh key={`cb2-${i}`} position={[x, 42, 0]}>
             <boxGeometry args={[1.1, 0.9, 350]} />
-            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0.2} />
+            <meshStandardMaterial color={COLORS.woodDk} roughness={0.78} metalness={0.05} envMapIntensity={0} />
           </mesh>
         )
       })}
@@ -396,9 +396,9 @@ export function Warehouse() {
       {[-200, -100, 0, 100, 200].flatMap(x =>
         [-120, -30, 60, 120].map(z => (
           <group key={`col-${x}-${z}`}>
-            <mesh position={[x, 22, z]} castShadow>
+            <mesh position={[x, 22, z]}>
               <cylinderGeometry args={[0.7, 0.85, 44, 8]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.55} roughness={0.45} envMapIntensity={0.4} />
+              <meshStandardMaterial color={COLORS.steel} metalness={0.55} roughness={0.45} envMapIntensity={0} />
             </mesh>
             {/* Column base plate */}
             <mesh position={[x, 0.05, z]}>

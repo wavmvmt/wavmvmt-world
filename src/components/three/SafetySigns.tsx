@@ -74,7 +74,7 @@ function SafetySign({ sign }: { sign: SignDef }) {
       {/* Sign backing */}
       <mesh>
         <boxGeometry args={[4, 2, 0.1]} />
-        <meshStandardMaterial color={sign.bgColor} roughness={0.8} />
+        <meshLambertMaterial color={sign.bgColor} />
       </mesh>
       {/* Content */}
       <Html position={[0, 0, 0.06]} center distanceFactor={15}>
@@ -109,7 +109,7 @@ function SafetySign({ sign }: { sign: SignDef }) {
       {/* Post */}
       <mesh position={[0, -2.5, 0]}>
         <cylinderGeometry args={[0.05, 0.05, 3, 4]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
     </group>
   )

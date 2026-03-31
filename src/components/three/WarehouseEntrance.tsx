@@ -62,13 +62,13 @@ function SlidingDoor({ position, rotation = [0, 0, 0] }: {
         {/* Top beam */}
         <mesh position={[0, doorH + 0.3, 0]}>
           <boxGeometry args={[doorW * 2 + 2, 0.6, doorD + 0.6]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
         {/* Side posts */}
         {[-doorW - 0.5, doorW + 0.5].map((x, i) => (
           <mesh key={i} position={[x, doorH / 2, 0]}>
             <boxGeometry args={[0.4, doorH, doorD + 0.4]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
         ))}
       </group>
@@ -80,8 +80,6 @@ function SlidingDoor({ position, rotation = [0, 0, 0] }: {
           color={COLORS.sky}
           transparent
           opacity={0.15}
-          metalness={0.8}
-          roughness={0.1}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -93,8 +91,6 @@ function SlidingDoor({ position, rotation = [0, 0, 0] }: {
           color={COLORS.sky}
           transparent
           opacity={0.15}
-          metalness={0.8}
-          roughness={0.1}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -139,7 +135,7 @@ function SmartGlassWindow({ position, width, height, rotation = [0, 0, 0] }: {
       {/* Window frame */}
       <mesh position={[0, height / 2 + 2, 0]}>
         <boxGeometry args={[width + 0.4, height + 0.4, 0.15]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
 
       {/* Glass pane — slightly transparent, reflective */}
@@ -149,10 +145,7 @@ function SmartGlassWindow({ position, width, height, rotation = [0, 0, 0] }: {
           color={0x88bbdd}
           transparent
           opacity={0.12}
-          metalness={0.9}
-          roughness={0.05}
           side={THREE.DoubleSide}
-          envMapIntensity={1.5}
         />
       </mesh>
 
@@ -162,7 +155,7 @@ function SmartGlassWindow({ position, width, height, rotation = [0, 0, 0] }: {
         return (
           <mesh key={i} position={[x, height / 2 + 2, 0.08]}>
             <boxGeometry args={[0.08, height, 0.08]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
         )
       })}
@@ -170,7 +163,7 @@ function SmartGlassWindow({ position, width, height, rotation = [0, 0, 0] }: {
       {/* Horizontal mullion */}
       <mesh position={[0, 2 + height * 0.4, 0.08]}>
         <boxGeometry args={[width, 0.08, 0.08]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
     </group>
   )
@@ -219,7 +212,7 @@ export function WarehouseEntrance() {
       {/* Entrance mat / welcome zone */}
       <mesh position={[0, 0.02, D / 2 - 3]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[12, 6]} />
-        <meshStandardMaterial color={COLORS.woodDk} transparent opacity={0.15} roughness={0.95} />
+        <meshLambertMaterial color={COLORS.woodDk} transparent opacity={0.15} />
       </mesh>
 
       {/* "ENTER" prompt near main door */}

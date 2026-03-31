@@ -11,10 +11,12 @@ import { ROOMS } from '@/lib/roomConfig'
  * Intensity scales with build percentage.
  * Gentle breathing animation.
  */
+let _fsRoomIn = 0
 export function RoomInteriorLights() {
   const lightsRef = useRef<(THREE.PointLight | null)[]>([])
 
   useFrame((state) => {
+    if ((_fsRoomIn = (_fsRoomIn + 1) % 8) !== 0) return  // ~7.5fps — slow breathing
     const t = state.clock.elapsedTime
     lightsRef.current.forEach((light, i) => {
       if (!light) return

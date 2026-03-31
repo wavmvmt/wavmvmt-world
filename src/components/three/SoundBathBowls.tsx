@@ -84,14 +84,12 @@ function SingingBowl({ position, note, color, index }: {
           color={color}
           emissive={color}
           emissiveIntensity={0}
-          metalness={0.7}
-          roughness={0.3}
         />
       </mesh>
       {/* Cushion */}
       <mesh position={[0, -0.2, 0]}>
         <cylinderGeometry args={[1.5, 1.5, 0.25, 8]} />
-        <meshStandardMaterial color={COLORS.rose} transparent opacity={0.5} roughness={0.9} />
+        <meshLambertMaterial color={COLORS.rose} transparent opacity={0.5} />
       </mesh>
       {/* Note label */}
       <Html position={[0, 0.8, 0]} center distanceFactor={15}>

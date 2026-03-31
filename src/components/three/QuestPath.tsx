@@ -40,6 +40,7 @@ const ARROW_SPACING = 4
  * Arrows flow toward the destination, pulse with proximity, and
  * show the quest name as a floating label at the midpoint.
  */
+let _fsQuestP = 0
 export function QuestPath() {
   const trailRef = useRef<THREE.Points>(null)
   const arrowGroupRef = useRef<THREE.Group>(null)
@@ -72,6 +73,7 @@ export function QuestPath() {
   }, [])
 
   useFrame((state) => {
+    if ((_fsQuestP = (_fsQuestP + 1) % 4) !== 0) return  // ~15fps — quest dots pulse slowly
     if (!trailRef.current) return
     const target = getQuestTarget(currentQuest)
     const mat = trailRef.current.material as THREE.PointsMaterial

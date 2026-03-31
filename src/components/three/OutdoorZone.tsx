@@ -180,13 +180,13 @@ function SoccerMarkings({ x, z, w, d }: { x: number; z: number; w: number; d: nu
             {/* Crossbar */}
             <mesh position={[0, 3.5, 0]}>
               <cylinderGeometry args={[0.12, 0.12, 11, 6]} />
-              <meshStandardMaterial color={0xffffff} metalness={0.5} roughness={0.4} transparent opacity={0.25} />
+              <meshLambertMaterial color={0xffffff} transparent opacity={0.25} />
             </mesh>
             {/* Posts */}
             {[-5.5, 5.5].map((pz, j) => (
               <mesh key={j} position={[0, 1.75, pz]}>
                 <cylinderGeometry args={[0.1, 0.1, 3.5, 6]} />
-                <meshStandardMaterial color={0xffffff} metalness={0.5} roughness={0.4} transparent opacity={0.25} />
+                <meshLambertMaterial color={0xffffff} transparent opacity={0.25} />
               </mesh>
             ))}
             {/* Net (wireframe plane behind goal) */}

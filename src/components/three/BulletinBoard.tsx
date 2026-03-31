@@ -24,7 +24,7 @@ export function BulletinBoard() {
       {/* Board */}
       <mesh>
         <boxGeometry args={[6, 4, 0.2]} />
-        <meshStandardMaterial color={0x6a5030} roughness={0.9} />
+        <meshLambertMaterial color={0x6a5030} />
       </mesh>
       {/* Frame */}
       <lineSegments position={[0, 0, 0.11]}>
@@ -34,7 +34,7 @@ export function BulletinBoard() {
       {/* Cork background */}
       <mesh position={[0, 0, 0.11]}>
         <planeGeometry args={[5.6, 3.6]} />
-        <meshStandardMaterial color={0xc8a060} roughness={0.95} side={THREE.DoubleSide} />
+        <meshLambertMaterial color={0xc8a060} side={THREE.DoubleSide} />
       </mesh>
       {/* Title */}
       <Html position={[0, 2.3, 0.15]} center distanceFactor={12}>

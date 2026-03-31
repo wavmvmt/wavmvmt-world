@@ -13,7 +13,10 @@ import { ROOMS } from '@/lib/roomConfig'
 export function RoomFloorGlow() {
   const meshRefs = useRef<(THREE.Mesh | null)[]>([])
 
+  const _fsFg = useRef(0)
   useFrame((state) => {
+    _fsFg.current = (_fsFg.current + 1) % 6  // ~10fps — subtle breathing
+    if (_fsFg.current !== 0) return
     const t = state.clock.elapsedTime
     meshRefs.current.forEach((mesh, i) => {
       if (!mesh) return

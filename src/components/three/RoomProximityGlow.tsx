@@ -24,7 +24,10 @@ export function RoomProximityGlow() {
     return () => window.removeEventListener('playerMove', onMove as EventListener)
   }, [])
 
+  const _fsGlw = useRef(0)
   useFrame((state) => {
+    _fsGlw.current = (_fsGlw.current + 1) % 10  // ~6fps — glow changes slowly
+    if (_fsGlw.current !== 0) return
     if (!glowRef.current || !ringRef.current) return
     const px = playerPos.current.x
     const pz = playerPos.current.z

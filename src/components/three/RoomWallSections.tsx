@@ -32,7 +32,6 @@ function RoomWalls({ room }: { room: typeof ROOMS[0] }) {
             color={COLORS.concrete}
             transparent
             opacity={opacity * 2}
-            roughness={0.85}
           />
         </mesh>
       ))}
@@ -47,7 +46,6 @@ function RoomWalls({ room }: { room: typeof ROOMS[0] }) {
               color={room.color}
               transparent
               opacity={opacity}
-              roughness={0.9}
               side={THREE.DoubleSide}
             />
           </mesh>
@@ -59,7 +57,6 @@ function RoomWalls({ room }: { room: typeof ROOMS[0] }) {
                 color={room.color}
                 transparent
                 opacity={opacity * 0.7}
-                roughness={0.9}
                 side={THREE.DoubleSide}
               />
             </mesh>
@@ -72,11 +69,11 @@ function RoomWalls({ room }: { room: typeof ROOMS[0] }) {
         <>
           <mesh position={[0, wallH + 2, -hd]}>
             <boxGeometry args={[room.w + 0.5, 0.4, 0.4]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
           <mesh position={[0, wallH + 2, hd]}>
             <boxGeometry args={[room.w + 0.5, 0.4, 0.4]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
         </>
       )}

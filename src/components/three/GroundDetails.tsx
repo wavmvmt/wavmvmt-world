@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import * as THREE from 'three'
@@ -43,8 +45,6 @@ function Puddle({ position, size }: {
         color={COLORS.sky}
         transparent
         opacity={0.04}
-        metalness={0.8}
-        roughness={0.1}
         depthWrite={false}
       />
     </mesh>
@@ -59,11 +59,11 @@ function AggregatePile({ position, scale = 1 }: {
     <group position={position} scale={scale}>
       <mesh position={[0, 0.3, 0]}>
         <sphereGeometry args={[0.8, 6, 4, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={0x4a3a2a} roughness={0.95} />
+        <meshLambertMaterial color={0x4a3a2a} />
       </mesh>
       <mesh position={[0.5, 0.2, 0.3]}>
         <sphereGeometry args={[0.5, 6, 4, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={0x5a4a38} roughness={0.95} />
+        <meshLambertMaterial color={0x5a4a38} />
       </mesh>
     </group>
   )

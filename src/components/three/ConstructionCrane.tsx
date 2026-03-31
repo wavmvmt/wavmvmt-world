@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import { useRef } from 'react'
@@ -37,7 +39,7 @@ export function ConstructionCrane({ position = [0, 0, 0] as [number, number, num
       {/* Tower — vertical mast */}
       <mesh position={[0, towerH / 2, 0]}>
         <boxGeometry args={[2, towerH, 2]} />
-        <meshStandardMaterial color={craneColor} roughness={0.7} />
+        <meshLambertMaterial color={craneColor} />
       </mesh>
 
       {/* Tower cross-bracing (X pattern) */}
@@ -45,11 +47,11 @@ export function ConstructionCrane({ position = [0, 0, 0] as [number, number, num
         <group key={i} position={[0, 7 + i * 7, 0]}>
           <mesh rotation={[0, 0, Math.PI / 4]} position={[0, 0, 0]}>
             <boxGeometry args={[0.1, 3, 0.1]} />
-            <meshStandardMaterial color={craneColor} roughness={0.7} />
+            <meshLambertMaterial color={craneColor} />
           </mesh>
           <mesh rotation={[0, 0, -Math.PI / 4]} position={[0, 0, 0]}>
             <boxGeometry args={[0.1, 3, 0.1]} />
-            <meshStandardMaterial color={craneColor} roughness={0.7} />
+            <meshLambertMaterial color={craneColor} />
           </mesh>
         </group>
       ))}
@@ -59,42 +61,42 @@ export function ConstructionCrane({ position = [0, 0, 0] as [number, number, num
         {/* Main boom (jib) */}
         <mesh position={[boomLen / 2, 1, 0]}>
           <boxGeometry args={[boomLen, 1.5, 1.5]} />
-          <meshStandardMaterial color={craneColor} roughness={0.7} />
+          <meshLambertMaterial color={craneColor} />
         </mesh>
 
         {/* Counter-jib (shorter, back) */}
         <mesh position={[-12, 1, 0]}>
           <boxGeometry args={[20, 1.2, 1.2]} />
-          <meshStandardMaterial color={craneColor} roughness={0.7} />
+          <meshLambertMaterial color={craneColor} />
         </mesh>
 
         {/* Counterweight */}
         <mesh position={[-20, 0, 0]}>
           <boxGeometry args={[4, 3, 3]} />
-          <meshStandardMaterial color={COLORS.concrete} roughness={0.9} />
+          <meshLambertMaterial color={COLORS.concrete} />
         </mesh>
 
         {/* Operator cab */}
         <mesh position={[2, -1, 0]}>
           <boxGeometry args={[3, 2.5, 2.5]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.6} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
         {/* Cab windows */}
         <mesh position={[2, -0.5, 1.3]}>
           <boxGeometry args={[2, 1.2, 0.05]} />
-          <meshStandardMaterial color={COLORS.sky} transparent opacity={0.3} metalness={0.8} roughness={0.1} />
+          <meshLambertMaterial color={COLORS.sky} transparent opacity={0.3} />
         </mesh>
 
         {/* Cable from boom tip */}
         <mesh ref={cableRef} position={[boomLen - 5, -12, 0]}>
           <cylinderGeometry args={[0.05, 0.05, 24, 4]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.6} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
 
         {/* Hook at cable end */}
         <mesh position={[boomLen - 5, -24, 0]}>
           <torusGeometry args={[0.5, 0.12, 6, 8, Math.PI]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.7} roughness={0.3} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
 
         {/* Support cables from tower top to boom */}
@@ -104,7 +106,7 @@ export function ConstructionCrane({ position = [0, 0, 0] as [number, number, num
           return (
             <mesh key={i} position={[x / 2, 5, 0]} rotation={[0, 0, angle]}>
               <cylinderGeometry args={[0.03, 0.03, len, 4]} />
-              <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+              <meshLambertMaterial color={COLORS.steel} />
             </mesh>
           )
         })}
@@ -113,7 +115,7 @@ export function ConstructionCrane({ position = [0, 0, 0] as [number, number, num
       {/* Base — concrete pad */}
       <mesh position={[0, 0.5, 0]}>
         <boxGeometry args={[6, 1, 6]} />
-        <meshStandardMaterial color={COLORS.concrete} roughness={0.95} />
+        <meshLambertMaterial color={COLORS.concrete} />
       </mesh>
 
       {/* Warning light on top */}

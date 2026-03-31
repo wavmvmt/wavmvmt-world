@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import * as THREE from 'three'
@@ -9,7 +11,7 @@ function SafetyCone({ position }: { position: [number, number, number] }) {
     <group position={position}>
       <mesh position={[0, 0.4, 0]}>
         <coneGeometry args={[0.2, 0.8, 8]} />
-        <meshStandardMaterial color={0xff6600} roughness={0.8} />
+        <meshLambertMaterial color={0xff6600} />
       </mesh>
       {/* White stripes */}
       <mesh position={[0, 0.55, 0]}>
@@ -23,7 +25,7 @@ function SafetyCone({ position }: { position: [number, number, number] }) {
       {/* Base */}
       <mesh position={[0, 0.02, 0]}>
         <boxGeometry args={[0.5, 0.04, 0.5]} />
-        <meshStandardMaterial color={0xff6600} roughness={0.9} />
+        <meshLambertMaterial color={0xff6600} />
       </mesh>
     </group>
   )
@@ -55,7 +57,7 @@ function CautionTape({ start, end, height = 0.8 }: {
       {[start, end].map((p, i) => (
         <mesh key={i} position={[p[0], height / 2, p[2]]}>
           <cylinderGeometry args={[0.03, 0.03, height, 6]} />
-          <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
     </group>
@@ -70,18 +72,18 @@ function BlueprintEasel({ position, rotation = 0 }: { position: [number, number,
       {[-0.3, 0.3].map((x, i) => (
         <mesh key={i} position={[x, 0.7, -0.1]} rotation={[0.1, 0, x > 0 ? -0.05 : 0.05]}>
           <cylinderGeometry args={[0.02, 0.02, 1.4, 4]} />
-          <meshStandardMaterial color={COLORS.woodLt} roughness={0.9} />
+          <meshLambertMaterial color={COLORS.woodLt} />
         </mesh>
       ))}
       {/* Back leg */}
       <mesh position={[0, 0.6, -0.3]} rotation={[-0.3, 0, 0]}>
         <cylinderGeometry args={[0.02, 0.02, 1.2, 4]} />
-        <meshStandardMaterial color={COLORS.woodLt} roughness={0.9} />
+        <meshLambertMaterial color={COLORS.woodLt} />
       </mesh>
       {/* Blueprint paper */}
       <mesh position={[0, 1.2, 0]}>
         <planeGeometry args={[0.8, 0.6]} />
-        <meshStandardMaterial color={0x2040a0} transparent opacity={0.8} side={THREE.DoubleSide} roughness={0.95} />
+        <meshLambertMaterial color={0x2040a0} transparent opacity={0.8} side={THREE.DoubleSide} />
       </mesh>
       {/* Grid lines on blueprint */}
       <lineSegments position={[0, 1.2, 0.005]}>
@@ -102,14 +104,14 @@ function Ladder({ position, height = 5, lean = 0.3 }: {
       {[-0.2, 0.2].map((x, i) => (
         <mesh key={i} position={[x, height / 2, 0]}>
           <boxGeometry args={[0.05, height, 0.05]} />
-          <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+          <meshLambertMaterial color={COLORS.amber} />
         </mesh>
       ))}
       {/* Rungs */}
       {Array.from({ length: Math.floor(height / 0.4) }, (_, i) => (
         <mesh key={`r-${i}`} position={[0, 0.3 + i * 0.4, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.02, 0.02, 0.4, 4]} />
-          <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+          <meshLambertMaterial color={COLORS.amber} />
         </mesh>
       ))}
     </group>
@@ -123,24 +125,24 @@ function Wheelbarrow({ position, rotation = 0 }: { position: [number, number, nu
       {/* Tray */}
       <mesh position={[0, 0.4, 0]} rotation={[-0.1, 0, 0]}>
         <boxGeometry args={[0.6, 0.3, 0.8]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.7} metalness={0.3} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Wheel */}
       <mesh position={[0, 0.15, 0.5]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.15, 0.15, 0.08, 8]} />
-        <meshStandardMaterial color={0x1a1015} roughness={0.95} />
+        <meshLambertMaterial color={0x1a1015} />
       </mesh>
       {/* Handles */}
       {[-0.25, 0.25].map((x, i) => (
         <mesh key={i} position={[x, 0.35, -0.5]} rotation={[0.8, 0, 0]}>
           <cylinderGeometry args={[0.02, 0.02, 0.6, 4]} />
-          <meshStandardMaterial color={COLORS.woodDk} roughness={0.9} />
+          <meshLambertMaterial color={COLORS.woodDk} />
         </mesh>
       ))}
       {/* Dirt/gravel in tray */}
       <mesh position={[0, 0.5, -0.05]}>
         <sphereGeometry args={[0.2, 6, 4, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color={0x5a4a3a} roughness={0.95} />
+        <meshLambertMaterial color={0x5a4a3a} />
       </mesh>
     </group>
   )
@@ -152,17 +154,17 @@ function Generator({ position }: { position: [number, number, number] }) {
     <group position={position}>
       <mesh position={[0, 0.5, 0]}>
         <boxGeometry args={[1.5, 1, 0.8]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Control panel */}
       <mesh position={[0, 0.7, 0.41]}>
         <planeGeometry args={[0.4, 0.3]} />
-        <meshStandardMaterial color={0x1a1520} roughness={0.5} />
+        <meshLambertMaterial color={0x1a1520} />
       </mesh>
       {/* Exhaust pipe */}
       <mesh position={[0.6, 0.9, 0]} rotation={[0, 0, -0.3]}>
         <cylinderGeometry args={[0.06, 0.06, 0.5, 6]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Power indicator */}
       <mesh position={[-0.5, 0.75, 0.41]}>
@@ -180,17 +182,17 @@ function WaterCooler({ position }: { position: [number, number, number] }) {
       {/* Body */}
       <mesh position={[0, 0.5, 0]}>
         <cylinderGeometry args={[0.2, 0.25, 1, 8]} />
-        <meshStandardMaterial color={0xd0d0d0} roughness={0.6} />
+        <meshLambertMaterial color={0xd0d0d0} />
       </mesh>
       {/* Water jug */}
       <mesh position={[0, 1.15, 0]}>
         <cylinderGeometry args={[0.15, 0.12, 0.4, 8]} />
-        <meshStandardMaterial color={0x8080ff} transparent opacity={0.3} roughness={0.2} />
+        <meshLambertMaterial color={0x8080ff} transparent opacity={0.3} />
       </mesh>
       {/* Tap */}
       <mesh position={[0.2, 0.4, 0]}>
         <boxGeometry args={[0.08, 0.05, 0.05]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.6} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
     </group>
   )
@@ -203,19 +205,19 @@ function ToolRack({ position, rotation = 0 }: { position: [number, number, numbe
       {/* Board */}
       <mesh>
         <boxGeometry args={[2, 1.2, 0.08]} />
-        <meshStandardMaterial color={COLORS.woodDk} roughness={0.9} />
+        <meshLambertMaterial color={COLORS.woodDk} />
       </mesh>
       {/* Hooks with tools */}
       {[-0.6, -0.2, 0.2, 0.6].map((x, i) => (
         <group key={i}>
           <mesh position={[x, 0.2, 0.05]} rotation={[Math.PI / 2, 0, 0]}>
             <cylinderGeometry args={[0.02, 0.02, 0.15, 4]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
           {/* Tool hanging */}
           <mesh position={[x, -0.1, 0.08]} rotation={[0, 0, [0, 0.3, -0.2, 0.1][i]]}>
             <boxGeometry args={[0.06, 0.5, 0.03]} />
-            <meshStandardMaterial color={[COLORS.amber, COLORS.steel, COLORS.woodLt, COLORS.copper][i]} roughness={0.7} />
+            <meshLambertMaterial color={[COLORS.amber, COLORS.steel, COLORS.woodLt, COLORS.copper][i]} />
           </mesh>
         </group>
       ))}

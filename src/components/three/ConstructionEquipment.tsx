@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import { useRef } from 'react'
@@ -23,15 +25,15 @@ function TowerCrane({ position }: { position: [number, number, number] }) {
     }
   })
 
-  const craneMat = <meshStandardMaterial color={COLORS.amber} roughness={0.6} metalness={0.3} />
-  const steelMat = <meshStandardMaterial color={COLORS.steel} roughness={0.5} metalness={0.5} />
+  const craneMat = <meshLambertMaterial color={COLORS.amber} />
+  const steelMat = <meshLambertMaterial color={COLORS.steel} />
 
   return (
     <group position={position}>
       {/* Base */}
       <mesh position={[0, 1, 0]}>
         <boxGeometry args={[4, 2, 4]} />
-        <meshStandardMaterial color={0x3a3030} roughness={0.9} />
+        <meshLambertMaterial color={0x3a3030} />
       </mesh>
 
       {/* Tower — vertical mast */}
@@ -63,7 +65,7 @@ function TowerCrane({ position }: { position: [number, number, number] }) {
         {/* Counterweight */}
         <mesh position={[-10, -0.5, 0]}>
           <boxGeometry args={[3, 2, 2]} />
-          <meshStandardMaterial color={0x3a3030} roughness={0.9} />
+          <meshLambertMaterial color={0x3a3030} />
         </mesh>
 
         {/* Cable and hook */}
@@ -120,35 +122,35 @@ function Forklift({ position, route }: { position: [number, number, number]; rou
       {/* Body */}
       <mesh position={[0, 0.5, 0]}>
         <boxGeometry args={[1.2, 0.8, 2]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Cab */}
       <mesh position={[0, 1.1, -0.3]}>
         <boxGeometry args={[1, 0.8, 1]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Roof */}
       <mesh position={[0, 1.55, -0.3]}>
         <boxGeometry args={[1.2, 0.08, 1.2]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Forks */}
       {[-0.3, 0.3].map((x, i) => (
         <mesh key={i} position={[x, 0.2, 1.2]}>
           <boxGeometry args={[0.12, 0.06, 1.2]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
       {/* Mast */}
       <mesh position={[0, 0.8, 0.7]}>
         <boxGeometry args={[0.8, 1.4, 0.1]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Wheels */}
       {[[-0.5, -0.7], [0.5, -0.7], [-0.5, 0.5], [0.5, 0.5]].map(([x, z], i) => (
         <mesh key={i} position={[x, 0.15, z]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.15, 0.15, 0.12, 8]} />
-          <meshStandardMaterial color={0x1a1015} roughness={0.95} />
+          <meshLambertMaterial color={0x1a1015} />
         </mesh>
       ))}
     </group>
@@ -170,24 +172,24 @@ function ConcreteMixer({ position }: { position: [number, number, number] }) {
       {/* Truck body */}
       <mesh position={[0, 0.8, 0]}>
         <boxGeometry args={[2.5, 1.2, 5]} />
-        <meshStandardMaterial color={0x4a4040} roughness={0.85} />
+        <meshLambertMaterial color={0x4a4040} />
       </mesh>
       {/* Cab */}
       <mesh position={[0, 1.3, 2.5]}>
         <boxGeometry args={[2.2, 1.2, 1.5]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Drum — rotating */}
       <mesh ref={drumRef} position={[0, 2.2, -0.3]} rotation={[0.3, 0, 0]}>
         <cylinderGeometry args={[1.2, 0.8, 3.5, 10]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.6} metalness={0.3} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Wheels */}
       {[-1, 1].flatMap(x =>
         [-1.5, 0, 1.5].map((z, i) => (
           <mesh key={`${x}-${i}`} position={[x * 1.1, 0.3, z]} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.3, 0.3, 0.2, 8]} />
-            <meshStandardMaterial color={0x1a1015} roughness={0.95} />
+            <meshLambertMaterial color={0x1a1015} />
           </mesh>
         ))
       )}

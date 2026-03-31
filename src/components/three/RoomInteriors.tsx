@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _riLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import * as THREE from 'three'
@@ -14,7 +16,7 @@ function ParkourGymInterior({ buildPct }: { buildPct: number }) {
     <group>
       {/* Vault boxes — various heights */}
       {[[-20, 7, -12], [-8, 5, -20], [12, 10, -8], [25, 6, 12], [-12, 4, 20]].map(([x, h, z], i) => (
-        <mesh key={`vb-${i}`} position={[x, h / 2, z]} castShadow>
+        <mesh key={`vb-${i}`} position={[x, h / 2, z]}>
           <boxGeometry args={[6, h, 5]} />
           {mat}
         </mesh>

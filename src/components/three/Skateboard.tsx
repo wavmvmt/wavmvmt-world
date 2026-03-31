@@ -84,22 +84,22 @@ function SkateboardEntity({ position, index }: {
       {/* Deck */}
       <mesh position={[0, 0.08, 0]}>
         <boxGeometry args={[0.3, 0.04, 0.9]} />
-        <meshStandardMaterial color={boardColor} roughness={0.7} />
+        <meshLambertMaterial color={boardColor} />
       </mesh>
       {/* Nose/tail curve */}
       <mesh position={[0, 0.1, 0.4]} rotation={[0.3, 0, 0]}>
         <boxGeometry args={[0.28, 0.03, 0.15]} />
-        <meshStandardMaterial color={boardColor} roughness={0.7} />
+        <meshLambertMaterial color={boardColor} />
       </mesh>
       <mesh position={[0, 0.1, -0.4]} rotation={[-0.3, 0, 0]}>
         <boxGeometry args={[0.28, 0.03, 0.15]} />
-        <meshStandardMaterial color={boardColor} roughness={0.7} />
+        <meshLambertMaterial color={boardColor} />
       </mesh>
       {/* Trucks */}
       {[-0.25, 0.25].map((z, i) => (
         <mesh key={i} position={[0, 0.04, z]}>
           <boxGeometry args={[0.25, 0.03, 0.08]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
       {/* Wheels */}
@@ -107,7 +107,7 @@ function SkateboardEntity({ position, index }: {
         [-0.25, 0.25].map((z, i) => (
           <mesh key={`${x}-${i}`} position={[x, 0.02, z]} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.025, 0.025, 0.04, 8]} />
-            <meshStandardMaterial color={0xf0f0f0} roughness={0.5} />
+            <meshLambertMaterial color={0xf0f0f0} />
           </mesh>
         ))
       )}

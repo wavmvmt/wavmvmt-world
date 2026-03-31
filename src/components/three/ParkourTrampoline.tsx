@@ -52,12 +52,12 @@ function Trampoline({ position }: { position: [number, number, number] }) {
       {/* Trampoline surface */}
       <mesh ref={meshRef}>
         <cylinderGeometry args={[2.5, 2.5, 0.3, 8]} />
-        <meshStandardMaterial color={COLORS.lavender} transparent opacity={0.6} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.lavender} transparent opacity={0.6} />
       </mesh>
       {/* Frame */}
       <mesh position={[0, 0, 0]}>
         <torusGeometry args={[2.5, 0.1, 6, 16]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.4} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Legs */}
       {Array.from({ length: 6 }, (_, i) => {
@@ -65,7 +65,7 @@ function Trampoline({ position }: { position: [number, number, number] }) {
         return (
           <mesh key={i} position={[Math.cos(angle) * 2.3, -0.3, Math.sin(angle) * 2.3]}>
             <cylinderGeometry args={[0.08, 0.08, 0.6, 4]} />
-            <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
         )
       })}

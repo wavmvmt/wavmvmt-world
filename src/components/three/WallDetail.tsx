@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import * as THREE from 'three'
@@ -18,13 +20,13 @@ function PipeRun({ y, z1, z2, x, color = COLORS.copper }: {
     <group>
       <mesh position={[x, y, midZ]}>
         <cylinderGeometry args={[0.12, 0.12, length, 6]} />
-        <meshStandardMaterial color={color} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={color} />
       </mesh>
       {/* Pipe brackets every 30 units */}
       {Array.from({ length: Math.floor(length / 30) + 1 }, (_, i) => (
         <mesh key={i} position={[x, y, z1 + i * 30]}>
           <torusGeometry args={[0.18, 0.03, 4, 8, Math.PI]} />
-          <meshStandardMaterial color={COLORS.steel} metalness={0.6} roughness={0.4} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
     </group>
@@ -39,7 +41,7 @@ function ConduitRun({ y, z1, z2, x }: {
   return (
     <mesh position={[x, y, midZ]}>
       <boxGeometry args={[0.08, 0.08, length]} />
-      <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.6} />
+      <meshLambertMaterial color={COLORS.steel} />
     </mesh>
   )
 }
@@ -49,12 +51,12 @@ function JunctionBox({ position }: { position: [number, number, number] }) {
     <group position={position}>
       <mesh>
         <boxGeometry args={[0.4, 0.5, 0.15]} />
-        <meshStandardMaterial color={0x2a2535} roughness={0.7} />
+        <meshLambertMaterial color={0x2a2535} />
       </mesh>
       {/* Cover plate */}
       <mesh position={[0, 0, 0.08]}>
         <boxGeometry args={[0.35, 0.45, 0.02]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
     </group>
   )
@@ -68,7 +70,7 @@ function EmergencyLight({ position, rotation = 0 }: {
       {/* Housing */}
       <mesh>
         <boxGeometry args={[1, 0.3, 0.15]} />
-        <meshStandardMaterial color={0x2a2535} roughness={0.7} />
+        <meshLambertMaterial color={0x2a2535} />
       </mesh>
       {/* Red light */}
       <mesh position={[0, 0, 0.09]}>
@@ -118,12 +120,12 @@ export function WallDetail() {
         <group key={`fe-${i}`} position={[x, 3, -228]}>
           <mesh>
             <cylinderGeometry args={[0.15, 0.15, 0.8, 8]} />
-            <meshStandardMaterial color={0xcc2020} roughness={0.6} />
+            <meshLambertMaterial color={0xcc2020} />
           </mesh>
           {/* Handle */}
           <mesh position={[0, 0.45, 0]}>
             <torusGeometry args={[0.08, 0.02, 4, 8, Math.PI]} />
-            <meshStandardMaterial color={0x1a1015} roughness={0.7} />
+            <meshLambertMaterial color={0x1a1015} />
           </mesh>
         </group>
       ))}

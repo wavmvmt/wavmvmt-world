@@ -34,7 +34,6 @@ export function ConstructionBanner() {
           transparent
           opacity={0.9}
           side={THREE.DoubleSide}
-          roughness={0.95}
         />
       </mesh>
 

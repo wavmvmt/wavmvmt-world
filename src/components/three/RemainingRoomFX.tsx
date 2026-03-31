@@ -151,19 +151,19 @@ function SpaMassageTable() {
           {/* Table surface */}
           <mesh position={[0, 1, 0]}>
             <boxGeometry args={[1.5, 0.15, 3]} />
-            <meshStandardMaterial color={0xf0e8d8} roughness={0.9} />
+            <meshLambertMaterial color={0xf0e8d8} />
           </mesh>
           {/* Legs */}
           {[[-0.6, -1.2], [0.6, -1.2], [-0.6, 1.2], [0.6, 1.2]].map(([lx, lz], j) => (
             <mesh key={j} position={[lx, 0.5, lz]}>
               <cylinderGeometry args={[0.04, 0.04, 1, 4]} />
-              <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+              <meshLambertMaterial color={COLORS.steel} />
             </mesh>
           ))}
           {/* Pillow */}
           <mesh position={[0, 1.12, -1.1]}>
             <boxGeometry args={[0.6, 0.1, 0.4]} />
-            <meshStandardMaterial color={0xffffff} roughness={0.95} />
+            <meshLambertMaterial color={0xffffff} />
           </mesh>
           {/* Soft glow */}
           <pointLight position={[0, 2, 0]} intensity={0.1} color={COLORS.gold} distance={5} decay={2} />

@@ -26,12 +26,14 @@ const ROOM_ICONS: Record<string, string> = {
  * Floating emoji icons above each room — gentle bobbing animation.
  * Makes rooms visually identifiable from a distance.
  */
+let _fsRoomIc = 0
 function RoomIcon({ room }: { room: typeof ROOMS[0] }) {
   const groupRef = useRef<THREE.Group>(null)
   const icon = ROOM_ICONS[room.name] || '🏗️'
   const phaseOffset = useRef(Math.random() * Math.PI * 2)
 
   useFrame((state) => {
+    if ((_fsRoomIc = (_fsRoomIc + 1) % 4) !== 0) return  // ~15fps — icon bobbing
     if (groupRef.current) {
       groupRef.current.position.y = room.h + 8 + Math.sin(state.clock.elapsedTime * 0.8 + phaseOffset.current) * 1.5
     }

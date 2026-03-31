@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import * as THREE from 'three'
@@ -12,12 +14,12 @@ function LoadingDocks() {
           {/* Dock platform */}
           <mesh position={[0, 1.5, -3]}>
             <boxGeometry args={[18, 3, 6]} />
-            <meshStandardMaterial color={COLORS.concrete} roughness={0.95} />
+            <meshLambertMaterial color={COLORS.concrete} />
           </mesh>
           {/* Roll-up door */}
           <mesh position={[0, 5, 0.1]}>
             <boxGeometry args={[14, 7, 0.2]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.6} transparent opacity={0.7} />
+            <meshLambertMaterial color={COLORS.steel} transparent opacity={0.7} />
           </mesh>
           {/* Door frame */}
           <lineSegments position={[0, 5, 0.2]}>
@@ -28,7 +30,7 @@ function LoadingDocks() {
           {[-5, 5].map((bx, j) => (
             <mesh key={j} position={[bx, 1, -0.5]}>
               <cylinderGeometry args={[0.3, 0.3, 1.5, 8]} />
-              <meshStandardMaterial color={COLORS.amber} roughness={0.8} />
+              <meshLambertMaterial color={COLORS.amber} />
             </mesh>
           ))}
         </group>
@@ -55,12 +57,12 @@ function ParkingArea() {
           {/* Pole */}
           <mesh position={[0, 6, 0]}>
             <cylinderGeometry args={[0.12, 0.15, 12, 6]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
           {/* Light fixture */}
           <mesh position={[0, 11.5, 0]}>
             <boxGeometry args={[1.5, 0.3, 0.8]} />
-            <meshStandardMaterial color={COLORS.steel} metalness={0.6} />
+            <meshLambertMaterial color={COLORS.steel} />
           </mesh>
           {/* Light glow */}
           <pointLight position={[0, 11, 0]} color={COLORS.cream} intensity={0.15} distance={25} decay={2} />
@@ -85,18 +87,18 @@ function UtilityArea() {
       {/* Dumpster */}
       <mesh position={[0, 2, 0]}>
         <boxGeometry args={[8, 4, 5]} />
-        <meshStandardMaterial color={0x2a5030} roughness={0.9} />
+        <meshLambertMaterial color={0x2a5030} />
       </mesh>
       {/* Dumpster lid */}
       <mesh position={[0, 4.1, 0]} rotation={[0.1, 0, 0]}>
         <boxGeometry args={[8.2, 0.2, 5.2]} />
-        <meshStandardMaterial color={0x1a3020} roughness={0.85} />
+        <meshLambertMaterial color={0x1a3020} />
       </mesh>
 
       {/* HVAC unit */}
       <mesh position={[15, 2.5, 0]}>
         <boxGeometry args={[6, 5, 5]} />
-        <meshStandardMaterial color={COLORS.steel} metalness={0.4} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* HVAC fan grille */}
       <mesh position={[15, 4, 2.6]}>
@@ -107,7 +109,7 @@ function UtilityArea() {
       {/* Electrical panel */}
       <mesh position={[-10, 2.5, 0]}>
         <boxGeometry args={[3, 4, 1]} />
-        <meshStandardMaterial color={0x404040} metalness={0.5} roughness={0.6} />
+        <meshLambertMaterial color={0x404040} />
       </mesh>
     </group>
   )
@@ -120,7 +122,7 @@ function GroundApron() {
       {/* Concrete apron around building */}
       <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[560, 500]} />
-        <meshStandardMaterial color={0x252028} roughness={0.95} />
+        <meshLambertMaterial color={0x252028} />
       </mesh>
 
       {/* Sidewalk paths */}
@@ -131,7 +133,7 @@ function GroundApron() {
       ].map((path, i) => (
         <mesh key={i} position={path.pos} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[path.w, path.d]} />
-          <meshStandardMaterial color={0x302830} roughness={0.9} />
+          <meshLambertMaterial color={0x302830} />
         </mesh>
       ))}
 
@@ -139,7 +141,7 @@ function GroundApron() {
       {Array.from({ length: 20 }, (_, i) => (
         <mesh key={i} position={[-90 + i * 10, 0.15, 186]}>
           <boxGeometry args={[4, 0.3, 0.5]} />
-          <meshStandardMaterial color={COLORS.concrete} roughness={0.95} />
+          <meshLambertMaterial color={COLORS.concrete} />
         </mesh>
       ))}
     </group>

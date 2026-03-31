@@ -58,6 +58,8 @@ export default function World3D() {
       <Canvas
         shadows={perf.enableShadows}
         camera={{ fov: 55, near: 0.5, far: level === 'low' ? 200 : 350, position: [0, 8, 80] }}
+        frameloop="always"
+        performance={{ min: 0.5 }}
         gl={{
           antialias: isDesktop && level !== 'low',
           toneMapping: THREE.ACESFilmicToneMapping,

@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import { useRef } from 'react'
@@ -23,25 +25,25 @@ function Plant({ position, scale = 1 }: { position: [number, number, number]; sc
       {/* Pot */}
       <mesh position={[0, 0.3, 0]}>
         <cylinderGeometry args={[0.4, 0.3, 0.6, 8]} />
-        <meshStandardMaterial color={0x8a5030} roughness={0.9} />
+        <meshLambertMaterial color={0x8a5030} />
       </mesh>
       {/* Soil */}
       <mesh position={[0, 0.62, 0]}>
         <cylinderGeometry args={[0.35, 0.35, 0.05, 8]} />
-        <meshStandardMaterial color={0x3a2a1a} roughness={0.95} />
+        <meshLambertMaterial color={0x3a2a1a} />
       </mesh>
       {/* Leaves — round bushy Ghibli style */}
       <group ref={leafRef}>
         {[0, 1.2, 2.4, 3.6, 4.8].map((angle, i) => (
           <mesh key={i} position={[Math.cos(angle) * 0.3, 1.1 + i * 0.08, Math.sin(angle) * 0.3]}>
             <sphereGeometry args={[0.35 - i * 0.03, 8, 6]} />
-            <meshStandardMaterial color={0x4a8a3a} roughness={0.85} transparent opacity={0.8} />
+            <meshLambertMaterial color={0x4a8a3a} transparent opacity={0.8} />
           </mesh>
         ))}
         {/* Central tall leaf cluster */}
         <mesh position={[0, 1.4, 0]}>
           <sphereGeometry args={[0.25, 8, 6]} />
-          <meshStandardMaterial color={0x5a9a4a} roughness={0.85} />
+          <meshLambertMaterial color={0x5a9a4a} />
         </mesh>
       </group>
     </group>
@@ -66,7 +68,7 @@ function NeonSign({ position, text, color, rotation = 0 }: {
       {/* Backing plate */}
       <mesh>
         <boxGeometry args={[text.length * 0.35 + 0.5, 0.8, 0.08]} />
-        <meshStandardMaterial color={0x1a1015} roughness={0.9} />
+        <meshLambertMaterial color={0x1a1015} />
       </mesh>
       {/* Neon tubes — simplified as emissive boxes */}
       {text.split('').map((char, i) => (

@@ -1,3 +1,5 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _dLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 'use client'
 
 import { useRef } from 'react'
@@ -27,7 +29,7 @@ function SurveyStakes({ positions }: { positions: [number, number, number][] }) 
           {/* Stake */}
           <mesh position={[0, 0.5, 0]}>
             <boxGeometry args={[0.05, 1, 0.05]} />
-            <meshStandardMaterial color={COLORS.woodLt} roughness={0.9} />
+            <meshLambertMaterial color={COLORS.woodLt} />
           </mesh>
           {/* Pink survey ribbon */}
           <mesh position={[0.1, 0.8, 0]}>
@@ -62,24 +64,24 @@ function MapTable({ position, rotation = 0 }: { position: [number, number, numbe
       {/* Table */}
       <mesh position={[0, 0.75, 0]}>
         <boxGeometry args={[2, 0.05, 1.2]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.7} metalness={0.3} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Legs */}
       {[[-0.8, -0.5], [0.8, -0.5], [-0.8, 0.5], [0.8, 0.5]].map(([x, z], i) => (
         <mesh key={i} position={[x, 0.37, z]}>
           <cylinderGeometry args={[0.03, 0.03, 0.74, 4]} />
-          <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       ))}
       {/* Map/blueprint on table */}
       <mesh position={[0, 0.78, 0]} rotation={[-Math.PI / 2, 0, 0.1]}>
         <planeGeometry args={[1.6, 1]} />
-        <meshStandardMaterial color={0x2040a0} transparent opacity={0.7} roughness={0.95} side={THREE.DoubleSide} />
+        <meshLambertMaterial color={0x2040a0} transparent opacity={0.7} side={THREE.DoubleSide} />
       </mesh>
       {/* Coffee cup */}
       <mesh position={[0.7, 0.85, 0.3]}>
         <cylinderGeometry args={[0.05, 0.04, 0.12, 8]} />
-        <meshStandardMaterial color={0xd0d0d0} roughness={0.6} />
+        <meshLambertMaterial color={0xd0d0d0} />
       </mesh>
     </group>
   )
@@ -102,34 +104,34 @@ function CementTruck({ position, rotation = 0 }: { position: [number, number, nu
       {/* Cab */}
       <mesh position={[0, 0.8, 1.8]}>
         <boxGeometry args={[1.8, 1.2, 1.2]} />
-        <meshStandardMaterial color={0xcc4444} roughness={0.7} />
+        <meshLambertMaterial color={0xcc4444} />
       </mesh>
       {/* Windshield */}
       <mesh position={[0, 1.1, 2.35]}>
         <planeGeometry args={[1.4, 0.6]} />
-        <meshStandardMaterial color={0x88bbdd} transparent opacity={0.5} roughness={0.2} />
+        <meshLambertMaterial color={0x88bbdd} transparent opacity={0.5} />
       </mesh>
       {/* Body */}
       <mesh position={[0, 0.6, 0]}>
         <boxGeometry args={[1.6, 0.8, 3]} />
-        <meshStandardMaterial color={0xcc4444} roughness={0.7} />
+        <meshLambertMaterial color={0xcc4444} />
       </mesh>
       {/* Drum */}
       <mesh ref={drumRef} position={[0, 1.5, -0.2]} rotation={[0.2, 0, 0]}>
         <cylinderGeometry args={[0.9, 0.6, 2.5, 10]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.5} metalness={0.3} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Chute */}
       <mesh position={[0.3, 0.8, -1.8]} rotation={[-0.5, 0, 0]}>
         <boxGeometry args={[0.4, 0.08, 1]} />
-        <meshStandardMaterial color={COLORS.steel} roughness={0.6} />
+        <meshLambertMaterial color={COLORS.steel} />
       </mesh>
       {/* Wheels */}
       {[-0.7, 0.7].flatMap(x =>
         [-1, 0.5, 1.5].map((z, i) => (
           <mesh key={`${x}-${i}`} position={[x, 0.2, z]} rotation={[0, 0, Math.PI / 2]}>
             <cylinderGeometry args={[0.2, 0.2, 0.15, 8]} />
-            <meshStandardMaterial color={0x1a1015} roughness={0.95} />
+            <meshLambertMaterial color={0x1a1015} />
           </mesh>
         ))
       )}
@@ -144,7 +146,7 @@ function RebarStack({ position }: { position: [number, number, number] }) {
       {Array.from({ length: 8 }, (_, i) => (
         <mesh key={i} position={[Math.random() * 0.3 - 0.15, i * 0.06, 0]} rotation={[0, Math.random() * 0.1, Math.PI / 2]}>
           <cylinderGeometry args={[0.02, 0.02, 5, 4]} />
-          <meshStandardMaterial color={0x8a5030} roughness={0.8} metalness={0.3} />
+          <meshLambertMaterial color={0x8a5030} />
         </mesh>
       ))}
     </group>
@@ -161,7 +163,7 @@ function LumberStack({ position }: { position: [number, number, number] }) {
         return (
           <mesh key={i} position={[col * 0.12 - 0.18, row * 0.1 + 0.05, 0]}>
             <boxGeometry args={[0.09, 0.09, 3]} />
-            <meshStandardMaterial color={0xc8a060} roughness={0.9} />
+            <meshLambertMaterial color={0xc8a060} />
           </mesh>
         )
       })}
@@ -185,34 +187,34 @@ function Excavator({ position, rotation = 0 }: { position: [number, number, numb
       {[-0.5, 0.5].map((x, i) => (
         <mesh key={i} position={[x, 0.15, 0]}>
           <boxGeometry args={[0.3, 0.3, 1.8]} />
-          <meshStandardMaterial color={0x2a2020} roughness={0.9} />
+          <meshLambertMaterial color={0x2a2020} />
         </mesh>
       ))}
       {/* Body */}
       <mesh position={[0, 0.6, 0]}>
         <boxGeometry args={[1, 0.5, 1.2]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Cab */}
       <mesh position={[-0.15, 1, 0.1]}>
         <boxGeometry args={[0.6, 0.5, 0.6]} />
-        <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+        <meshLambertMaterial color={COLORS.amber} />
       </mesh>
       {/* Window */}
       <mesh position={[-0.15, 1.1, 0.41]}>
         <planeGeometry args={[0.4, 0.3]} />
-        <meshStandardMaterial color={0x88bbdd} transparent opacity={0.4} />
+        <meshLambertMaterial color={0x88bbdd} transparent opacity={0.4} />
       </mesh>
       {/* Arm */}
       <group ref={armRef} position={[0.3, 0.9, 0.5]}>
         <mesh position={[0, 0.3, 0.5]} rotation={[-0.3, 0, 0]}>
           <boxGeometry args={[0.15, 0.12, 1.2]} />
-          <meshStandardMaterial color={COLORS.amber} roughness={0.7} />
+          <meshLambertMaterial color={COLORS.amber} />
         </mesh>
         {/* Bucket */}
         <mesh position={[0, 0.1, 1.1]} rotation={[-0.8, 0, 0]}>
           <boxGeometry args={[0.4, 0.3, 0.3]} />
-          <meshStandardMaterial color={COLORS.steel} roughness={0.6} metalness={0.3} />
+          <meshLambertMaterial color={COLORS.steel} />
         </mesh>
       </group>
     </group>

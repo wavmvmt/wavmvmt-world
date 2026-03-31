@@ -139,12 +139,12 @@ function CoachNPC({ coach }: { coach: Coach }) {
       {/* Body — distinct from workers (vest instead of uniform) */}
       <mesh position={[0, 1.05, 0]}>
         <capsuleGeometry args={[0.22, 0.5, 8, 12]} />
-        <meshStandardMaterial color={coach.color} roughness={0.7} />
+        <meshLambertMaterial color={coach.color} />
       </mesh>
       {/* Head */}
       <mesh position={[0, 1.72, 0]}>
         <sphereGeometry args={[0.28, 8, 6]} />
-        <meshStandardMaterial color={coach.skinTone} roughness={0.8} />
+        <meshLambertMaterial color={coach.skinTone} />
       </mesh>
       {/* Eyes */}
       {[-1, 1].map(s => (
@@ -162,7 +162,7 @@ function CoachNPC({ coach }: { coach: Coach }) {
       {/* Clipboard */}
       <mesh position={[0.3, 0.9, 0.15]} rotation={[0.3, 0, 0]}>
         <boxGeometry args={[0.25, 0.35, 0.02]} />
-        <meshStandardMaterial color={0xf0e8d0} roughness={0.9} />
+        <meshLambertMaterial color={0xf0e8d0} />
       </mesh>
 
       {/* Name tag */}

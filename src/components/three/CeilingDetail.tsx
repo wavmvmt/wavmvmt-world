@@ -34,7 +34,7 @@ function Duct({ start, end, radius = 0.4 }: {
   return (
     <mesh position={mid} rotation={euler}>
       <cylinderGeometry args={[radius, radius, length, 8]} />
-      <meshStandardMaterial color={COLORS.steel} metalness={0.5} roughness={0.5} />
+      <meshLambertMaterial color={COLORS.steel} />
     </mesh>
   )
 }
@@ -49,7 +49,7 @@ function HangingCable({ x, z, length = 8 }: { x: number; z: number; length?: num
       {/* Junction box at bottom */}
       <mesh position={[0, -length, 0]}>
         <boxGeometry args={[0.3, 0.2, 0.3]} />
-        <meshStandardMaterial color={0x2a2030} roughness={0.7} />
+        <meshLambertMaterial color={0x2a2030} />
       </mesh>
     </group>
   )
@@ -85,8 +85,6 @@ export function CeilingDetail() {
             <planeGeometry args={[480, 30]} />
             <meshStandardMaterial
               color={0x1a1520}
-              roughness={0.95}
-              metalness={0.02}
               side={THREE.DoubleSide}
             />
           </mesh>

@@ -52,7 +52,7 @@ function ReflectingPools() {
               metalness={0.95}
               roughness={0.05}
               side={THREE.DoubleSide}
-              envMapIntensity={2}
+              envMapIntensity={0}
             />
           </mesh>
           {/* Pool edge — stone border */}

@@ -86,7 +86,10 @@ export function AmbientAudio() {
     }
   }, [initAudio])
 
+  const _fsAudio = useRef(0)
   useFrame(() => {
+    _fsAudio.current = (_fsAudio.current + 1) % 30  // Check audio events at ~2fps max
+    if (_fsAudio.current !== 0) return
     const ctx = audioManager.getContext()
     if (!ctx) return
 

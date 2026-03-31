@@ -44,7 +44,7 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
       {/* Screen frame */}
       <mesh>
         <boxGeometry args={[8, 5, 0.2]} />
-        <meshStandardMaterial color={0x1a1015} roughness={0.5} />
+        <meshLambertMaterial color={0x1a1015} />
       </mesh>
       {/* Screen surface — emissive glow */}
       <mesh position={[0, 0, 0.11]}>
@@ -53,7 +53,6 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
           color={0x0a0510}
           emissive={color}
           emissiveIntensity={0.15}
-          roughness={0.3}
         />
       </mesh>
       {/* Animated scan line */}
