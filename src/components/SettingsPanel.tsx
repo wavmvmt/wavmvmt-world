@@ -18,6 +18,37 @@ export function SettingsPanel() {
   const [quality, setQuality] = useState<PerfLevel>(() =>
     typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
   )
+  const [drawCalls, setDrawCalls] = useState(0)
+  const [fps, setFps] = useState(0)
+
+  // Live FPS + draw call counter
+  useEffect(() => {
+    let frames = 0, last = performance.now()
+    const rafId = { current: 0 }
+    const tick = () => {
+      frames++
+      const now = performance.now()
+      if (now - last >= 1000) {
+        setFps(frames)
+        frames = 0
+        last = now
+        // Request renderer stats from World3D canvas
+        window.dispatchEvent(new CustomEvent('requestRendererStats'))
+      }
+      rafId.current = requestAnimationFrame(tick)
+    }
+    rafId.current = requestAnimationFrame(tick)
+
+    const onStats = (e: Event) => {
+      const { drawCalls: dc } = (e as CustomEvent).detail
+      setDrawCalls(dc || 0)
+    }
+    window.addEventListener('rendererStats', onStats as EventListener)
+    return () => {
+      cancelAnimationFrame(rafId.current)
+      window.removeEventListener('rendererStats', onStats as EventListener)
+    }
+  }, [open])
 
   // Check system preference on mount
   useEffect(() => {
@@ -101,6 +132,17 @@ export function SettingsPanel() {
         <div className="text-[0.48rem] mt-1.5" style={{ color: 'rgba(255,220,180,0.2)' }}>
           Applies on reload
         </div>
+        {/* Live perf stats */}
+        {open && fps > 0 && (
+          <div className="flex justify-between mt-2 px-1">
+            <span style={{ color: fps >= 50 ? 'rgba(128,212,168,0.6)' : fps >= 30 ? 'rgba(240,198,116,0.6)' : 'rgba(240,100,100,0.7)', fontSize: '0.5rem', fontFamily: 'monospace' }}>
+              {fps} fps
+            </span>
+            <span style={{ color: 'rgba(255,220,180,0.25)', fontSize: '0.5rem', fontFamily: 'monospace' }}>
+              {drawCalls} DC
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Controls reference */}
