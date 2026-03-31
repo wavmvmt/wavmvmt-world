@@ -190,16 +190,27 @@ export function Minimap() {
       ctx.lineWidth = 1
       ctx.stroke()
 
-      animId = requestAnimationFrame(draw)
-    }
+    }  // draw function ends here — RAF is event-driven, not self-scheduling
 
-    // Listen for player position updates
+    // Event-driven redraw — only when player moves (not every RAF)
+    // This cuts from 60fps canvas redraws to ~20fps (matching player movement)
+    let rafPending = false
+    function scheduleRedraw() {
+      if (rafPending) return
+      rafPending = true
+      animId = requestAnimationFrame(() => {
+        rafPending = false
+        draw()
+      })
+    }
     function onPlayerMove(e: CustomEvent) {
       playerX = e.detail.x
       playerZ = e.detail.z
+      scheduleRedraw()
     }
     window.addEventListener('playerMove' as string, onPlayerMove as EventListener)
 
+    // Initial draw
     draw()
 
     return () => {

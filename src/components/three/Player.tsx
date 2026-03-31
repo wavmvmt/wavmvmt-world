@@ -113,6 +113,11 @@ export function Player() {
     }
   }, [handleKeyDown, handleKeyUp, handleMouseMove, handleClick, handleLockChange])
 
+  // Dispatch cache refs — avoid DOM events when player hasn't moved
+  const _lastPX = useRef(0), _lastPZ = useRef(0)
+  const _lastDX = useRef(999), _lastDZ = useRef(999)
+  const _lastRoom = useRef('')
+
   // Pre-allocated vectors — reused every frame, zero GC pressure
   const _forward = useRef(new THREE.Vector3()).current
   const _right = useRef(new THREE.Vector3()).current
@@ -158,6 +163,11 @@ export function Player() {
     const PLAYER_R = 1.5
 
     for (const room of ROOMS) {
+      // Fast radius pre-check — skip rooms clearly out of range
+      const rdx = newX - room.x, rdz = newZ - room.z
+      const maxR = room.w / 2 + room.d / 2 + PLAYER_R + 4
+      if (rdx * rdx + rdz * rdz > maxR * maxR) continue
+
       const left = room.x - room.w / 2 - PLAYER_R
       const rRight = room.x + room.w / 2 + PLAYER_R
       const front = room.z - room.d / 2 - PLAYER_R
@@ -257,10 +267,17 @@ export function Player() {
       s.currentRoom = nearestRoom
     }
 
-    // Dispatch position + room for minimap and UI
-    window.dispatchEvent(new CustomEvent('playerMove', {
-      detail: { x: pos.x, z: pos.z, room: s.currentRoom },
-    }))
+    // Dispatch position + room for minimap and UI — only when moved
+    _lastDX.current += Math.abs(pos.x - _lastPX.current)
+    _lastDZ.current += Math.abs(pos.z - _lastPZ.current)
+    if (_lastDX.current > 0.3 || _lastDZ.current > 0.3 || nearestRoom !== _lastRoom.current) {
+      _lastPX.current = pos.x; _lastPZ.current = pos.z
+      _lastDX.current = 0; _lastDZ.current = 0
+      _lastRoom.current = nearestRoom
+      window.dispatchEvent(new CustomEvent('playerMove', {
+        detail: { x: pos.x, z: pos.z, room: s.currentRoom },
+      }))
+    }
 
     // Camera bob while walking
     const bobOffset = currentSpeed > 1
