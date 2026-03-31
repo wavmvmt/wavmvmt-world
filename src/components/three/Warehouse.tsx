@@ -60,8 +60,10 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
     return () => window.removeEventListener('playerMove', handler as EventListener)
   }, [x, z, w, d])
 
+  const _fsWglow = useRef(0)
   useFrame(() => {
-
+    _fsWglow.current = (_fsWglow.current + 1) % 4
+    if (_fsWglow.current !== 0) return
     // Apply proximity glow
     if (glowRef.current) {
       glowRef.current.intensity = proximityRef.current * 0.8

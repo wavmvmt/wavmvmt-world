@@ -60,7 +60,8 @@ function SkateboardEntity({ position, index }: {
     const bz = groupRef.current.position.z
 
     const dist = Math.sqrt((px - bx) ** 2 + (pz - bz) ** 2)
-    setNearby(dist < 5 && !riding)
+    const _newNearby = dist < 5 && !riding
+    if (_newNearby !== nearby) setNearby(_newNearby)
 
     if (riding) {
       // Board follows player

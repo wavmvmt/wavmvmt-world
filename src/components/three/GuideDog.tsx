@@ -92,11 +92,11 @@ export function GuideDog() {
 
     // At destination?
     const atDest = distToTarget < 15
-    setSitting(atDest)
+    if (sitting !== atDest) setSitting(atDest)
 
     // Player too far behind?
     const playerFarBehind = distPlayerToDog > 25
-    setLookingBack(playerFarBehind)
+    if (lookingBack !== playerFarBehind) setLookingBack(playerFarBehind)
 
     // Move dog toward its target position
     const speed = atDest ? 0 : playerFarBehind ? 0.5 : 3

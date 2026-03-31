@@ -28,7 +28,10 @@ function DemoScreenPanel({ screen }: { screen: DemoScreen }) {
   const color = room?.color || COLORS.gold
   const hexColor = `#${color.toString(16).padStart(6, '0')}`
 
+  const _fsDem = useRef(0)
   useFrame((state) => {
+    _fsDem.current = (_fsDem.current + 1) % 6
+    if (_fsDem.current !== 0) return
     if (glowRef.current) {
       glowRef.current.intensity = 0.25 + Math.sin(state.clock.elapsedTime * 0.5) * 0.08
     }

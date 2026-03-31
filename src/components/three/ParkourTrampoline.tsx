@@ -34,8 +34,14 @@ function Trampoline({ position }: { position: [number, number, number] }) {
     return () => window.removeEventListener('playerMove', onMove as EventListener)
   }, [position])
 
+  const _fsTram = useRef(0)
   useFrame((_, delta) => {
     if (!meshRef.current) return
+    if (!bouncing.current) {
+      // Trampoline idle — check every 4th frame for collision only
+      _fsTram.current = (_fsTram.current + 1) % 4
+      if (_fsTram.current !== 0) return
+    }
     if (bouncing.current) {
       bouncePhase.current += delta * 8
       const squash = 1 - Math.sin(bouncePhase.current) * 0.3 * Math.exp(-bouncePhase.current * 0.5)

@@ -135,16 +135,17 @@ function SimpleWorker({ position, index }: { position: [number, number]; index: 
 }
 
 // ─── DETAILED WORKER (high quality — original full geometry) ─────────────────
-function useToonGradient() {
-  return useMemo(() => {
-    const colors = new Uint8Array(4)
-    colors[0] = 80; colors[1] = 160; colors[2] = 220; colors[3] = 255
-    const tex = new THREE.DataTexture(colors, 4, 1, THREE.RedFormat)
-    tex.minFilter = THREE.NearestFilter
-    tex.magFilter = THREE.NearestFilter
-    tex.needsUpdate = true
-    return tex
-  }, [])
+// Toon gradient — singleton, shared by ALL DetailedWorker instances
+let _toonGradient: THREE.DataTexture | null = null
+function getToonGradient(): THREE.DataTexture {
+  if (_toonGradient) return _toonGradient
+  const colors = new Uint8Array(4)
+  colors[0] = 80; colors[1] = 160; colors[2] = 220; colors[3] = 255
+  _toonGradient = new THREE.DataTexture(colors, 4, 1, THREE.RedFormat)
+  _toonGradient.minFilter = THREE.NearestFilter
+  _toonGradient.magFilter = THREE.NearestFilter
+  _toonGradient.needsUpdate = true
+  return _toonGradient
 }
 
 function DetailedWorker({ position, index }: { position: [number, number]; index: number }) {
@@ -157,7 +158,7 @@ function DetailedWorker({ position, index }: { position: [number, number]; index
   const skin = SKIN_TONES[index % SKIN_TONES.length]
   const phase = useRef(Math.random() * Math.PI * 2)
   const type = ['hammer', 'measure', 'walk', 'dance', 'hammer', 'walk', 'weld', 'carry', 'idle', 'dance'][index % 10]
-  const toonGradient = useToonGradient()
+  const toonGradient = getToonGradient()
   const [speech, setSpeech] = useState<string | null>(null)
   const nextSpeechRef = useRef(5 + Math.random() * 15)
   const distRef = useRef(999)
