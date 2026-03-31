@@ -42,8 +42,11 @@ export function RoomParticles() {
     return { positions: pos, colors: col, roomIndices: indices }
   }, [])
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
     if (!pointsRef.current) return
+    frameSkip.current = (frameSkip.current + 1) % 2
+    if (frameSkip.current !== 0) return
     const t = state.clock.elapsedTime
     const posAttr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute
     const arr = posAttr.array as Float32Array

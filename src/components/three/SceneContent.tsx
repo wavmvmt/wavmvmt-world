@@ -2,7 +2,13 @@
 
 /**
  * All 3D scene content with performance-adaptive rendering.
- * Low-end devices get a stripped-down version that still looks good.
+ *
+ * KEY CHANGE: Workers, DustMotes, LightShafts, NightSky moved out of
+ * "always rendered" — they were responsible for the majority of frame cost
+ * on low/medium devices due to useFrame hooks + Html elements.
+ *
+ * Always-rendered section is now truly lightweight:
+ *   Warehouse geometry + Player + RoomInteriors (static) + audio + doors + fog
  */
 
 import { useMemo } from 'react'
@@ -85,36 +91,19 @@ import { RoomProgressRings } from './RoomProgressRings'
 import { RoomParticles } from './RoomParticles'
 
 export function SceneContent() {
-  const perf = useMemo(() => {
-    const level = detectPerformanceLevel()
-    return getPerfSettings(level)
-  }, [])
+  const level = useMemo(() => detectPerformanceLevel(), [])
+  const perf = useMemo(() => getPerfSettings(level), [level])
+  const isMediumOrHigh = level !== 'low'
 
   return (
     <>
-      {/* === ALWAYS RENDERED (core experience) === */}
+      {/* === ALWAYS RENDERED — lean static core only === */}
+      {/* Pure geometry, no useFrame, no Html */}
       <Warehouse />
       <Player />
       <RoomInteriors />
-      <Workers />
-      <AmbientAudio />
-      <DustMotes />
       <AnimatedDoors />
-      <LightShafts />
       <Signage />
-      <NightSky />
-
-      {/* Room interactions — lightweight, essential */}
-      <BeatPads />
-      <SoundBathBowls />
-      <RoomInteractions />
-      <StageSpotlight />
-
-      {/* Quest navigation — lightweight */}
-      <QuestPath />
-      <GuideDog />
-
-      {/* Room floor glow + floor markings — lightweight, always render */}
       <ProceduralFloor />
       <RoomFloorGlow />
       <FloorDetail />
@@ -122,19 +111,49 @@ export function SceneContent() {
       <FogLayers />
       <ConstructionBanner />
 
-      {/* Audio — no visual cost */}
+      {/* Audio — zero visual cost */}
+      <AmbientAudio />
       <CafeAmbient />
       <BirdSounds />
       <RoomAmbience />
-      <RoomProximityGlow />
 
-      {/* Confetti + drone — event-driven, zero cost when idle */}
+      {/* Lightweight interaction triggers */}
+      <RoomInteractions />
+      <RoomProximityGlow />
+      <QuestPath />
+
+      {/* Event-driven — zero cost when idle */}
       <Confetti />
       <DroneCamera />
       <IntroFlyover />
 
-      {/* === MEDIUM + HIGH (enableDecorations / enableParticles) === */}
+      {/* === MEDIUM + HIGH only === */}
+      {/* NightSky: star particles — useFrame + points */}
+      {isMediumOrHigh && <NightSky />}
+
+      {/* LightShafts: GPU-heavy volumetric effect */}
+      {isMediumOrHigh && <LightShafts />}
+
+      {/* Workers: up to 24 animated meshes + Html speech bubbles */}
+      {isMediumOrHigh && perf.enableDecorations && <Workers />}
+
+      {/* DustMotes: 80–400 particles + useFrame */}
+      {isMediumOrHigh && perf.enableParticles && <DustMotes />}
+
+      {/* GuideDog: useFrame + Html tooltip — skip on low */}
+      {isMediumOrHigh && <GuideDog />}
+
+      {/* BeatPads + SoundBathBowls: Html overlays in 3D */}
+      {isMediumOrHigh && <BeatPads />}
+      {isMediumOrHigh && <SoundBathBowls />}
+
+      {/* StageSpotlight: animated light */}
+      {isMediumOrHigh && <StageSpotlight />}
+
+      {/* Room icons — Html floating labels */}
       {perf.enableRoomIcons && <RoomIcons />}
+
+      {/* === MEDIUM + HIGH decorations === */}
       {perf.enableDecorations && <NPCCoaches />}
       {perf.enableDecorations && <DemoScreens />}
       {perf.enableDecorations && <RoomProgressRings />}

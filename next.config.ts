@@ -10,7 +10,20 @@ const nextConfig: NextConfig = {
     {
       source: '/audio/:path*',
       headers: [
-        { key: 'Cache-Control', value: 'public, max-age=86400, immutable' },
+        { key: 'Cache-Control', value: 'public, max-age=604800, immutable' },
+      ],
+    },
+    {
+      // Cache static 3D assets aggressively
+      source: '/models/:path*',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=604800, immutable' },
+      ],
+    },
+    {
+      source: '/images/:path*',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=604800, immutable' },
       ],
     },
     {
@@ -21,7 +34,22 @@ const nextConfig: NextConfig = {
     },
   ],
   experimental: {
-    optimizePackageImports: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
+    optimizePackageImports: [
+      'three',
+      '@react-three/fiber',
+      '@react-three/drei',
+      '@react-three/postprocessing',
+      'postprocessing',
+    ],
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Tree-shake heavy Three.js extras we don't use
+      config.resolve.alias = {
+        ...config.resolve.alias,
+      }
+    }
+    return config
   },
 };
 

@@ -30,7 +30,10 @@ export function PlayerTrail() {
     return () => window.removeEventListener('playerMove', onMove as EventListener)
   }, [])
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
+    frameSkip.current = (frameSkip.current + 1) % 2
+    if (frameSkip.current !== 0) return
     if (!pointsRef.current) return
     const now = state.clock.elapsedTime
     const pos = positions.current

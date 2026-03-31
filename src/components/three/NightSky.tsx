@@ -4,8 +4,10 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const STAR_COUNT = 400
-const BRIGHT_STAR_COUNT = 30
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+const _level = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+const STAR_COUNT = _level === 'low' ? 80 : _level === 'medium' ? 200 : 400
+const BRIGHT_STAR_COUNT = _level === 'low' ? 8 : _level === 'medium' ? 15 : 30
 
 /**
  * Multi-layer night sky visible through skylights.
@@ -45,7 +47,10 @@ export function NightSky() {
     return { positions: pos, phases }
   }, [])
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
+    frameSkip.current = (frameSkip.current + 1) % 4
+    if (frameSkip.current !== 0) return  // Twinkle update ~15fps
     const t = state.clock.elapsedTime
     const cycle = (t % 300) / 300
     const isNight = cycle > 0.4 && cycle < 0.85

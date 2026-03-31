@@ -10,7 +10,10 @@ function LightShaft({ position, width = 6, depth = 6, opacity = 0.02 }: {
 }) {
   const meshRef = useRef<THREE.Mesh>(null)
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
+    frameSkip.current = (frameSkip.current + 1) % 4
+    if (frameSkip.current !== 0) return  // Update opacity 15fps max
     if (meshRef.current) {
       const t = state.clock.elapsedTime
       const mat = meshRef.current.material as THREE.MeshBasicMaterial
@@ -73,7 +76,7 @@ export function LightShafts() {
     [100, 20, -120],
   ]
   // LOW: 4 shafts, MEDIUM: 8, HIGH: all 12
-  const maxShafts = level === 'low' ? 4 : level === 'medium' ? 8 : 12
+  const maxShafts = level === 'low' ? 3 : level === 'medium' ? 5 : 10
   const positions = allPositions.slice(0, maxShafts)
 
   return (

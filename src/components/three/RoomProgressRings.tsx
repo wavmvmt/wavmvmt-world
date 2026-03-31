@@ -12,7 +12,10 @@ import { ROOMS } from '@/lib/roomConfig'
 export function RoomProgressRings() {
   const groupRef = useRef<THREE.Group>(null)
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
+    frameSkip.current = (frameSkip.current + 1) % 3
+    if (frameSkip.current !== 0) return
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
     groupRef.current.children.forEach((child, i) => {

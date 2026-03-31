@@ -6,9 +6,15 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COLORS, SKIN_TONES, WORKER_DATA, WORKER_POSITIONS } from '@/lib/roomConfig'
 import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
+import { useWorldState } from '@/lib/useWorldState'
 
 const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
 const _perfLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+
+/** Workers beyond this distance get animation throttled and Html hidden */
+const HTML_SHOW_DIST = 18
+const ANIM_SKIP_DIST = 45
+const _playerPos = new THREE.Vector3()
 
 const SPEECH_LINES = [
   'Building the future!',
@@ -53,12 +59,24 @@ function Worker({ position, index }: { position: [number, number]; index: number
   const info = WORKER_DATA[index % WORKER_DATA.length]
   const skin = SKIN_TONES[index % SKIN_TONES.length]
   const phase = useRef(Math.random() * Math.PI * 2)
+  const distRef = useRef(999)
+  const skipFrame = useRef(0)
   const type = ['hammer', 'measure', 'walk', 'dance', 'hammer', 'walk', 'weld', 'carry', 'idle', 'dance'][index % 10]
   const toonGradient = useToonGradient()
   const [speech, setSpeech] = useState<string | null>(null)
   const nextSpeechRef = useRef(5 + Math.random() * 15)
 
   useFrame((state, delta) => {
+    // Proximity throttle — skip animation for far workers
+    skipFrame.current = (skipFrame.current + 1) % 3
+    const px = state.camera.position
+    distRef.current = Math.sqrt(
+      (px.x - position[0]) ** 2 + (px.z - position[1]) ** 2
+    )
+    const dist = distRef.current
+    // Far workers: update every 3rd frame only
+    if (dist > ANIM_SKIP_DIST && skipFrame.current !== 0) return
+
     const t = phase.current
     phase.current += delta * 3
 
@@ -324,7 +342,7 @@ function Worker({ position, index }: { position: [number, number]; index: number
       </mesh>
 
       {/* Name tag — skip on low perf to reduce HTML overlays */}
-      {_perfLevel !== 'low' && (
+      {_perfLevel !== 'low' && distRef.current < HTML_SHOW_DIST && (
         <Html position={[0, 2.3, 0]} center distanceFactor={8}>
           <div style={{
             color: `#${info.hat.toString(16).padStart(6, '0')}`,
@@ -343,7 +361,7 @@ function Worker({ position, index }: { position: [number, number]; index: number
       )}
 
       {/* Speech bubble — skip on low perf */}
-      {_perfLevel !== 'low' && speech && (
+      {_perfLevel !== 'low' && speech && distRef.current < HTML_SHOW_DIST && (
         <Html position={[0, 2.8, 0]} center distanceFactor={10}>
           <div style={{
             background: 'rgba(26,21,32,0.92)',

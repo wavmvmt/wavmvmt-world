@@ -12,7 +12,7 @@ function Wall({ width, height, position, rotationY = 0 }: {
   return (
     <group>
       <mesh position={position} rotation={[0, rotationY, 0]} receiveShadow>
-        <planeGeometry args={[width, height, Math.floor(width / 4), Math.floor(height / 4)]} />
+        <planeGeometry args={[width, height]} />
         <meshStandardMaterial
           color={COLORS.concrete}
           roughness={0.75}
@@ -48,7 +48,8 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
   const proximityRef = useRef(0)
 
   // Listen for player position and calculate proximity
-  useFrame(() => {
+  // FIX: moved event listener out of useFrame (was registering a new listener every frame!)
+  useEffect(() => {
     const handler = (e: Event) => {
       const { x: px, z: pz } = (e as CustomEvent).detail
       const dist = Math.sqrt((px - x) ** 2 + (pz - z) ** 2)
@@ -56,6 +57,10 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
       proximityRef.current = Math.max(0, 1 - dist / maxDist)
     }
     window.addEventListener('playerMove', handler as EventListener)
+    return () => window.removeEventListener('playerMove', handler as EventListener)
+  }, [x, z, w, d])
+
+  useFrame(() => {
 
     // Apply proximity glow
     if (glowRef.current) {
@@ -66,7 +71,6 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
       mat.opacity = 0.5 + proximityRef.current * 0.5
     }
 
-    return () => window.removeEventListener('playerMove', handler as EventListener)
   })
 
   return (

@@ -118,7 +118,13 @@ function CoachNPC({ coach }: { coach: Coach }) {
     }
   }, [coach])
 
+  const distRef = useRef(999)
+  const skipFrame = useRef(0)
   useFrame((state, delta) => {
+    skipFrame.current = (skipFrame.current + 1) % 3
+    const px = state.camera.position
+    distRef.current = Math.sqrt((px.x - coach.position[0])**2 + (px.z - coach.position[2])**2)
+    if (distRef.current > 50 && skipFrame.current !== 0) return
     if (!groupRef.current) return
     phase.current += delta * 0.5
     // Gentle idle sway
@@ -160,15 +166,17 @@ function CoachNPC({ coach }: { coach: Coach }) {
       </mesh>
 
       {/* Name tag */}
-      <Html position={[0, 2.2, 0]} center distanceFactor={10}>
-        <div style={{
-          textAlign: 'center',
-          pointerEvents: 'none',
-        }}>
-          <div style={{ color: hexColor, fontSize: '9px', fontWeight: 700 }}>{coach.name}</div>
-          <div style={{ color: 'rgba(255,220,180,0.35)', fontSize: '6px', letterSpacing: '0.1em' }}>{coach.title}</div>
-        </div>
-      </Html>
+      {distRef.current < 20 && (
+        <Html position={[0, 2.2, 0]} center distanceFactor={10}>
+          <div style={{
+            textAlign: 'center',
+            pointerEvents: 'none',
+          }}>
+            <div style={{ color: hexColor, fontSize: '9px', fontWeight: 700 }}>{coach.name}</div>
+            <div style={{ color: 'rgba(255,220,180,0.35)', fontSize: '6px', letterSpacing: '0.1em' }}>{coach.title}</div>
+          </div>
+        </Html>
+      )}
 
       {/* Interact prompt */}
       {playerNear.current && !showDialog && (

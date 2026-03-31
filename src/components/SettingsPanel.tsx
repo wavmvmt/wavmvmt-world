@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { detectPerformanceLevel, setPerformanceLevel, resetPerformanceLevel, type PerfLevel } from '@/lib/performanceMode'
 
 const panelStyle = {
   background: 'rgba(26,21,32,0.85)',
@@ -14,6 +15,9 @@ export function SettingsPanel() {
   const [open, setOpen] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
   const [showLabels, setShowLabels] = useState(true)
+  const [quality, setQuality] = useState<PerfLevel>(() =>
+    typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+  )
 
   // Check system preference on mount
   useEffect(() => {
@@ -33,6 +37,13 @@ export function SettingsPanel() {
     const next = !showLabels
     setShowLabels(next)
     window.dispatchEvent(new CustomEvent('settingsChange', { detail: { showLabels: next } }))
+  }
+
+  function changeQuality(q: PerfLevel) {
+    setQuality(q)
+    setPerformanceLevel(q)
+    // Reload the page so Three.js re-initialises with new settings
+    window.location.reload()
   }
 
   if (!open) {
@@ -67,6 +78,30 @@ export function SettingsPanel() {
           className="w-3.5 h-3.5 rounded accent-[#f0c674]" />
         <span className="text-[0.6rem]" style={{ color: 'rgba(255,220,180,0.6)' }}>Room labels</span>
       </label>
+
+      {/* Quality selector */}
+      <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,200,120,0.08)' }}>
+        <div className="text-[0.5rem] tracking-[0.15em] uppercase mb-2" style={{ color: 'rgba(255,220,180,0.25)' }}>Graphics quality</div>
+        <div className="flex gap-1.5">
+          {(['low', 'medium', 'high'] as PerfLevel[]).map(q => (
+            <button
+              key={q}
+              onClick={() => changeQuality(q)}
+              className="flex-1 py-1 rounded-lg text-[0.55rem] uppercase tracking-wider cursor-pointer transition-all"
+              style={{
+                background: quality === q ? 'rgba(240,198,116,0.2)' : 'rgba(255,255,255,0.04)',
+                color: quality === q ? 'rgba(240,198,116,0.9)' : 'rgba(255,220,180,0.35)',
+                border: quality === q ? '1px solid rgba(240,198,116,0.3)' : '1px solid rgba(255,200,120,0.08)',
+              }}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+        <div className="text-[0.48rem] mt-1.5" style={{ color: 'rgba(255,220,180,0.2)' }}>
+          Applies on reload
+        </div>
+      </div>
 
       {/* Controls reference */}
       <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,200,120,0.08)' }}>

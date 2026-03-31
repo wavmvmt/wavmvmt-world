@@ -42,7 +42,10 @@ export function DayNightCycle() {
   const tempFog = new THREE.Color()
   const tempBg = new THREE.Color()
 
+  const frameSkip = useRef(0)
   useFrame((state) => {
+    frameSkip.current = (frameSkip.current + 1) % 6
+    if (frameSkip.current !== 0) return  // 10fps update — day/night is very slow
     const t = state.clock.elapsedTime
     // 5-minute cycle: 0-75s golden, 75-150s dusk, 150-225s night, 225-300s dawn
     const cycle = (t % 300) / 300 // 0 to 1 over 5 minutes

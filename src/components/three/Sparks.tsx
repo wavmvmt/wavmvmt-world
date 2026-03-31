@@ -8,7 +8,7 @@ import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 import { prefersReducedMotion } from '@/lib/accessibility'
 
 const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
-const SPARK_COUNT = Math.round(30 * _perf.particleMultiplier)
+const SPARK_COUNT = Math.round(20 * _perf.particleMultiplier)
 
 function SparkEmitter({ origin }: { origin: [number, number, number] }) {
   const pointsRef = useRef<THREE.Points>(null)
@@ -30,7 +30,10 @@ function SparkEmitter({ origin }: { origin: [number, number, number] }) {
     return { positions: pos, velocities: vel }
   }, [origin])
 
+  const frameSkip = useRef(0)
   useFrame(() => {
+    frameSkip.current = (frameSkip.current + 1) % 2
+    if (frameSkip.current !== 0) return
     if (!pointsRef.current) return
     const pos = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute
     const arr = pos.array as Float32Array

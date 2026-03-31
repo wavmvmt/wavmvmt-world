@@ -12,9 +12,14 @@ import { COLORS } from '@/lib/roomConfig'
 function Fan({ position, speed = 0.5 }: { position: [number, number, number]; speed?: number }) {
   const bladeRef = useRef<THREE.Group>(null)
 
-  useFrame((state) => {
+  const angle = useRef(0)
+  const frameSkip = useRef(0)
+  useFrame((_, delta) => {
+    frameSkip.current = (frameSkip.current + 1) % 2
+    if (frameSkip.current !== 0) return
     if (bladeRef.current) {
-      bladeRef.current.rotation.y = state.clock.elapsedTime * speed
+      angle.current += delta * speed * 2
+      bladeRef.current.rotation.y = angle.current
     }
   })
 

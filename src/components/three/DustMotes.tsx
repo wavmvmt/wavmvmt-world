@@ -8,14 +8,15 @@ import { detectPerformanceLevel, getPerfSettings } from '@/lib/performanceMode'
 import { prefersReducedMotion } from '@/lib/accessibility'
 
 const _perf = typeof window !== 'undefined' ? getPerfSettings(detectPerformanceLevel()) : getPerfSettings('medium')
-const DUST_COUNT = Math.round(350 * _perf.particleMultiplier)
-const EMBER_COUNT = Math.round(40 * _perf.particleMultiplier)
+const DUST_COUNT = Math.min(Math.round(350 * _perf.particleMultiplier), _perf.particleMultiplier < 0.5 ? 30 : 80)
+const EMBER_COUNT = Math.round(20 * _perf.particleMultiplier)
 
 /** Floating dust motes — Ghibli signature atmospheric particles */
 export function DustMotes() {
   if (prefersReducedMotion()) return null
   const dustRef = useRef<THREE.Points>(null)
   const emberRef = useRef<THREE.Points>(null)
+  const frameSkip = useRef(0)
 
   const dust = useMemo(() => {
     const pos = new Float32Array(DUST_COUNT * 3)
@@ -55,6 +56,9 @@ export function DustMotes() {
   }, [])
 
   useFrame((state, delta) => {
+    // Skip every other frame on medium perf to halve GPU cost
+    frameSkip.current = (frameSkip.current + 1) % 2
+    if (_perf.particleMultiplier < 1.0 && frameSkip.current !== 0) return
     // Dust motes — gentle floating upward with drift
     if (dustRef.current) {
       const pos = dustRef.current.geometry.attributes.position as THREE.BufferAttribute
