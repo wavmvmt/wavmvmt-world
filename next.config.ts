@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Silence the "webpack config present but no turbopack config" error in Next 16
+  turbopack: {},
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 768, 1024, 1280, 1920],
@@ -14,7 +16,6 @@ const nextConfig: NextConfig = {
       ],
     },
     {
-      // Cache static 3D assets aggressively
       source: '/models/:path*',
       headers: [
         { key: 'Cache-Control', value: 'public, max-age=604800, immutable' },
@@ -41,15 +42,6 @@ const nextConfig: NextConfig = {
       '@react-three/postprocessing',
       'postprocessing',
     ],
-  },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Tree-shake heavy Three.js extras we don't use
-      config.resolve.alias = {
-        ...config.resolve.alias,
-      }
-    }
-    return config
   },
 };
 
