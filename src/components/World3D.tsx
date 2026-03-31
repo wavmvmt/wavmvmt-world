@@ -57,7 +57,7 @@ export default function World3D() {
     >
       <Canvas
         shadows={perf.enableShadows}
-        camera={{ fov: 55, near: 0.5, far: 350, position: [0, 8, 80] }}
+        camera={{ fov: 55, near: 0.5, far: level === 'low' ? 200 : 350, position: [0, 8, 80] }}
         gl={{
           antialias: isDesktop && level !== 'low',
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -104,6 +104,18 @@ export default function World3D() {
             })
           }
           window.addEventListener('takeScreenshot', takeScreenshot)
+
+          // FPS cap — render at max 30fps on medium, 24fps on low (still smooth, half GPU cost)
+          if (level !== 'high') {
+            const targetMs = level === 'low' ? 1000 / 24 : 1000 / 30
+            let lastTime = 0
+            gl.setAnimationLoop((time) => {
+              if (time - lastTime >= targetMs) {
+                lastTime = time
+                gl.render(gl.domElement as unknown as THREE.Scene, gl.domElement as unknown as THREE.Camera)
+              }
+            })
+          }
         }}
       >
         {/* Auto-adjust pixel ratio at runtime to hit target FPS */}
@@ -120,7 +132,7 @@ export default function World3D() {
 
         <color attach="background" args={[COLORS.bg]} />
         {/* Denser fog = shorter draw distance = fewer objects rendered */}
-        <fogExp2 attach="fog" args={[0x1e1828, level === 'low' ? 0.004 : 0.0028]} />
+        <fogExp2 attach="fog" args={[0x1e1828, level === 'low' ? 0.006 : level === 'medium' ? 0.004 : 0.0028]} />
 
         <DayNightCycle />
 

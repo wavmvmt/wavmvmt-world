@@ -1,3 +1,4 @@
+import { detectPerformanceLevel } from '@/lib/performanceMode'
 'use client'
 
 import { useMemo } from 'react'
@@ -88,6 +89,17 @@ const fragmentShader = `
 `
 
 export function ProceduralFloor() {
+  const _level = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
+  // On low: skip the shader, use a simple flat floor
+  if (_level === 'low') {
+    return (
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} receiveShadow={false}>
+        <planeGeometry args={[600, 400]} />
+        <meshBasicMaterial color={0x1a1520} />
+      </mesh>
+    )
+  }
+
   const uniforms = useMemo(() => ({
     uBaseColor: { value: new THREE.Color(COLORS.floor) },
     uTime: { value: 0 },

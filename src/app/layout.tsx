@@ -4,6 +4,7 @@ import { DM_Sans, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
+import { VideoBackground } from '@/components/VideoBackground'
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -88,6 +89,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-[#1a1520] text-white antialiased" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+        <VideoBackground />
         {children}
         <Analytics />
         <SpeedInsights />

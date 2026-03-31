@@ -75,8 +75,10 @@ export function detectPerformanceLevel(): PerfLevel {
 
   const score = scoreDevice()
   let level: PerfLevel
-  if (score <= 3) level = 'low'
-  else if (score <= 6) level = 'medium'
+  // Conservative thresholds — better to start lower and let PerformanceMonitor upgrade
+  // than start high and have it chug. Users can always manually set quality in Settings.
+  if (score <= 4) level = 'low'
+  else if (score <= 7) level = 'medium'
   else level = 'high'
 
   _cachedLevel = level
@@ -109,7 +111,7 @@ export function getPerfSettings(level: PerfLevel): PerfSettings {
         enableOutdoor: false,
         enableWeather: false,
         maxLights: 2,
-        maxWorkers: 5,
+        maxWorkers: 0,
       }
     case 'medium':
       return {
@@ -125,7 +127,7 @@ export function getPerfSettings(level: PerfLevel): PerfSettings {
         enableOutdoor: false,
         enableWeather: false,
         maxLights: 3,
-        maxWorkers: 12,
+        maxWorkers: 8,
       }
     case 'high':
       return {

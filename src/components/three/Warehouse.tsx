@@ -5,6 +5,9 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 import { COLORS, ROOMS, SCAFFOLD_POSITIONS } from '@/lib/roomConfig'
+import { detectPerformanceLevel } from '@/lib/performanceMode'
+
+const _warehouseLevel = typeof window !== 'undefined' ? detectPerformanceLevel() : 'medium'
 
 function Wall({ width, height, position, rotationY = 0 }: {
   width: number; height: number; position: [number, number, number]; rotationY?: number
@@ -78,8 +81,10 @@ function WireframeRoom({ name, x, z, w, d, h, color, buildPct, sqft, vision, fea
       {/* Proximity glow light — stronger */}
       <pointLight ref={glowRef} position={[0, h / 2, 0]} color={color} intensity={0} distance={Math.max(w, d) * 1.2} decay={2} />
 
-      {/* Ambient room light — always on, gives rooms presence */}
-      <pointLight position={[0, h * 0.6, 0]} color={color} intensity={0.15 + (buildPct / 100) * 0.3} distance={Math.max(w, d) * 0.7} decay={2} />
+      {/* Ambient room light — medium+ only (global lights cover low) */}
+      {_warehouseLevel !== 'low' && (
+        <pointLight position={[0, h * 0.6, 0]} color={color} intensity={0.12 + (buildPct / 100) * 0.25} distance={Math.max(w, d) * 0.6} decay={2} />
+      )}
 
       {/* Main wireframe outline — glowing */}
       <lineSegments ref={outlineRef} position={[0, h / 2, 0]}>
