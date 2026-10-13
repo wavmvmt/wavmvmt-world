@@ -10,16 +10,28 @@ import { ROOMS } from '@/lib/roomConfig'
  */
 const MUSIC_STUDIO = ROOMS.find(room => room.name === 'Music Studio')
 const QUEST_URL = '/alpha/music-quest.html?from=world'
-const STORAGE_KEY = 'wavmvmt-world-alpha-v1'
+const PROGRESS_KEY = 'wavmvmt-world-progress-v2'
+const LEGACY_KEY = 'wavmvmt-world-alpha-v1'
 
 function completedLocally(): boolean {
   try {
-    const saved = window.localStorage.getItem(STORAGE_KEY)
-    if (!saved) return false
-    const parsed: unknown = JSON.parse(saved)
-    if (!parsed || typeof parsed !== 'object') return false
-    return 'version' in parsed && parsed.version === 1 &&
-      'completed' in parsed && parsed.completed === true
+    const current = window.localStorage.getItem(PROGRESS_KEY)
+    if (current !== null) {
+      // A present v2 record takes precedence. Never resurrect stale legacy progress.
+      const parsed: unknown = JSON.parse(current)
+      if (!parsed || typeof parsed !== 'object' || !('version' in parsed) ||
+          parsed.version !== 2 || !('completions' in parsed) ||
+          !Array.isArray(parsed.completions)) return false
+      return parsed.completions.some((item: unknown) =>
+        !!item && typeof item === 'object' && 'questId' in item &&
+        item.questId === 'music_producer_001')
+    }
+
+    const legacy = window.localStorage.getItem(LEGACY_KEY)
+    if (!legacy) return false
+    const parsed: unknown = JSON.parse(legacy)
+    return !!parsed && typeof parsed === 'object' && 'version' in parsed &&
+      parsed.version === 1 && 'completed' in parsed && parsed.completed === true
   } catch {
     return false
   }
