@@ -62,3 +62,14 @@ Manual checks on desktop and a real phone (including `/world?q=low`):
 3. Design the next actual vertical-slice quest (e.g. photography composition, movement), only after the music loop is proven.
 4. Add an accessible route independent of 3D for lower-powered devices and keyboard-only visitors.
 5. If approved, mount the public game as its own app/subdomain under the WAVMVMT ecosystem and link to it from wavmvmt.com. Keep CORE private.
+
+
+## Extension: Photography quest + shared progress V2
+
+The draft now includes `public/alpha/progression-v2.js`, `public/alpha/photo-quest.html`, and studio gateway access from both the Music Studio and Photo Studio, with no additional 3D draw calls. All skill unlocks use the same local browser key `wavmvmt-world-progress-v2`, preserving and migrating older V1 music progress. A visitor can complete Music + Photo independently, with eight practice nodes total.
+
+The photo experience is a stylized 2D rule-of-thirds composition exercise with a side-light selector, preview requirement and clear disclaimers. It is **not** a real camera, professional assessment or photo upload. To access a Mind Palace reflecting both quests, use `/alpha/music-quest.html?view=palace`.
+
+Both studios now have a keyboard-focusable skip-3D shortcut in `UIOverlay.tsx`. Physical walk-in/door transitions and real 3D minigames are **not** implemented. The PR's smoke script now checks both quest JS files and the V2 rules, but actual Node/Next/mobile tests remain pending.
+
+**Important:** The earlier statements in this integration document about "only one playable quest" reflect the original draft baseline, not this extension. Follow this later checkpoint for current state.
