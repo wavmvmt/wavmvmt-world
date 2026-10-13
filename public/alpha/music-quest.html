@@ -42,6 +42,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <button type="button" data-view="hub">Center</button>
 <button type="button" data-view="studio">Music Quest</button>
 <button type="button" data-view="palace">Mind Palace</button>
+<a href="./passport.html" style="font-size:13px;padding:8px 11px;display:inline-block;text-decoration:none;border:1px solid #bda897;border-radius:6px">My Passport ↗</a>
 <button type="button" data-view="about">About</button>
 <a href="/world" style="font-size:13px;padding:8px 11px;border:1px solid #8a2c23;border-radius:6px;text-decoration:none;white-space:nowrap;">← Back to 3D Center</a>
 </nav></div></header>
@@ -80,6 +81,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <div class="room"><strong>☀️ Energy Workshop</strong><span>CONCEPT · Design practical clean-energy projects.</span><span class="pill">Not yet playable</span></div>
 <div class="room"><strong>🧩 Community Workshop</strong><span>CONCEPT · Collaborate on meaningful projects.</span><span class="pill">Not yet playable</span></div>
 <div class="room"><strong>🧠 Mind Palace</strong><span>PLAYABLE · Explore your evolving skill web.</span><button type="button" class="btn secondary" data-view="palace">View skill web</button></div>
+<div class="room"><strong>🪪 Player Passport</strong><span>PLAYABLE · Your three quests, achievements, skill branches and export.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./passport.html">See your journey ↗</a></div>
 </div></section>
 <section id="studio" class="view hidden">
 <div class="eyebrow">Quest 001 · Producer pathway</div><h1>Find your rhythm.</h1>
@@ -108,7 +110,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <section id="about" class="view hidden">
 <div class="eyebrow">Prototype notes</div><h1>Built to test a game loop.</h1>
 <div class="layout">
-<div class="panel"><h3>What actually works</h3><p>One-choice or skip onboarding; center navigation; an editable eight-step sequencer; visual playback with optional local synthesized audio; quest validation; saved completion state; and a connected Mind Palace graph.</p><h3>What does not exist yet</h3><p>No walkable 3D environment in this prototype, multiplayer, live guide AI, shared economy, careers engine, real-world financial forecasts or cross-device profile sync. These require separate builds and verification.</p></div>
+<div class="panel"><h3>What actually works</h3><p>One-choice or skip onboarding; center navigation; an editable eight-step sequencer; optional local synthesized audio; photography composition and virtual wayfinding challenges; a connected Mind Palace graph; and a local Player Passport with reset and JSON export.</p><h3>What does not exist yet</h3><p>No walkable 3D environment in this prototype, multiplayer, live guide AI, shared economy, careers engine, real-world financial forecasts or cross-device profile sync. These require separate builds and verification.</p></div>
 <div class="panel"><h3>Where this fits</h3><p>Separate from the existing <a href="https://github.com/wavmvmt/wavmvmt-world" target="_blank" rel="noopener noreferrer">WAVMVMT World 3D repo</a> and <a href="https://github.com/wavmvmt/wavmvmt-world-game" target="_blank" rel="noopener noreferrer">WAVMVMT World Game design repo</a>. Intended for review first, with future integration into the public WAVMVMT ecosystem only after approval.</p>
 <h3>Your local data</h3><p class="muted">Stored only in this browser using localStorage (when available). The versioned JSON export contains your selected onboarding path, pattern and completed local-demo quests. Old alpha progress migrates without losing completed quests. No personal profile is requested.</p>
 <div class="save-controls"><button type="button" class="btn ghost" id="export">Export progress JSON</button><button type="button" class="btn secondary" id="reset">Reset local progress</button></div>
