@@ -4,24 +4,26 @@ import { useEffect, useState } from 'react'
 import { ROOMS } from '@/lib/roomConfig'
 
 /**
- * Three optional playable-alpha entry points for the existing 3D Center.
+ * Four optional playable-alpha entry points for the existing 3D Center.
  * Independent of graphics quality: subscribes to Player's playerMove event.
  * Progress is a browser-local demonstration, NOT an authenticated credential.
  */
 const MUSIC_STUDIO = ROOMS.find(room => room.name === 'Music Studio')
 const PHOTO_STUDIO = ROOMS.find(room => room.name === 'Photo Studio')
 const MOVEMENT_LAB = ROOMS.find(room => room.name === 'Parkour Gym')
+const EDUCATION_WING = ROOMS.find(room => room.name === 'Education Wing')
 const QUEST_URL = '/alpha/music-quest.html?from=world'
 const PHOTO_URL = '/alpha/photo-quest.html'
 const MOVEMENT_URL = '/alpha/movement-quest.html'
+const ENERGY_URL = '/alpha/energy-quest.html'
 const PROGRESS_KEY = 'wavmvmt-world-progress-v2'
 const LEGACY_KEY = 'wavmvmt-world-alpha-v1'
 
-type QuestLane = 'music' | 'photo' | 'movement'
-type CompletionStatus = { music: boolean; photo: boolean; movement: boolean }
+type QuestLane = 'music' | 'photo' | 'movement' | 'energy'
+type CompletionStatus = { music: boolean; photo: boolean; movement: boolean; energy: boolean }
 
 function completedLocally(): CompletionStatus {
-  const empty = { music: false, photo: false, movement: false }
+  const empty = { music: false, photo: false, movement: false, energy: false }
   try {
     const current = window.localStorage.getItem(PROGRESS_KEY)
     if (current !== null) {
@@ -38,6 +40,7 @@ function completedLocally(): CompletionStatus {
         music: hasQuest('music_producer_001'),
         photo: hasQuest('photo_composition_001'),
         movement: hasQuest('movement_pathfinder_001'),
+        energy: hasQuest('energy_balancer_001'),
       }
     }
 
@@ -49,6 +52,7 @@ function completedLocally(): CompletionStatus {
         parsed.version === 1 && 'completed' in parsed && parsed.completed === true,
       photo: false,
       movement: false,
+      energy: false,
     }
   } catch {
     return empty
@@ -57,7 +61,7 @@ function completedLocally(): CompletionStatus {
 
 export function StudioQuestGateway() {
   const [near, setNear] = useState<QuestLane | null>(null)
-  const [completed, setCompleted] = useState<CompletionStatus>({ music: false, photo: false, movement: false })
+  const [completed, setCompleted] = useState<CompletionStatus>({ music: false, photo: false, movement: false, energy: false })
 
   useEffect(() => {
     setCompleted(completedLocally())
@@ -76,7 +80,11 @@ export function StudioQuestGateway() {
       const movementNear = !!MOVEMENT_LAB &&
         Math.abs(detail.x - MOVEMENT_LAB.x) <= MOVEMENT_LAB.w / 2 + 6 &&
         Math.abs(detail.z - MOVEMENT_LAB.z) <= MOVEMENT_LAB.d / 2 + 6
-      const next: QuestLane | null = musicNear ? 'music' : photoNear ? 'photo' : movementNear ? 'movement' : null
+      const energyNear = !!EDUCATION_WING &&
+        Math.abs(detail.x - EDUCATION_WING.x) <= EDUCATION_WING.w / 2 + 6 &&
+        Math.abs(detail.z - EDUCATION_WING.z) <= EDUCATION_WING.d / 2 + 6
+      const next: QuestLane | null =
+        musicNear ? 'music' : photoNear ? 'photo' : movementNear ? 'movement' : energyNear ? 'energy' : null
       setNear(previous => previous === next ? previous : next)
     }
 
@@ -97,15 +105,18 @@ export function StudioQuestGateway() {
   const isMusic = near === 'music'
   const isDone = completed[near]
   const isMovement = near === 'movement'
-  const name = isMusic ? 'Music Studio' : isMovement ? 'Movement Lab' : 'Photo Studio'
-  const url = isMusic ? QUEST_URL : isMovement ? MOVEMENT_URL : PHOTO_URL
+  const isEnergy = near === 'energy'
+  const name = isMusic ? 'Music Studio' : isMovement ? 'Movement Lab' : isEnergy ? 'Energy Workshop' : 'Photo Studio'
+  const url = isMusic ? QUEST_URL : isMovement ? MOVEMENT_URL : isEnergy ? ENERGY_URL : PHOTO_URL
   const description = isDone
     ? 'Your local practice quest is complete. Revisit it or explore your Mind Palace.'
     : isMusic
       ? 'Build an eight-step beat to practice rhythm and sequencing.'
       : isMovement
         ? 'Navigate a safe virtual route and visit three learning stations.'
-        : 'Practice portrait composition and side lighting in a short illustrated exercise.'
+        : isEnergy
+          ? 'Inside the Education Wing: balance fictional energy supply, demand and resources.'
+          : 'Practice portrait composition and side lighting in a short illustrated exercise.'
 
   return (
     <aside
@@ -121,7 +132,7 @@ export function StudioQuestGateway() {
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-[0.65rem] font-bold tracking-widest uppercase" style={{ color: '#f0c674' }}>
-            {isMusic ? '♪' : isMovement ? '↗' : '◉'} {name} · Playable Alpha
+            {isMusic ? '♪' : isMovement ? '↗' : isEnergy ? '☀' : '◉'} {name} · Playable Alpha
           </p>
           <p className="mt-1 text-xs leading-relaxed" style={{ color: '#fff0d8' }}>
             {description}
