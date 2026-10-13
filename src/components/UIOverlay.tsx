@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { HUD } from './HUD'
+import { StudioQuestGateway } from './StudioQuestGateway'
+import { WorldQuestDirectory } from './WorldQuestDirectory'
 import { Minimap } from './Minimap'
 import { FPSCounter } from './FPSCounter'
 import { SettingsPanel } from './SettingsPanel'
@@ -72,8 +74,51 @@ export function UIOverlay() {
         Skip to 3D World
       </a>
 
+      {/* Accessible shortcut for visitors who cannot or prefer not to navigate the 3D room. */}
+      <a
+        href="/alpha/music-quest.html?from=world"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-16 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Skip 3D movement and play the music quest
+      </a>
+
+      <a
+        href="/alpha/photo-quest.html"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-28 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Skip 3D movement and play the photography quest
+      </a>
+
+      <a
+        href="/alpha/movement-quest.html"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-40 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Skip 3D movement and play the virtual pathfinder quest
+      </a>
+
+      <a
+        href="/alpha/energy-quest.html"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-52 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Skip 3D movement and play the Energy Workshop quest
+      </a>
+
+      <a
+        href="/alpha/passport.html"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-64 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Open Player Passport without navigating the 3D World
+      </a>
+
       {/* === ALWAYS VISIBLE === */}
       <HUD />
+      <StudioQuestGateway />
+      <WorldQuestDirectory />
       <QuestTracker />
       <RoomNotification />
       <ParkourTimer />

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fdfbf4">
+<title>WAVMVMT World — Playable Alpha 03</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#2e1a14;background:#fdfbf4;--paper:#fdfbf4;--cream:#f1e7d3;--ink:#2e1a14;--wine:#8a2c23;--clay:#c58460;--gold:#dca53c}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}button{font:inherit;cursor:pointer}button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+a{color:var(--wine)}header{position:sticky;top:0;z-index:5;background:rgba(253,251,244,.97);border-bottom:1px solid #d6c6b5}
+.header-inner{max-width:1160px;margin:auto;padding:15px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:900;letter-spacing:.19em;font-size:16px}.logo small{display:block;letter-spacing:.13em;color:#7e6959;font-weight:500;font-size:9px;margin-top:4px}
+nav{display:flex;gap:5px;flex-wrap:wrap}nav button{border:1px solid transparent;background:transparent;border-radius:6px;padding:8px 11px;color:#5e4d43;font-size:13px}nav button[aria-current="page"]{background:var(--wine);color:white}
+main{max-width:1160px;margin:auto;padding:28px 20px 90px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;color:var(--wine);font-size:11px;font-weight:800}
+h1{font-size:clamp(32px,5vw,62px);line-height:1.07;letter-spacing:-.045em;margin:12px 0 18px;font-weight:800}h2{font-size:clamp(22px,3vw,32px);letter-spacing:-.03em}h3{margin:0 0 8px}p{line-height:1.6;color:#544438}.lead{font-size:18px;max-width:720px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{background:white;border:1px solid #dac9b8;border-radius:13px;padding:23px;box-shadow:0 8px 32px #57392408}.soft{background:var(--cream)}.feature{background:linear-gradient(135deg,var(--cream),#fdf8ee);padding:30px;border:1px solid #dac9b8;border-radius:15px}
+.btn{border:1px solid var(--wine);background:var(--wine);color:white;border-radius:8px;padding:11px 16px;font-weight:700;min-height:43px}.btn.secondary{background:transparent;color:var(--wine)}.btn.ghost{background:white;color:var(--ink);border-color:#cabbaa}.btn[disabled]{opacity:.52;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.muted{color:#77665a;font-size:13px}.tiny{font-size:11px}.pill{display:inline-flex;border:1px solid #c4a486;border-radius:99px;padding:5px 10px;font-size:11px;font-weight:700;color:#6c3c31;background:#fffaf4}
+.path-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.path{min-height:125px;text-align:left;background:#fff;border:1px solid #d8c6b3;border-radius:10px;padding:18px}.path strong{display:block;font-size:17px}.path small{display:block;color:#77665a;margin-top:6px}.path[aria-pressed="true"]{background:#f8e9dd;border:2px solid var(--wine)}
+.hidden{display:none!important}.divider{height:1px;background:#dbc9b5;margin:24px 0}.room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.room{min-height:125px;padding:18px;border-radius:10px;border:1px solid #d4c1af;background:linear-gradient(160deg,#fffaf1,#f0e2d1);display:flex;flex-direction:column;justify-content:space-between}
+.room strong{font-size:15px}.room span{font-size:12px;color:#735b49}.room button{align-self:flex-start;margin-top:12px}
+.studio-shell{background:#231c21;color:#ffead2;padding:22px;border-radius:15px}.studio-shell p{color:#e2c9b9}.sequencer{display:grid;gap:11px;overflow-x:auto}.track{display:grid;grid-template-columns:76px repeat(8,minmax(29px,1fr));gap:5px;min-width:415px;align-items:center}
+.track-label{font-size:12px;color:#e9c5a7;font-weight:700}.step{width:100%;aspect-ratio:1;border:1px solid #78645e;border-radius:7px;background:#3b3035;position:relative}
+.step[data-active="true"]{background:var(--gold);border-color:#ffe89e}.step[data-current="true"]{box-shadow:0 0 0 2px #fdfbf4 inset}
+.step:focus-visible{outline:3px solid white}.step[data-active="true"][data-current="true"]{background:#f4b96c}
+.hint{border-left:3px solid var(--gold);padding:10px 13px;background:#fff7e9;color:#51352b;border-radius:0 7px 7px 0;font-size:13px;line-height:1.5}
+.score{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.score strong{font-size:25px;color:var(--wine)}
+.status{min-height:45px;padding:11px 14px;border-radius:7px;background:#eee4d6;color:var(--ink);font-size:13px}
+.graph-container{overflow:auto;border:1px solid #d5bfac;background:radial-gradient(circle at 40% 30%,#fff,#f6ebde);border-radius:12px}
+#graph{display:block;width:100%;height:auto;min-width:320px}#graph [role="button"]{cursor:pointer}#graph [role="button"]:focus-visible{outline:none}#graph [role="button"]:focus-visible circle{stroke:#bd6c27;stroke-width:5}
+#node-detail{min-height:80px}.save-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px;font-size:12px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.room-grid{grid-template-columns:1fr 1fr}.header-inner{align-items:flex-start}.path-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){main{padding:20px 14px 70px}.panel,.feature{padding:17px}.room-grid,.path-grid{grid-template-columns:1fr}nav button{font-size:12px;padding:7px 9px}.score{gap:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><div class="logo">WAVMVMT <small>WORLD · PLAYABLE ALPHA 03</small></div><nav aria-label="Primary navigation">
+<button type="button" data-view="arrival" aria-current="page">Arrival</button>
+<button type="button" data-view="hub">Center</button>
+<button type="button" data-view="studio">Music Quest</button>
+<button type="button" data-view="palace">Mind Palace</button>
+<a href="./passport.html" style="font-size:13px;padding:8px 11px;display:inline-block;text-decoration:none;border:1px solid #bda897;border-radius:6px">My Passport ↗</a>
+<button type="button" data-view="about">About</button>
+<a href="/world" style="font-size:13px;padding:8px 11px;border:1px solid #8a2c23;border-radius:6px;text-decoration:none;white-space:nowrap;">← Back to 3D Center</a>
+</nav></div></header>
+<main>
+<section id="arrival" class="view">
+<div class="eyebrow">A world built around becoming</div>
+<h1>What would you do if you could begin anywhere?</h1>
+<p class="lead">Enter a small, playable piece of WAVMVMT World. Explore a creative pathway, make a beat, and see how your skills connect. Four small learning quests today; a much larger world ahead.</p>
+<div class="layout">
+<div class="feature">
+<span class="pill">Private development alpha · No account required</span>
+<h2>Start where you are.</h2><p>There's no fixed character class and no wrong way to begin. You can answer one question or skip directly to the Center.</p>
+<h3 id="guide-question">What has your curiosity right now?</h3>
+<div class="path-grid" id="paths">
+<button type="button" class="path" data-path="continue" aria-pressed="false"><strong>Continue</strong><small>Build on what you already do.</small></button>
+<button type="button" class="path" data-path="reclaim" aria-pressed="false"><strong>Reclaim</strong><small>Return to an interest you left behind.</small></button>
+<button type="button" class="path" data-path="curiosity" aria-pressed="false"><strong>Curiosity</strong><small>Explore something you've always wanted to try.</small></button>
+<button type="button" class="path" data-path="wildcard" aria-pressed="false"><strong>Wildcard</strong><small>Let an unexpected connection lead.</small></button>
+</div>
+<div class="actions"><button class="btn" id="enter">Enter the Center</button><button class="btn secondary" id="skip">Skip and play</button></div>
+</div>
+<div class="panel">
+<h3>How this alpha works</h3>
+<p><strong>1. Arrive</strong> at the virtual Center. <strong>2. Start</strong> a music-production quest. <strong>3. Build</strong> a real eight-step pattern. <strong>4. Hear or watch</strong> one bar play. <strong>5. Unlock</strong> skill nodes in your Mind Palace.</p>
+<p class="muted">This is a standalone browser prototype. Progress is saved only in your browser. Audio is off until you switch it on. No login, tracking, email capture, outside APIs or money transactions.</p>
+<div class="score"><div><span class="muted">Quest status</span><br><strong id="arrival-status">Not started</strong></div><div><span class="muted">Skill nodes</span><br><strong id="arrival-skills">2</strong></div></div>
+</div></div>
+</section>
+<section id="hub" class="view hidden">
+<div class="eyebrow">WAVMVMT Center / first neighborhood</div><h1>Your journey begins here.</h1>
+<p class="lead">A community hub for sound, movement, learning and building. Music, photography, virtual movement and energy systems have small playable exercises. Other rooms remain conceptual previews.</p>
+<div class="room-grid">
+<div class="room"><strong>🎚️ Music Studio</strong><span>PLAYABLE · Make a groove and connect two skills.</span><button type="button" class="btn" data-view="studio">Enter studio</button></div>
+<div class="room"><strong>🧭 Movement Lab</strong><span>PLAYABLE · Navigate a virtual route with three checkpoints.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./movement-quest.html">Find a way ↗</a></div>
+<div class="room"><strong>📷 Photo Studio</strong><span>PLAYABLE · Practice an illustrated composition and lighting challenge.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./photo-quest.html">Frame a moment ↗</a></div>
+<div class="room"><strong>☀️ Energy Workshop</strong><span>PLAYABLE · Balance imaginary supply, demand and resources.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./energy-quest.html">Balance the system ↗</a></div>
+<div class="room"><strong>🧩 Community Workshop</strong><span>CONCEPT · Collaborate on meaningful projects.</span><span class="pill">Not yet playable</span></div>
+<div class="room"><strong>🧠 Mind Palace</strong><span>PLAYABLE · Explore your evolving skill web.</span><button type="button" class="btn secondary" data-view="palace">View skill web</button></div>
+<div class="room"><strong>🪪 Player Passport</strong><span>PLAYABLE · Your three quests, achievements, skill branches and export.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./passport.html">See your journey ↗</a></div>
+</div></section>
+<section id="studio" class="view hidden">
+<div class="eyebrow">Quest 001 · Producer pathway</div><h1>Find your rhythm.</h1>
+<p class="lead">Create an eight-step groove. Select steps to switch sounds on or off. Press Play to audition a full bar, then complete the challenge. You can watch the playhead without enabling audio.</p>
+<div class="layout">
+<div class="panel"><h2>Quest challenge</h2><div class="hint">Put <strong>kick</strong> hits on steps 1 and 5, <strong>snare</strong> on 3 and 7, and at least <strong>four hi-hat</strong> hits. Play one complete bar of your final pattern.</div>
+<div class="divider"></div><div class="score"><div><span class="muted">Pattern</span><br><strong id="pattern-state">Not ready</strong></div><div><span class="muted">Full bar heard / watched</span><br><strong id="bar-state">No</strong></div></div>
+<div class="actions"><button type="button" class="btn" id="finish" disabled>Complete quest</button><button type="button" class="btn ghost" id="sample">Load starter groove</button></div>
+<p class="muted" id="quest-message">Practice is free. Completing the challenge unlocks your first rhythm and sequencing nodes.</p>
+</div>
+<div class="studio-shell"><h2>8-step beat lab</h2><p>Tap a square or use Tab + Space/Enter. Playback is a quick demo loop at 120 BPM.</p>
+<div class="sequencer" id="sequencer" aria-label="Eight-step pattern editor"></div>
+<div class="actions"><button type="button" class="btn" id="play">▶ Play bar</button><button type="button" class="btn secondary" id="stop">■ Stop</button><button type="button" class="btn secondary" id="sound" aria-pressed="false">Sound: OFF</button></div>
+<p class="tiny">Original synthesized sounds; nothing is recorded or uploaded. Audio activates only when you explicitly enable it.</p>
+<div id="playback-status" role="status" aria-live="polite" class="status">Ready to experiment.</div>
+</div></div>
+</section>
+<section id="palace" class="view hidden">
+<div class="eyebrow">Mind Palace / evolving connections</div><h1>Skills are not islands.</h1>
+<p class="lead">Your skill web grows as you complete music, photography and virtual movement quests. Select a node to explore it. Connections illustrate possible skill transfers, not guaranteed outcomes or scientific measurements.</p>
+<div class="layout">
+<div class="graph-container"><svg id="graph" viewBox="0 0 650 460" role="group" aria-label="Interactive skill network"></svg></div>
+<div class="panel"><h2 id="node-title">Your skill web</h2><p id="node-detail">Choose a node to explore it. Each completed quest adds a different set of practice nodes.</p>
+<div class="status" id="palace-status" role="status">Two starting nodes available.</div><div class="actions"><button type="button" class="btn" data-view="hub">Explore all quests</button></div></div>
+</div></section>
+<section id="about" class="view hidden">
+<div class="eyebrow">Prototype notes</div><h1>Built to test a game loop.</h1>
+<div class="layout">
+<div class="panel"><h3>What actually works</h3><p>One-choice or skip onboarding; center navigation; an editable eight-step sequencer; optional local synthesized audio; photography composition and virtual wayfinding challenges; a connected Mind Palace graph; and a local Player Passport with reset and JSON export.</p><h3>What does not exist yet</h3><p>No walkable 3D environment in this prototype, multiplayer, live guide AI, shared economy, careers engine, real-world financial forecasts or cross-device profile sync. These require separate builds and verification.</p></div>
+<div class="panel"><h3>Where this fits</h3><p>Separate from the existing <a href="https://github.com/wavmvmt/wavmvmt-world" target="_blank" rel="noopener noreferrer">WAVMVMT World 3D repo</a> and <a href="https://github.com/wavmvmt/wavmvmt-world-game" target="_blank" rel="noopener noreferrer">WAVMVMT World Game design repo</a>. Intended for review first, with future integration into the public WAVMVMT ecosystem only after approval.</p>
+<h3>Your local data</h3><p class="muted">Stored only in this browser using localStorage (when available). The versioned JSON export contains your selected onboarding path, pattern and completed local-demo quests. Old alpha progress migrates without losing completed quests. No personal profile is requested.</p>
+<div class="save-controls"><button type="button" class="btn ghost" id="export">Export progress JSON</button><button type="button" class="btn secondary" id="reset">Reset local progress</button></div>
+<p class="tiny" id="save-status" role="status" aria-live="polite"></p></div>
+</div></section>
+</main><footer>WAVMVMT World · Functional local alpha · Unpublished development concept · No brand affiliations</footer>
+<script src="./progression-v2.js"></script>
+<script>
+(function(){
+'use strict';
+var PROGRESS=window.WAVMVMTProgression;
+var sounds=['kick','snare','hat','clap'];
+var progress=PROGRESS.newProgress();
+try{progress=PROGRESS.read(localStorage);}catch(e){}
+var state=PROGRESS.getMusicSnapshot(progress);
+function save(){
+  progress=PROGRESS.updateDraft(progress,state);
+  try{progress=PROGRESS.persist(localStorage,progress);}
+  catch(e){document.getElementById('save-status').textContent='Browser storage unavailable; changes will remain for this session only.';}
+}
+function id(s){return document.getElementById(s);}
+function view(name){document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('hidden',x.id!==name);});document.querySelectorAll('nav [data-view]').forEach(function(x){x.setAttribute('aria-current',x.dataset.view===name?'page':'false');});render();window.scrollTo(0,0);}
+document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view(b.dataset.view);});});
+document.querySelectorAll('[data-path]').forEach(function(b){b.addEventListener('click',function(){state.path=b.dataset.path;save();render();});});
+id('enter').addEventListener('click',function(){view('hub');});id('skip').addEventListener('click',function(){view('studio');});
+var playing=false,timer=null,at=-1,stepsPlayed=0,startedValid=false,soundOn=false,audioCtx=null,runId=0;
+function patternOK(){return PROGRESS.qualifiedPattern(state.pattern);}
+function stop(){playing=false;runId++;if(timer!==null){clearInterval(timer);timer=null;}at=-1;renderSteps();id('play').disabled=false;id('playback-status').textContent='Playback stopped.';}
+function tone(f,t,d,type,vol){if(!soundOn||!audioCtx)return;try{var o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(type==='sine')o.frequency.exponentialRampToValueAtTime(Math.max(35,f*.5),t+d);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+d+.01);}catch(e){}}
+function soundStep(step){if(!soundOn||!audioCtx)return;var t=audioCtx.currentTime; if(state.pattern[0][step])tone(115,t,.19,'sine',.21);if(state.pattern[1][step])tone(190,t,.11,'triangle',.085);if(state.pattern[2][step])tone(950,t,.055,'square',.018);if(state.pattern[3][step])tone(420,t,.07,'sawtooth',.024);}
+function nextStep(token){if(token!==runId)return;at=(at+1)%8;stepsPlayed++;soundStep(at);renderSteps();id('playback-status').textContent='Playing step '+(at+1)+' of 8.';if(stepsPlayed===8){stop();if(startedValid&&patternOK()){state.playedBar=true;save();id('playback-status').textContent='Full qualifying bar completed. Ready to finish the quest.';}else{id('playback-status').textContent='Bar completed. Adjust your pattern to meet the quest challenge, then replay.';}render();}}
+id('play').addEventListener('click',function(){if(playing)return;if(soundOn&&audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(function(){});state.playedBar=false;save();playing=true;stepsPlayed=0;at=-1;startedValid=patternOK();id('play').disabled=true;var token=++runId;nextStep(token);if(playing)timer=setInterval(function(){nextStep(token);},250);render();});
+id('stop').addEventListener('click',stop);
+id('sound').addEventListener('click',function(){soundOn=!soundOn;if(soundOn){try{var Context=window.AudioContext||window.webkitAudioContext;if(!Context)throw Error('Audio unsupported');audioCtx=audioCtx||new Context();audioCtx.resume().catch(function(){});}catch(e){soundOn=false;id('playback-status').textContent='Audio is unavailable here; visual playback still works.';}}if(audioCtx&&!soundOn&&audioCtx.state==='running')audioCtx.suspend().catch(function(){});render();});
+id('sample').addEventListener('click',function(){stop();state.pattern=[[1,0,0,0,1,0,0,0],[0,0,1,0,0,0,1,0],[1,0,1,0,1,0,1,0],[0,0,0,0,0,0,0,0]];state.playedBar=false;save();render();id('playback-status').textContent='Starter groove loaded. Press Play for a full bar.';});
+function renderSteps(){document.querySelectorAll('.step').forEach(function(b){var s=+b.dataset.sound,p=+b.dataset.step;b.dataset.active=state.pattern[s][p]?'true':'false';b.dataset.current=at===p&&playing?'true':'false';b.setAttribute('aria-pressed',state.pattern[s][p]?'true':'false');});}
+function makeGrid(){var root=id('sequencer');root.textContent='';sounds.forEach(function(sound,s){var row=document.createElement('div');row.className='track';var name=document.createElement('div');name.className='track-label';name.textContent=sound.toUpperCase();row.appendChild(name);for(var p=0;p<8;p++){(function(ss,pp){var b=document.createElement('button');b.type='button';b.className='step';b.dataset.sound=ss;b.dataset.step=pp;b.setAttribute('aria-label',sound+' step '+(pp+1));b.addEventListener('click',function(){if(playing)stop();state.pattern[ss][pp]=state.pattern[ss][pp]?0:1;state.playedBar=false;save();render();});row.appendChild(b);})(s,p);}root.appendChild(row);});renderSteps();}
+id('finish').addEventListener('click',function(){if(!patternOK()||!state.playedBar)return;progress=PROGRESS.completeMusic(progress,state);state.completed=PROGRESS.isCompleted(progress);save();render();id('quest-message').textContent='Quest completed! Rhythm and Sequencing are now part of your Mind Palace. You can still remix your beat.';view('palace');});
+var ns='http://www.w3.org/2000/svg';
+var nodes=[
+{id:'curiosity',name:'Curiosity',x:73,y:90,desc:'Trying something unfamiliar is a starting point for learning.'},
+{id:'listening',name:'Listening',x:210,y:80,desc:'Notice changes in a sound or a scene.'},
+{id:'rhythm',name:'Rhythm',x:258,y:203,desc:'Practice repeating patterns in time, learned in the music quest.'},
+{id:'sequencing',name:'Sequencing',x:422,y:306,desc:'Arrange events in time, practiced in the music quest.'},
+{id:'creative-practice',name:'Creative practice',x:90,y:302,desc:'Experiment, listen, adjust, and try again.'},
+{id:'composition',name:'Composition',x:400,y:79,desc:'Explore placing a subject in a frame in the photo challenge.'},
+{id:'light-awareness',name:'Light awareness',x:472,y:191,desc:'Explore how lighting direction changes an illustrated scene.'},
+{id:'visual-storytelling',name:'Visual storytelling',x:260,y:355,desc:'Make an intentional visual choice in the photo challenge.'},
+{id:'spatial-planning',name:'Spatial planning',x:555,y:70,desc:'Plan a route through a virtual space with obstacles.'},
+{id:'route-adaptation',name:'Route adaptation',x:580,y:218,desc:'Find a new way around a closed path in the virtual quest.'},
+{id:'wayfinding',name:'Wayfinding',x:546,y:385,desc:'Follow a map and visit checkpoints before a destination.'},
+{id:'load-balancing',name:'Load balancing',x:127,y:423,desc:'Balance supply against demand in a fictional energy puzzle.'},
+{id:'resource-planning',name:'Resource planning',x:385,y:415,desc:'Choose system components within a game token budget.'},
+{id:'systems-thinking',name:'Systems thinking',x:610,y:305,desc:'Consider how multiple pieces of a small imaginary energy system fit together.'}
+];
+function svg(tag,attrs){var e=document.createElementNS(ns,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
+function isUnlocked(n){return PROGRESS.unlockedSkills(progress).indexOf(n.id)!==-1;}
+function detail(n){
+ var unlocked=isUnlocked(n);
+ id('node-title').textContent=n.name+(unlocked?'':' · Locked');
+ id('node-detail').textContent=unlocked?n.desc:'Complete the relevant music, photography, movement or energy quest to unlock this practice node.';
+}
+function renderGraph(){
+ var root=id('graph');while(root.firstChild)root.removeChild(root.firstChild);
+ var edges=[[0,1],[0,4],[1,2],[2,3],[2,4],[0,5],[1,6],[5,6],[5,7],[4,7],[0,8],[5,8],[8,9],[9,10],[3,10],[4,11],[7,12],[10,13],[11,12],[12,13]];
+ edges.forEach(function(pair){var a=nodes[pair[0]],b=nodes[pair[1]],open=isUnlocked(a)&&isUnlocked(b);root.appendChild(svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:open?'#c58460':'#d7c9bd','stroke-width':open?'3':'2','stroke-dasharray':open?'0':'6 7'}));});
+ nodes.forEach(function(n,i){
+  var unlocked=isUnlocked(n);
+  var g=svg('g',{role:'button',tabindex:'0','aria-label':n.name+(unlocked?'':' locked')});
+  g.appendChild(svg('circle',{cx:n.x,cy:n.y,r:37,fill:unlocked?(i===0?'#8a2c23':'#c58460'):'#ded6cf',stroke:unlocked?'#79402e':'#b3a99f','stroke-width':'2'}));
+  var words=n.name.split(' ');var t=svg('text',{x:n.x,y:n.y-(words.length>=2?8:0),'text-anchor':'middle','font-size':words.length>1?'10':'12','font-weight':'700',fill:unlocked?'white':'#736b64','pointer-events':'none'});
+  words.forEach(function(w,j){var sp=svg('tspan',{x:n.x,dy:j===0?'0':'13'});sp.textContent=w;t.appendChild(sp);});g.appendChild(t);
+  g.addEventListener('click',function(){detail(n);});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();detail(n);}});
+  root.appendChild(g);
+ });
+ var count=PROGRESS.unlockedSkills(progress).length;
+ id('palace-status').textContent=count+' of '+nodes.length+' practice nodes unlocked locally. Music, photography, movement and energy challenges unlock different branches.';
+}
+function render(){
+ document.querySelectorAll('[data-path]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.path===state.path?'true':'false');});
+ id('arrival-status').textContent=state.completed?'Music completed':'Music not completed';
+ id('arrival-skills').textContent=String(PROGRESS.unlockedSkills(progress).length);
+ id('pattern-state').textContent=patternOK()?'Ready':'Not ready';
+ id('bar-state').textContent=state.playedBar?'Yes':'No';
+ id('finish').disabled=!(patternOK()&&state.playedBar);
+ id('sound').textContent='Sound: '+(soundOn?'ON':'OFF');
+ id('sound').setAttribute('aria-pressed',soundOn?'true':'false');
+ id('quest-message').textContent=state.completed?'Quest completed! You can still edit your beat.':'Complete a qualifying bar to unlock Rhythm, Sequencing, and Creative practice.';
+ renderSteps();renderGraph();
+}
+id('export').addEventListener('click',function(){var data=JSON.stringify(progress,null,2);var blob=new Blob([data],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='wavmvmt-world-progress-v2.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},300);id('save-status').textContent='Local progress exported as JSON.';});
+id('reset').addEventListener('click',function(){if(!window.confirm('Clear local WAVMVMT World alpha progress?'))return;stop();try{progress=PROGRESS.reset(localStorage);}catch(e){progress=PROGRESS.newProgress();}state=PROGRESS.getMusicSnapshot(progress);save();id('save-status').textContent='Progress reset in this browser.';render();view('arrival');});
+makeGrid();render();var query=new URLSearchParams(window.location.search);if(query.get('view')==='palace')view('palace');else if(query.get('view')==='hub')view('hub');else if(query.get('from')==='world')view('studio');
+})();
+</script>
+</body>
+</html>

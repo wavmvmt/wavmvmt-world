@@ -64,13 +64,19 @@ export function Player() {
     state.current.pitch = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, state.current.pitch))
   }, [isMobile])
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((event: MouseEvent) => {
+    // Only the 3D rendering canvas may activate pointer lock.
+    // Buttons, navigation, the minimap and quest links must remain clickable.
+    if (isMobile || document.pointerLockElement === document.body) return
+    const canvas = document.querySelector<HTMLCanvasElement>('#world-canvas canvas')
+    if (!canvas || event.target !== canvas) return
     try {
-      document.body.requestPointerLock()
+      const request = document.body.requestPointerLock()
+      if (request && typeof request.catch === 'function') request.catch(() => {})
     } catch {
-      // Pointer lock not supported or denied
+      // Pointer lock may be unsupported or blocked by the browser.
     }
-  }, [])
+  }, [isMobile])
 
   const handleLockChange = useCallback(() => {
     state.current.locked = document.pointerLockElement === document.body
