@@ -6,16 +6,21 @@
   const KEY = 'wavmvmt-world-progress-v2';
   const LEGACY_KEY = 'wavmvmt-world-alpha-v1';
   const QUEST_ID = 'music_producer_001';
+  const PHOTO_ID = 'photo_composition_001';
+  const PHOTO_POSITIONS = ['center', 'upper-left', 'upper-right', 'lower-left', 'lower-right'];
   const SKILLS = Object.freeze([
     { id: 'curiosity', title: 'Curiosity', from: null },
     { id: 'listening', title: 'Listening', from: null },
     { id: 'rhythm', title: 'Rhythm', from: QUEST_ID },
     { id: 'sequencing', title: 'Sequencing', from: QUEST_ID },
     { id: 'creative-practice', title: 'Creative practice', from: QUEST_ID },
+    { id: 'composition', title: 'Composition', from: PHOTO_ID },
+    { id: 'light-awareness', title: 'Light awareness', from: PHOTO_ID },
+    { id: 'visual-storytelling', title: 'Visual storytelling', from: PHOTO_ID },
   ]);
   const EMPTY_PATTERN = () => Array.from({ length: 4 }, () => Array(8).fill(0));
   const PATHS = ['continue', 'reclaim', 'curiosity', 'wildcard'];
-  const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const PHOTO_LIGHTS = ['front', 'side'];
 
   function validPattern(p) {
     return Array.isArray(p) && p.length === 4 &&
@@ -34,11 +39,28 @@
     return p.map(row => row.slice());
   }
 
+  function defaultPhotoDraft() {
+    return { placement: 'center', lighting: 'front', previewed: false };
+  }
+
+  function validPhotoDraft(draft) {
+    return !!draft && typeof draft === 'object' &&
+      PHOTO_POSITIONS.includes(draft.placement) &&
+      PHOTO_LIGHTS.includes(draft.lighting) &&
+      typeof draft.previewed === 'boolean';
+  }
+
+  function qualifiedPhotoDraft(draft) {
+    return validPhotoDraft(draft) && draft.placement !== 'center' &&
+      draft.lighting === 'side' && draft.previewed === true;
+  }
+
   function newProgress() {
     return {
       version: 2,
       onboarding: { path: null },
-      drafts: { [QUEST_ID]: { pattern: EMPTY_PATTERN(), playedBar: false } },
+      drafts: { [QUEST_ID]: { pattern: EMPTY_PATTERN(), playedBar: false },
+        [PHOTO_ID]: defaultPhotoDraft() },
       completions: [],
     };
   }
@@ -63,14 +85,22 @@
       result.drafts[QUEST_ID].pattern = clonePattern(draft.pattern);
       result.drafts[QUEST_ID].playedBar = draft.playedBar === true;
     }
-    // Preserve only registered local-demo completion claims in V2.
-    if (isCompleted(raw, QUEST_ID)) {
-      const original = raw.completions.find(item => item && item.questId === QUEST_ID);
-      result.completions.push({
-        questId: QUEST_ID,
-        source: original.source === 'legacy_local_alpha' ? 'legacy_local_alpha' : 'local_demo',
-        completedAt: typeof original.completedAt === 'string' ? original.completedAt : null,
-      });
+    const photoDraft = raw.drafts[PHOTO_ID];
+    if (validPhotoDraft(photoDraft)) result.drafts[PHOTO_ID] = {
+      placement: photoDraft.placement,
+      lighting: photoDraft.lighting,
+      previewed: photoDraft.previewed,
+    };
+    // Keep only whitelisted local-demo completions, deduplicated per quest.
+    for (const questId of [QUEST_ID, PHOTO_ID]) {
+      if (isCompleted(raw, questId)) {
+        const original = raw.completions.find(item => item && item.questId === questId);
+        result.completions.push({
+          questId,
+          source: original.source === 'legacy_local_alpha' ? 'legacy_local_alpha' : 'local_demo',
+          completedAt: typeof original.completedAt === 'string' ? original.completedAt : null,
+        });
+      }
     }
     return result;
   }
@@ -155,9 +185,44 @@
     return clean;
   }
 
+  function getPhotoSnapshot(progress) {
+    const clean = normalize(progress) || newProgress();
+    return {
+      ...clean.drafts[PHOTO_ID],
+      completed: isCompleted(clean, PHOTO_ID),
+    };
+  }
+
+  function updatePhotoDraft(progress, draft) {
+    const clean = normalize(progress) || newProgress();
+    if (!validPhotoDraft(draft)) throw new TypeError('Invalid photo draft');
+    clean.drafts[PHOTO_ID] = {
+      placement: draft.placement,
+      lighting: draft.lighting,
+      previewed: draft.previewed,
+    };
+    return clean;
+  }
+
+  function completePhoto(progress, draft, clock) {
+    const clean = updatePhotoDraft(progress, draft);
+    if (!qualifiedPhotoDraft(draft)) {
+      throw new Error('Select an off-center third, side lighting and preview before completion');
+    }
+    if (!isCompleted(clean, PHOTO_ID)) {
+      const now = typeof clock === 'function' ? clock() : new Date().toISOString();
+      clean.completions.push({
+        questId: PHOTO_ID,
+        source: 'local_demo',
+        completedAt: now,
+      });
+    }
+    return clean;
+  }
+
   function unlockedSkills(progress) {
-    const completed = isCompleted(progress);
-    return SKILLS.filter(skill => !skill.from || completed).map(skill => skill.id);
+    return SKILLS.filter(skill => !skill.from || isCompleted(progress, skill.from))
+      .map(skill => skill.id);
   }
 
   function reset(storage) {
@@ -167,9 +232,11 @@
   }
 
   root.WAVMVMTProgression = Object.freeze({
-    KEY, LEGACY_KEY, QUEST_ID, SKILLS,
-    newProgress, validPattern, qualifiedPattern, normalize, fromLegacy,
+    KEY, LEGACY_KEY, QUEST_ID, PHOTO_ID, SKILLS,
+    newProgress, validPattern, qualifiedPattern, validPhotoDraft,
+    qualifiedPhotoDraft, normalize, fromLegacy,
     read, persist, getMusicSnapshot, updateDraft, completeMusic,
+    getPhotoSnapshot, updatePhotoDraft, completePhoto,
     isCompleted, unlockedSkills, reset,
   });
 })(typeof window !== 'undefined' ? window : globalThis);
