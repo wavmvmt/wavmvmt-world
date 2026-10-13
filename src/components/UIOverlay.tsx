@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { HUD } from './HUD'
+import { StudioQuestGateway } from './StudioQuestGateway'
 import { Minimap } from './Minimap'
 import { FPSCounter } from './FPSCounter'
 import { SettingsPanel } from './SettingsPanel'
@@ -74,6 +75,7 @@ export function UIOverlay() {
 
       {/* === ALWAYS VISIBLE === */}
       <HUD />
+      <StudioQuestGateway />
       <QuestTracker />
       <RoomNotification />
       <ParkourTimer />
