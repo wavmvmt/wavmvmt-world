@@ -23,10 +23,10 @@ main{max-width:1140px;margin:auto;padding:33px 20px 84px}.eyebrow{font-size:11px
 <main><div class="eyebrow">Your journey · Locally saved</div><h1>Build a world of skills.</h1>
 <p class="lead">Each completed learning exercise adds a branch to your Passport. Follow what interests you. This records what you tried in the demo, not a grade, certification, employment qualification, or measure of real ability.</p>
 <div class="hero"><div class="stats">
-<div class="stat"><strong id="completed-count">0 / 3</strong><span>Quests completed</span></div>
-<div class="stat"><strong id="unlocked-count">2 / 11</strong><span>Practice nodes discovered</span></div>
+<div class="stat"><strong id="completed-count">0 / 4</strong><span>Quests completed</span></div>
+<div class="stat"><strong id="unlocked-count">2 / 14</strong><span>Practice nodes discovered</span></div>
 <div class="stat"><strong id="pathway">Explore</strong><span>Your starting intention</span></div>
-</div><p style="font-size:13px;margin-bottom:8px">Local quest exploration</p><div class="progress" role="progressbar" aria-label="Quests complete" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" id="completion-progress"><div class="fill" id="completion-fill"></div></div>
+</div><p style="font-size:13px;margin-bottom:8px">Local quest exploration</p><div class="progress" role="progressbar" aria-label="Quests complete" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="completion-progress"><div class="fill" id="completion-fill"></div></div>
 </div>
 <div class="grid">
 <section class="panel" aria-labelledby="quests-heading"><h2 id="quests-heading">Learning pathways</h2>
@@ -40,7 +40,7 @@ main{max-width:1140px;margin:auto;padding:33px 20px 84px}.eyebrow{font-size:11px
 <section class="panel" style="margin-top:18px" aria-labelledby="privacy-heading"><h2 id="privacy-heading">Your data stays with you</h2>
 <p>This alpha uses local browser storage. You can export your progress as a JSON file or clear it completely. There is no cloud sync, account system, real financial asset, streaming income or company record associated with these achievements.</p>
 <div class="actions"><button type="button" class="btn" id="export">Export my progress JSON</button><button type="button" class="btn secondary" id="refresh">Refresh passport</button></div>
-<div class="danger"><button type="button" class="btn neutral" id="reset">Clear all local game progress</button><p class="note">Reset clears all three quests and any older alpha save in this browser. This cannot be undone unless you've exported a copy.</p></div>
+<div class="danger"><button type="button" class="btn neutral" id="reset">Clear all local game progress</button><p class="note">Reset clears all four quests and any older alpha save in this browser. This cannot be undone unless you've exported a copy.</p></div>
 <p class="status" id="status" role="status" aria-live="polite"></p>
 </section></main>
 <script src="./progression-v2.js"></script>
@@ -51,7 +51,8 @@ var api=window.WAVMVMTProgression;
 var quests=[
 {id:api.QUEST_ID,label:'01 / Find Your Rhythm',area:'Music Studio',about:'Make an eight-step groove and complete one qualifying bar.',url:'./music-quest.html?view=studio'},
 {id:api.PHOTO_ID,label:'02 / Frame a Moment',area:'Photography Studio',about:'Compose a portrait with a rule-of-thirds grid and light choice.',url:'./photo-quest.html'},
-{id:api.MOVEMENT_ID,label:'03 / Movement Pathfinder',area:'Movement Lab',about:'Find an obstacle-free virtual route through three stations.',url:'./movement-quest.html'}
+{id:api.MOVEMENT_ID,label:'03 / Movement Pathfinder',area:'Movement Lab',about:'Find an obstacle-free virtual route through three stations.',url:'./movement-quest.html'},
+{id:api.ENERGY_ID,label:'04 / Balance the System',area:'Energy Workshop',about:'Balance fictional power supply, service demand and build tokens.',url:'./energy-quest.html'}
 ];
 function id(x){return document.getElementById(x);}
 function elem(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt)e.textContent=txt;return e;}
@@ -64,6 +65,7 @@ function render(){
  id('pathway').textContent=(current.onboarding.path||'Explore').replace(/^\w/,function(x){return x.toUpperCase();});
  id('completion-fill').style.width=pct+'%';
  id('completion-progress').setAttribute('aria-valuenow',String(complete.length));
+ id('completion-progress').setAttribute('aria-valuemax',String(quests.length));
  var list=id('quest-list');list.textContent='';
  quests.forEach(function(q){
   var done=api.isCompleted(current,q.id),wrap=elem('div','quest'),title=elem('h3','',q.label),tag=elem('span','tag'+(done?' finished':''),done?'Completed ✓':'Ready to explore'),p=elem('p','',q.about),a=elem('a','btn'+(done?' secondary':''),done?'Try again ↗':'Start quest ↗');
