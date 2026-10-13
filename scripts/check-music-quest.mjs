@@ -11,6 +11,10 @@ import { Script, runInNewContext } from 'node:vm'
 const html = readFileSync('public/alpha/music-quest.html', 'utf8')
 const photo = readFileSync('public/alpha/photo-quest.html', 'utf8')
 const movement = readFileSync('public/alpha/movement-quest.html', 'utf8')
+const energy = readFileSync('public/alpha/energy-quest.html', 'utf8')
+const passport = readFileSync('public/alpha/passport.html', 'utf8')
+const directory = readFileSync('src/components/WorldQuestDirectory.tsx', 'utf8')
+const player = readFileSync('src/components/three/Player.tsx', 'utf8')
 const overlay = readFileSync('src/components/UIOverlay.tsx', 'utf8')
 const gateway = readFileSync('src/components/StudioQuestGateway.tsx', 'utf8')
 const progressionJs = readFileSync('public/alpha/progression-v2.js', 'utf8')
@@ -49,6 +53,14 @@ new Script(moveScript[1], { filename: 'movement-quest.inline.js' })
 assert.match(movement, /href="\.\/music-quest\.html\?view=palace"/)
 assert.match(movement, /<script src="\.\/progression-v2\.js"><\/script>/)
 assert.doesNotMatch(movement, /\bfetch\s*\(/)
+for (const [name, page] of [['energy', energy], ['passport', passport]]) {
+  const inline = page.match(/<script>\s*([\s\S]*?)<\/script>/)
+  assert.ok(inline, name + ' must contain an inline script')
+  new Script(inline[1], { filename: name + '.inline.js' })
+  assert.match(page, /<script src="\.\/progression-v2\.js"><\/script>/)
+  assert.doesNotMatch(page, /\bfetch\s*\(/)
+}
+assert.match(passport, /wavmvmt-world-passport-progress-v2\.json/)
 
 // V2 progression is the only source of truth for quest qualification.
 const vmContext = {}
@@ -89,6 +101,12 @@ assert.equal(progress.qualifiedMovementDraft(progress.getMovementSnapshot(moveme
 movementProgress=progress.completeMovement(movementProgress,progress.getMovementSnapshot(movementProgress))
 assert.equal(progress.isCompleted(movementProgress,progress.MOVEMENT_ID),true)
 assert.equal(progress.unlockedSkills(movementProgress).length,5)
+const energyDraft = {panels:2,batteries:3,loads:{lights:true,studio:true,ventilation:true},tested:true}
+assert.equal(progress.qualifiedEnergyDraft(energyDraft),true)
+assert.equal(progress.qualifiedEnergyDraft({...energyDraft,tested:false}),false)
+const energyDone=progress.completeEnergy(progress.newProgress(),energyDraft)
+assert.equal(progress.isCompleted(energyDone, progress.ENERGY_ID),true)
+assert.match(energy, /api\.completeEnergy\(progress,draft\)/)
 assert.match(inlineScript[1], /PROGRESS\.completeMusic\(progress,state\)/)
 assert.match(inlineScript[1], /PROGRESS\.persist\(localStorage,progress\)/)
 assert.match(inlineScript[1], /stepsPlayed===8/)
@@ -107,6 +125,14 @@ assert.match(gateway, /MUSIC_STUDIO\.x/)
 assert.match(gateway, /PHOTO_STUDIO\.x/)
 assert.match(gateway, /MOVEMENT_LAB\.x/)
 assert.match(gateway, /movement-quest\.html/)
+assert.match(gateway, /EDUCATION_WING\.x/)
+assert.match(gateway, /energy-quest\.html/)
+assert.match(overlay, /<WorldQuestDirectory\s*\/>/)
+for (const link of ['music-quest','photo-quest','movement-quest','energy-quest','passport']) {
+  assert.ok(directory.includes('/alpha/' + link + '.html'), 'Missing quest directory link: ' + link)
+}
+assert.match(player, /event\.target !== canvas/)
+assert.match(player, /#world-canvas canvas/)
 assert.match(gateway, /photo-quest\.html/)
 assert.doesNotMatch(gateway, /\bfetch\s*\(/)
 
