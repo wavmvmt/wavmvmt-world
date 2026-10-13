@@ -1,0 +1,39 @@
+name: World Alpha Validation
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/alpha/**'
+      - 'src/components/StudioQuestGateway.tsx'
+      - 'src/components/UIOverlay.tsx'
+      - 'scripts/check-music-quest.mjs'
+      - '.github/workflows/world-alpha-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  alpha-source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check music, photography, progression, and 3D entry points
+        run: node scripts/check-music-quest.mjs
+  typescript-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: TypeScript validation
+        run: npx tsc --noEmit
+      - name: Production build
+        run: npm run build
