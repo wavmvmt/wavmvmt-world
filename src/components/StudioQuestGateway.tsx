@@ -28,12 +28,12 @@ function completedLocally(): CompletionStatus {
       if (!parsed || typeof parsed !== 'object' || !('version' in parsed) ||
           parsed.version !== 2 || !('completions' in parsed) ||
           !Array.isArray(parsed.completions)) return empty
-      const questIds = parsed.completions
-        .filter((item: unknown) => !!item && typeof item === 'object' && 'questId' in item)
-        .map((item: { questId: string }) => item.questId)
+      const hasQuest = (questId: string) => parsed.completions.some((item: unknown) =>
+        !!item && typeof item === 'object' && 'questId' in item &&
+        item.questId === questId)
       return {
-        music: questIds.includes('music_producer_001'),
-        photo: questIds.includes('photo_composition_001'),
+        music: hasQuest('music_producer_001'),
+        photo: hasQuest('photo_composition_001'),
       }
     }
 
