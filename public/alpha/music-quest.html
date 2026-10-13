@@ -49,7 +49,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <section id="arrival" class="view">
 <div class="eyebrow">A world built around becoming</div>
 <h1>What would you do if you could begin anywhere?</h1>
-<p class="lead">Enter a small, playable piece of WAVMVMT World. Explore a creative pathway, make a beat, and see how your skills connect. One working quest today; a much larger world ahead.</p>
+<p class="lead">Enter a small, playable piece of WAVMVMT World. Explore a creative pathway, make a beat, and see how your skills connect. Two small learning quests today; a much larger world ahead.</p>
 <div class="layout">
 <div class="feature">
 <span class="pill">Private development alpha · No account required</span>
@@ -72,11 +72,11 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 </section>
 <section id="hub" class="view hidden">
 <div class="eyebrow">WAVMVMT Center / first neighborhood</div><h1>Your journey begins here.</h1>
-<p class="lead">A community hub for sound, movement, learning and building. Only the Music Studio is playable in this first slice; the other rooms are conceptual previews.</p>
+<p class="lead">A community hub for sound, movement, learning and building. The Music Studio and Photo Studio have small playable exercises. Other rooms remain conceptual previews.</p>
 <div class="room-grid">
 <div class="room"><strong>🎚️ Music Studio</strong><span>PLAYABLE · Make a groove and connect two skills.</span><button type="button" class="btn" data-view="studio">Enter studio</button></div>
 <div class="room"><strong>🤸 Movement Lab</strong><span>CONCEPT · Parkour and movement progression.</span><span class="pill">Not yet playable</span></div>
-<div class="room"><strong>📷 Photo Studio</strong><span>CONCEPT · Learn light, storytelling and composition.</span><span class="pill">Not yet playable</span></div>
+<div class="room"><strong>📷 Photo Studio</strong><span>PLAYABLE · Practice an illustrated composition and lighting challenge.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./photo-quest.html">Frame a moment ↗</a></div>
 <div class="room"><strong>☀️ Energy Workshop</strong><span>CONCEPT · Design practical clean-energy projects.</span><span class="pill">Not yet playable</span></div>
 <div class="room"><strong>🧩 Community Workshop</strong><span>CONCEPT · Collaborate on meaningful projects.</span><span class="pill">Not yet playable</span></div>
 <div class="room"><strong>🧠 Mind Palace</strong><span>PLAYABLE · Explore your evolving skill web.</span><button type="button" class="btn secondary" data-view="palace">View skill web</button></div>
@@ -148,14 +148,54 @@ function renderSteps(){document.querySelectorAll('.step').forEach(function(b){va
 function makeGrid(){var root=id('sequencer');root.textContent='';sounds.forEach(function(sound,s){var row=document.createElement('div');row.className='track';var name=document.createElement('div');name.className='track-label';name.textContent=sound.toUpperCase();row.appendChild(name);for(var p=0;p<8;p++){(function(ss,pp){var b=document.createElement('button');b.type='button';b.className='step';b.dataset.sound=ss;b.dataset.step=pp;b.setAttribute('aria-label',sound+' step '+(pp+1));b.addEventListener('click',function(){if(playing)stop();state.pattern[ss][pp]=state.pattern[ss][pp]?0:1;state.playedBar=false;save();render();});row.appendChild(b);})(s,p);}root.appendChild(row);});renderSteps();}
 id('finish').addEventListener('click',function(){if(!patternOK()||!state.playedBar)return;progress=PROGRESS.completeMusic(progress,state);state.completed=PROGRESS.isCompleted(progress);save();render();id('quest-message').textContent='Quest completed! Rhythm and Sequencing are now part of your Mind Palace. You can still remix your beat.';view('palace');});
 var ns='http://www.w3.org/2000/svg';
-var nodes=[{name:'Curiosity',x:105,y:118,desc:'Your willingness to explore and try something new.'},{name:'Listening',x:278,y:65,desc:'Paying attention to differences in sound and timing.'},{name:'Rhythm',x:290,y:208,desc:'Practicing a repeating temporal pattern. Unlocked by the playable music quest.',earned:true},{name:'Sequencing',x:411,y:306,desc:'Arranging events over time. Unlocked by constructing and playing a qualifying bar.',earned:true},{name:'Creative practice',x:102,y:305,desc:'Turning ideas into experiments and iterating.',earned:true}];
+var nodes=[
+{id:'curiosity',name:'Curiosity',x:73,y:90,desc:'Trying something unfamiliar is a starting point for learning.'},
+{id:'listening',name:'Listening',x:210,y:80,desc:'Notice changes in a sound or a scene.'},
+{id:'rhythm',name:'Rhythm',x:258,y:203,desc:'Practice repeating patterns in time, learned in the music quest.'},
+{id:'sequencing',name:'Sequencing',x:422,y:306,desc:'Arrange events in time, practiced in the music quest.'},
+{id:'creative-practice',name:'Creative practice',x:90,y:302,desc:'Experiment, listen, adjust, and try again.'},
+{id:'composition',name:'Composition',x:400,y:79,desc:'Explore placing a subject in a frame in the photo challenge.'},
+{id:'light-awareness',name:'Light awareness',x:472,y:191,desc:'Explore how lighting direction changes an illustrated scene.'},
+{id:'visual-storytelling',name:'Visual storytelling',x:260,y:355,desc:'Make an intentional visual choice in the photo challenge.'}
+];
 function svg(tag,attrs){var e=document.createElementNS(ns,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
-function detail(n){id('node-title').textContent=n.name+(n.earned&&!state.completed?' · Locked':'');id('node-detail').textContent=n.earned&&!state.completed?'Complete the first music quest to add this node to your skill web.':n.desc;}
-function renderGraph(){var root=id('graph');while(root.firstChild)root.removeChild(root.firstChild);var edges=[[0,1],[0,4],[1,2],[2,3],[2,4]];edges.forEach(function(pair){var a=nodes[pair[0]],b=nodes[pair[1]],open=(!a.earned||state.completed)&&(!b.earned||state.completed);root.appendChild(svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:open?'#c58460':'#d7c9bd','stroke-width':open?'3':'2','stroke-dasharray':open?'0':'6 7'}));});nodes.forEach(function(n,i){var unlocked=!n.earned||state.completed;var g=svg('g',{role:'button',tabindex:'0','aria-label':n.name+(unlocked?'':' locked')});var c=svg('circle',{cx:n.x,cy:n.y,r:48,fill:unlocked?(i===0?'#8a2c23':'#c58460'):'#ded6cf',stroke:unlocked?'#79402e':'#b3a99f','stroke-width':'2'});g.appendChild(c);var words=n.name.split(' ');var t=svg('text',{x:n.x,y:n.y-(words.length===2?7:0),'text-anchor':'middle','font-size':words.length===2?'12':'14','font-weight':'700',fill:unlocked?'white':'#736b64','pointer-events':'none'});words.forEach(function(w,j){var sp=svg('tspan',{x:n.x,dy:j===0?'0':'15'});sp.textContent=w;t.appendChild(sp);});g.appendChild(t);g.addEventListener('click',function(){detail(n);});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();detail(n);}});root.appendChild(g);});id('palace-status').textContent=state.completed?'Quest complete: five nodes available.':'Two starting nodes available; three unlock through Quest 001.';}
-function render(){document.querySelectorAll('[data-path]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.path===state.path?'true':'false');});id('arrival-status').textContent=state.completed?'Completed':'Not completed';id('arrival-skills').textContent=state.completed?'5':'2';id('pattern-state').textContent=patternOK()?'Ready':'Not ready';id('bar-state').textContent=state.playedBar?'Yes':'No';id('finish').disabled=!(patternOK()&&state.playedBar);id('sound').textContent='Sound: '+(soundOn?'ON':'OFF');id('sound').setAttribute('aria-pressed',soundOn?'true':'false');id('quest-message').textContent=state.completed?'Quest completed! You can still edit your beat.':'Complete a qualifying bar to unlock Rhythm, Sequencing, and Creative practice.';renderSteps();renderGraph();}
+function isUnlocked(n){return PROGRESS.unlockedSkills(progress).indexOf(n.id)!==-1;}
+function detail(n){
+ var unlocked=isUnlocked(n);
+ id('node-title').textContent=n.name+(unlocked?'':' · Locked');
+ id('node-detail').textContent=unlocked?n.desc:'Complete the relevant music or photography quest to unlock this practice node.';
+}
+function renderGraph(){
+ var root=id('graph');while(root.firstChild)root.removeChild(root.firstChild);
+ var edges=[[0,1],[0,4],[1,2],[2,3],[2,4],[0,5],[1,6],[5,6],[5,7],[4,7]];
+ edges.forEach(function(pair){var a=nodes[pair[0]],b=nodes[pair[1]],open=isUnlocked(a)&&isUnlocked(b);root.appendChild(svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:open?'#c58460':'#d7c9bd','stroke-width':open?'3':'2','stroke-dasharray':open?'0':'6 7'}));});
+ nodes.forEach(function(n,i){
+  var unlocked=isUnlocked(n);
+  var g=svg('g',{role:'button',tabindex:'0','aria-label':n.name+(unlocked?'':' locked')});
+  g.appendChild(svg('circle',{cx:n.x,cy:n.y,r:37,fill:unlocked?(i===0?'#8a2c23':'#c58460'):'#ded6cf',stroke:unlocked?'#79402e':'#b3a99f','stroke-width':'2'}));
+  var words=n.name.split(' ');var t=svg('text',{x:n.x,y:n.y-(words.length>=2?8:0),'text-anchor':'middle','font-size':words.length>1?'10':'12','font-weight':'700',fill:unlocked?'white':'#736b64','pointer-events':'none'});
+  words.forEach(function(w,j){var sp=svg('tspan',{x:n.x,dy:j===0?'0':'13'});sp.textContent=w;t.appendChild(sp);});g.appendChild(t);
+  g.addEventListener('click',function(){detail(n);});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();detail(n);}});
+  root.appendChild(g);
+ });
+ var count=PROGRESS.unlockedSkills(progress).length;
+ id('palace-status').textContent=count+' of '+nodes.length+' practice nodes unlocked locally. Music and photography quests unlock different branches.';
+}
+function render(){
+ document.querySelectorAll('[data-path]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.path===state.path?'true':'false');});
+ id('arrival-status').textContent=state.completed?'Music completed':'Music not completed';
+ id('arrival-skills').textContent=String(PROGRESS.unlockedSkills(progress).length);
+ id('pattern-state').textContent=patternOK()?'Ready':'Not ready';
+ id('bar-state').textContent=state.playedBar?'Yes':'No';
+ id('finish').disabled=!(patternOK()&&state.playedBar);
+ id('sound').textContent='Sound: '+(soundOn?'ON':'OFF');
+ id('sound').setAttribute('aria-pressed',soundOn?'true':'false');
+ id('quest-message').textContent=state.completed?'Quest completed! You can still edit your beat.':'Complete a qualifying bar to unlock Rhythm, Sequencing, and Creative practice.';
+ renderSteps();renderGraph();
+}
 id('export').addEventListener('click',function(){var data=JSON.stringify(progress,null,2);var blob=new Blob([data],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='wavmvmt-world-progress-v2.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},300);id('save-status').textContent='Local progress exported as JSON.';});
 id('reset').addEventListener('click',function(){if(!window.confirm('Clear local WAVMVMT World alpha progress?'))return;stop();try{progress=PROGRESS.reset(localStorage);}catch(e){progress=PROGRESS.newProgress();}state=PROGRESS.getMusicSnapshot(progress);save();id('save-status').textContent='Progress reset in this browser.';render();view('arrival');});
-makeGrid();render();if(new URLSearchParams(window.location.search).get('from')==='world')view('studio');
+makeGrid();render();var query=new URLSearchParams(window.location.search);if(query.get('view')==='palace')view('palace');else if(query.get('view')==='hub')view('hub');else if(query.get('from')==='world')view('studio');
 })();
 </script>
 </body>
