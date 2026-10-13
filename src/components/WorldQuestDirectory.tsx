@@ -95,7 +95,7 @@ export function WorldQuestDirectory() {
   }, [])
 
   return (
-    <section className="fixed right-3 top-[90px] z-[55] pointer-events-auto max-w-[calc(100vw-24px)]"
+    <section className="fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:translate-x-0 md:right-3 md:top-[90px] z-[55] pointer-events-auto max-w-[calc(100vw-24px)]"
       aria-label="World learning quests">
       <button
         type="button"
@@ -114,7 +114,7 @@ export function WorldQuestDirectory() {
       </button>
       {open && (
         <nav id="world-quest-menu" aria-label="Explore playable world quests"
-          className="mt-2 w-[340px] max-w-[calc(100vw-24px)] max-h-[68vh] overflow-y-auto rounded-2xl border p-4 shadow-2xl"
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 md:static md:translate-x-0 md:mt-2 md:mb-0 w-[340px] max-w-[calc(100vw-24px)] max-h-[65vh] overflow-y-auto rounded-2xl border p-4 shadow-2xl"
           style={{
             background: 'rgba(26,21,32,.97)', color: '#fff0d8',
             borderColor: 'rgba(240,198,116,.4)',
