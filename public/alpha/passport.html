@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fdfbf4"><title>WAVMVMT World — Player Passport</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#2e1a14;background:#fdfbf4;--paper:#fdfbf4;--cream:#f1e7d3;--wine:#8a2c23;--ink:#2e1a14;--gold:#dca53c}
+*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}a{color:var(--wine)}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+header{border-bottom:1px solid #dccbb7;background:#fdfbf4}header>div{max-width:1140px;margin:auto;padding:18px 21px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:900;letter-spacing:.17em}.logo small{display:block;font-weight:500;letter-spacing:.14em;font-size:10px;margin-top:5px;color:#795f52}
+main{max-width:1140px;margin:auto;padding:33px 20px 84px}.eyebrow{font-size:11px;color:var(--wine);font-weight:800;letter-spacing:.17em;text-transform:uppercase}h1{font-size:clamp(36px,6vw,66px);line-height:1.06;letter-spacing:-.048em;margin:10px 0}h2{font-size:24px;letter-spacing:-.03em;margin:0 0 14px}p{color:#59483e;line-height:1.6}.lead{max-width:760px;font-size:18px}
+.hero{background:linear-gradient(135deg,#f1e7d3,#fffaf2);padding:25px;border:1px solid #e0cbb9;border-radius:16px;margin:24px 0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat{padding:17px;background:#fff;border-radius:12px;border:1px solid #e0cbb9}.stat strong{font-size:32px;letter-spacing:-.05em;display:block;color:var(--wine)}.stat span{font-size:12px;color:#665146}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}.panel{padding:23px;background:#fff;border:1px solid #dcc9b5;border-radius:14px}
+.quest{padding:15px 0;border-bottom:1px solid #e7dacc}.quest:last-child{border-bottom:0}.quest h3{margin:0 0 5px}.quest p{font-size:13px;margin:5px 0 12px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.btn{display:inline-block;min-height:44px;padding:12px 15px;border-radius:8px;font-size:13px;text-decoration:none;font-weight:750;color:white;background:var(--wine);border:1px solid var(--wine)}.btn.secondary{background:transparent;color:var(--wine)}.btn.neutral{background:white;color:#58463a;border-color:#bca79a}.btn[disabled]{opacity:.5}
+.tag{font-size:10px;padding:5px 9px;border-radius:99px;display:inline-block;background:#f4e5d7;color:#6b3125;font-weight:750;letter-spacing:.05em}
+.tag.finished{background:#e2eddd;color:#355b38}.skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.skill{padding:12px;background:#fbf4e9;border:1px solid #e1d0bf;border-radius:8px;font-size:13px;display:flex;align-items:center;gap:8px;min-height:55px}
+.skill.locked{background:#f5f1eb;color:#877a70;border-style:dashed}.skill .dot{display:inline-flex;justify-content:center;align-items:center;flex:0 0 27px;width:27px;height:27px;border-radius:50%;background:#8a2c23;color:#fff;font-size:13px}.skill.locked .dot{background:#b9aca4}
+.progress{height:9px;background:#e6d5c5;overflow:hidden;border-radius:20px}.fill{height:100%;width:0%;background:#8a2c23;transition:width .35s ease}.note{font-size:12px;color:#786458}.danger{border-top:1px solid #ebd8c8;margin-top:22px;padding-top:16px}.status{min-height:25px;font-size:13px;color:#663d31}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.hero{padding:18px}}@media(max-width:480px){main{padding:22px 13px 60px}.panel{padding:16px}.stats{grid-template-columns:1fr 1fr}.stats>.stat:last-child{grid-column:span 2}.skill-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+</style></head><body>
+<header><div><div class="logo">WAVMVMT <small>WORLD · PLAYER PASSPORT · ALPHA</small></div><a href="./music-quest.html?view=hub">← Back to Center</a></div></header>
+<main><div class="eyebrow">Your journey · Locally saved</div><h1>Build a world of skills.</h1>
+<p class="lead">Each completed learning exercise adds a branch to your Passport. Follow what interests you. This records what you tried in the demo, not a grade, certification, employment qualification, or measure of real ability.</p>
+<div class="hero"><div class="stats">
+<div class="stat"><strong id="completed-count">0 / 3</strong><span>Quests completed</span></div>
+<div class="stat"><strong id="unlocked-count">2 / 11</strong><span>Practice nodes discovered</span></div>
+<div class="stat"><strong id="pathway">Explore</strong><span>Your starting intention</span></div>
+</div><p style="font-size:13px;margin-bottom:8px">Local quest exploration</p><div class="progress" role="progressbar" aria-label="Quests complete" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" id="completion-progress"><div class="fill" id="completion-fill"></div></div>
+</div>
+<div class="grid">
+<section class="panel" aria-labelledby="quests-heading"><h2 id="quests-heading">Learning pathways</h2>
+<div id="quest-list"></div>
+<p class="note">Quests are tiny prototypes; the full WAVMVMT World experience is still in development. No public multiplayer or real-world rewards are connected.</p>
+</section>
+<section class="panel" aria-labelledby="skills-heading"><h2 id="skills-heading">Your Mind Palace</h2><p class="note">Unlocked practice nodes appear in color. Locked ones show what you can try next.</p><div class="skill-grid" id="skills"></div>
+<div class="actions"><a class="btn secondary" href="./music-quest.html?view=palace">Open the connected Mind Palace ↗</a></div>
+</section>
+</div>
+<section class="panel" style="margin-top:18px" aria-labelledby="privacy-heading"><h2 id="privacy-heading">Your data stays with you</h2>
+<p>This alpha uses local browser storage. You can export your progress as a JSON file or clear it completely. There is no cloud sync, account system, real financial asset, streaming income or company record associated with these achievements.</p>
+<div class="actions"><button type="button" class="btn" id="export">Export my progress JSON</button><button type="button" class="btn secondary" id="refresh">Refresh passport</button></div>
+<div class="danger"><button type="button" class="btn neutral" id="reset">Clear all local game progress</button><p class="note">Reset clears all three quests and any older alpha save in this browser. This cannot be undone unless you've exported a copy.</p></div>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+</section></main>
+<script src="./progression-v2.js"></script>
+<script>
+(function(){
+'use strict';
+var api=window.WAVMVMTProgression;
+var quests=[
+{id:api.QUEST_ID,label:'01 / Find Your Rhythm',area:'Music Studio',about:'Make an eight-step groove and complete one qualifying bar.',url:'./music-quest.html?view=studio'},
+{id:api.PHOTO_ID,label:'02 / Frame a Moment',area:'Photography Studio',about:'Compose a portrait with a rule-of-thirds grid and light choice.',url:'./photo-quest.html'},
+{id:api.MOVEMENT_ID,label:'03 / Movement Pathfinder',area:'Movement Lab',about:'Find an obstacle-free virtual route through three stations.',url:'./movement-quest.html'}
+];
+function id(x){return document.getElementById(x);}
+function elem(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt)e.textContent=txt;return e;}
+function progress(){try{return api.read(localStorage);}catch(e){id('status').textContent='Local browser storage is not available in this context.';return api.newProgress();}}
+function render(){
+ var current=progress(),complete=quests.filter(function(q){return api.isCompleted(current,q.id);});
+ var unlocked=api.unlockedSkills(current),pct=(complete.length/quests.length)*100;
+ id('completed-count').textContent=complete.length+' / '+quests.length;
+ id('unlocked-count').textContent=unlocked.length+' / '+api.SKILLS.length;
+ id('pathway').textContent=(current.onboarding.path||'Explore').replace(/^\w/,function(x){return x.toUpperCase();});
+ id('completion-fill').style.width=pct+'%';
+ id('completion-progress').setAttribute('aria-valuenow',String(complete.length));
+ var list=id('quest-list');list.textContent='';
+ quests.forEach(function(q){
+  var done=api.isCompleted(current,q.id),wrap=elem('div','quest'),title=elem('h3','',q.label),tag=elem('span','tag'+(done?' finished':''),done?'Completed ✓':'Ready to explore'),p=elem('p','',q.about),a=elem('a','btn'+(done?' secondary':''),done?'Try again ↗':'Start quest ↗');
+  a.href=q.url;a.setAttribute('aria-label',q.label+(done?' replay':' start'));
+  var tiny=elem('p','note',q.area);
+  wrap.appendChild(title);wrap.appendChild(tag);wrap.appendChild(tiny);wrap.appendChild(p);wrap.appendChild(a);list.appendChild(wrap);
+ });
+ var skills=id('skills');skills.textContent='';
+ api.SKILLS.forEach(function(s){
+  var ok=unlocked.indexOf(s.id)!==-1,box=elem('div','skill'+(ok?'':' locked')),mark=elem('span','dot',ok?'✓':'○'),t=elem('span','',s.title);
+  box.setAttribute('aria-label',s.title+(ok?' unlocked':' locked'));
+  box.appendChild(mark);box.appendChild(t);skills.appendChild(box);
+ });
+}
+id('refresh').addEventListener('click',function(){render();id('status').textContent='Passport refreshed from this browser.';});
+id('export').addEventListener('click',function(){
+ var current=progress(),data=JSON.stringify(current,null,2);
+ var file=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(file),link=document.createElement('a');
+ link.href=url;link.download='wavmvmt-world-passport-progress-v2.json';
+ document.body.appendChild(link);link.click();link.remove();
+ setTimeout(function(){URL.revokeObjectURL(url)},300);
+ id('status').textContent='Your local progress JSON was exported.';
+});
+id('reset').addEventListener('click',function(){
+ if(!window.confirm('Clear all WAVMVMT World local game progress, including earlier alpha saves?'))return;
+ try{api.reset(localStorage);id('status').textContent='Local game progress cleared.';}
+ catch(e){id('status').textContent='Browser storage cannot be cleared here.';}
+ render();
+});
+window.addEventListener('pageshow',render);
+render();
+})();
+</script></body></html>
