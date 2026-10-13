@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fdfbf4">
+<title>WAVMVMT World · Photography Composition Quest</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--paper:#fdfbf4;--cream:#f1e7d3;--ink:#2e1a14;--wine:#8a2c23;--ochre:#dca53c;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}body{margin:0}header{border-bottom:1px solid #d9c9b7;background:#fdfbf4}header>div{padding:16px 20px;max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header strong{letter-spacing:.2em;font-size:15px}a{color:var(--wine)}main{max-width:1100px;margin:auto;padding:32px 20px 80px}h1{font-size:clamp(33px,5vw,58px);letter-spacing:-.045em;line-height:1.08;margin:12px 0}h2{margin:0 0 14px}p{line-height:1.65;color:#58493d}.kicker{color:var(--wine);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;margin-top:24px}.panel{border:1px solid #dac9b8;border-radius:14px;background:#fff;padding:22px}.soft{background:var(--cream)}.stage{position:relative;aspect-ratio:5/4;min-height:220px;overflow:hidden;border-radius:12px;border:4px solid #5f3b32;background:linear-gradient(110deg,#e2cfb5,#ffecd1 55%,#d4b4a7)}
+.stage.side{background:linear-gradient(105deg,#6e4b4d 0%,#c78372 32%,#ffe4b3 70%,#fff2da 100%)}.stage:before,.stage:after{content:"";position:absolute;inset:0;pointer-events:none}
+.stage:before{background:linear-gradient(to right,transparent calc(33.333% - 1px),#6a49375c 33.333%,transparent calc(33.333% + 1px),transparent calc(66.666% - 1px),#6a49375c 66.666%,transparent calc(66.666% + 1px))}
+.stage:after{background:linear-gradient(to bottom,transparent calc(33.333% - 1px),#6a49375c 33.333%,transparent calc(33.333% + 1px),transparent calc(66.666% - 1px),#6a49375c 66.666%,transparent calc(66.666% + 1px))}
+.subject{position:absolute;transform:translate(-50%,-50%);width:18%;height:35%;pointer-events:none;transition:left .22s ease,top .22s ease}
+.head{display:block;position:absolute;top:3%;left:25%;height:37%;width:50%;border-radius:50%;background:#59312a;box-shadow:9px 0 #5f403d35}
+.shoulders{display:block;position:absolute;top:35%;left:5%;width:90%;height:65%;background:#784c46;border-radius:55% 55% 20% 20%}
+.stage-label{position:absolute;bottom:12px;left:12px;font-size:11px;background:#fff5eacc;padding:6px 9px;border-radius:6px;color:#4f3029;z-index:1}
+fieldset{border:0;padding:0;margin:0 0 16px}legend{font-weight:800;margin-bottom:8px;font-size:15px}
+.option-row{display:flex;gap:8px;flex-wrap:wrap}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--ochre);outline-offset:3px}
+.option{min-height:42px;border-radius:8px;border:1px solid #bda697;padding:9px 13px;color:var(--ink);background:white;font-size:13px}
+.option[aria-pressed="true"]{background:var(--wine);color:white;border-color:var(--wine)}
+.btn{border-radius:9px;min-height:44px;padding:11px 16px;background:var(--wine);border:1px solid var(--wine);color:white;font-weight:750}
+.btn.secondary{background:transparent;color:var(--wine)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.hint{border-left:4px solid var(--ochre);background:#fff6e5;border-radius:0 8px 8px 0;padding:12px;line-height:1.55;font-size:14px}
+.status{margin-top:15px;padding:13px;background:#f3ebdf;border-radius:8px;min-height:49px;font-size:13px;color:#513b32}
+.small{font-size:12px;color:#735f51}.badge{display:inline-block;border:1px solid #a98269;color:var(--wine);border-radius:20px;padding:5px 9px;font-size:11px;font-weight:700}
+.preview-indicator{display:none;position:absolute;top:10px;right:10px;z-index:1;padding:7px 10px;color:white;border-radius:6px;background:#35654b;font-weight:700;font-size:11px}.previewed .preview-indicator{display:block}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.stage{min-height:200px}}@media(max-width:420px){main{padding:23px 13px 70px}.panel{padding:16px}.option{padding:8px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.subject{transition:none}}
+</style></head><body>
+<header><div><strong>WAVMVMT · WORLD</strong><a href="./music-quest.html?view=hub">← Back to Center</a></div></header>
+<main><div class="kicker">Quest 002 · Photography / Visual storytelling</div>
+<h1>Frame a moment.</h1><p>Learn a simple visual-composition exercise by arranging a subject and choosing a lighting direction. This is an illustrated practice puzzle, not a real camera or a claim of professional skill certification.</p>
+<div class="layout">
+<section class="panel" aria-labelledby="scene-title"><h2 id="scene-title">Your composition</h2>
+<div class="stage" id="stage" aria-label="Illustrated portrait composition with rule-of-thirds grid">
+<div class="subject" id="subject"><span class="head"></span><span class="shoulders"></span></div>
+<div class="stage-label" id="scene-label">Subject centered · Front light</div><div class="preview-indicator" aria-live="polite">PREVIEWED ✓</div></div>
+<p class="small">The grid marks thirds. Move the illustrated subject to an intersection, choose side lighting, and preview your composition to finish the exercise.</p>
+<div class="buttons"><button class="btn secondary" id="preview" type="button">Preview composition</button><button class="btn" id="complete" type="button" disabled>Complete photo quest</button></div>
+<div class="status" id="message" role="status" aria-live="polite">Choose a framing position to begin.</div>
+</section>
+<section class="panel soft" aria-label="Composition controls">
+<div class="badge">Playable local prototype</div><h2 style="margin-top:14px">Create your shot</h2>
+<div class="hint"><strong>Challenge:</strong> Move the subject away from center to any of the four third intersections. Use side lighting for contrast. Preview your choice, then complete the quest.</div>
+<fieldset style="margin-top:19px"><legend>1. Subject position</legend>
+<div class="option-row" id="positions">
+<button class="option" type="button" data-position="center" aria-pressed="true">Center</button>
+<button class="option" type="button" data-position="upper-left" aria-pressed="false">Upper left</button>
+<button class="option" type="button" data-position="upper-right" aria-pressed="false">Upper right</button>
+<button class="option" type="button" data-position="lower-left" aria-pressed="false">Lower left</button>
+<button class="option" type="button" data-position="lower-right" aria-pressed="false">Lower right</button>
+</div></fieldset>
+<fieldset><legend>2. Light direction</legend>
+<div class="option-row" id="lighting"><button type="button" class="option" data-light="front" aria-pressed="true">Front light</button><button type="button" class="option" data-light="side" aria-pressed="false">Side light</button></div></fieldset>
+<p class="small">A strong photograph can also use centered framing or front lighting. This challenge only teaches one creative technique, not a universal rule.</p>
+<div style="border-top:1px solid #d7c3ad;margin:20px 0"></div>
+<h2>Mind Palace</h2><p id="skill-status">Explore to unlock composition-related practice nodes.</p>
+<div class="buttons"><a class="btn secondary" style="text-decoration:none" href="./music-quest.html?view=palace">View skill web ↗</a><button class="btn secondary" type="button" id="reset-photo">Clear photo draft</button></div>
+</section></div>
+<p class="small">All state is stored locally in this browser under WAVMVMT World progress V2. This puzzle uses no device camera, no accounts and no uploads. No real-world earnings or credentials are awarded.</p>
+</main>
+<script src="./progression-v2.js"></script>
+<script>
+(function(){
+'use strict';
+var engine=window.WAVMVMTProgression;
+var progress=engine.newProgress();
+try{progress=engine.read(localStorage);}catch(e){}
+var draft=engine.getPhotoSnapshot(progress);
+var pts={'center':[50,50],'upper-left':[33.333,33.333],'upper-right':[66.666,33.333],'lower-left':[33.333,66.666],'lower-right':[66.666,66.666]};
+function byId(x){return document.getElementById(x);}
+function save(){
+  progress=engine.updatePhotoDraft(progress,draft);
+  try{progress=engine.persist(localStorage,progress);}
+  catch(e){byId('message').textContent='Browser storage unavailable. This attempt is only saved for this session.';}
+}
+function render(){
+  var xy=pts[draft.placement]||pts.center;
+  byId('subject').style.left=xy[0]+'%';
+  byId('subject').style.top=xy[1]+'%';
+  byId('stage').classList.toggle('side',draft.lighting==='side');
+  byId('stage').classList.toggle('previewed',draft.previewed);
+  byId('scene-label').textContent=draft.placement.replace('-',' ')+' · '+(draft.lighting==='side'?'Side':'Front')+' light';
+  document.querySelectorAll('[data-position]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.position===draft.placement));});
+  document.querySelectorAll('[data-light]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.light===draft.lighting));});
+  byId('complete').disabled=!engine.qualifiedPhotoDraft(draft);
+  var skills=engine.unlockedSkills(progress);
+  byId('skill-status').textContent=skills.length+' locally unlocked practice nodes. '+(engine.isCompleted(progress,engine.PHOTO_ID)?'Composition, Light awareness and Visual storytelling unlocked in this demo.':'Complete the exercise to unlock three photography practice nodes.');
+}
+function change(key,value){
+  draft[key]=value;
+  draft.previewed=false;
+  save();render();
+  byId('message').textContent='Composition changed. Preview your new framing before completion.';
+}
+document.querySelectorAll('[data-position]').forEach(function(b){b.addEventListener('click',function(){change('placement',b.dataset.position);});});
+document.querySelectorAll('[data-light]').forEach(function(b){b.addEventListener('click',function(){change('lighting',b.dataset.light);});});
+byId('preview').addEventListener('click',function(){
+  draft.previewed=true;
+  save();render();
+  byId('message').textContent=engine.qualifiedPhotoDraft(draft)?'Preview complete. Framing and lighting meet this quest’s requirements.':'Preview saved. Try a thirds intersection and side lighting to complete the practice exercise.';
+});
+byId('complete').addEventListener('click',function(){
+  if(!engine.qualifiedPhotoDraft(draft))return;
+  progress=engine.completePhoto(progress,draft);
+  save();render();
+  byId('message').textContent='Photo composition quest complete! Open Mind Palace to view your new practice nodes.';
+});
+byId('reset-photo').addEventListener('click',function(){
+  draft={placement:'center',lighting:'front',previewed:false};
+  save();render();
+  byId('message').textContent='Photo framing reset. Previous quest completions are preserved; use the main alpha’s full reset to clear all progress.';
+});
+render();
+})();
+</script></body></html>
