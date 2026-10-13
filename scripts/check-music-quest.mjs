@@ -35,7 +35,7 @@ assert.ok(inlineScript, 'Inline quest script not found')
 new Script(inlineScript[1], { filename: 'music-quest.inline.js' })
 
 // Smoke-test core challenge criteria directly from the declared game function.
-const source = inlineScript[1].match(/function patternOK\(\)\{[^}]+\}/)
+const source = inlineScript[1].match(/function patternOK\(\)\{[^\r\n]*\}/)
 assert.ok(source, 'patternOK implementation not found')
 const start = [
   [1, 0, 0, 0, 1, 0, 0, 0],
