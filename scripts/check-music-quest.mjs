@@ -74,7 +74,7 @@ assert.match(inlineScript[1], /PROGRESS\.completeMusic\(progress,state\)/)
 assert.match(inlineScript[1], /PROGRESS\.persist\(localStorage,progress\)/)
 assert.match(inlineScript[1], /stepsPlayed===8/)
 assert.match(inlineScript[1], /state\.playedBar=true/)
-assert.match(inlineScript[1], /state\.completed=true/)
+assert.match(inlineScript[1], /state\.completed=PROGRESS\.isCompleted\(progress\)/)
 assert.match(inlineScript[1], /if\(!patternOK\(\)\|\|!state\.playedBar\)return/)
 
 // The 3D bridge is optional: no shared account, no network or cross-site data.
