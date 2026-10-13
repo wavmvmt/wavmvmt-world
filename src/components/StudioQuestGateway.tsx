@@ -28,7 +28,8 @@ function completedLocally(): CompletionStatus {
       if (!parsed || typeof parsed !== 'object' || !('version' in parsed) ||
           parsed.version !== 2 || !('completions' in parsed) ||
           !Array.isArray(parsed.completions)) return empty
-      const hasQuest = (questId: string) => parsed.completions.some((item: unknown) =>
+      const completions: unknown[] = parsed.completions
+      const hasQuest = (questId: string) => completions.some((item: unknown) =>
         !!item && typeof item === 'object' && 'questId' in item &&
         item.questId === questId)
       return {
