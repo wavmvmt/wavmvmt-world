@@ -49,7 +49,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <section id="arrival" class="view">
 <div class="eyebrow">A world built around becoming</div>
 <h1>What would you do if you could begin anywhere?</h1>
-<p class="lead">Enter a small, playable piece of WAVMVMT World. Explore a creative pathway, make a beat, and see how your skills connect. Two small learning quests today; a much larger world ahead.</p>
+<p class="lead">Enter a small, playable piece of WAVMVMT World. Explore a creative pathway, make a beat, and see how your skills connect. Three small learning quests today; a much larger world ahead.</p>
 <div class="layout">
 <div class="feature">
 <span class="pill">Private development alpha · No account required</span>
@@ -72,10 +72,10 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 </section>
 <section id="hub" class="view hidden">
 <div class="eyebrow">WAVMVMT Center / first neighborhood</div><h1>Your journey begins here.</h1>
-<p class="lead">A community hub for sound, movement, learning and building. The Music Studio and Photo Studio have small playable exercises. Other rooms remain conceptual previews.</p>
+<p class="lead">A community hub for sound, movement, learning and building. Music, photography and virtual movement each have a playable learning exercise. Other rooms remain conceptual previews.</p>
 <div class="room-grid">
 <div class="room"><strong>🎚️ Music Studio</strong><span>PLAYABLE · Make a groove and connect two skills.</span><button type="button" class="btn" data-view="studio">Enter studio</button></div>
-<div class="room"><strong>🤸 Movement Lab</strong><span>CONCEPT · Parkour and movement progression.</span><span class="pill">Not yet playable</span></div>
+<div class="room"><strong>🧭 Movement Lab</strong><span>PLAYABLE · Navigate a virtual route with three checkpoints.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./movement-quest.html">Find a way ↗</a></div>
 <div class="room"><strong>📷 Photo Studio</strong><span>PLAYABLE · Practice an illustrated composition and lighting challenge.</span><a class="btn secondary" style="display:inline-block;text-decoration:none;text-align:center;font-size:13px" href="./photo-quest.html">Frame a moment ↗</a></div>
 <div class="room"><strong>☀️ Energy Workshop</strong><span>CONCEPT · Design practical clean-energy projects.</span><span class="pill">Not yet playable</span></div>
 <div class="room"><strong>🧩 Community Workshop</strong><span>CONCEPT · Collaborate on meaningful projects.</span><span class="pill">Not yet playable</span></div>
@@ -101,7 +101,7 @@ footer{border-top:1px solid #d6c6b5;text-align:center;color:#7a695b;padding:25px
 <div class="eyebrow">Mind Palace / evolving connections</div><h1>Skills are not islands.</h1>
 <p class="lead">This little web grows when you complete a real action in the music quest. Select a node to explore it. Connections illustrate possible skill transfers, not guaranteed outcomes or scientific measurements.</p>
 <div class="layout">
-<div class="graph-container"><svg id="graph" viewBox="0 0 520 400" role="group" aria-label="Interactive skill network"></svg></div>
+<div class="graph-container"><svg id="graph" viewBox="0 0 650 460" role="group" aria-label="Interactive skill network"></svg></div>
 <div class="panel"><h2 id="node-title">Your skill web</h2><p id="node-detail">Choose a node in the web. Complete the music quest to unlock Rhythm and Sequencing.</p>
 <div class="status" id="palace-status" role="status">Two starting nodes available.</div><div class="actions"><button type="button" class="btn" data-view="studio">Continue music quest</button></div></div>
 </div></section>
@@ -156,18 +156,21 @@ var nodes=[
 {id:'creative-practice',name:'Creative practice',x:90,y:302,desc:'Experiment, listen, adjust, and try again.'},
 {id:'composition',name:'Composition',x:400,y:79,desc:'Explore placing a subject in a frame in the photo challenge.'},
 {id:'light-awareness',name:'Light awareness',x:472,y:191,desc:'Explore how lighting direction changes an illustrated scene.'},
-{id:'visual-storytelling',name:'Visual storytelling',x:260,y:355,desc:'Make an intentional visual choice in the photo challenge.'}
+{id:'visual-storytelling',name:'Visual storytelling',x:260,y:355,desc:'Make an intentional visual choice in the photo challenge.'},
+{id:'spatial-planning',name:'Spatial planning',x:555,y:70,desc:'Plan a route through a virtual space with obstacles.'},
+{id:'route-adaptation',name:'Route adaptation',x:580,y:218,desc:'Find a new way around a closed path in the virtual quest.'},
+{id:'wayfinding',name:'Wayfinding',x:546,y:385,desc:'Follow a map and visit checkpoints before a destination.'}
 ];
 function svg(tag,attrs){var e=document.createElementNS(ns,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
 function isUnlocked(n){return PROGRESS.unlockedSkills(progress).indexOf(n.id)!==-1;}
 function detail(n){
  var unlocked=isUnlocked(n);
  id('node-title').textContent=n.name+(unlocked?'':' · Locked');
- id('node-detail').textContent=unlocked?n.desc:'Complete the relevant music or photography quest to unlock this practice node.';
+ id('node-detail').textContent=unlocked?n.desc:'Complete the relevant music, photography or movement quest to unlock this practice node.';
 }
 function renderGraph(){
  var root=id('graph');while(root.firstChild)root.removeChild(root.firstChild);
- var edges=[[0,1],[0,4],[1,2],[2,3],[2,4],[0,5],[1,6],[5,6],[5,7],[4,7]];
+ var edges=[[0,1],[0,4],[1,2],[2,3],[2,4],[0,5],[1,6],[5,6],[5,7],[4,7],[0,8],[5,8],[8,9],[9,10],[3,10]];
  edges.forEach(function(pair){var a=nodes[pair[0]],b=nodes[pair[1]],open=isUnlocked(a)&&isUnlocked(b);root.appendChild(svg('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:open?'#c58460':'#d7c9bd','stroke-width':open?'3':'2','stroke-dasharray':open?'0':'6 7'}));});
  nodes.forEach(function(n,i){
   var unlocked=isUnlocked(n);
@@ -179,7 +182,7 @@ function renderGraph(){
   root.appendChild(g);
  });
  var count=PROGRESS.unlockedSkills(progress).length;
- id('palace-status').textContent=count+' of '+nodes.length+' practice nodes unlocked locally. Music and photography quests unlock different branches.';
+ id('palace-status').textContent=count+' of '+nodes.length+' practice nodes unlocked locally. Music, photography and virtual movement quests unlock different branches.';
 }
 function render(){
  document.querySelectorAll('[data-path]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.path===state.path?'true':'false');});
