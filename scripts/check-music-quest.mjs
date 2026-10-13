@@ -10,6 +10,7 @@ import { Script, runInNewContext } from 'node:vm'
 
 const html = readFileSync('public/alpha/music-quest.html', 'utf8')
 const photo = readFileSync('public/alpha/photo-quest.html', 'utf8')
+const movement = readFileSync('public/alpha/movement-quest.html', 'utf8')
 const overlay = readFileSync('src/components/UIOverlay.tsx', 'utf8')
 const gateway = readFileSync('src/components/StudioQuestGateway.tsx', 'utf8')
 const progressionJs = readFileSync('public/alpha/progression-v2.js', 'utf8')
@@ -42,6 +43,12 @@ new Script(photoScript[1], { filename: 'photo-quest.inline.js' })
 assert.match(photo, /href="\.\/music-quest\.html\?view=palace"/)
 assert.match(photo, /<script src="\.\/progression-v2\.js"><\/script>/)
 assert.doesNotMatch(photo, /\bfetch\s*\(/)
+const moveScript = movement.match(/<script>\s*([\s\S]*?)<\/script>/)
+assert.ok(moveScript, 'Movement challenge script missing')
+new Script(moveScript[1], { filename: 'movement-quest.inline.js' })
+assert.match(movement, /href="\.\/music-quest\.html\?view=palace"/)
+assert.match(movement, /<script src="\.\/progression-v2\.js"><\/script>/)
+assert.doesNotMatch(movement, /\bfetch\s*\(/)
 
 // V2 progression is the only source of truth for quest qualification.
 const vmContext = {}
@@ -70,6 +77,18 @@ const photoDone = progress.completePhoto(progress.newProgress(), photoDraft, () 
 assert.equal(progress.isCompleted(photoDone, progress.PHOTO_ID),true)
 assert.equal(progress.isCompleted(photoDone, progress.QUEST_ID),false)
 assert.match(photoScript[1], /engine\.completePhoto\(progress,draft\)/)
+assert.match(moveScript[1], /engine\.completeMovement\(progress,state\)/)
+let movementProgress = progress.newProgress()
+const route=['right','up','up','up','up','right','right','right','down','down','left','right','up','up','right']
+for (const step of route) {
+  const next=progress.advanceMovement(movementProgress,step)
+  assert.equal(next.moved,true)
+  movementProgress=next.progress
+}
+assert.equal(progress.qualifiedMovementDraft(progress.getMovementSnapshot(movementProgress)),true)
+movementProgress=progress.completeMovement(movementProgress,progress.getMovementSnapshot(movementProgress))
+assert.equal(progress.isCompleted(movementProgress,progress.MOVEMENT_ID),true)
+assert.equal(progress.unlockedSkills(movementProgress).length,5)
 assert.match(inlineScript[1], /PROGRESS\.completeMusic\(progress,state\)/)
 assert.match(inlineScript[1], /PROGRESS\.persist\(localStorage,progress\)/)
 assert.match(inlineScript[1], /stepsPlayed===8/)
@@ -86,6 +105,8 @@ assert.match(gateway, /music_producer_001/)
 assert.match(gateway, /wavmvmt-world-alpha-v1/)
 assert.match(gateway, /MUSIC_STUDIO\.x/)
 assert.match(gateway, /PHOTO_STUDIO\.x/)
+assert.match(gateway, /MOVEMENT_LAB\.x/)
+assert.match(gateway, /movement-quest\.html/)
 assert.match(gateway, /photo-quest\.html/)
 assert.doesNotMatch(gateway, /\bfetch\s*\(/)
 
