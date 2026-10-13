@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fdfbf4"><title>WAVMVMT World — Energy Lab</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--paper:#fdfbf4;--cream:#f1e7d3;--ink:#2e1a14;--wine:#8a2c23;--gold:#dca53c;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}body{margin:0}header{padding:17px max(18px,calc((100vw - 1100px)/2));border-bottom:1px solid #d8c6b5;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:14px}
+header strong{letter-spacing:.18em}a{color:var(--wine)}main{max-width:1100px;margin:auto;padding:30px 20px 90px}.eyebrow{font-weight:800;letter-spacing:.16em;color:var(--wine);text-transform:uppercase;font-size:11px}h1{font-size:clamp(35px,5.8vw,61px);line-height:1.09;letter-spacing:-.05em;margin:12px 0}h2{font-size:24px;letter-spacing:-.03em;margin:0 0 14px}p{color:#59483b;line-height:1.58}.lead{max-width:740px;font-size:18px}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin:22px 0}
+.card{padding:23px;border-radius:15px;border:1px solid #dac8b5;background:white}.soft{background:var(--cream)}.hint{padding:12px;border-left:4px solid var(--gold);background:#fff5e4;border-radius:0 8px 8px 0;font-size:14px;line-height:1.6}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.control{padding:16px;border-radius:10px;border:1px solid #dcc7b6;background:#fffaf0}.control strong{display:block;margin-bottom:5px}.control p{font-size:12px;margin:5px 0 12px}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:7px}.stepper span{font-size:26px;font-weight:800;min-width:34px;text-align:center;color:var(--wine)}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.stepper button{width:42px;height:42px;border-radius:8px;border:1px solid #bda59a;background:#f1e7d3;color:var(--ink);font-size:20px}.stepper button:disabled{opacity:.35;cursor:not-allowed}
+fieldset{border:0;margin:20px 0 0;padding:0}legend{font-weight:800;margin-bottom:10px}.load{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #d9c7b8;border-radius:8px;margin-bottom:8px;font-size:14px;cursor:pointer}.load input{width:20px;height:20px;accent-color:var(--wine)}.load strong{margin-left:auto;font-size:12px}
+.gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gauge{padding:13px 7px;border:1px solid #decdba;border-radius:8px;background:white;text-align:center}.gauge strong{font-size:25px;display:block;color:var(--wine)}.gauge small{color:#705a4c}.bar{height:12px;border-radius:20px;background:#e3d3c0;overflow:hidden;margin-top:15px}.fill{height:100%;background:#8a2c23;width:0%;transition:width .3s ease}.flow{padding:18px;text-align:center;border-radius:10px;background:linear-gradient(120deg,#f9ecda,#fff9ed);border:1px dashed #be9f80;margin-top:12px}.flow strong{font-size:21px;display:block;margin:5px 0}.flow.good{background:#e9f1e3;border-color:#749068}.btn{padding:12px 17px;min-height:44px;font-size:14px;border-radius:8px;border:1px solid var(--wine);background:var(--wine);color:white;font-weight:750}.btn.secondary{background:transparent;color:var(--wine)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.status{padding:13px;background:#fff9f0;border-radius:8px;min-height:50px;font-size:13px;margin-top:14px;line-height:1.55}.fine{font-size:12px;color:#735d4e}
+@media(max-width:770px){.grid{grid-template-columns:1fr}}@media(max-width:460px){main{padding:20px 13px 65px}.card{padding:14px}.controls{grid-template-columns:1fr}.gauge strong{font-size:20px}}@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+</style></head><body>
+<header><strong>WAVMVMT · ENERGY LAB</strong><a href="./music-quest.html?view=hub">← Back to Center</a></header>
+<main><div class="eyebrow">Quest 004 · Systems design / fictional units</div><h1>Keep the center powered.</h1>
+<p class="lead">Design a tiny imaginary energy system for a WAVMVMT studio. Choose solar panels and battery packs, select essential services, and test whether your supply covers demand within a resource budget.</p>
+<div class="grid"><section class="card" aria-labelledby="build-head"><h2 id="build-head">Your energy system</h2>
+<div class="hint"><strong>The challenge:</strong> Power all three services using at least two panels and one battery. Stay within eight build tokens. Press <strong>Test system</strong> to check, then complete the quest.</div>
+<div class="controls">
+<div class="control"><strong>☀️ Solar panels</strong><p>Each provides 2 fictional energy units and costs 2 build tokens.</p>
+<div class="stepper"><button type="button" data-unit="panels" data-delta="-1" aria-label="Remove one panel">−</button><span id="panels">0</span><button type="button" data-unit="panels" data-delta="1" aria-label="Add one panel">+</button></div></div>
+<div class="control"><strong>🔋 Battery packs</strong><p>Each provides 2 fictional energy units and costs 1 build token.</p>
+<div class="stepper"><button type="button" data-unit="batteries" data-delta="-1" aria-label="Remove one battery">−</button><span id="batteries">0</span><button type="button" data-unit="batteries" data-delta="1" aria-label="Add one battery">+</button></div></div>
+</div>
+<fieldset><legend>Services to power</legend>
+<label class="load"><input type="checkbox" data-load="lights" checked> <span>Studio lighting</span><strong>2 units</strong></label>
+<label class="load"><input type="checkbox" data-load="studio" checked> <span>Music production equipment</span><strong>4 units</strong></label>
+<label class="load"><input type="checkbox" data-load="ventilation" checked> <span>Air circulation</span><strong>3 units</strong></label>
+</fieldset>
+<div class="actions"><button type="button" class="btn" id="test">Test system</button><button type="button" class="btn secondary" id="finish" disabled>Complete quest</button><button type="button" class="btn secondary" id="reset-design">Reset design</button></div>
+<p class="status" id="status" role="status" aria-live="polite">Choose a system design and test your plan.</p>
+</section><section class="card soft" aria-labelledby="sim-head"><h2 id="sim-head">Resource board</h2><div class="gauges">
+<div class="gauge"><strong id="supply">0</strong><small>Supply units</small></div><div class="gauge"><strong id="demand">9</strong><small>Demand units</small></div><div class="gauge"><strong id="credits">0 / 8</strong><small>Build tokens</small></div>
+</div>
+<div class="bar" aria-label="Supply coverage"><div class="fill" id="coverage"></div></div>
+<div class="flow" id="flow"><span>☀️ + 🔋 → 🎚️</span><strong id="flow-label">Design incomplete</strong><span class="fine" id="flow-detail">Balance your fictional supply and demand.</span></div>
+<h2 style="margin-top:23px">Learning progression</h2><p id="skills" class="fine"></p>
+<div class="actions"><a href="./passport.html" class="btn secondary" style="text-decoration:none">My Player Passport ↗</a><a href="./music-quest.html?view=palace" class="btn secondary" style="text-decoration:none">Mind Palace ↗</a></div>
+<p class="fine">This is a fictional game: "units" and "tokens" are invented for the exercise. Real solar output, storage, conversion losses, electrical safety, building systems, utility charges and financial return require qualified professionals and site-specific calculations. This is not engineering, investment, or electrical-installation guidance.</p>
+</section></div></main>
+<script src="./progression-v2.js"></script>
+<script>
+(function(){
+'use strict';
+var api=window.WAVMVMTProgression,progress=api.newProgress();
+try{progress=api.read(localStorage);}catch(e){}
+var draft=api.getEnergySnapshot(progress);
+function id(x){return document.getElementById(x);}
+function save(){
+ progress=api.updateEnergyDraft(progress,draft);
+ try{progress=api.persist(localStorage,progress);}
+ catch(e){id('status').textContent='Browser storage unavailable; this session may not persist.';}
+}
+function status(t){id('status').textContent=t;}
+function render(){
+ var metrics=api.energyStats(draft);
+ id('panels').textContent=String(draft.panels);
+ id('batteries').textContent=String(draft.batteries);
+ id('supply').textContent=String(metrics.supply);
+ id('demand').textContent=String(metrics.demand);
+ id('credits').textContent=metrics.credits+' / 8';
+ id('coverage').style.width=Math.min(100,metrics.demand===0?0:(metrics.supply/metrics.demand)*100)+'%';
+ document.querySelectorAll('[data-unit]').forEach(function(b){
+  var val=draft[b.dataset.unit],max=b.dataset.unit==='panels'?4:3,delta=+b.dataset.delta;
+  b.disabled=val+delta<0||val+delta>max;
+ });
+ document.querySelectorAll('[data-load]').forEach(function(b){b.checked=draft.loads[b.dataset.load];});
+ var ok=api.qualifiedEnergyDraft(draft);
+ var allLoads=Object.values(draft.loads).every(Boolean);
+ var sufficient=metrics.supply>=metrics.demand;
+ id('finish').disabled=!ok;
+ id('flow').className='flow'+(ok?' good':'');
+ id('flow-label').textContent=ok?'Balanced ✓':metrics.credits>8?'Over budget':!allLoads?'Service disconnected':!sufficient?'Supply below demand':draft.tested?'Review the challenge':'Ready to test';
+ id('flow-detail').textContent='Supply '+metrics.supply+', demand '+metrics.demand+', budget '+metrics.credits+'/8; '+(draft.tested?'tested':'not yet tested');
+ id('skills').textContent=api.unlockedSkills(progress).length+' of '+api.SKILLS.length+' practice nodes discovered. '+(api.isCompleted(progress,api.ENERGY_ID)?'You completed the Energy Lab exercise.':'Completing this challenge unlocks Load balancing, Resource planning and Systems thinking.');
+}
+function change(){
+ draft.tested=false;save();render();status('Design updated. Test the new system before completion.');
+}
+document.querySelectorAll('[data-unit]').forEach(function(b){b.addEventListener('click',function(){
+ var key=b.dataset.unit,max=key==='panels'?4:3;
+ draft[key]=Math.max(0,Math.min(max,draft[key]+(+b.dataset.delta)));change();
+});});
+document.querySelectorAll('[data-load]').forEach(function(b){b.addEventListener('change',function(){draft.loads[b.dataset.load]=b.checked;change();});});
+id('test').addEventListener('click',function(){
+ draft.tested=true;save();render();
+ if(api.qualifiedEnergyDraft(draft))status('Test passed. All three services have enough fictional supply within eight tokens. Finish the quest.');
+ else{var m=api.energyStats(draft);status('Test needs work: all three loads must be on; supply needs to cover demand; you need 2+ panels, 1+ battery, and 8 or fewer build tokens. Currently '+m.supply+'/'+m.demand+' units, '+m.credits+' tokens.');}
+});
+id('finish').addEventListener('click',function(){
+ if(!api.qualifiedEnergyDraft(draft))return;
+ progress=api.completeEnergy(progress,draft);save();render();status('Energy Lab complete! Three systems-design practice nodes are now in your Mind Palace.');
+});
+id('reset-design').addEventListener('click',function(){
+ draft={panels:0,batteries:0,loads:{lights:true,studio:true,ventilation:true},tested:false};
+ save();render();status('Design reset. Previous earned practice quests are preserved.');
+});
+window.addEventListener('pageshow',function(){try{progress=api.read(localStorage);}catch(e){}draft=api.getEnergySnapshot(progress);render();});
+render();
+})();
+</script></body></html>
