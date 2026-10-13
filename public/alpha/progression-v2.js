@@ -8,6 +8,7 @@
   const QUEST_ID = 'music_producer_001';
   const PHOTO_ID = 'photo_composition_001';
   const MOVEMENT_ID = 'movement_pathfinder_001';
+  const ENERGY_ID = 'energy_balancer_001';
   const PHOTO_POSITIONS = ['center', 'upper-left', 'upper-right', 'lower-left', 'lower-right'];
   const SKILLS = Object.freeze([
     { id: 'curiosity', title: 'Curiosity', from: null },
@@ -21,6 +22,9 @@
     { id: 'spatial-planning', title: 'Spatial planning', from: MOVEMENT_ID },
     { id: 'route-adaptation', title: 'Route adaptation', from: MOVEMENT_ID },
     { id: 'wayfinding', title: 'Wayfinding', from: MOVEMENT_ID },
+    { id: 'load-balancing', title: 'Load balancing', from: ENERGY_ID },
+    { id: 'resource-planning', title: 'Resource planning', from: ENERGY_ID },
+    { id: 'systems-thinking', title: 'Systems thinking', from: ENERGY_ID },
   ]);
   const EMPTY_PATTERN = () => Array.from({ length: 4 }, () => Array(8).fill(0));
   const PATHS = ['continue', 'reclaim', 'curiosity', 'wildcard'];
@@ -81,13 +85,46 @@
       ['warmup', 'adapt', 'wayfinding'].every(id => draft.checkpoints.includes(id));
   }
 
+  function defaultEnergyDraft() {
+    return { panels: 0, batteries: 0, loads: { lights: true, studio: true, ventilation: true }, tested: false };
+  }
+
+  function validEnergyDraft(draft) {
+    return !!draft && typeof draft === 'object' &&
+      Number.isInteger(draft.panels) && draft.panels >= 0 && draft.panels <= 4 &&
+      Number.isInteger(draft.batteries) && draft.batteries >= 0 && draft.batteries <= 3 &&
+      !!draft.loads && typeof draft.loads === 'object' &&
+      ['lights', 'studio', 'ventilation'].every(k => typeof draft.loads[k] === 'boolean') &&
+      typeof draft.tested === 'boolean';
+  }
+
+  // Fictional teaching units and tokens, NOT engineering estimates or actual equipment sizing.
+  function energyStats(draft) {
+    if (!validEnergyDraft(draft)) throw new TypeError('Invalid energy design');
+    const demand = (draft.loads.lights ? 2 : 0) +
+      (draft.loads.studio ? 4 : 0) + (draft.loads.ventilation ? 3 : 0);
+    return {
+      supply: draft.panels * 2 + draft.batteries * 2,
+      demand,
+      credits: draft.panels * 2 + draft.batteries,
+    };
+  }
+
+  function qualifiedEnergyDraft(draft) {
+    if (!validEnergyDraft(draft) || !draft.tested || draft.panels < 2 || draft.batteries < 1 ||
+        !Object.values(draft.loads).every(Boolean)) return false;
+    const stats = energyStats(draft);
+    return stats.supply >= stats.demand && stats.credits <= 8;
+  }
+
   function newProgress() {
     return {
       version: 2,
       onboarding: { path: null },
       drafts: { [QUEST_ID]: { pattern: EMPTY_PATTERN(), playedBar: false },
         [PHOTO_ID]: defaultPhotoDraft(),
-        [MOVEMENT_ID]: defaultMovementDraft() },
+        [MOVEMENT_ID]: defaultMovementDraft(),
+        [ENERGY_ID]: defaultEnergyDraft() },
       completions: [],
     };
   }
@@ -123,8 +160,15 @@
       x: movementDraft.x, y: movementDraft.y,
       checkpoints: [...new Set(movementDraft.checkpoints)],
     };
+    const energyDraft = raw.drafts[ENERGY_ID];
+    if (validEnergyDraft(energyDraft)) result.drafts[ENERGY_ID] = {
+      panels: energyDraft.panels, batteries: energyDraft.batteries,
+      loads: { lights: energyDraft.loads.lights, studio: energyDraft.loads.studio,
+        ventilation: energyDraft.loads.ventilation },
+      tested: energyDraft.tested,
+    };
     // Keep only whitelisted local-demo completions, deduplicated per quest.
-    for (const questId of [QUEST_ID, PHOTO_ID, MOVEMENT_ID]) {
+    for (const questId of [QUEST_ID, PHOTO_ID, MOVEMENT_ID, ENERGY_ID]) {
       if (isCompleted(raw, questId)) {
         const original = raw.completions.find(item => item && item.questId === questId);
         result.completions.push({
@@ -294,6 +338,34 @@
     return { progress: clean, moved: true };
   }
 
+  function getEnergySnapshot(progress) {
+    const clean = normalize(progress) || newProgress();
+    const d = clean.drafts[ENERGY_ID];
+    return { panels: d.panels, batteries: d.batteries, loads: { ...d.loads },
+      tested: d.tested, completed: isCompleted(clean, ENERGY_ID) };
+  }
+
+  function updateEnergyDraft(progress, draft) {
+    if (!validEnergyDraft(draft)) throw new TypeError('Invalid energy draft');
+    const clean = normalize(progress) || newProgress();
+    clean.drafts[ENERGY_ID] = {
+      panels: draft.panels, batteries: draft.batteries,
+      loads: { lights: draft.loads.lights, studio: draft.loads.studio,
+        ventilation: draft.loads.ventilation }, tested: draft.tested,
+    };
+    return clean;
+  }
+
+  function completeEnergy(progress, draft, clock) {
+    const clean = updateEnergyDraft(progress, draft);
+    if (!qualifiedEnergyDraft(draft)) throw new Error('Energy puzzle does not meet the challenge');
+    if (!isCompleted(clean, ENERGY_ID)) {
+      const now = typeof clock === 'function' ? clock() : new Date().toISOString();
+      clean.completions.push({ questId: ENERGY_ID, source: 'local_demo', completedAt: now });
+    }
+    return clean;
+  }
+
   function unlockedSkills(progress) {
     return SKILLS.filter(skill => !skill.from || isCompleted(progress, skill.from))
       .map(skill => skill.id);
@@ -306,13 +378,15 @@
   }
 
   root.WAVMVMTProgression = Object.freeze({
-    KEY, LEGACY_KEY, QUEST_ID, PHOTO_ID, MOVEMENT_ID, SKILLS,
+    KEY, LEGACY_KEY, QUEST_ID, PHOTO_ID, MOVEMENT_ID, ENERGY_ID, SKILLS,
     newProgress, validPattern, qualifiedPattern, validPhotoDraft,
     qualifiedPhotoDraft, validMovementDraft, qualifiedMovementDraft,
+    validEnergyDraft, qualifiedEnergyDraft, energyStats,
     normalize, fromLegacy,
     read, persist, getMusicSnapshot, updateDraft, completeMusic,
     getPhotoSnapshot, updatePhotoDraft, completePhoto,
     getMovementSnapshot, updateMovementDraft, completeMovement, advanceMovement,
+    getEnergySnapshot, updateEnergyDraft, completeEnergy,
     isCompleted, unlockedSkills, reset,
   });
 })(typeof window !== 'undefined' ? window : globalThis);
