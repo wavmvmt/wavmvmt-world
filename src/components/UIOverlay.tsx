@@ -90,6 +90,14 @@ export function UIOverlay() {
         Skip 3D movement and play the photography quest
       </a>
 
+      <a
+        href="/alpha/movement-quest.html"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-40 focus:left-3 focus:z-50 focus:rounded-lg focus:px-4 focus:py-3 focus:text-sm focus:font-bold"
+        style={{ background: '#f0c674', color: '#1a1520' }}
+      >
+        Skip 3D movement and play the virtual pathfinder quest
+      </a>
+
       {/* === ALWAYS VISIBLE === */}
       <HUD />
       <StudioQuestGateway />
