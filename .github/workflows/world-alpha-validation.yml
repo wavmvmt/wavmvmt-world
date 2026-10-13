@@ -6,7 +6,10 @@ on:
       - 'public/alpha/**'
       - 'src/components/StudioQuestGateway.tsx'
       - 'src/components/UIOverlay.tsx'
+      - 'src/components/WorldQuestDirectory.tsx'
+      - 'src/components/three/Player.tsx'
       - 'scripts/check-music-quest.mjs'
+      - 'scripts/sync-game-alpha.mjs'
       - '.github/workflows/world-alpha-validation.yml'
   workflow_dispatch:
 permissions:
@@ -20,8 +23,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check music, photography, progression, and 3D entry points
+      - name: Check four quests, Passport, progression, and 3D entry points
         run: node scripts/check-music-quest.mjs
+      - name: Syntax check local alpha sync utility
+        run: node --check scripts/sync-game-alpha.mjs
   typescript-build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
