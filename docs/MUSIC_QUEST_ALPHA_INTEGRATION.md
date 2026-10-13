@@ -73,3 +73,16 @@ The photo experience is a stylized 2D rule-of-thirds composition exercise with a
 Both studios now have a keyboard-focusable skip-3D shortcut in `UIOverlay.tsx`. Physical walk-in/door transitions and real 3D minigames are **not** implemented. The PR's smoke script now checks both quest JS files and the V2 rules, but actual Node/Next/mobile tests remain pending.
 
 **Important:** The earlier statements in this integration document about "only one playable quest" reflect the original draft baseline, not this extension. Follow this later checkpoint for current state.
+
+
+## October 13, 2026 — Alpha 03 activation update
+
+**Review-branch scope:** Three standalone interactive learning quests: (1) eight-step music sequencer, (2) photography thirds-grid composition and side-light preview, (3) safe virtual grid route/pathfinding. The shared V2 browser-local progression code keeps all three independently completed and unlocks **11 practice nodes** (two starting, nine earned). The Movement Pathfinder is an abstract planning puzzle, **not a physical parkour tutorial**.
+
+**Automated CI:** GitHub Actions was added for the World Game (Node regression suite + JS source syntax) and 3D World (source checks + TypeScript + Next.js production build). The Game CI passed at commit `bf8251a561b`; World CI source and build passed at commit `953ea775f00`. Further code was committed after those runs; inspect the latest PR checks rather than inferring that every later commit passed.
+
+**Private distributable:** World Game GitHub Actions packaged an offline ZIP with `playable-alpha.html`, `photo-quest.html`, `movement-quest.html` and `progression-v2.js`; artifact `wavmvmt-world-playable-alpha`, run ID `38354668505`, build successful. Artifact retention is seven days.
+
+**Standalone browser testing:** The extracted ZIP was tested in Chromium via Playwright with local HTML content injection because navigation to local HTTP and file URLs was blocked by the browser administrator. The test clicked actual browser controls for the music, photography and movement exercises, completed all three, and verified 11/11 nodes, three separate saved achievements and no uncaught page errors. Width checks at 390px and 320px reported no document horizontal overflow for all three pages. This is narrower than a deployed server + physical-device QA; test harness supplied simulated localStorage because the about:blank browser document restricts native storage.
+
+**Outstanding gates:** Real-world 3D WebGL proximity and return-navigation tests, on-device iOS/Android audio/touch accessibility, cross-origin/domain choice, security/privacy review, legal/content/funding claims audit, and final approval to publish. Do not connect to private CORE production data or merge/publish without approval. No separate company affiliations claimed.
