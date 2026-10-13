@@ -7,6 +7,7 @@
   const LEGACY_KEY = 'wavmvmt-world-alpha-v1';
   const QUEST_ID = 'music_producer_001';
   const PHOTO_ID = 'photo_composition_001';
+  const MOVEMENT_ID = 'movement_pathfinder_001';
   const PHOTO_POSITIONS = ['center', 'upper-left', 'upper-right', 'lower-left', 'lower-right'];
   const SKILLS = Object.freeze([
     { id: 'curiosity', title: 'Curiosity', from: null },
@@ -17,10 +18,16 @@
     { id: 'composition', title: 'Composition', from: PHOTO_ID },
     { id: 'light-awareness', title: 'Light awareness', from: PHOTO_ID },
     { id: 'visual-storytelling', title: 'Visual storytelling', from: PHOTO_ID },
+    { id: 'spatial-planning', title: 'Spatial planning', from: MOVEMENT_ID },
+    { id: 'route-adaptation', title: 'Route adaptation', from: MOVEMENT_ID },
+    { id: 'wayfinding', title: 'Wayfinding', from: MOVEMENT_ID },
   ]);
   const EMPTY_PATTERN = () => Array.from({ length: 4 }, () => Array(8).fill(0));
   const PATHS = ['continue', 'reclaim', 'curiosity', 'wildcard'];
   const PHOTO_LIGHTS = ['front', 'side'];
+  const MOVEMENT_BARRIERS = ['2,3', '2,2', '3,1', '4,3', '0,1'];
+  const MOVEMENT_CHECKPOINTS = { '1,3': 'warmup', '3,2': 'adapt', '4,0': 'wayfinding' };
+  const MOVEMENT_GOAL = '5,0';
 
   function validPattern(p) {
     return Array.isArray(p) && p.length === 4 &&
@@ -55,12 +62,32 @@
       draft.lighting === 'side' && draft.previewed === true;
   }
 
+  function defaultMovementDraft() {
+    return { x: 0, y: 4, checkpoints: [] };
+  }
+
+  function validMovementDraft(draft) {
+    return !!draft && typeof draft === 'object' &&
+      Number.isInteger(draft.x) && draft.x >= 0 && draft.x < 6 &&
+      Number.isInteger(draft.y) && draft.y >= 0 && draft.y < 5 &&
+      !MOVEMENT_BARRIERS.includes(draft.x + ',' + draft.y) &&
+      Array.isArray(draft.checkpoints) &&
+      draft.checkpoints.every(id => ['warmup', 'adapt', 'wayfinding'].includes(id));
+  }
+
+  function qualifiedMovementDraft(draft) {
+    return validMovementDraft(draft) &&
+      (draft.x + ',' + draft.y) === MOVEMENT_GOAL &&
+      ['warmup', 'adapt', 'wayfinding'].every(id => draft.checkpoints.includes(id));
+  }
+
   function newProgress() {
     return {
       version: 2,
       onboarding: { path: null },
       drafts: { [QUEST_ID]: { pattern: EMPTY_PATTERN(), playedBar: false },
-        [PHOTO_ID]: defaultPhotoDraft() },
+        [PHOTO_ID]: defaultPhotoDraft(),
+        [MOVEMENT_ID]: defaultMovementDraft() },
       completions: [],
     };
   }
@@ -91,8 +118,13 @@
       lighting: photoDraft.lighting,
       previewed: photoDraft.previewed,
     };
+    const movementDraft = raw.drafts[MOVEMENT_ID];
+    if (validMovementDraft(movementDraft)) result.drafts[MOVEMENT_ID] = {
+      x: movementDraft.x, y: movementDraft.y,
+      checkpoints: [...new Set(movementDraft.checkpoints)],
+    };
     // Keep only whitelisted local-demo completions, deduplicated per quest.
-    for (const questId of [QUEST_ID, PHOTO_ID]) {
+    for (const questId of [QUEST_ID, PHOTO_ID, MOVEMENT_ID]) {
       if (isCompleted(raw, questId)) {
         const original = raw.completions.find(item => item && item.questId === questId);
         result.completions.push({
@@ -220,6 +252,48 @@
     return clean;
   }
 
+  function getMovementSnapshot(progress) {
+    const clean = normalize(progress) || newProgress();
+    return { ...clean.drafts[MOVEMENT_ID], completed: isCompleted(clean, MOVEMENT_ID) };
+  }
+
+  function updateMovementDraft(progress, draft) {
+    if (!validMovementDraft(draft)) throw new TypeError('Invalid movement path state');
+    const clean = normalize(progress) || newProgress();
+    clean.drafts[MOVEMENT_ID] = {
+      x: draft.x, y: draft.y,
+      checkpoints: [...new Set(draft.checkpoints)],
+    };
+    return clean;
+  }
+
+  function completeMovement(progress, draft, clock) {
+    const clean = updateMovementDraft(progress, draft);
+    if (!qualifiedMovementDraft(draft)) throw new Error('Visit all route checkpoints and reach the goal');
+    if (!isCompleted(clean, MOVEMENT_ID)) {
+      const now = typeof clock === 'function' ? clock() : new Date().toISOString();
+      clean.completions.push({ questId: MOVEMENT_ID, source: 'local_demo', completedAt: now });
+    }
+    return clean;
+  }
+
+  function advanceMovement(progress, direction) {
+    const moves = { up: [0,-1], down: [0,1], left: [-1,0], right: [1,0] };
+    if (!Object.prototype.hasOwnProperty.call(moves, direction)) throw new TypeError('Invalid direction');
+    const clean = normalize(progress) || newProgress();
+    const before = clean.drafts[MOVEMENT_ID];
+    const [dx,dy] = moves[direction];
+    const x = before.x + dx, y = before.y + dy;
+    if (x < 0 || x > 5 || y < 0 || y > 4 || MOVEMENT_BARRIERS.includes(x + ',' + y)) {
+      return { progress: clean, moved: false };
+    }
+    const checkpoints = before.checkpoints.slice();
+    const checkpoint = MOVEMENT_CHECKPOINTS[x + ',' + y];
+    if (checkpoint && !checkpoints.includes(checkpoint)) checkpoints.push(checkpoint);
+    clean.drafts[MOVEMENT_ID] = { x, y, checkpoints };
+    return { progress: clean, moved: true };
+  }
+
   function unlockedSkills(progress) {
     return SKILLS.filter(skill => !skill.from || isCompleted(progress, skill.from))
       .map(skill => skill.id);
@@ -232,11 +306,13 @@
   }
 
   root.WAVMVMTProgression = Object.freeze({
-    KEY, LEGACY_KEY, QUEST_ID, PHOTO_ID, SKILLS,
+    KEY, LEGACY_KEY, QUEST_ID, PHOTO_ID, MOVEMENT_ID, SKILLS,
     newProgress, validPattern, qualifiedPattern, validPhotoDraft,
-    qualifiedPhotoDraft, normalize, fromLegacy,
+    qualifiedPhotoDraft, validMovementDraft, qualifiedMovementDraft,
+    normalize, fromLegacy,
     read, persist, getMusicSnapshot, updateDraft, completeMusic,
     getPhotoSnapshot, updatePhotoDraft, completePhoto,
+    getMovementSnapshot, updateMovementDraft, completeMovement, advanceMovement,
     isCompleted, unlockedSkills, reset,
   });
 })(typeof window !== 'undefined' ? window : globalThis);
